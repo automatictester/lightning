@@ -16,4 +16,12 @@ public class TeamCityReporter extends CIReporter {
         System.out.println(String.format(teamCityOutput, getReportSummary(jmeterTransactions)));
     }
 
+	public static String getVerifySummary(TestSet testSet) {
+		int executed = testSet.getTestCount();
+		int failed = testSet.getFailCount();
+		int ignored = testSet.getIgnoreCount();
+		String testMsgHead = failed > 0 ? "Tests failed:" : "Tests passed:";
+		return String.format(testMsgHead + " executed: %s, failed: %s, ignored: %s", executed, failed, ignored);
+	}
+
 }
