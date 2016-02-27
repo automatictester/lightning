@@ -1,5 +1,11 @@
 notifications:
   email: false
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/bef4eada69f81d1f6a5b
+        on_success: always
+        on_failure: always
+        on_start: always
 os:
  - linux
 language: java
