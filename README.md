@@ -117,85 +117,7 @@ Actual result:    Average response time = 3583.2
 Test result:      Pass
 ```
 
-#### Using server-side tests
-
-To include server-side tests in `verify` mode, Lightning requires 3 sources of input data: XML config file, JMeter and PerfMon CSV output files. XML file contains definition of tests, which will be executed to determine if execution should be marked as passed or failed, based on analysis of CSV files. If you want to run server-side tests, you should also have at least one test analysing client-side metrics (e.g. average response times). This way you not only monitor server load, but also make sure the client gets what expected.
-
-To run server-side tests, you need to configure your JMeter test to collect server-side statistics using [PerfMon Server Agent](http://jmeter-plugins.org/wiki/PerfMonAgent/) and [JMeter PerfMon Metrics Collector](http://jmeter-plugins.org/wiki/PerfMon/).
-
-Lightning XML config file, e.g.:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<testSet>
-    <avgRespTimeTest>
-        <testName>Test #1</testName>
-        <description>Verify average login times</description>
-        <transactionName>Login</transactionName>
-        <maxAvgRespTime>4000</maxAvgRespTime>
-    </avgRespTimeTest>
-    <serverSideTest>
-        <testName>Test #2</testName>
-        <subType>LESS_THAN</subType>         
-        <description>Verify server-side resource utilisation</description>         
-        <hostAndMetric>192.168.0.12 CPU</hostAndMetric>
-        <metricValueA>60000</metricValueA>
-    </serverSideTest>
-</testSet>
-```
-
-JMeter CSV output file, e.g.:
-
-```
-timeStamp,elapsed,label,responseCode,threadName,dataType,success,bytes,Latency
-1434291247743,3514,Login,200,Thread Group 1-2,,true,444013,0
-1434291247541,3780,Login,200,Thread Group 1-1,,true,444236,0
-1434291247949,3474,Login,200,Thread Group 1-3,,true,444041,0
-1434291248160,3448,Login,200,Thread Group 1-4,,true,444712,0
-1434291248359,3700,Login,200,Thread Group 1-5,,true,444054,0
-1434291251330,10769,Search,200,Thread Group 1-1,,true,1912363,0
-1434291251624,10626,Search,200,Thread Group 1-4,,true,1912352,0
-1434291251436,11086,Search,200,Thread Group 1-3,,true,1912321,0
-1434291251272,11250,Search,200,Thread Group 1-2,,true,1912264,0
-1434291252072,11221,Search,200,Thread Group 1-5,,true,1912175,0
-```
-
-PerfMon CSV output file, e.g.:
-
-```
-1434291247949,9128,192.168.0.12 CPU,,,,,true,0,0,0,0
-1434291251436,21250,192.168.0.12 CPU,,,,,true,0,0,0,0
-```
-
-To run Lightning:
-
-`java -jar lightning-<version>.jar verify -xml=path/to/xml/file --jmeter-csv=path/to/jmeter/csv/file --perfmon-csv=path/to/perfmon/csv/file`
-
-Sample output:
-
-```
-Test name:            Test #1
-Test type:            avgRespTimeTest
-Test description:     Verify average login times
-Transaction name:     Login
-Expected result:      Average response time <= 4000
-Actual result:        Average response time = 3583.2
-Transaction count:    5
-Test result:          Pass
-
-Test name:            Test #2
-Test type:            serverSideTest
-Test subtype:         Less than
-Test description:     Verify server-side resource utilisation
-Host and metric:      192.168.0.12 CPU
-Expected result:      Average value < 60000
-Actual result:        Average value = 15189.0
-Entries count:        2
-Test result:          Pass
-```
-
-Find out more about the available options [here](https://github.com/automatictester/lightning/wiki/Test-Types#server-side-test).
-
+[Here](https://github.com/automatictester/lightning/wiki/Using-Server-Side-Tests) you can read about using server-side tests.
 
 ### Report mode
 
