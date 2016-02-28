@@ -213,13 +213,13 @@
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>3.5</version>
+            <version>3.7</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
-            <version>3.5</version>
+            <version>3.6</version>
         </dependency>
 
         <dependency>
@@ -238,7 +238,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.9.9</version>
+            <version>6.9.10</version>
             <scope>test</scope>
         </dependency>
 
