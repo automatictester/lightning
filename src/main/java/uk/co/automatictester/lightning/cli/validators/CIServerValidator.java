@@ -13,7 +13,7 @@ public class CIServerValidator implements IParameterValidator {
         ciServers.add("jenkins");
         ciServers.add("teamcity");
 
-        if (!(ciServers.contains(value.toLowerCase()))) {
+        if (!ciServers.contains(value.toLowerCase())) {
             throw new ParameterException(String.format("CI server '%s' not in list: %s", value, ciServers.toString()));
         }
     }
