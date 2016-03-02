@@ -51,7 +51,7 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
     }
 
     public double getThroughput() {
-        double transactionTimespanInMilliseconds = (getLastTransactionTimestamp() - getFirstTransactionTimestamp());
+        double transactionTimespanInMilliseconds = getLastTransactionTimestamp() - getFirstTransactionTimestamp();
         return getTransactionCount() / (transactionTimespanInMilliseconds / 1000);
     }
 

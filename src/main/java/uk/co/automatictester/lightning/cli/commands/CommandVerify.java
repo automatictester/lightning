@@ -39,6 +39,6 @@ public class CommandVerify {
     }
 
     public boolean isPerfmonCsvFileProvided() {
-        return (perfmonCsvFile != null);
+        return perfmonCsvFile != null;
     }
 }
