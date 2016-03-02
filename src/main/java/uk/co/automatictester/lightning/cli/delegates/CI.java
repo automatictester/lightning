@@ -14,7 +14,7 @@ public class CI {
         if (this.ci == null) {
             return false;
         } else {
-            return (this.ci.toLowerCase().equals(ci));
+            return this.ci.toLowerCase().equals(ci);
         }
     }
 

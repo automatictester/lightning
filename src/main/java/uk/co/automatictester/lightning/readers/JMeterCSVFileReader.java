@@ -27,10 +27,10 @@ public class JMeterCSVFileReader {
             getColumnIndexes(columnNames);
 
             String[] jmeterTransaction;
-            String labelValue = null;
-            String elapsedValue = null;
-            String successValue = null;
-            String timeStampValue = null;
+            String labelValue;
+            String elapsedValue;
+            String successValue;
+            String timeStampValue;
 
             while ((jmeterTransaction = reader.readNext()) != null) {
                 ArrayList<String> currentTransaction = new ArrayList<>();

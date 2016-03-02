@@ -21,9 +21,9 @@ public class PerfMonDataReader {
             CSVReader reader = new CSVReader(new FileReader(csvFile));
 
             String[] perfMonDataEntry;
-            String timestamp = null;
-            String value = null;
-            String hostAndMetric = null;
+            String timestamp;
+            String value;
+            String hostAndMetric;
 
             while ((perfMonDataEntry = reader.readNext()) != null) {
                 ArrayList<String> currentDataEntry = new ArrayList<>();
