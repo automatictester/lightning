@@ -1,0 +1,17 @@
+Test name:            Test #1
+Test type:            maxRespTimeTest
+Test description:     Verify max login times
+Transaction name:     Login
+Expected result:      Max response time <= 4000
+Actual result:        Max response time = 11221
+Transaction count:    2
+Longest transactions: [11221, 3514]
+Test result:          FAIL
+
+
+============= EXECUTION SUMMARY =============
+Tests executed:    1
+Tests passed:      0
+Tests failed:      1
+Tests ignored:     0
+Test set status:   FAIL

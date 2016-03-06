@@ -20,6 +20,19 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
         return transactions;
     }
 
+    public JMeterTransactions includeRegexpLabels(String label) {
+        JMeterTransactions transactions = new JMeterTransactions();
+        for (ArrayList<String> transaction : this) {
+            if (transaction.get(0).contains(label)) {
+                transactions.add(transaction);
+            }
+        }
+        if (transactions.size() == 0)
+            throw new CSVFileNonexistentLabelException(label);
+        return transactions;
+    }
+
+
     public List<Integer> getLongestTransactions() {
         List<Integer> longestTransactions = new ArrayList<>();
         for (List<String> transaction : this) {
