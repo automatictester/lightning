@@ -5,23 +5,21 @@
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning)
 [![Coverage Status](https://coveralls.io/repos/automatictester/lightning/badge.svg?branch=master)](https://coveralls.io/r/automatictester/lightning?branch=master)
 
+### What's that?
+
+Lightning integrates JMeter non-functional tests with Continuous Integration infrastructure. Lightning analyses results of your non-functional tests and provides your CI server with simple and meaningful information whether to pass or fail the build - with no human involvement needed. Check the [story behind Lightning](https://github.com/automatictester/lightning/wiki/Story-Behind-Lightning) for more information.
+
 ### Breaking changes in version 2
 
 Command line parameter **-csv** is now renamed to **--jmeter-csv**. If you want to upgrade but don't need to use server side monitoring functionality, just update this parameter name in your Lightning startup script.
 
 ### Download
 
-Lightning as standalone JAR is available for download from [Releases](https://github.com/automatictester/lightning/releases) tab.
-
-Lightning as a dependency is available in [Maven Central](http://search.maven.org/#search|gav|1|g%3A%22uk.co.automatictester%22%20AND%20a%3A%22lightning%22).
+Lightning is a 100% Java tool. It is available as a standalone JAR for download from [Releases](https://github.com/automatictester/lightning/releases) tab. Lightning as a dependency is available in [Maven Central](http://search.maven.org/#search|gav|1|g%3A%22uk.co.automatictester%22%20AND%20a%3A%22lightning%22).
 
 ### Changelog
 
 All new features and bugfixes are included in [release notes](https://github.com/automatictester/lightning/releases).
-
-### Goals
-
-Lightning's goal is to revolutionise the approach to non-functional testing. Lightning integrates JMeter non-functional tests with Continuous Integration infrastructure. It can instantly provide CI server with simple and meaningful information whether to pass or fail the build - with no human involvement needed. Check the [story behind Lightning](https://github.com/automatictester/lightning/wiki/Story-Behind-Lightning) for more information.
 
 ### Philosophy
 
