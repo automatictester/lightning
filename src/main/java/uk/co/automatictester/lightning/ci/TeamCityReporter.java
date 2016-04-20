@@ -38,9 +38,11 @@ public class TeamCityReporter extends CIReporter {
             String statsEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
             System.out.println(statsEntry);
         }
-        for (ServerSideTest test : testSet.getServerSideTests()) {
-            String statsEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
-            System.out.println(statsEntry);
+        if (testSet.getServerSideTests() != null) {
+            for (ServerSideTest test : testSet.getServerSideTests()) {
+                String statsEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
+                System.out.println(statsEntry);
+            }
         }
         return this;
     }
