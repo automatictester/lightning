@@ -80,6 +80,18 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
     }
 
     @Test
+    public void testIsPerfmonCsvFileProvided() {
+        CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv", "--perfmon-csv=src/test/resources/csv/perfmon/2_entries.csv"});
+        assertThat(params.verify.isPerfmonCsvFileProvided(), equalTo(true));
+    }
+
+    @Test
+    public void testGetPerfmonCsvFile() {
+        CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv", "--perfmon-csv=src/test/resources/csv/perfmon/2_entries.csv"});
+        assertThat(params.verify.getPerfmonCsvFile(), equalToIgnoringCase("src/test/resources/csv/perfmon/2_entries.csv"));
+    }
+
+    @Test
     public void testIsCIEqualToJenkinsNotSet() {
         CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
         assertThat(params.verify.isCiEqualTo("jenkins"), is(false));

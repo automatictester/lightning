@@ -16,7 +16,7 @@ public class ThroughputTest extends ClientSideTest {
     public ThroughputTest(String name, String type, String description, String transactionName, double minThroughput) {
         super(name, type, description, transactionName);
         this.minThroughput = minThroughput;
-        expectedResult = String.format(EXPECTED_RESULT_MESSAGE, minThroughput);
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, minThroughput);
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
@@ -24,18 +24,17 @@ public class ThroughputTest extends ClientSideTest {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
 
-            double actualThroughput = transactions.getThroughput();
+            actualResult = transactions.getThroughput();
+            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            actualResult = String.format(ACTUAL_RESULT_MESSAGE, actualThroughput);
-
-            if (actualThroughput < minThroughput) {
+            if ((double) actualResult < minThroughput) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;
             }
         } catch (Exception e) {
             result = TestResult.IGNORED;
-            actualResult = e.getMessage();
+            actualResultDescription = e.getMessage();
         }
     }
 
@@ -45,11 +44,12 @@ public class ThroughputTest extends ClientSideTest {
             return name.equals(test.name) &&
                     description.equals(test.description) &&
                     Objects.equals(transactionName, test.transactionName) &&
-                    expectedResult.equals(test.expectedResult) &&
-                    actualResult.equals(test.actualResult) &&
+                    expectedResultDescription.equals(test.expectedResultDescription) &&
+                    actualResultDescription.equals(test.actualResultDescription) &&
                     result == test.result &&
                     minThroughput == test.minThroughput &&
                     transactionCount == test.transactionCount &&
+                    Objects.equals(actualResult, test.actualResult) &&
                     type.equals(test.type);
         } else {
             return false;

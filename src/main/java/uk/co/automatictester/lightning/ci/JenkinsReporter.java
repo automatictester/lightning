@@ -11,11 +11,19 @@ import java.util.Properties;
 
 public class JenkinsReporter extends CIReporter {
 
-    public void setJenkinsBuildName(TestSet testSet) {
+    public JenkinsReporter(TestSet testSet) {
+        super(testSet);
+    }
+
+    public JenkinsReporter(JMeterTransactions jmeterTransactions) {
+        super(jmeterTransactions);
+    }
+
+    public void setJenkinsVerifyBuildName() {
         writeJenkinsFile(getVerifySummary(testSet));
     }
 
-    public void setJenkinsBuildName(JMeterTransactions jmeterTransactions) {
+    public void setJenkinsReportBuildName() {
         writeJenkinsFile(getReportSummary(jmeterTransactions));
     }
 

@@ -41,6 +41,7 @@ public class RespTimeMaxTestTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+        assertThat((long) test.getActualResult(), equalTo(11221L));
     }
 
     @Test

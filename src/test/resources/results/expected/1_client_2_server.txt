@@ -1,4 +1,4 @@
-Test name:            Test #2
+Test name:            CPU range
 Test type:            serverSideTest
 Test subtype:         Between
 Test description:     Verify server-side resource utilisation
@@ -8,7 +8,7 @@ Actual result:        Average value = 15189.0
 Entries count:        2
 Test result:          Pass
 
-Test name:            Test #3
+Test name:            CPU upper limit
 Test type:            serverSideTest
 Test subtype:         Less than
 Test description:     Verify server-side resource utilisation
@@ -18,7 +18,7 @@ Actual result:        Average value = 15189.0
 Entries count:        2
 Test result:          Pass
 
-Test name:            Test #1
+Test name:            Failed transactions
 Test type:            passedTransactionsTest
 Test description:     Verify number of passed tests
 Transaction name:     Login

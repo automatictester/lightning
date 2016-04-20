@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class RespTimeStdDevTest extends ClientSideTest {
 
@@ -19,7 +20,7 @@ public class RespTimeStdDevTest extends ClientSideTest {
     public RespTimeStdDevTest(String name, String type, String description, String transactionName, long maxRespTimeStdDev) {
         super(name, type, description, transactionName);
         this.maxRespTimeStdDev = maxRespTimeStdDev;
-        expectedResult = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
@@ -36,17 +37,17 @@ public class RespTimeStdDevTest extends ClientSideTest {
             }
             double actualRespTimeStdDev = ds.getStandardDeviation();
             DecimalFormat df = new DecimalFormat("#.##");
-            double roundedActualRespTimeStdDev = Double.valueOf(df.format(actualRespTimeStdDev));
+            actualResult = Double.valueOf(df.format(actualRespTimeStdDev));
+            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            actualResult = String.format(ACTUAL_RESULT_MESSAGE, roundedActualRespTimeStdDev);
-            if (roundedActualRespTimeStdDev > maxRespTimeStdDev) {
+            if ((double) actualResult > maxRespTimeStdDev) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;
             }
         } catch (Exception e) {
             result = TestResult.IGNORED;
-            actualResult = e.getMessage();
+            actualResultDescription = e.getMessage();
         }
     }
 
@@ -56,11 +57,12 @@ public class RespTimeStdDevTest extends ClientSideTest {
             return name.equals(test.name) &&
                     description.equals(test.description) &&
                     transactionName.equals(test.transactionName) &&
-                    expectedResult.equals(test.expectedResult) &&
-                    actualResult.equals(test.actualResult) &&
+                    expectedResultDescription.equals(test.expectedResultDescription) &&
+                    actualResultDescription.equals(test.actualResultDescription) &&
                     result == test.result &&
                     maxRespTimeStdDev == test.maxRespTimeStdDev &&
                     transactionCount == test.transactionCount &&
+                    Objects.equals(actualResult, test.actualResult) &&
                     type.equals(test.type);
         } else {
             return false;

@@ -69,11 +69,11 @@ public class TestSet {
         return ignoreCount;
     }
 
-    private List<ClientSideTest> getClientSideTests() {
+    public List<ClientSideTest> getClientSideTests() {
         return clientSideTests;
     }
 
-    private List<ServerSideTest> getServerSideTests() {
+    public List<ServerSideTest> getServerSideTests() {
         return serverSideTests;
     }
 

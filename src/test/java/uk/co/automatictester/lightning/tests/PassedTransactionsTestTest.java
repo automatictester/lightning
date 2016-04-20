@@ -21,7 +21,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResult(), containsString("Number of failed transactions = 0"));
+        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResult(), containsString("Number of failed transactions = 0"));
+        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResult(), containsString("Percent of failed transactions = 10.0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10.0"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResult(), containsString("Percent of failed transactions = 10.0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10.0"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResult(), containsString("Number of failed transactions = 1"));
+        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResult(), containsString("Number of failed transactions = 1"));
+        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
     }
 
     @Test

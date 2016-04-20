@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
@@ -23,7 +24,7 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
         super(name, type, description, transactionName);
         this.maxRespTime = maxRespTime;
         this.percentile = percentile;
-        expectedResult = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
@@ -41,18 +42,18 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
             longestTransactions = transactions.getLongestTransactions();
             double actualRespTimePercentile = ds.getPercentile((double) percentile);
             DecimalFormat df = new DecimalFormat("#.##");
-            double roundedActualRespTimePercentile = Double.valueOf(df.format(actualRespTimePercentile));
+            actualResult = Double.valueOf(df.format(actualRespTimePercentile));
 
-            actualResult = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), roundedActualRespTimePercentile);
+            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), actualResult);
 
-            if (roundedActualRespTimePercentile > maxRespTime) {
+            if ((double) actualResult > maxRespTime) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;
             }
         } catch (Exception e) {
             result = TestResult.IGNORED;
-            actualResult = e.getMessage();
+            actualResultDescription = e.getMessage();
         }
     }
 
@@ -62,12 +63,13 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
             return name.equals(test.name) &&
                     description.equals(test.description) &&
                     transactionName.equals(test.transactionName) &&
-                    expectedResult.equals(test.expectedResult) &&
-                    actualResult.equals(test.actualResult) &&
+                    expectedResultDescription.equals(test.expectedResultDescription) &&
+                    actualResultDescription.equals(test.actualResultDescription) &&
                     result == test.result &&
                     maxRespTime == test.maxRespTime &&
                     percentile == test.percentile &&
                     transactionCount == test.transactionCount &&
+                    Objects.equals(actualResult, test.actualResult) &&
                     type.equals(test.type);
         } else {
             return false;

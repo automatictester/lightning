@@ -9,17 +9,19 @@ public abstract class LightningTest {
     protected final String name;
     protected final String description;
     protected final String type;
-    protected String expectedResult;
-    protected String actualResult;
+    protected String expectedResultDescription;
+    protected String actualResultDescription;
     protected TestResult result;
+    protected Number actualResult;
 
     protected LightningTest(String name, String type, String description) {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.expectedResult = "";
-        this.actualResult = "";
+        this.expectedResultDescription = "";
+        this.actualResultDescription = "";
         this.result = null;
+        this.actualResult = null;
     }
 
     public abstract void printTestExecutionReport();
@@ -46,15 +48,19 @@ public abstract class LightningTest {
         return description;
     }
 
-    public String getExpectedResult() {
-        return expectedResult;
+    public String getExpectedResultDescription() {
+        return expectedResultDescription;
     }
 
-    public String getActualResult() {
-        return actualResult;
+    public String getActualResultDescription() {
+        return actualResultDescription;
     }
 
     public TestResult getResult() {
         return result;
+    }
+
+    public Number getActualResult() {
+        return actualResult;
     }
 }

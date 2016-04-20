@@ -4,6 +4,11 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.tests.ClientSideTest;
+import uk.co.automatictester.lightning.tests.PassedTransactionsTest;
+import uk.co.automatictester.lightning.tests.ServerSideTest;
+
+import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,6 +16,40 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TeamCityReporterTest extends ConsoleOutputTest {
+
+    @Test
+    public void testPrintTeamCityReportStatistics() {
+        JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
+        when(jmeterTransactions.getTransactionCount()).thenReturn(1204);
+        when(jmeterTransactions.getFailCount()).thenReturn(25);
+
+        configureStream();
+        new TeamCityReporter(jmeterTransactions).printTeamCityReportStatistics();
+        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Failed transactions' value='25']"));
+        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Total transactions' value='1204']"));
+        revertStream();
+    }
+
+    @Test
+    public void testPrintTeamCityVerifyStatistics() {
+        final PassedTransactionsTest clientTest = mock(PassedTransactionsTest.class);
+        when(clientTest.getName()).thenReturn("Failed transactions");
+        when(clientTest.getActualResult()).thenReturn(1);
+
+        final ServerSideTest serverTest = mock(ServerSideTest.class);
+        when(serverTest.getName()).thenReturn("Memory utilization");
+        when(serverTest.getActualResult()).thenReturn(45);
+
+        TestSet testSet = mock(TestSet.class);
+        when(testSet.getClientSideTests()).thenReturn(new ArrayList<ClientSideTest>() {{ add(clientTest); }});
+        when(testSet.getServerSideTests()).thenReturn(new ArrayList<ServerSideTest>() {{ add(serverTest); }});
+
+        configureStream();
+        new TeamCityReporter(testSet).printTeamCityVerifyStatistics();
+        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));
+        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Memory utilization' value='45']"));
+        revertStream();
+    }
 
     @Test
     public void testSetTeamCityBuildStatusTextTest_verify_passed() {
@@ -22,7 +61,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(testSet.getIgnoreCount()).thenReturn(0);
 
         configureStream();
-        new TeamCityReporter().setTeamCityBuildStatusText(testSet);
+        new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }
@@ -37,7 +76,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(testSet.getIgnoreCount()).thenReturn(0);
 
         configureStream();
-        new TeamCityReporter().setTeamCityBuildStatusText(testSet);
+        new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }
@@ -52,7 +91,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(testSet.getIgnoreCount()).thenReturn(1);
 
         configureStream();
-        new TeamCityReporter().setTeamCityBuildStatusText(testSet);
+        new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }
@@ -66,7 +105,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(jmeterTransactions.getFailCount()).thenReturn(0);
 
         configureStream();
-        new TeamCityReporter().setTeamCityBuildStatusText(jmeterTransactions);
+        new TeamCityReporter(jmeterTransactions).setTeamCityReportBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }
@@ -80,7 +119,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 
         configureStream();
-        new TeamCityReporter().setTeamCityBuildStatusText(jmeterTransactions);
+        new TeamCityReporter(jmeterTransactions).setTeamCityReportBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }

@@ -28,8 +28,8 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
                 getType(),
                 getDescriptionForReport(),
                 getTransactionNameForReport(),
-                getExpectedResult(),
-                getActualResult(),
+                getExpectedResultDescription(),
+                getActualResultDescription(),
                 getTransactionCount(),
                 getLongestTransactions(),
                 getResultForReport());

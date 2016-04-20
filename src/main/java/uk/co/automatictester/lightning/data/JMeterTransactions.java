@@ -42,7 +42,6 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
                 failCount++;
             }
         }
-
         return failCount;
     }
 
@@ -80,5 +79,4 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
         }
         return maxTimestamp;
     }
-
 }

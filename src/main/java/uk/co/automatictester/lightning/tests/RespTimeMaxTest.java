@@ -6,6 +6,7 @@ import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RespTimeMaxTest extends RespTimeBasedTest {
 
@@ -17,7 +18,7 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
     public RespTimeMaxTest(String name, String type, String description, String transactionName, long maxRespTime) {
         super(name, type, description, transactionName);
         this.maxRespTime = maxRespTime;
-        expectedResult = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
@@ -32,18 +33,17 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
                 ds.addValue(Double.parseDouble(elapsed));
             }
             longestTransactions = transactions.getLongestTransactions();
-            long maxRespTime = (long) ds.getMax();
+            actualResult = (long) ds.getMax();
+            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            actualResult = String.format(ACTUAL_RESULT_MESSAGE, maxRespTime);
-
-            if (maxRespTime > this.maxRespTime) {
+            if ((long) actualResult > this.maxRespTime) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;
             }
         } catch (Exception e) {
             result = TestResult.IGNORED;
-            actualResult = e.getMessage();
+            actualResultDescription = e.getMessage();
         }
     }
 
@@ -53,11 +53,12 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
             return name.equals(test.name) &&
                     description.equals(test.description) &&
                     transactionName.equals(test.transactionName) &&
-                    expectedResult.equals(test.expectedResult) &&
-                    actualResult.equals(test.actualResult) &&
+                    expectedResultDescription.equals(test.expectedResultDescription) &&
+                    actualResultDescription.equals(test.actualResultDescription) &&
                     result == test.result &&
                     maxRespTime == test.maxRespTime &&
                     transactionCount == test.transactionCount &&
+                    Objects.equals(actualResult, test.actualResult) &&
                     type.equals(test.type);
         } else {
             return false;

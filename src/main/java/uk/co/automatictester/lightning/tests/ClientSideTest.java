@@ -44,8 +44,8 @@ public abstract class ClientSideTest extends LightningTest {
                 getType(),
                 getDescriptionForReport(),
                 getTransactionNameForReport(),
-                getExpectedResult(),
-                getActualResult(),
+                getExpectedResultDescription(),
+                getActualResultDescription(),
                 getTransactionCount(),
                 getResultForReport());
 

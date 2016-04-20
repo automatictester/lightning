@@ -1,6 +1,5 @@
 package uk.co.automatictester.lightning.tests;
 
-import org.apache.commons.lang3.StringUtils;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.enums.ThresholdType;
@@ -23,14 +22,14 @@ public class PassedTransactionsTest extends ClientSideTest {
         super(name, type, description, transactionName);
         this.type = ThresholdType.NUMBER;
         this.allowedNumberOfFailedTransactions = allowedNumberOfFailedTransactions;
-        expectedResult = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedNumberOfFailedTransactions);
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedNumberOfFailedTransactions);
     }
 
     public PassedTransactionsTest(String name, String type, String description, String transactionName, Percent percent) {
         super(name, type, description, transactionName);
         this.type = ThresholdType.PERCENT;
         this.allowedPercentOfFailedTransactions = percent;
-        expectedResult = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getPercent());
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getPercent());
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
@@ -50,7 +49,8 @@ public class PassedTransactionsTest extends ClientSideTest {
                 } else {
                     result = TestResult.PASS;
                 }
-                actualResult = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), failureCount);
+                this.actualResult = failureCount;
+                actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), failureCount);
             } else {
                 float percentOfFailedTransactions = ((float) failureCount / transactionCount) * 100;
                 if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getPercent()) {
@@ -58,11 +58,12 @@ public class PassedTransactionsTest extends ClientSideTest {
                 } else {
                     result = TestResult.PASS;
                 }
-                actualResult = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), percentOfFailedTransactions);
+                this.actualResult = percentOfFailedTransactions;
+                actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), percentOfFailedTransactions);
             }
         } catch (Exception e) {
             result = TestResult.IGNORED;
-            actualResult = e.getMessage();
+            actualResultDescription = e.getMessage();
         }
     }
 
@@ -72,13 +73,14 @@ public class PassedTransactionsTest extends ClientSideTest {
             return name.equals(test.name) &&
                     description.equals(test.description) &&
                     Objects.equals(transactionName, test.transactionName) &&
-                    expectedResult.equals(test.expectedResult) &&
-                    actualResult.equals(test.actualResult) &&
+                    expectedResultDescription.equals(test.expectedResultDescription) &&
+                    actualResultDescription.equals(test.actualResultDescription) &&
                     result == test.result &&
                     allowedNumberOfFailedTransactions == test.allowedNumberOfFailedTransactions &&
                     percentEquals(test) &&
                     type == test.type &&
                     transactionCount == test.transactionCount &&
+                    Objects.equals(actualResult, test.actualResult) &&
                     type.equals(test.type);
         } else {
             return false;
@@ -88,11 +90,7 @@ public class PassedTransactionsTest extends ClientSideTest {
     private boolean percentEquals(PassedTransactionsTest test) {
         if (allowedPercentOfFailedTransactions != null && test.allowedPercentOfFailedTransactions != null) {
             return (allowedPercentOfFailedTransactions.getPercent() == test.allowedPercentOfFailedTransactions.getPercent());
-        } else if (allowedPercentOfFailedTransactions == null && test.allowedPercentOfFailedTransactions == null) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return allowedPercentOfFailedTransactions == null && test.allowedPercentOfFailedTransactions == null;
     }
 
 }

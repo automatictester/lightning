@@ -22,7 +22,7 @@ public class JenkinsReporterTest {
         when(testSet.getFailCount()).thenReturn(0);
         when(testSet.getIgnoreCount()).thenReturn(0);
 
-        new JenkinsReporter().setJenkinsBuildName(testSet);
+        new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
 
         File lightningFile = new File("lightning-jenkins.properties");
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();
@@ -38,7 +38,7 @@ public class JenkinsReporterTest {
         when(jmeterTransactions.getTransactionCount()).thenReturn(3);
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 
-        new JenkinsReporter().setJenkinsBuildName(jmeterTransactions);
+        new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
 
         File lightningFile = new File("lightning-jenkins.properties");
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();

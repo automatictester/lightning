@@ -2,14 +2,14 @@
 <testSet>
 
     <passedTransactionsTest>
-        <testName>Test #1</testName>
+        <testName>Failed transactions</testName>
         <description>Verify number of passed tests</description>
         <transactionName>Login</transactionName>
         <allowedPercentOfFailedTransactions>0</allowedPercentOfFailedTransactions>
     </passedTransactionsTest>
 
     <serverSideTest>
-         <testName>Test #2</testName>
+         <testName>CPU range</testName>
          <subType>BETWEEN</subType> 
         <description>Verify server-side resource utilisation</description> 
         <hostAndMetric>192.168.0.12 CPU</hostAndMetric>
@@ -18,7 +18,7 @@
     </serverSideTest>
 
     <serverSideTest>
-         <testName>Test #3</testName>
+         <testName>CPU upper limit</testName>
          <subType>LESS_THAN</subType> 
         <description>Verify server-side resource utilisation</description> 
         <hostAndMetric>192.168.0.12 CPU</hostAndMetric>

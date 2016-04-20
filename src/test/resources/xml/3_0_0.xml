@@ -2,20 +2,20 @@
 <testSet>
 
     <passedTransactionsTest>
-        <testName>Test #1</testName>
+        <testName>Failed transactions (%)</testName>
         <description>Verify number of passed tests</description>
         <transactionName>Login</transactionName>
         <allowedPercentOfFailedTransactions>0</allowedPercentOfFailedTransactions>
     </passedTransactionsTest>
 
     <passedTransactionsTest>
-        <testName>Test #2</testName>
+        <testName>Failed transactions</testName>
         <description>Verify number of passed tests</description>
         <allowedNumberOfFailedTransactions>0</allowedNumberOfFailedTransactions>
     </passedTransactionsTest>
 
     <nthPercRespTimeTest>
-        <testName>Test #3</testName>
+        <testName>80th percentile</testName>
         <description>Verify nth percentile</description>
         <transactionName>Search</transactionName>
         <percentile>80</percentile>

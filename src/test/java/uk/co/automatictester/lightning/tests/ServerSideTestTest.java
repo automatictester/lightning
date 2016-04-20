@@ -124,7 +124,6 @@ public class ServerSideTestTest extends ConsoleOutputTest {
         PerfMonDataEntries dataEntries = new PerfMonDataEntries();
         dataEntries.add(CPU_ENTRY_10000);
         dataEntries.add(CPU_ENTRY_10001);
-        test.execute(dataEntries);
 
         configureStream();
         test.execute(dataEntries);

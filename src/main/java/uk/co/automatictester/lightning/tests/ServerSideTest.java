@@ -50,30 +50,29 @@ public class ServerSideTest extends LightningTest {
                 String elapsed = transaction.get(1);
                 ds.addValue(Double.parseDouble(elapsed));
             }
-            double avgRespTime = ds.getMean();
+            double avg = ds.getMean();
 
             DecimalFormat df = new DecimalFormat("#.##");
-            double roundedAvgRespTime = Double.valueOf(df.format(avgRespTime));
-
-            actualResult = String.format(ACTUAL_RESULT_MESSAGE, roundedAvgRespTime);
+            actualResult = Double.valueOf(df.format(avg));
+            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
             if (subtype.equals(ServerSideTestType.GREATER_THAN)) {
-                expectedResult = String.format(expectedResultMessage, metricValueA);
-                if (roundedAvgRespTime > metricValueA) {
+                expectedResultDescription = String.format(expectedResultMessage, metricValueA);
+                if ((double) actualResult > metricValueA) {
                     result = TestResult.PASS;
                 } else {
                     result = TestResult.FAIL;
                 }
             } else if (subtype.equals(ServerSideTestType.LESS_THAN)) {
-                expectedResult = String.format(expectedResultMessage, metricValueA);
-                if (roundedAvgRespTime < metricValueA) {
+                expectedResultDescription = String.format(expectedResultMessage, metricValueA);
+                if ((double) actualResult < metricValueA) {
                     result = TestResult.PASS;
                 } else {
                     result = TestResult.FAIL;
                 }
             } else if (subtype.equals(ServerSideTestType.BETWEEN)) {
-                expectedResult = String.format(expectedResultMessage, metricValueA, metricValueB);
-                if ((roundedAvgRespTime > metricValueA) && (roundedAvgRespTime < metricValueB)) {
+                expectedResultDescription = String.format(expectedResultMessage, metricValueA, metricValueB);
+                if (((double) actualResult > metricValueA) && ((double) actualResult < metricValueB)) {
                     result = TestResult.PASS;
                 } else {
                     result = TestResult.FAIL;
@@ -82,7 +81,7 @@ public class ServerSideTest extends LightningTest {
 
         } catch (Exception e) {
             result = TestResult.IGNORED;
-            actualResult = e.getMessage();
+            actualResultDescription = e.getMessage();
         }
     }
 
@@ -105,8 +104,8 @@ public class ServerSideTest extends LightningTest {
                 getSubType(),
                 getDescriptionForReport(),
                 getHostAndMetric(),
-                getExpectedResult(),
-                getActualResult(),
+                getExpectedResultDescription(),
+                getActualResultDescription(),
                 getDataEntriesCount(),
                 getResultForReport());
 
@@ -133,11 +132,12 @@ public class ServerSideTest extends LightningTest {
                     hostAndMetric.equals(test.hostAndMetric) &&
                     type.equals(test.type) &&
                     subtype.equals(test.subtype) &&
-                    expectedResult.equals(test.expectedResult) &&
-                    actualResult.equals(test.actualResult) &&
+                    expectedResultDescription.equals(test.expectedResultDescription) &&
+                    actualResultDescription.equals(test.actualResultDescription) &&
                     Objects.equals(result, test.result) &&
                     dataEntriesCount == test.dataEntriesCount &&
                     metricValueA == test.metricValueA &&
+                    Objects.equals(actualResult, test.actualResult) &&
                     Objects.equals(metricValueB, test.metricValueB);
         } else {
             return false;

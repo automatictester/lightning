@@ -81,9 +81,9 @@ public class TestData {
     public static final ArrayList<String> LOGIN_2_SUCCESS = new ArrayList<>(Arrays.asList("Login", "2", "true"));
 
     // Tests
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_A = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", new Percent(0));
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_B = new PassedTransactionsTest("Test #2", "passedTransactionsTest", "Verify number of passed tests", null, 0);
-    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_3_0_0_C = new RespTimeNthPercentileTest("Test #3", "nthPercRespTimeTest", "Verify nth percentile", "Search", 80, 11245);
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_A = new PassedTransactionsTest("Failed transactions (%)", "passedTransactionsTest", "Verify number of passed tests", "Login", new Percent(0));
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_B = new PassedTransactionsTest("Failed transactions", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_3_0_0_C = new RespTimeNthPercentileTest("80th percentile", "nthPercRespTimeTest", "Verify nth percentile", "Search", 80, 11245);
 
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_A = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 1);
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_B = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);

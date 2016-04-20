@@ -6,6 +6,8 @@ import uk.co.automatictester.lightning.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.cli.CommandLineInterface;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.enums.CIServer;
+import uk.co.automatictester.lightning.enums.Mode;
 import uk.co.automatictester.lightning.readers.JMeterCSVFileReader;
 import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
 import uk.co.automatictester.lightning.readers.PerfMonDataReader;
@@ -23,19 +25,19 @@ public class CliTestRunner {
     private static TestSet testSet;
     private static JMeterTransactions jmeterTransactions;
     private static PerfMonDataEntries perfMonDataEntries;
-    private static String mode;
+    private static Mode mode;
 
     public static void main(String[] args) {
         parseParams(args);
 
-        mode = params.getParsedCommand();
+        mode = Mode.valueOf(params.getParsedCommand().toUpperCase());
         if (params.isHelpRequested()) {
             params.printHelp();
-        } else if (mode.equals("verify")) {
+        } else if (mode.toString().equals("verify")) {
             runTests();
             notifyCIServer();
             setExitCode();
-        } else if (mode.equals("report")) {
+        } else if (mode.toString().equals("report")) {
             runReport();
             notifyCIServer();
             setExitCode();
@@ -91,23 +93,29 @@ public class CliTestRunner {
     }
 
     private static void notifyCIServer() {
-        if (mode.equals("verify")) {
-            if (params.verify.isCiEqualTo("teamcity")) {
-                new TeamCityReporter().setTeamCityBuildStatusText(testSet);
-            } else if (params.verify.isCiEqualTo("jenkins")) {
-                new JenkinsReporter().setJenkinsBuildName(testSet);
-            }
-        } else if (mode.equals("report")) {
-            if (params.report.isCiEqualTo("teamcity")) {
-                new TeamCityReporter().setTeamCityBuildStatusText(jmeterTransactions);
-            } else if (params.report.isCiEqualTo("jenkins")) {
-                new JenkinsReporter().setJenkinsBuildName(jmeterTransactions);
-            }
+        switch (mode) {
+            case VERIFY:
+                if (params.verify.isCiEqualTo("teamcity")) {
+                    new TeamCityReporter(testSet)
+                            .setTeamCityVerifyBuildStatusText()
+                            .printTeamCityVerifyStatistics();
+                } else if (params.verify.isCiEqualTo("jenkins")) {
+                    new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
+                }
+                break;
+            case REPORT:
+                if (params.report.isCiEqualTo("teamcity")) {
+                    new TeamCityReporter(jmeterTransactions)
+                            .setTeamCityReportBuildStatusText()
+                            .printTeamCityReportStatistics();
+                } else if (params.report.isCiEqualTo("jenkins")) {
+                    new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
+                }
+                break;
         }
     }
 
     private static void setExitCode() {
         System.exit(exitCode);
     }
-
 }

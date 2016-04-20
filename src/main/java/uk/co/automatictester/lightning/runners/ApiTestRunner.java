@@ -91,30 +91,29 @@ public class ApiTestRunner {
     private void notifyCIServer() {
         switch (mode) {
             case VERIFY:
-
                 switch (ciServer) {
                     case JENKINS:
-                        new JenkinsReporter().setJenkinsBuildName(testSet);
+                        new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
                         break;
                     case TEAMCITY:
-                        new TeamCityReporter().setTeamCityBuildStatusText(testSet);
+                        new TeamCityReporter(testSet)
+                                .setTeamCityVerifyBuildStatusText()
+                                .printTeamCityVerifyStatistics();
                         break;
                 }
-
                 break;
             case REPORT:
-
                 switch (ciServer) {
                     case JENKINS:
-                        new JenkinsReporter().setJenkinsBuildName(jmeterTransactions);
+                        new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
                         break;
                     case TEAMCITY:
-                        new TeamCityReporter().setTeamCityBuildStatusText(jmeterTransactions);
+                        new TeamCityReporter(jmeterTransactions)
+                                .setTeamCityReportBuildStatusText()
+                                .printTeamCityReportStatistics();
                         break;
                 }
-
                 break;
         }
     }
-
 }
