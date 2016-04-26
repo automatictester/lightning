@@ -30,7 +30,7 @@ public class CliTestRunner {
     public static void main(String[] args) {
         parseParams(args);
 
-        if (params.isHelpRequested()) {
+        if (params.isHelpRequested() || (params.getParsedCommand() == null)) {
             params.printHelp();
             return;
         }
