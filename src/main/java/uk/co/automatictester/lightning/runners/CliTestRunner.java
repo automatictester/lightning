@@ -30,10 +30,13 @@ public class CliTestRunner {
     public static void main(String[] args) {
         parseParams(args);
 
-        mode = Mode.valueOf(params.getParsedCommand().toUpperCase());
         if (params.isHelpRequested()) {
             params.printHelp();
-        } else if (mode.toString().equals("verify")) {
+            return;
+        }
+        
+        mode = Mode.valueOf(params.getParsedCommand().toUpperCase());
+        if (mode.toString().equals("verify")) {
             runTests();
             notifyCIServer();
             setExitCode();
