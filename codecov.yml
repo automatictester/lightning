@@ -2,6 +2,6 @@ codecov:
   branch: master
 
 coverage:
-  precision: 2
+  precision: 0
   round: down
   range: "0...80"
