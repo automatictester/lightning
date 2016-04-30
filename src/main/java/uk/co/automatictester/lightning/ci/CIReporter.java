@@ -19,7 +19,7 @@ public abstract class CIReporter {
     public static String getVerifySummary(TestSet testSet) {
         int executed = testSet.getTestCount();
         int failed = testSet.getFailCount();
-        int ignored = testSet.getIgnoreCount();
+        int ignored = testSet.getErrorCount();
         return String.format("Tests executed: %s, failed: %s, ignored: %s", executed, failed, ignored);
     }
 

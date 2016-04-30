@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <serverSideTest>
+        <testName>CPU utilisation</testName>
+        <subType>LESS_THAN</subType>
+        <hostAndMetric>192.168.0.12 CPU</hostAndMetric>
+        <metricValueA>10000</metricValueA>
+    </serverSideTest>
+
+    <passedTransactionsTest>
+        <testName>No failed transactions</testName>
+        <allowedNumberOfFailedTransactions>0</allowedNumberOfFailedTransactions>
+    </passedTransactionsTest>
+
+    <avgRespTimeTest>
+        <testName>Average response time</testName>
+        <transactionName>Sear</transactionName>
+        <maxAvgRespTime>1000</maxAvgRespTime>
+    </avgRespTimeTest>
+
+</testSet>

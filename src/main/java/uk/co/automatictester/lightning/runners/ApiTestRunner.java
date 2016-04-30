@@ -74,7 +74,7 @@ public class ApiTestRunner {
         long testExecTime = testSetExecEnd - testSetExecStart;
         System.out.println(String.format("Execution time:    %dms", testExecTime));
 
-        if (testSet.getFailCount() + testSet.getIgnoreCount() != 0) {
+        if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
             exitCode = 1;
         }
     }

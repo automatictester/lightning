@@ -51,7 +51,7 @@ public class ThroughputTestTest {
         jmeterTransactions.add(TRANSACTION_0);
 
         test.execute(jmeterTransactions);
-        assertThat(test.getResult(), is(equalTo(TestResult.IGNORED)));
+        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

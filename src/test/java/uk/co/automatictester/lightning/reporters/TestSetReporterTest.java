@@ -24,7 +24,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
         when(testSet.getTestCount()).thenReturn(15);
         when(testSet.getPassCount()).thenReturn(15);
         when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getIgnoreCount()).thenReturn(0);
+        when(testSet.getErrorCount()).thenReturn(0);
 
         configureStream();
         new TestSetReporter(testSet).printTestSetExecutionSummaryReport();
@@ -46,7 +46,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
         when(testSet.getTestCount()).thenReturn(15);
         when(testSet.getPassCount()).thenReturn(14);
         when(testSet.getFailCount()).thenReturn(1);
-        when(testSet.getIgnoreCount()).thenReturn(0);
+        when(testSet.getErrorCount()).thenReturn(0);
 
         configureStream();
         new TestSetReporter(testSet).printTestSetExecutionSummaryReport();
@@ -68,7 +68,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
         when(testSet.getTestCount()).thenReturn(15);
         when(testSet.getPassCount()).thenReturn(14);
         when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getIgnoreCount()).thenReturn(1);
+        when(testSet.getErrorCount()).thenReturn(1);
 
         configureStream();
         new TestSetReporter(testSet).printTestSetExecutionSummaryReport();

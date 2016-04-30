@@ -20,7 +20,7 @@ public class JenkinsReporterTest {
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(3);
         when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getIgnoreCount()).thenReturn(0);
+        when(testSet.getErrorCount()).thenReturn(0);
 
         new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
 

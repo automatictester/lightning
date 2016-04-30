@@ -117,7 +117,7 @@ public class RespTimeNthPercentileTestTest {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(SEARCH_5_SUCCESS);
         test.execute(jmeterTransactions);
-        assertThat(test.getResult(), is(equalTo(TestResult.IGNORED)));
+        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

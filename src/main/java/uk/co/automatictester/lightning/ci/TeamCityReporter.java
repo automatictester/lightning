@@ -22,7 +22,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter setTeamCityVerifyBuildStatusText() {
-        String teamCityOutput = (testSet.getFailCount() + testSet.getIgnoreCount()) > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
+        String teamCityOutput = (testSet.getFailCount() + testSet.getErrorCount()) > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
         System.out.println(String.format(teamCityOutput, getVerifySummary(testSet)));
         return this;
     }

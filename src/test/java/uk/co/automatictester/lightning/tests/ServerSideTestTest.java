@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.ConsoleOutputTest;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.enums.TestResult;
@@ -105,7 +104,7 @@ public class ServerSideTestTest extends ConsoleOutputTest {
         dataEntries.add(CPU_ENTRY_10000);
         dataEntries.add(CPU_ENTRY_10001);
         test.execute(dataEntries);
-        assertThat(test.getResult(), is(equalTo(TestResult.IGNORED)));
+        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

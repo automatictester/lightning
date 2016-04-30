@@ -1,6 +1,7 @@
-target
-target.lib
-.idea
-lightning.iml
+target/
+target.lib/
+.idea/
+*.iml
 src/test/resources/results/actual/
 lightning-jenkins.properties
+reports/

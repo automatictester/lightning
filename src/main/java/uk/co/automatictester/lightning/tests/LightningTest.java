@@ -26,6 +26,8 @@ public abstract class LightningTest {
 
     public abstract void printTestExecutionReport();
 
+    public abstract String getTestExecutionReport();
+
     public abstract void execute(ArrayList<ArrayList<String>> dataEntries);
 
     protected String getDescriptionForReport() {

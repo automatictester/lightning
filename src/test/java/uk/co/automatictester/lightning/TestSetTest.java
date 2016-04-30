@@ -38,7 +38,7 @@ public class TestSetTest extends ConsoleOutputTest {
         assertThat(testSet.getTestCount(), is(3));
         assertThat(testSet.getPassCount(), is(1));
         assertThat(testSet.getFailCount(), is(1));
-        assertThat(testSet.getIgnoreCount(), is(1));
+        assertThat(testSet.getErrorCount(), is(1));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class TestSetTest extends ConsoleOutputTest {
         assertThat(testSet.getTestCount(), is(2));
         assertThat(testSet.getPassCount(), is(2));
         assertThat(testSet.getFailCount(), is(0));
-        assertThat(testSet.getIgnoreCount(), is(0));
+        assertThat(testSet.getErrorCount(), is(0));
     }
 
     @Test
@@ -88,6 +88,6 @@ public class TestSetTest extends ConsoleOutputTest {
         assertThat(testSet.getTestCount(), is(3));
         assertThat(testSet.getPassCount(), is(1));
         assertThat(testSet.getFailCount(), is(1));
-        assertThat(testSet.getIgnoreCount(), is(1));
+        assertThat(testSet.getErrorCount(), is(1));
     }
 }

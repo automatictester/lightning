@@ -30,7 +30,7 @@ public class TestSet {
                 passCount++;
             } else if (test.getResult() == TestResult.FAIL) {
                 failCount++;
-            } else if (test.getResult() == TestResult.IGNORED) {
+            } else if (test.getResult() == TestResult.ERROR) {
                 ignoreCount++;
             }
             test.printTestExecutionReport();
@@ -44,7 +44,7 @@ public class TestSet {
                 passCount++;
             } else if (test.getResult() == TestResult.FAIL) {
                 failCount++;
-            } else if (test.getResult() == TestResult.IGNORED) {
+            } else if (test.getResult() == TestResult.ERROR) {
                 ignoreCount++;
             }
             test.printTestExecutionReport();
@@ -65,7 +65,7 @@ public class TestSet {
         return failCount;
     }
 
-    public int getIgnoreCount() {
+    public int getErrorCount() {
         return ignoreCount;
     }
 
@@ -77,4 +77,10 @@ public class TestSet {
         return serverSideTests;
     }
 
+    public List<LightningTest> getTests() {
+        List<LightningTest> tests = new ArrayList<>();
+        tests.addAll(clientSideTests);
+        tests.addAll(serverSideTests);
+        return tests;
+    }
 }

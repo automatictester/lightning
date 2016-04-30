@@ -14,7 +14,7 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
         return longestTransactions;
     }
 
-    public void printTestExecutionReport() {
+    public String getTestExecutionReport() {
         String executionReport = String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
                         "%s" +
@@ -34,7 +34,10 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
                 getLongestTransactions(),
                 getResultForReport());
 
-        System.out.println(executionReport);
+        return executionReport;
     }
 
+    public void printTestExecutionReport() {
+        System.out.println(getTestExecutionReport());
+    }
 }

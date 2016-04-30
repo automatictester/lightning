@@ -48,7 +48,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
                 result = TestResult.PASS;
             }
         } catch (Exception e) {
-            result = TestResult.IGNORED;
+            result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
     }

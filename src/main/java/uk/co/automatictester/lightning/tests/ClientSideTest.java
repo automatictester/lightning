@@ -31,7 +31,7 @@ public abstract class ClientSideTest extends LightningTest {
         return transactionName;
     }
 
-    public void printTestExecutionReport() {
+    public String getTestExecutionReport() {
         String executionReport = String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
                         "%s" +
@@ -49,7 +49,11 @@ public abstract class ClientSideTest extends LightningTest {
                 getTransactionCount(),
                 getResultForReport());
 
-        System.out.println(executionReport);
+        return executionReport;
+    }
+
+    public void printTestExecutionReport() {
+        System.out.println(getTestExecutionReport());
     }
 
     protected String getTransactionNameForReport() {

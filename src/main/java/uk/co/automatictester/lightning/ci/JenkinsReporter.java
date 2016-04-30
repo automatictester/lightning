@@ -31,8 +31,8 @@ public class JenkinsReporter extends CIReporter {
         try {
             Properties props = new Properties();
             props.setProperty("result.string", summary);
-            File f = new File("lightning-jenkins.properties");
-            OutputStream out = new FileOutputStream(f);
+            File jenkinsBuildNameFile = new File("lightning-jenkins.properties");
+            OutputStream out = new FileOutputStream(jenkinsBuildNameFile);
             props.store(out, "In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}");
         } catch (IOException e) {
             e.printStackTrace();

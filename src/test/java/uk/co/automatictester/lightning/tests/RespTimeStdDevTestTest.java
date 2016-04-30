@@ -83,7 +83,7 @@ public class RespTimeStdDevTestTest {
         jmeterTransactions.add(SEARCH_11221_SUCCESS);
 
         test.execute(jmeterTransactions);
-        assertThat(test.getResult(), is(equalTo(TestResult.IGNORED)));
+        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

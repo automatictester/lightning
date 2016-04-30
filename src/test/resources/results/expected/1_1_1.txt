@@ -26,7 +26,7 @@ Expected result:      Average response time <= 1
 Actual result:        No transactions with label equal to 'just wrong' found in CSV file
 Transaction count:    0
 Longest transactions: null
-Test result:          IGNORED
+Test result:          ERROR
 
 
 ============= EXECUTION SUMMARY =============

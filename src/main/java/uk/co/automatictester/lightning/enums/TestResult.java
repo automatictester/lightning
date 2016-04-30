@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.enums;
 public enum TestResult {
     PASS("Pass"),
     FAIL("FAIL"),
-    IGNORED("IGNORED");
+    ERROR("ERROR");
 
     private final String value;
 

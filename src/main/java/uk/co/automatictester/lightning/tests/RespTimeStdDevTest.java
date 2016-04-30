@@ -46,7 +46,7 @@ public class RespTimeStdDevTest extends ClientSideTest {
                 result = TestResult.PASS;
             }
         } catch (Exception e) {
-            result = TestResult.IGNORED;
+            result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
     }

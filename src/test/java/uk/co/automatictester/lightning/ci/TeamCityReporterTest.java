@@ -58,7 +58,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(6);
         when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getIgnoreCount()).thenReturn(0);
+        when(testSet.getErrorCount()).thenReturn(0);
 
         configureStream();
         new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
@@ -73,7 +73,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(6);
         when(testSet.getFailCount()).thenReturn(1);
-        when(testSet.getIgnoreCount()).thenReturn(0);
+        when(testSet.getErrorCount()).thenReturn(0);
 
         configureStream();
         new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
@@ -88,7 +88,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(6);
         when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getIgnoreCount()).thenReturn(1);
+        when(testSet.getErrorCount()).thenReturn(1);
 
         configureStream();
         new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();

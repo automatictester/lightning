@@ -106,7 +106,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
         jmeterTransactions.add(LOGIN_1200_FAILURE);
 
         test.execute(jmeterTransactions);
-        assertThat(test.getResult(), is(equalTo(TestResult.IGNORED)));
+        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test
@@ -192,7 +192,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
                 "Expected result:      Number of failed transactions <= 0%n" +
                 "Actual result:        No transactions with label equal to 'incorrect' found in CSV file%n" +
                 "Transaction count:    0%n" +
-                "Test result:          IGNORED");
+                "Test result:          ERROR");
 
         PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "incorrect", 0);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();

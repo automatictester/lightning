@@ -62,7 +62,7 @@ public class PassedTransactionsTest extends ClientSideTest {
                 actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), percentOfFailedTransactions);
             }
         } catch (Exception e) {
-            result = TestResult.IGNORED;
+            result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
     }

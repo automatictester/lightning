@@ -80,7 +80,7 @@ public class ServerSideTest extends LightningTest {
             }
 
         } catch (Exception e) {
-            result = TestResult.IGNORED;
+            result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
     }
@@ -89,7 +89,7 @@ public class ServerSideTest extends LightningTest {
         return originalPerfMonDataEntries.excludeHostAndMetricOtherThan(getHostAndMetric());
     }
 
-    public void printTestExecutionReport() {
+    public String getTestExecutionReport() {
         String executionReport = String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
                         "Test subtype:         %s%n" +
@@ -109,7 +109,11 @@ public class ServerSideTest extends LightningTest {
                 getDataEntriesCount(),
                 getResultForReport());
 
-        System.out.println(executionReport);
+        return executionReport;
+    }
+
+    public void printTestExecutionReport() {
+        System.out.println(getTestExecutionReport());
     }
 
     public String getHostAndMetric() {
