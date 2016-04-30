@@ -9,13 +9,9 @@
 
 Lightning integrates JMeter non-functional tests with Continuous Integration infrastructure. Lightning analyses results of your non-functional tests and provides your CI server with simple and meaningful information whether to pass or fail the build - with no human involvement needed. Check the [story behind Lightning](https://github.com/automatictester/lightning/wiki/Story-Behind-Lightning) for more information.
 
-### Breaking changes in version 2
-
-Command line parameter **-csv** is now renamed to **--jmeter-csv**. If you want to upgrade but don't need to use server side monitoring functionality, just update this parameter name in your Lightning startup script.
-
 ### Download
 
-Lightning is a 100% Java tool. It is available as a standalone JAR for download from [Releases](https://github.com/automatictester/lightning/releases) tab. Lightning as a dependency is available in [Maven Central](http://search.maven.org/#search|gav|1|g%3A%22uk.co.automatictester%22%20AND%20a%3A%22lightning%22).
+Lightning is a 100% Java tool. It is available as a standalone JAR for download from [Releases](https://github.com/automatictester/lightning/releases) tab.
 
 ### Changelog
 
@@ -24,7 +20,7 @@ All new features and bugfixes are included in [release notes](https://github.com
 ### Philosophy
 
 - Keep technology stack as close to JMeter as possible
-- Be continuous integration server-independent and operating system-independent. Lightning should not be designed to run in particular environment only, but can offer extra features for certain environments
+- Be continuous integration server-independent and operating system-independent. Lightning should not be designed to run only in a particular environment, but can offer extra features for certain environments
 - Using Lightning shouldn't require coding skills, as JMeter doesn't require that neither
 - Release changes frequently
 - Be well documented
@@ -38,13 +34,8 @@ All new features and bugfixes are included in [release notes](https://github.com
 
 ### Project maturity
 
-* Lightning as a standalone JAR has been used in day-to-day delivery for months and can be considered production-ready.
+* Lightning as a standalone JAR has been used in day-to-day delivery for months and client-side tests can be considered production-ready.
 * Server-side tests is a new functionality.
-* Lightning as a Java dependency is used only by a subset of users.
-
-### Future
-
-Lightning 2 delivered new functionality to measure server-side metrics. This brand new option could benefit from a few tweaks, so stay tuned!
 
 # How to start
 
@@ -129,17 +120,17 @@ Sample output:
 
 # Java API (experimental)
 
-Advanced Lightning users may want to call its Java API directly. Here you can find examples of calling Lightning Java API in [verify](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/VerifyTest.java) and [report](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/ReportTest.java) mode.
+Advanced Lightning users may want to call its Java API directly. Here you can find examples of calling Lightning Java API in [verify](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/VerifyTest.java) and [report](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/ReportTest.java) mode. Lightning is available in [Maven Central](http://search.maven.org/#search|gav|1|g%3A%22uk.co.automatictester%22%20AND%20a%3A%22lightning%22).
 
 # Misc
 
 ### Issues, questions and feature requests
 
-Issues, questions and feature requests should be raised [here](https://github.com/automatictester/lightning/issues).
+Issues, questions and feature requests can be raised on [Gitter](https://gitter.im/automatictester/lightning) or using our [issue tracker](https://github.com/automatictester/lightning/issues).
 
 ### Contributors
 
-All the information you may need (and even more) can be found [here](https://github.com/automatictester/lightning/wiki/Info-for-Contributors). Pull requests are welcome!
+All the information you may need (and even more) can be found in our [wiki](https://github.com/automatictester/lightning/wiki/Info-for-Contributors). Pull requests are welcome!
 
 ### License
 
