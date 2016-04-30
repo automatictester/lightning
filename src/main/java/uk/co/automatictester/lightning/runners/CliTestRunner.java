@@ -107,7 +107,6 @@ public class CliTestRunner {
             case VERIFY:
                 if (params.verify.isCiEqualTo("teamcity")) {
                     new TeamCityReporter(testSet)
-                            .setTeamCityVerifyBuildStatusText()
                             .printTeamCityVerifyStatistics();
                 } else if (params.verify.isCiEqualTo("jenkins")) {
                     new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
@@ -116,7 +115,7 @@ public class CliTestRunner {
             case REPORT:
                 if (params.report.isCiEqualTo("teamcity")) {
                     new TeamCityReporter(jmeterTransactions)
-                            .setTeamCityReportBuildStatusText()
+                            .printTeamCityBuildStatusText()
                             .printTeamCityReportStatistics();
                 } else if (params.report.isCiEqualTo("jenkins")) {
                     new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();

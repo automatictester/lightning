@@ -52,51 +52,6 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
     }
 
     @Test
-    public void testSetTeamCityBuildStatusTextTest_verify_passed() {
-        String expectedOutput = String.format("##teamcity[buildStatus text='Tests executed: 6, failed: 0']%n");
-
-        TestSet testSet = mock(TestSet.class);
-        when(testSet.getTestCount()).thenReturn(6);
-        when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getErrorCount()).thenReturn(0);
-
-        configureStream();
-        new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
-    }
-
-    @Test
-    public void testSetTeamCityBuildStatusTextTest_verify_failed() {
-        String expectedOutput = String.format("##teamcity[buildProblem description='Tests executed: 6, failed: 1']%n");
-
-        TestSet testSet = mock(TestSet.class);
-        when(testSet.getTestCount()).thenReturn(6);
-        when(testSet.getFailCount()).thenReturn(1);
-        when(testSet.getErrorCount()).thenReturn(0);
-
-        configureStream();
-        new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
-    }
-
-    @Test
-    public void testSetTeamCityBuildStatusTextTest_verify_ignored() {
-        String expectedOutput = String.format("##teamcity[buildProblem description='Tests executed: 6, failed: 1']%n");
-
-        TestSet testSet = mock(TestSet.class);
-        when(testSet.getTestCount()).thenReturn(6);
-        when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getErrorCount()).thenReturn(1);
-
-        configureStream();
-        new TeamCityReporter(testSet).setTeamCityVerifyBuildStatusText();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
-    }
-
-    @Test
     public void testSetTeamCityBuildStatusTextTest_report_passed() {
         String expectedOutput = String.format("##teamcity[buildStatus text='Transactions executed: 10, failed: 0']%n");
 
@@ -105,7 +60,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(jmeterTransactions.getFailCount()).thenReturn(0);
 
         configureStream();
-        new TeamCityReporter(jmeterTransactions).setTeamCityReportBuildStatusText();
+        new TeamCityReporter(jmeterTransactions).printTeamCityBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }
@@ -119,7 +74,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 
         configureStream();
-        new TeamCityReporter(jmeterTransactions).setTeamCityReportBuildStatusText();
+        new TeamCityReporter(jmeterTransactions).printTeamCityBuildStatusText();
         assertThat(out.toString(), containsString(expectedOutput));
         revertStream();
     }

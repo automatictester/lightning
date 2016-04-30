@@ -97,7 +97,6 @@ public class ApiTestRunner {
                         break;
                     case TEAMCITY:
                         new TeamCityReporter(testSet)
-                                .setTeamCityVerifyBuildStatusText()
                                 .printTeamCityVerifyStatistics();
                         break;
                 }
@@ -109,7 +108,7 @@ public class ApiTestRunner {
                         break;
                     case TEAMCITY:
                         new TeamCityReporter(jmeterTransactions)
-                                .setTeamCityReportBuildStatusText()
+                                .printTeamCityBuildStatusText()
                                 .printTeamCityReportStatistics();
                         break;
                 }

@@ -21,13 +21,7 @@ public class TeamCityReporter extends CIReporter {
         super(jMeterTransactions);
     }
 
-    public TeamCityReporter setTeamCityVerifyBuildStatusText() {
-        String teamCityOutput = (testSet.getFailCount() + testSet.getErrorCount()) > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
-        System.out.println(String.format(teamCityOutput, getVerifySummary(testSet)));
-        return this;
-    }
-
-    public TeamCityReporter setTeamCityReportBuildStatusText() {
+    public TeamCityReporter printTeamCityBuildStatusText() {
         String teamCityOutput = jmeterTransactions.getFailCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
         System.out.println(String.format(teamCityOutput, getReportSummary(jmeterTransactions)));
         return this;
