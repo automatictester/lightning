@@ -19,8 +19,8 @@ public class JenkinsReporterTest {
     public void testSetJenkinsBuildName_verify() throws FileNotFoundException {
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(3);
-        when(testSet.getFailCount()).thenReturn(0);
-        when(testSet.getErrorCount()).thenReturn(0);
+        when(testSet.getFailCount()).thenReturn(1);
+        when(testSet.getErrorCount()).thenReturn(1);
 
         new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
 
@@ -29,7 +29,7 @@ public class JenkinsReporterTest {
         lightningFile.delete();
 
         assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
-        assertThat(text, containsString("result.string=Tests executed\\: 3, failed\\: 0, ignored\\: 0"));
+        assertThat(text, containsString("result.string=Tests executed\\: 3, failed\\: 2"));
     }
 
     @Test

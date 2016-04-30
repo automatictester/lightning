@@ -53,7 +53,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
 
     @Test
     public void testSetTeamCityBuildStatusTextTest_verify_passed() {
-        String expectedOutput = String.format("##teamcity[buildStatus text='Tests executed: 6, failed: 0, ignored: 0']%n");
+        String expectedOutput = String.format("##teamcity[buildStatus text='Tests executed: 6, failed: 0']%n");
 
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(6);
@@ -68,7 +68,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
 
     @Test
     public void testSetTeamCityBuildStatusTextTest_verify_failed() {
-        String expectedOutput = String.format("##teamcity[buildProblem description='Tests executed: 6, failed: 1, ignored: 0']%n");
+        String expectedOutput = String.format("##teamcity[buildProblem description='Tests executed: 6, failed: 1']%n");
 
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(6);
@@ -83,7 +83,7 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
 
     @Test
     public void testSetTeamCityBuildStatusTextTest_verify_ignored() {
-        String expectedOutput = String.format("##teamcity[buildProblem description='Tests executed: 6, failed: 0, ignored: 1']%n");
+        String expectedOutput = String.format("##teamcity[buildProblem description='Tests executed: 6, failed: 1']%n");
 
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(6);
