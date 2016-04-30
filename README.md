@@ -47,11 +47,7 @@ Lightning 2 delivered new functionality to measure server-side metrics. This bra
 
 # How to start
 
-You can start using Lightning as a standalone JAR or directly from Java code.
-
-### Standalone JAR
-
-Using Lightning as a standalone JAR is a most suitable option for most users.
+Lightning is a standalone Java JAR executable from command line.
 
 By default, continuous integration servers mark build as failed based on exit code of executed build step. This behaviour can be amended using CI server-specific features or plugins, which allow to fail build based on build console output.
 
@@ -130,9 +126,9 @@ Sample output:
 
 `Transactions executed: 10, failed: 0`
 
-### Java API
+# Java API (experimental)
 
-Advanced Lightning users may want to call its Java API directly. It doesn't provide any extra features over standalone JAR, but gives you more low-level control. Here you can find examples of calling Lightning Java API in [verify](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/VerifyTest.java) and [report](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/ReportTest.java) mode.
+Advanced Lightning users may want to call its Java API directly. Here you can find examples of calling Lightning Java API in [verify](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/VerifyTest.java) and [report](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/ReportTest.java) mode.
 
 # Misc
 
