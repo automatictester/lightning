@@ -9,7 +9,7 @@ Lightning integrates JMeter non-functional tests with Continuous Integration inf
 
 ### Download
 
-Lightning is a 100% Java tool. It is available as a standalone JAR for download from [Releases](https://github.com/automatictester/lightning/releases) tab.
+Standalone JAR is available for download from [Releases](https://github.com/automatictester/lightning/releases) tab.
 
 ### Changelog
 
@@ -17,7 +17,7 @@ All new features and bugfixes are included in [release notes](https://github.com
 
 ### Philosophy
 
-- Keep technology stack as close to JMeter as possible
+- Keep technology stack as close to JMeter as possible - Lightning is 100% Java
 - Be continuous integration server-independent and operating system-independent. Lightning should not be designed to run only in a particular environment, but can offer extra features for certain environments
 - Using Lightning shouldn't require coding skills, as JMeter doesn't require that neither
 - Release changes frequently
