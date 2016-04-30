@@ -13,7 +13,7 @@ OUT=$?
 
 echo -e ''; echo `basename "$0"`
 
-if [ $OUT -eq 0 ];then
+if [ $OUT = 0 ];then
     echo "EXIT CODE = $OUT"
     echo "TEST PASSED"
     exit 0

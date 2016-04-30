@@ -98,7 +98,7 @@ public class CliTestRunner {
         JMeterReporter reporter = new JMeterReporter(jmeterTransactions);
         reporter.printJMeterReport();
         if (jmeterTransactions.getFailCount() != 0) {
-            exitCode = 2;
+            exitCode = 1;
         }
     }
 

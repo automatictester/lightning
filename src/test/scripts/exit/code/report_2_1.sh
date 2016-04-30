@@ -11,7 +11,7 @@ OUT=$?
 
 echo -e ''; echo `basename "$0"`
 
-if [ $OUT -eq 2 ];then
+if [ $OUT = 1 ];then
     echo "EXIT CODE = $OUT"
     echo "TEST PASSED"
     exit 0
