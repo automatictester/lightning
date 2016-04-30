@@ -19,12 +19,12 @@ public class JenkinsReporter extends CIReporter {
         super(jmeterTransactions);
     }
 
-    public void setJenkinsVerifyBuildName() {
-        writeJenkinsFile(getVerifySummary(testSet));
-    }
-
-    public void setJenkinsReportBuildName() {
-        writeJenkinsFile(getReportSummary(jmeterTransactions));
+    public void setJenkinsBuildName() {
+        if (testSet != null) {
+            writeJenkinsFile(getVerifySummary(testSet));
+        } else if (jmeterTransactions != null) {
+            writeJenkinsFile(getReportSummary(jmeterTransactions));
+        }
     }
 
     private void writeJenkinsFile(String summary) {

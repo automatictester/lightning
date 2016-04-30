@@ -22,7 +22,7 @@ public class JenkinsReporterTest {
         when(testSet.getFailCount()).thenReturn(1);
         when(testSet.getErrorCount()).thenReturn(1);
 
-        new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
+        new JenkinsReporter(testSet).setJenkinsBuildName();
 
         File lightningFile = new File("reports/lightning-jenkins.properties");
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();
@@ -30,21 +30,5 @@ public class JenkinsReporterTest {
 
         assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
         assertThat(text, containsString("result.string=Tests executed\\: 3, failed\\: 2"));
-    }
-
-    @Test
-    public void testSetJenkinsBuildName_report() throws FileNotFoundException {
-        JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
-        when(jmeterTransactions.getTransactionCount()).thenReturn(3);
-        when(jmeterTransactions.getFailCount()).thenReturn(1);
-
-        new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
-
-        File lightningFile = new File("reports/lightning-jenkins.properties");
-        String text = new Scanner(lightningFile).useDelimiter("\\A").next();
-        lightningFile.delete();
-
-        assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
-        assertThat(text, containsString("result.string=Transactions executed\\: 3, failed\\: 1"));
     }
 }

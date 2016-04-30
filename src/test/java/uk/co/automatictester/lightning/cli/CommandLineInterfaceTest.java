@@ -1,6 +1,5 @@
 package uk.co.automatictester.lightning.cli;
 
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.ConsoleOutputTest;
 
@@ -8,46 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class CommandLineInterfaceTest extends ConsoleOutputTest {
-
-    @DataProvider(name = "teamcity")
-    private String[][] teamCity() {
-        return new String[][]{
-                {"teamcity"},
-                {"TeamCity"}
-        };
-    }
-
-    @Test(dataProvider = "teamcity")
-    public void testIsCIEqualToTeamCityTrue_verify(String ci) {
-        CommandLineInterface params = new CommandLineInterface(new String[]{"verify", String.format("-ci=%s", ci), "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.verify.isCiEqualTo("teamcity"), is(true));
-    }
-
-    @Test(dataProvider = "teamcity")
-    public void testIsCIEqualToTeamCityTrue_report(String ci) {
-        CommandLineInterface params = new CommandLineInterface(new String[]{"report", String.format("-ci=%s", ci), "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.report.isCiEqualTo("teamcity"), is(true));
-    }
-
-    @DataProvider(name = "jenkins")
-    private String[][] jenkins() {
-        return new String[][]{
-                {"jenkins"},
-                {"Jenkins"}
-        };
-    }
-
-    @Test(dataProvider = "jenkins")
-    public void testIsCIEqualToJenkinsTrue_verify(String ci) {
-        CommandLineInterface params = new CommandLineInterface(new String[]{"verify", String.format("-ci=%s", ci), "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.verify.isCiEqualTo("jenkins"), is(true));
-    }
-
-    @Test(dataProvider = "jenkins")
-    public void testIsCIEqualToJenkinsTrue_report(String ci) {
-        CommandLineInterface params = new CommandLineInterface(new String[]{"report", String.format("-ci=%s", ci), "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.report.isCiEqualTo("jenkins"), is(true));
-    }
 
     @Test
     public void testGetParsedCommandVerify() {
@@ -92,12 +51,6 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
     }
 
     @Test
-    public void testIsCIEqualToJenkinsNotSet() {
-        CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.verify.isCiEqualTo("jenkins"), is(false));
-    }
-
-    @Test
     public void testIsHelpRequested() {
         CommandLineInterface params = new CommandLineInterface(new String[]{"-h"});
         assertThat(params.isHelpRequested(), is(true));
@@ -114,8 +67,6 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
                 "             JMeter CSV result file%n" +
                 "          --perfmon-csv%n" +
                 "             PerfMon CSV result file%n" +
-                "          -ci%n" +
-                "             CI server (jenkins or teamcity)%n" +
                 "        * -xml%n" +
                 "             Lightning XML config file%n" +
                 "%n" +
@@ -123,9 +74,7 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
                 "      Usage: report [options]%n" +
                 "        Options:%n" +
                 "        * --jmeter-csv%n" +
-                "             JMeter CSV result file%n" +
-                "          -ci%n" +
-                "             CI server (jenkins or teamcity)");
+                "             JMeter CSV result file%n");
 
         CommandLineInterface params = new CommandLineInterface(new String[]{});
         configureStream();

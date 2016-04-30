@@ -3,7 +3,6 @@ package uk.co.automatictester.lightning.cli.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.ParametersDelegate;
-import uk.co.automatictester.lightning.cli.delegates.CI;
 import uk.co.automatictester.lightning.cli.delegates.JmeterCsvFile;
 import uk.co.automatictester.lightning.cli.validators.FileValidator;
 
@@ -19,9 +18,6 @@ public class CommandVerify {
     @ParametersDelegate
     private JmeterCsvFile jmeterCsvFile = new JmeterCsvFile();
 
-    @ParametersDelegate
-    private CI ci = new CI();
-
     public String getXmlFile() {
         return xmlFile;
     }
@@ -32,10 +28,6 @@ public class CommandVerify {
 
     public String getPerfmonCsvFile() {
         return perfmonCsvFile;
-    }
-
-    public boolean isCiEqualTo(String ci) {
-        return this.ci.isCIEqualTo(ci);
     }
 
     public boolean isPerfmonCsvFileProvided() {

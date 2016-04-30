@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.runners;
 
 import uk.co.automatictester.lightning.TestSet;
+import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.cli.CommandLineInterface;
@@ -11,7 +12,6 @@ import uk.co.automatictester.lightning.readers.JMeterCSVFileReader;
 import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
 import uk.co.automatictester.lightning.readers.PerfMonDataReader;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
-import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
@@ -36,7 +36,7 @@ public class CliTestRunner {
             params.printHelp();
             return;
         }
-        
+
         mode = Mode.valueOf(params.getParsedCommand().toUpperCase());
         if (mode.toString().equals("verify")) {
             runTests();
@@ -105,22 +105,14 @@ public class CliTestRunner {
     private static void notifyCIServer() {
         switch (mode) {
             case VERIFY:
-                if (params.verify.isCiEqualTo("teamcity")) {
-                    new TeamCityReporter(testSet)
-                            .printTeamCityVerifyStatistics();
-                } else if (params.verify.isCiEqualTo("jenkins")) {
-                    new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
-                }
+                new TeamCityReporter(testSet).printTeamCityVerifyStatistics();
+                new JenkinsReporter(testSet).setJenkinsBuildName();
                 break;
             case REPORT:
-                if (params.report.isCiEqualTo("teamcity")) {
-                    new TeamCityReporter(jmeterTransactions)
-                            .printTeamCityBuildStatusText()
-                            .printTeamCityReportStatistics();
-                } else if (params.report.isCiEqualTo("jenkins")) {
-                    new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
-                }
-                break;
+                new TeamCityReporter(jmeterTransactions)
+                        .printTeamCityBuildStatusText()
+                        .printTeamCityReportStatistics();
+                new JenkinsReporter(jmeterTransactions).setJenkinsBuildName();
         }
     }
 

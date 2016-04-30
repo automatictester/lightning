@@ -7,9 +7,9 @@ import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 public class TeamCityReporter extends CIReporter {
 
-    private static final String TEAMCITY_BUILD_STATUS = "%n======= ENHANCED TEAMCITY INTEGRATION =======%n##teamcity[buildStatus text='%s']";
+    private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
 
-    private static final String TEAMCITY_BUILD_PROBLEM = "%n======= ENHANCED TEAMCITY INTEGRATION =======%n##teamcity[buildProblem description='%s']";
+    private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']";
 
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']";
 

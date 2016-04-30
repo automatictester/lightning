@@ -5,7 +5,6 @@ import uk.co.automatictester.lightning.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
-import uk.co.automatictester.lightning.enums.CIServer;
 import uk.co.automatictester.lightning.enums.Mode;
 import uk.co.automatictester.lightning.readers.JMeterCSVFileReader;
 import uk.co.automatictester.lightning.readers.PerfMonDataReader;
@@ -20,7 +19,6 @@ public class ApiTestRunner {
     private String jmeterCsvFile;
     private String perfmonCsvFile;
     private Mode mode;
-    private CIServer ciServer;
 
     public ApiTestRunner(String jmeterCsvFile) {
         this.mode = Mode.REPORT;
@@ -34,10 +32,6 @@ public class ApiTestRunner {
         this.testSet = testSet;
     }
 
-    public void setCiServer(CIServer ciServer) {
-        this.ciServer = ciServer;
-    }
-
     public void run() {
         switch (mode) {
             case VERIFY:
@@ -48,9 +42,7 @@ public class ApiTestRunner {
                 runReport();
                 break;
         }
-        if (ciServer != null) {
-            notifyCIServer();
-        }
+        notifyCIServer();
     }
 
     public int getExitCode() {
@@ -91,28 +83,14 @@ public class ApiTestRunner {
     private void notifyCIServer() {
         switch (mode) {
             case VERIFY:
-                switch (ciServer) {
-                    case JENKINS:
-                        new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
-                        break;
-                    case TEAMCITY:
-                        new TeamCityReporter(testSet)
-                                .printTeamCityVerifyStatistics();
-                        break;
-                }
+                new TeamCityReporter(testSet).printTeamCityVerifyStatistics();
+                new JenkinsReporter(testSet).setJenkinsBuildName();
                 break;
             case REPORT:
-                switch (ciServer) {
-                    case JENKINS:
-                        new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
-                        break;
-                    case TEAMCITY:
-                        new TeamCityReporter(jmeterTransactions)
-                                .printTeamCityBuildStatusText()
-                                .printTeamCityReportStatistics();
-                        break;
-                }
-                break;
+                new TeamCityReporter(jmeterTransactions)
+                        .printTeamCityBuildStatusText()
+                        .printTeamCityReportStatistics();
+                new JenkinsReporter(jmeterTransactions).setJenkinsBuildName();
         }
     }
 }

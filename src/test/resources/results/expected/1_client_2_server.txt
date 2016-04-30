@@ -34,3 +34,6 @@ Tests passed:      3
 Tests failed:      0
 Tests errors:      0
 Test set status:   Pass
+##teamcity[buildStatisticValue key='Failed transactions' value='0.0']
+##teamcity[buildStatisticValue key='CPU range' value='15189.0']
+##teamcity[buildStatisticValue key='CPU upper limit' value='15189.0']
