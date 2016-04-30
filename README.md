@@ -104,24 +104,6 @@ Test result:      Pass
 
 [Here](https://github.com/automatictester/lightning/wiki/Using-Server-Side-Tests) you can read about using server-side tests.
 
-### Report mode
-
-In this mode, JMeter doesn't execute any tests. It only parses JMeter output and reports total number of transactions and number of failed transactions. Lightning returns 2 exit code on non-zero number of failed transactions.
-
-In `report` mode, Lightning requires only 1 source of input data: JMeter CSV output. In this mode Lightning parses JMeter output and reports total number of transactions and number of failed transactions. In this mode, Lightning doesn't perform any verification.
-
-To run Lightning:
-
-`java -jar lightning-<version>.jar report --jmeter-csv=path/to/csv/file`
-
-Sample output:
-
-`Transactions executed: 10, failed: 0`
-
-# Java API (experimental)
-
-Advanced Lightning users may want to call its Java API directly. Here you can find examples of calling Lightning Java API in [verify](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/VerifyTest.java) and [report](https://github.com/automatictester/lightning-java-api-tests/blob/master/src/test/java/uk/co/automatictester/lightning/java/api/tests/ReportTest.java) mode. Lightning is available in [Maven Central](http://search.maven.org/#search|gav|1|g%3A%22uk.co.automatictester%22%20AND%20a%3A%22lightning%22).
-
 # Misc
 
 ### Issues, questions and feature requests
