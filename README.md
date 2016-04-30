@@ -3,9 +3,9 @@
 [![codecov](https://codecov.io/gh/automatictester/lightning/branch/master/graph/badge.svg)](https://codecov.io/gh/automatictester/lightning)
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning)
 
-### What's that?
+### Introduction
 
-Lightning integrates JMeter non-functional tests with Continuous Integration infrastructure. Lightning analyses results of your non-functional tests and provides your CI server with simple and meaningful information whether to pass or fail the build - with no human involvement needed. Check the [story behind Lightning](https://github.com/automatictester/lightning/wiki/Story-Behind-Lightning) for more information.
+Lightning integrates JMeter non-functional tests with Continuous Integration infrastructure. Lightning analyses results of your non-functional tests and provides your CI server with simple and meaningful information whether to pass or fail the build - with no human involvement needed. Check the [story behind Lightning](https://github.com/automatictester/lightning/wiki/Story-Behind-Lightning-1.0) for more information.
 
 ### Download
 
