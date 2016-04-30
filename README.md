@@ -9,29 +9,31 @@ Lightning integrates JMeter non-functional tests with your CI/CD server. It anal
 
 Lightning is the **most advanced** tool providing that kind of integration, and this is not just a marketing slogan. Here is why:
 
-:white_check_mark: Lightning allows you to make a decision on performance build results, based on very broad range of client-side statistics. These include: throughput, average response time, median response time, maximum response time, n-th percentile response time, response time standard deviation and percentage of failed transactions. There is no need to configure anything on CI/CD server side to run these tests.
+:white_check_mark: Lightning allows you to make a decision on performance build results, based on very broad range of client-side statistics. These include: throughput, average response time, median response time, maximum response time, n-th percentile response time, response time standard deviation and percentage of failed transactions. Learn more about available [test types](https://github.com/automatictester/lightning/wiki/Test-Types).
+
+:white_check_mark: There is no need to configure anything on CI/CD server side to run the above tests. You can have your [first Lightning test](https://github.com/automatictester/lightning/wiki/Quick-Start-Guide) running in minutes.
 
 :white_check_mark: Lightning understands you may have different SLA different transactions types, and therefore allows you to define different thresholds for every transaction type.
 
-:white_check_mark: Lightning is not only about client-side statistics. It gives you unique ability to measure server-side metrics (CPU, memory, network usage etc) and fail the build if certain metrics go above defined threshold. Or below. Your JMeter tests are no longer pure performance tests, they are now powerful non-functional tests. This lets you test load balancing and other system characteristics.
+:white_check_mark: Lightning is not only about client-side statistics. It gives you unique ability to measure [server-side metrics](https://github.com/automatictester/lightning/wiki/Server-Side-Tests) (CPU, memory, network usage etc) and fail the build if certain metrics go above defined threshold. Or below. Your JMeter tests are no longer pure performance tests, they are now powerful non-functional tests. This lets you test load balancing and other system characteristics.
 
-:white_check_mark: No disk space considerations - there is no need for extremely verbose JMeter results in XML format. Lightning processes JMeter results in CSV format with just a few columns.
+:white_check_mark: No disk space considerations - there is no need for extremely verbose JMeter results in XML format. Lightning processes JMeter results in [CSV format](https://github.com/automatictester/lightning/wiki/Configure-JMeter-to-Save-Relevant-Data) with just a few columns.
 
 :white_check_mark: No security concerns - your data is not uploaded to any 3rd party servers.
 
-:white_check_mark: Lightning integrates seamlessly with CI/CD servers using "language" which they understand - exit code.
+:white_check_mark: Lightning integrates seamlessly with CI/CD servers using "language" which they understand - [exit code](https://github.com/automatictester/lightning/wiki/CI-CD-Server-Integration).
 
 :white_check_mark: Lightning is a standalone tool, not a plugin. If you change your CI server or build tool, you can still use it.
 
 :white_check_mark: Lightning is open source and free for commercial and non-commercial use.
 
-:white_check_mark: If all you need is number of executed an failed JMeter transactions, Lightning can check that for you as well.
+:white_check_mark: If all you need is number of executed an failed JMeter transactions, Lightning can check that for you [as well](https://github.com/automatictester/lightning/wiki/Report-Mode).
 
-:white_check_mark: If you use Jenkins, you can set the build name to something more meaningful than the defaults. Build name can now include number of passed and failed tests.
+:white_check_mark: If you use [Jenkins](https://github.com/automatictester/lightning/wiki/Enhanced-Jenkins-Integration), you can set the build name to something more meaningful than the defaults. Build name can now include number of passed and failed tests.
 
-:white_check_mark: If you use TeamCity, you will benefit from build statistics charts.
+:white_check_mark: If you use [TeamCity](https://github.com/automatictester/lightning/wiki/Enhanced-TeamCity-Integration), you will benefit from build statistics charts.
 
-:white_check_mark: If you want to experiment with calling Lightning directly from your Java code, it's available for download from Maven Central.
+:white_check_mark: If you want to [experiment](https://github.com/automatictester/lightning/wiki/Java-API-%28experimental%29) with calling Lightning directly from your Java code, it's available for download from Maven Central.
 
 ### Download
 
