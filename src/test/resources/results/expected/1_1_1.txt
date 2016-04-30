@@ -33,5 +33,5 @@ Test result:          ERROR
 Tests executed:    3
 Tests passed:      1
 Tests failed:      1
-Tests ignored:     1
+Tests errors:      1
 Test set status:   FAIL

@@ -32,5 +32,5 @@ Test result:          Pass
 Tests executed:    3
 Tests passed:      3
 Tests failed:      0
-Tests ignored:     0
+Tests errors:      0
 Test set status:   Pass

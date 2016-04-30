@@ -17,7 +17,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
                 "Tests executed:    15%n" +
                 "Tests passed:      15%n" +
                 "Tests failed:      0%n" +
-                "Tests ignored:     0%n" +
+                "Tests errors:      0%n" +
                 "Test set status:   Pass%n");
 
         TestSet testSet = mock(TestSet.class);
@@ -39,7 +39,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
                 "Tests executed:    15%n" +
                 "Tests passed:      14%n" +
                 "Tests failed:      1%n" +
-                "Tests ignored:     0%n" +
+                "Tests errors:      0%n" +
                 "Test set status:   FAIL%n");
 
         TestSet testSet = mock(TestSet.class);
@@ -61,7 +61,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
                 "Tests executed:    15%n" +
                 "Tests passed:      14%n" +
                 "Tests failed:      0%n" +
-                "Tests ignored:     1%n" +
+                "Tests errors:      1%n" +
                 "Test set status:   FAIL%n");
 
         TestSet testSet = mock(TestSet.class);
