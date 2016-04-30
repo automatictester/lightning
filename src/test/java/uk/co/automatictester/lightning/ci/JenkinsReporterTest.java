@@ -24,7 +24,7 @@ public class JenkinsReporterTest {
 
         new JenkinsReporter(testSet).setJenkinsVerifyBuildName();
 
-        File lightningFile = new File("lightning-jenkins.properties");
+        File lightningFile = new File("reports/lightning-jenkins.properties");
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();
         lightningFile.delete();
 
@@ -40,7 +40,7 @@ public class JenkinsReporterTest {
 
         new JenkinsReporter(jmeterTransactions).setJenkinsReportBuildName();
 
-        File lightningFile = new File("lightning-jenkins.properties");
+        File lightningFile = new File("reports/lightning-jenkins.properties");
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();
         lightningFile.delete();
 
