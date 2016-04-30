@@ -5,7 +5,7 @@
 
 ### Introduction
 
-Lightning integrates JMeter non-functional tests with your CI/CD server. It analyses results of your JMeter tests and provides your server with unequivocal information allowing it to make autonomous whether to pass or fail the build - with no human involvement needed.
+Lightning integrates JMeter non-functional tests with your CI/CD server. It analyses results of your JMeter tests and provides your server with unequivocal information allowing it to make autonomous decision whether to pass or fail the build - with no human involvement needed.
 
 Lightning is the **most advanced** tool providing that kind of integration, and this is not just a marketing slogan. Here is why:
 
