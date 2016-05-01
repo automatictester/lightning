@@ -5,3 +5,5 @@ target.lib/
 src/test/resources/results/actual/
 lightning-jenkins.properties
 reports/
+pom.xml.releaseBackup
+release.properties
