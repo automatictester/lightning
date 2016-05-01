@@ -43,21 +43,6 @@ Standalone JAR is available for download from [Releases](https://github.com/auto
 
 All new features and bugfixes are included in [release notes](https://github.com/automatictester/lightning/releases).
 
-### Philosophy
-
-- Keep technology stack as close to JMeter as possible - Lightning is 100% Java
-- Be continuous integration server-independent and operating system-independent. Lightning should not be designed to run only in a particular environment, but can offer extra features for certain environments
-- Using Lightning shouldn't require coding skills, as JMeter doesn't require that neither
-- Release changes frequently
-- Be well documented
-- Be well tested
-- Do not provide bugfixes and support for old versions
-- Follow [SemVer](http://semver.org)
-
-### Design assumptions
-
-- JMeter and PerfMon CSV files produced in CI environment should be small enough to be processed by Lightning and stored in memory without hacks
-
 ### Project maturity
 
 * Lightning as a standalone JAR has been used in day-to-day delivery for months and client-side tests can be considered production-ready.
