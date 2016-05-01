@@ -21,7 +21,7 @@ Lightning is the most advanced tool providing that kind of integration and this 
 
 :white_check_mark: No security concerns - your data is not uploaded to any 3rd party servers.
 
-:white_check_mark: Lightning integrates seamlessly with CI/CD servers using "language" which they understand - [exit code](https://github.com/automatictester/lightning/wiki/CI-CD-Server-Integration).
+:white_check_mark: Lightning integrates seamlessly with CI/CD servers using "language" which they understand - [exit code and JUnit XML report](https://github.com/automatictester/lightning/wiki/CI-CD-Server-Integration).
 
 :white_check_mark: Lightning is a standalone tool, not a plugin. If you change your CI server or build tool, you can still use it.
 
