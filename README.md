@@ -37,60 +37,7 @@ Lightning is the most advanced tool providing that kind of integration and this 
 
 ### Quick start guide
 
-Preconditions:
-- Check your Java version with `java -version`. Lightning requires Java 7 or above.
-- Download most recent `lightning-standalone-<version>.jar` from [releases](https://github.com/automatictester/lightning/releases).
-- Configure your JMeter tests to [save relevant data](https://github.com/automatictester/lightning/wiki/Configure-JMeter-to-Save-Relevant-Data).
-
-You can define any combination of tests described in [test types](https://github.com/automatictester/lightning/wiki/Test-Types) and execute them executed against JMeter output.
-
-In a typical scenario Lightning requires 2 sources of input data: XML config file and JMeter CSV output. XML file contains definition of Lightning tests, which will be executed to determine if execution should be marked as passed or failed.
-
-Lightning XML config file, e.g.:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<testSet>
-    <avgRespTimeTest>
-        <testName>Average login times</testName>
-        <transactionName>Login</transactionName>
-        <maxAvgRespTime>4000</maxAvgRespTime>
-    </avgRespTimeTest>
-</testSet>
-```
-
-JMeter CSV output file, e.g.:
-
-```
-timeStamp,elapsed,label,responseCode,threadName,dataType,success,bytes,Latency
-1434291247743,3514,Login,200,Thread Group 1-2,,true,444013,0
-1434291247541,3780,Login,200,Thread Group 1-1,,true,444236,0
-1434291247949,3474,Login,200,Thread Group 1-3,,true,444041,0
-1434291248160,3448,Login,200,Thread Group 1-4,,true,444712,0
-1434291248359,3700,Login,200,Thread Group 1-5,,true,444054,0
-1434291251330,10769,Search,200,Thread Group 1-1,,true,1912363,0
-1434291251624,10626,Search,200,Thread Group 1-4,,true,1912352,0
-1434291251436,11086,Search,200,Thread Group 1-3,,true,1912321,0
-1434291251272,11250,Search,200,Thread Group 1-2,,true,1912264,0
-1434291252072,11221,Search,200,Thread Group 1-5,,true,1912175,0
-```
-
-Run Lightning:
-
-`java -jar lightning-<version>.jar verify -xml=path/to/xml/file --jmeter-csv=path/to/csv/file`
-
-Sample output:
-
-```
-Test name:            Average login times
-Test type:            avgRespTimeTest
-Transaction name:     Login
-Expected result:      Average response time <= 4000
-Actual result:        Average response time = 3583.2
-Transaction count:    5
-Longest transactions: [3780, 3700, 3514, 3474, 3448]
-Test result:          Pass
-```
+You will find complete, executable usage example in [lightning-example](https://github.com/automatictester/lightning-example) repo.
 
 ### Changelog
 
