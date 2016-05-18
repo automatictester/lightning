@@ -38,7 +38,7 @@ public class CliTestRunner {
             return;
         }
 
-        mode = Mode.valueOf(params.getParsedCommand().toUpperCase());
+        mode = Mode.valueOf(params.getParsedCommand().toLowerCase());
         if (mode.toString().equals("verify")) {
             runTests();
             saveJunitReport();
@@ -105,11 +105,11 @@ public class CliTestRunner {
 
     private static void notifyCIServer() {
         switch (mode) {
-            case VERIFY:
+            case verify:
                 new TeamCityReporter(testSet).printTeamCityVerifyStatistics();
                 new JenkinsReporter(testSet).setJenkinsBuildName();
                 break;
-            case REPORT:
+            case report:
                 new TeamCityReporter(jmeterTransactions)
                         .printTeamCityBuildStatusText()
                         .printTeamCityReportStatistics();

@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.enums;
 
 public enum Mode {
-    VERIFY("verify"),
-    REPORT("report");
+    verify("verify"),
+    report("report");
 
     private final String value;
 
