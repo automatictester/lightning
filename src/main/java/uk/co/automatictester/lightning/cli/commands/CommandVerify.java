@@ -6,27 +6,29 @@ import com.beust.jcommander.ParametersDelegate;
 import uk.co.automatictester.lightning.cli.delegates.JmeterCsvFile;
 import uk.co.automatictester.lightning.cli.validators.FileValidator;
 
+import java.io.File;
+
 @Parameters(separators = "=", commandDescription = "Execute Lightning tests against JMeter output")
 public class CommandVerify {
 
     @Parameter(names = "-xml", description = "Lightning XML config file", required = true, validateWith = FileValidator.class)
-    private String xmlFile;
+    private File xmlFile;
 
     @Parameter(names = "--perfmon-csv", description = "PerfMon CSV result file", required = false, validateWith = FileValidator.class)
-    private String perfmonCsvFile;
+    private File perfmonCsvFile;
 
     @ParametersDelegate
     private JmeterCsvFile jmeterCsvFile = new JmeterCsvFile();
 
-    public String getXmlFile() {
+    public File getXmlFile() {
         return xmlFile;
     }
 
-    public String getJmeterCsvFile() {
+    public File getJmeterCsvFile() {
         return jmeterCsvFile.getJmeterCsvFile();
     }
 
-    public String getPerfmonCsvFile() {
+    public File getPerfmonCsvFile() {
         return perfmonCsvFile;
     }
 

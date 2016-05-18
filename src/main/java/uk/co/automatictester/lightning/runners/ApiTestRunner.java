@@ -11,21 +11,23 @@ import uk.co.automatictester.lightning.readers.PerfMonDataReader;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 
+import java.io.File;
+
 public class ApiTestRunner {
 
     private int exitCode = 0;
     private TestSet testSet;
     private JMeterTransactions jmeterTransactions;
-    private String jmeterCsvFile;
-    private String perfmonCsvFile;
+    private File jmeterCsvFile;
+    private File perfmonCsvFile;
     private Mode mode;
 
-    public ApiTestRunner(String jmeterCsvFile) {
+    public ApiTestRunner(File jmeterCsvFile) {
         this.mode = Mode.REPORT;
         this.jmeterCsvFile = jmeterCsvFile;
     }
 
-    public ApiTestRunner(String jmeterCsvFile, String perfmonCsvFile, TestSet testSet) {
+    public ApiTestRunner(File jmeterCsvFile, File perfmonCsvFile, TestSet testSet) {
         this.mode = Mode.VERIFY;
         this.jmeterCsvFile = jmeterCsvFile;
         this.perfmonCsvFile = perfmonCsvFile;

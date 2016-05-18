@@ -3,6 +3,7 @@ package uk.co.automatictester.lightning.shared;
 import uk.co.automatictester.lightning.tests.*;
 import uk.co.automatictester.lightning.utils.Percent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,38 +16,38 @@ public class TestData {
     private static final String PERFMON_CSV_RESOURCES = RESOURCES + "csv/perfmon/";
 
     // XML files
-    public static final String TEST_SET_3_0_0 = XML_RESOURCES + "3_0_0.xml";
-    public static final String TEST_SET_1_2 = XML_RESOURCES + "1_client_2_server.xml";
-    public static final String TEST_SET_1_1_1 = XML_RESOURCES + "1_1_1.xml";
-    public static final String TEST_SET_0_0_0 = XML_RESOURCES + "0_0_0.xml";
-    public static final String TEST_SET_AVG_RESP_TIME = XML_RESOURCES + "avgRespTimeTest.xml";
-    public static final String TEST_SET_MAX_RESP_TIME = XML_RESOURCES + "maxRespTimeTest.xml";
-    public static final String TEST_SET_PERCENTILE = XML_RESOURCES + "nthPercRespTimeTest.xml";
-    public static final String TEST_SET_PASSED = XML_RESOURCES + "passedTransactionsTest.xml";
-    public static final String TEST_SET_PASSED_PERCENT = XML_RESOURCES + "passedTransactionsPercentTest.xml";
-    public static final String TEST_SET_STD_DEV = XML_RESOURCES + "respTimeStdDevTest.xml";
-    public static final String TEST_SET_THROUGHPUT = XML_RESOURCES + "throughputTest.xml";
-    public static final String TEST_SET_MEDIAN = XML_RESOURCES + "medianRespTimeTest.xml";
-    public static final String TEST_SET_NOT_WELL_FORMED = XML_RESOURCES + "not_well_formed.xml";
-    public static final String TEST_SET_SERVER_LESS = XML_RESOURCES + "serverSideTest_lessThan.xml";
-    public static final String TEST_SET_SERVER_BETWEEN = XML_RESOURCES + "serverSideTest_between.xml";
-    public static final String TEST_SET_SERVER_GREATER = XML_RESOURCES + "serverSideTest_greaterThan.xml";
-    public static final String TEST_SET_XML_FILE_NO_VALID_SUB_TYPE_EXCAPTION = XML_RESOURCES + "XMLFileNoValidSubTypeException.xml";
-    public static final String TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION = XML_RESOURCES + "XMLFileNumberFormatException.xml";
-    public static final String TEST_SET_XML_FILE_MISSING_ELEMENT_VALUE_EXCEPTION = XML_RESOURCES + "XMLFileMissingElementValueException.xml";
-    public static final String TEST_SET_XML_FILE_MISSING_ELEMENT_EXCEPTION = XML_RESOURCES + "XMLFileMissingElementException.xml";
-    public static final String TEST_SET_XML_FILE_PERCENTILE_EXCEPTION = XML_RESOURCES + "XMLFilePercentileException.xml";
+    public static final File TEST_SET_3_0_0 = new File(XML_RESOURCES + "3_0_0.xml");
+    public static final File TEST_SET_1_2 = new File(XML_RESOURCES + "1_client_2_server.xml");
+    public static final File TEST_SET_1_1_1 = new File(XML_RESOURCES + "1_1_1.xml");
+    public static final File TEST_SET_0_0_0 = new File(XML_RESOURCES + "0_0_0.xml");
+    public static final File TEST_SET_AVG_RESP_TIME = new File(XML_RESOURCES + "avgRespTimeTest.xml");
+    public static final File TEST_SET_MAX_RESP_TIME = new File(XML_RESOURCES + "maxRespTimeTest.xml");
+    public static final File TEST_SET_PERCENTILE = new File(XML_RESOURCES + "nthPercRespTimeTest.xml");
+    public static final File TEST_SET_PASSED = new File(XML_RESOURCES + "passedTransactionsTest.xml");
+    public static final File TEST_SET_PASSED_PERCENT = new File(XML_RESOURCES + "passedTransactionsPercentTest.xml");
+    public static final File TEST_SET_STD_DEV = new File(XML_RESOURCES + "respTimeStdDevTest.xml");
+    public static final File TEST_SET_THROUGHPUT = new File(XML_RESOURCES + "throughputTest.xml");
+    public static final File TEST_SET_MEDIAN = new File(XML_RESOURCES + "medianRespTimeTest.xml");
+    public static final File TEST_SET_NOT_WELL_FORMED = new File(XML_RESOURCES + "not_well_formed.xml");
+    public static final File TEST_SET_SERVER_LESS = new File(XML_RESOURCES + "serverSideTest_lessThan.xml");
+    public static final File TEST_SET_SERVER_BETWEEN = new File(XML_RESOURCES + "serverSideTest_between.xml");
+    public static final File TEST_SET_SERVER_GREATER = new File(XML_RESOURCES + "serverSideTest_greaterThan.xml");
+    public static final File TEST_SET_XML_FILE_NO_VALID_SUB_TYPE_EXCAPTION = new File(XML_RESOURCES + "XMLFileNoValidSubTypeException.xml");
+    public static final File TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION = new File(XML_RESOURCES + "XMLFileNumberFormatException.xml");
+    public static final File TEST_SET_XML_FILE_MISSING_ELEMENT_VALUE_EXCEPTION = new File(XML_RESOURCES + "XMLFileMissingElementValueException.xml");
+    public static final File TEST_SET_XML_FILE_MISSING_ELEMENT_EXCEPTION = new File(XML_RESOURCES + "XMLFileMissingElementException.xml");
+    public static final File TEST_SET_XML_FILE_PERCENTILE_EXCEPTION = new File(XML_RESOURCES + "XMLFilePercentileException.xml");
 
     // JMeter CSV files
-    public static final String CSV_MISSING_LABEL_COLUMN = JMETER_CSV_RESOURCES + "missing_label_column.csv";
-    public static final String CSV_NOT_ENOUGH_COLUMNS_IN_DATA_PART = JMETER_CSV_RESOURCES + "not_enough_columns_in_data_part.csv";
-    public static final String CSV_2_TRANSACTIONS = JMETER_CSV_RESOURCES + "2_transactions.csv";
-    public static final String CSV_0_TRANSACTIONS = JMETER_CSV_RESOURCES + "0_transactions.csv";
-    public static final String CSV_NONEXISTENT = JMETER_CSV_RESOURCES + "nonexistent.csv";
+    public static final File CSV_MISSING_LABEL_COLUMN = new File(JMETER_CSV_RESOURCES + "missing_label_column.csv");
+    public static final File CSV_NOT_ENOUGH_COLUMNS_IN_DATA_PART = new File(JMETER_CSV_RESOURCES + "not_enough_columns_in_data_part.csv");
+    public static final File CSV_2_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "2_transactions.csv");
+    public static final File CSV_0_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "0_transactions.csv");
+    public static final File CSV_NONEXISTENT = new File(JMETER_CSV_RESOURCES + "nonexistent.csv");
 
     // PerfMon CSV files
-    public static final String CSV_2_ENTRIES = PERFMON_CSV_RESOURCES + "2_entries.csv";
-    public static final String CSV_0_ENTRIES = PERFMON_CSV_RESOURCES + "0_entries.csv";
+    public static final File CSV_2_ENTRIES = new File(PERFMON_CSV_RESOURCES + "2_entries.csv");
+    public static final File CSV_0_ENTRIES = new File(PERFMON_CSV_RESOURCES + "0_entries.csv");
 
     // PerfMon data entries
     public static final ArrayList<String> CPU_ENTRY_9128 = new ArrayList<>(Arrays.asList("1455366135623", "9128", "192.168.0.12 CPU"));

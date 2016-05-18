@@ -18,6 +18,7 @@ import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.File;
 import java.util.List;
 
 public class CliTestRunner {
@@ -61,9 +62,9 @@ public class CliTestRunner {
     private static void runTests() {
         long testSetExecStart = System.currentTimeMillis();
 
-        String xmlFile = params.verify.getXmlFile();
-        String jmeterCsvFile = params.verify.getJmeterCsvFile();
-        String perfmonCsvFile = params.verify.getPerfmonCsvFile();
+        File xmlFile = params.verify.getXmlFile();
+        File jmeterCsvFile = params.verify.getJmeterCsvFile();
+        File perfmonCsvFile = params.verify.getPerfmonCsvFile();
 
         LightningXMLFileReader xmlFileReader = new LightningXMLFileReader();
         xmlFileReader.readTests(xmlFile);

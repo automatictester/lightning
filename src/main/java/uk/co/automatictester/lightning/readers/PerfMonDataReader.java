@@ -5,6 +5,7 @@ import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class PerfMonDataReader {
     private static final int VALUE = 1;
     private static final int HOST_AND_METRIC = 2;
 
-    public PerfMonDataEntries getDataEntires(String csvFile) {
+    public PerfMonDataEntries getDataEntires(File csvFile) {
         PerfMonDataEntries perfMonDataEntries = new PerfMonDataEntries();
         try {
             CSVReader reader = new CSVReader(new FileReader(csvFile));

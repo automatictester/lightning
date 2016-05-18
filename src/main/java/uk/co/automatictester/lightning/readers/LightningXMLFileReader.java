@@ -24,11 +24,11 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
     private List<ClientSideTest> clientSideTests = new ArrayList<>();
     private List<ServerSideTest> serverSideTests = new ArrayList<>();
 
-    public void readTests(String xmlFile) {
+    public void readTests(File xmlFile) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new File(xmlFile));
+            Document doc = db.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
             addRespTimeAvgTests(doc);

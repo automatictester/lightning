@@ -3,6 +3,8 @@ package uk.co.automatictester.lightning.cli;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.ConsoleOutputTest;
 
+import java.io.File;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -23,19 +25,19 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
     @Test
     public void testGetCSVFileInReportMode() {
         CommandLineInterface params = new CommandLineInterface(new String[]{"report", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.report.getJmeterCsvFile(), equalToIgnoringCase("src/test/resources/csv/jmeter/10_transactions.csv"));
+        assertThat(params.report.getJmeterCsvFile(), is(equalTo((new File("src/test/resources/csv/jmeter/10_transactions.csv")))));
     }
 
     @Test
     public void testGetCSVFileInVerifyMode() {
         CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.verify.getJmeterCsvFile(), equalToIgnoringCase("src/test/resources/csv/jmeter/10_transactions.csv"));
+        assertThat(params.verify.getJmeterCsvFile(), is(equalTo((new File("src/test/resources/csv/jmeter/10_transactions.csv")))));
     }
 
     @Test
     public void testGetXMLFileInVerifyMode() {
         CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv"});
-        assertThat(params.verify.getXmlFile(), equalToIgnoringCase("src/test/resources/xml/3_0_0.xml"));
+        assertThat(params.verify.getXmlFile(), is(equalTo((new File("src/test/resources/xml/3_0_0.xml")))));
     }
 
     @Test
@@ -47,7 +49,7 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
     @Test
     public void testGetPerfmonCsvFile() {
         CommandLineInterface params = new CommandLineInterface(new String[]{"verify", "-xml=src/test/resources/xml/3_0_0.xml", "--jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv", "--perfmon-csv=src/test/resources/csv/perfmon/2_entries.csv"});
-        assertThat(params.verify.getPerfmonCsvFile(), equalToIgnoringCase("src/test/resources/csv/perfmon/2_entries.csv"));
+        assertThat(params.verify.getPerfmonCsvFile(), is(equalTo((new File("src/test/resources/csv/perfmon/2_entries.csv")))));
     }
 
     @Test

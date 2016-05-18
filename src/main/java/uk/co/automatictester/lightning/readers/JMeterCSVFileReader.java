@@ -7,6 +7,7 @@ import uk.co.automatictester.lightning.exceptions.CSVFileMalformedDataException;
 import uk.co.automatictester.lightning.exceptions.CSVFileMissingColumnNameException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class JMeterCSVFileReader {
     private int successIndex;
     private int timeStampIndex;
 
-    public JMeterTransactions getTransactions(String csvFile) {
+    public JMeterTransactions getTransactions(File csvFile) {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         try {
             CSVReader reader = new CSVReader(new FileReader(csvFile));

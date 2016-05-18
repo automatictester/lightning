@@ -10,11 +10,11 @@ public class FileValidatorTest {
 
     @Test
     public void verifyValidateExisting() {
-        new FileValidator().validate("-csv", CSV_2_TRANSACTIONS);
+        new FileValidator().validate("-csv", CSV_2_TRANSACTIONS.toString());
     }
 
-    @Test(expectedExceptions = ParameterException.class, expectedExceptionsMessageRegExp = "Error reading file: " + CSV_NONEXISTENT)
+    @Test(expectedExceptions = ParameterException.class, expectedExceptionsMessageRegExp = "Error reading file: src/test/resources/csv/jmeter/nonexistent.csv")
     public void verifyValidateNonexistent() {
-        new FileValidator().validate("-csv", CSV_NONEXISTENT);
+        new FileValidator().validate("-csv", CSV_NONEXISTENT.toString());
     }
 }
