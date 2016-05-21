@@ -9,9 +9,9 @@ public class TeamCityReporter extends CIReporter {
 
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
 
-    private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']";
+    private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
 
-    private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']";
+    private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
 
     public TeamCityReporter(TestSet testSet) {
         super(testSet);
@@ -22,30 +22,44 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityBuildStatusText() {
-        String teamCityOutput = jmeterTransactions.getFailCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
-        System.out.println(String.format(teamCityOutput, getReportSummary(jmeterTransactions)));
+        System.out.println(getTeamCityBuildStatusText());
         return this;
+    }
+
+    public String getTeamCityBuildStatusText() {
+        String output = jmeterTransactions.getFailCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
+        return String.format(output, getReportSummary(jmeterTransactions));
     }
 
     public TeamCityReporter printTeamCityVerifyStatistics() {
-        for (ClientSideTest test : testSet.getClientSideTests()) {
-            String statsEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
-            System.out.println(statsEntry);
-        }
-        if (testSet.getServerSideTests() != null) {
-            for (ServerSideTest test : testSet.getServerSideTests()) {
-                String statsEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
-                System.out.println(statsEntry);
-            }
-        }
+        System.out.println(getTeamCityVerifyStatistics());
         return this;
     }
 
+    public String getTeamCityVerifyStatistics() {
+        String output = "";
+        for (ClientSideTest test : testSet.getClientSideTests()) {
+            output += String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
+        }
+        if (testSet.getServerSideTests() != null) {
+            for (ServerSideTest test : testSet.getServerSideTests()) {
+                output += String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
+            }
+        }
+        return output;
+    }
+
     public TeamCityReporter printTeamCityReportStatistics() {
-        String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", jmeterTransactions.getFailCount());
-        System.out.println(failedTransactionsStats);
-        String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", jmeterTransactions.getTransactionCount());
-        System.out.println(totalTransactionsStats);
+        System.out.println(getTeamCityReportStatistics());
         return this;
+    }
+
+    public String getTeamCityReportStatistics() {
+        String output = "";
+        String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", jmeterTransactions.getFailCount());
+        output += failedTransactionsStats;
+        String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", jmeterTransactions.getTransactionCount());
+        output += totalTransactionsStats;
+        return output;
     }
 }

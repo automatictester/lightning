@@ -11,9 +11,12 @@ public class JMeterReporter {
     }
 
     public void printJMeterReport() {
+        System.out.println(getJMeterReport());
+    }
+
+    public String getJMeterReport() {
         int transactionCount = jmeterTransactions.getTransactionCount();
         int failCount = jmeterTransactions.getFailCount();
-        String summaryReport = String.format("Transactions executed: %d, failed: %d", transactionCount, failCount);
-        System.out.println(summaryReport);
+        return String.format("Transactions executed: %d, failed: %d", transactionCount, failCount);
     }
 }
