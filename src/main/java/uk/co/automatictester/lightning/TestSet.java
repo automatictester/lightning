@@ -17,6 +17,7 @@ public class TestSet {
     private int passCount = 0;
     private int failCount = 0;
     private int ignoreCount = 0;
+    private String testExecutionReport = "";
 
     public TestSet(List<ClientSideTest> clientSideTests, List<ServerSideTest> serverSideTests) {
         this.clientSideTests = clientSideTests;
@@ -24,37 +25,47 @@ public class TestSet {
     }
 
     public void executeClientSideTests(JMeterTransactions dataEntires) {
+        String output = "";
         for (ClientSideTest test : getClientSideTests()) {
             test.execute(dataEntires);
-            if (test.getResult() == TestResult.PASS) {
-                passCount++;
-            } else if (test.getResult() == TestResult.FAIL) {
-                failCount++;
-            } else if (test.getResult() == TestResult.ERROR) {
-                ignoreCount++;
-            }
-            test.printTestExecutionReport();
+            setCounts(test);
+            output += test.getTestExecutionReport() + System.lineSeparator();
         }
+        testExecutionReport += output;
     }
 
     public void executeServerSideTests(PerfMonDataEntries dataEntires) {
+        String output = "";
         for (ServerSideTest test : getServerSideTests()) {
             test.execute(dataEntires);
-            if (test.getResult() == TestResult.PASS) {
-                passCount++;
-            } else if (test.getResult() == TestResult.FAIL) {
-                failCount++;
-            } else if (test.getResult() == TestResult.ERROR) {
-                ignoreCount++;
-            }
-            test.printTestExecutionReport();
+            setCounts(test);
+            output += test.getTestExecutionReport() + System.lineSeparator();
         }
+        testExecutionReport += output;
+    }
+
+    private void setCounts(LightningTest test) {
+        if (test.getResult() == TestResult.PASS) {
+            passCount++;
+        } else if (test.getResult() == TestResult.FAIL) {
+            failCount++;
+        } else if (test.getResult() == TestResult.ERROR) {
+            ignoreCount++;
+        }
+    }
+
+    public void printTestExecutionReport() {
+        System.out.println(getTestExecutionReport());
+    }
+
+    public String getTestExecutionReport() {
+        return testExecutionReport;
     }
 
     public int getTestCount() {
         return
                 ((clientSideTests != null) ? clientSideTests.size() : 0) +
-                ((serverSideTests != null) ? serverSideTests.size() : 0);
+                        ((serverSideTests != null) ? serverSideTests.size() : 0);
     }
 
     public int getPassCount() {

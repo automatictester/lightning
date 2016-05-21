@@ -82,6 +82,7 @@ public class CliTestRunner {
         }
 
         testSet.executeClientSideTests(jmeterTransactions);
+        testSet.printTestExecutionReport();
 
         new TestSetReporter(testSet).printTestSetExecutionSummaryReport();
 
