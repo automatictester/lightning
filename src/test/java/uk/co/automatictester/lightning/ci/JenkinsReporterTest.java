@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.ci;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.TestSet;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,11 +23,11 @@ public class JenkinsReporterTest {
 
         new JenkinsReporter(testSet).setJenkinsBuildName();
 
-        File lightningFile = new File("reports/lightning-jenkins.properties");
+        File lightningFile = new File("lightning-jenkins.properties");
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();
         lightningFile.delete();
 
-        assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"reports/lightning-jenkins.properties\",property=\"result.string\"}"));
+        assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
         assertThat(text, containsString("result.string=Tests executed\\: 3, failed\\: 2"));
     }
 }

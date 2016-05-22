@@ -89,8 +89,7 @@ public class JUnitReporter {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         DOMSource source = new DOMSource(doc);
 
-        File junitReport = new File("reports" + File.separator + "junit.xml");
-        junitReport.getParentFile().mkdirs();
+        File junitReport = new File("junit.xml");
         StreamResult file = new StreamResult(junitReport);
         try {
             transformer.transform(source, file);

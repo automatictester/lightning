@@ -1,9 +1,10 @@
 #!/bin/bash
 
 mkdir -p src/test/resources/results/actual/junit/
+rm -f junit.xml
 
 EXPECTED_RESULT="src/test/resources/results/expected/junit/junit.xml"
-ACTUAL_RESULT="reports/junit.xml"
+ACTUAL_RESULT="junit.xml"
 
 java \
     -jar target/lightning*.jar \
