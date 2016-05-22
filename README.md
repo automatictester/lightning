@@ -33,8 +33,6 @@ Lightning is the most advanced tool providing that kind of integration and this 
 
 :white_check_mark: If you use [TeamCity](https://github.com/automatictester/lightning/wiki/Enhanced-TeamCity-Integration), you will benefit from build statistics charts.
 
-:white_check_mark: If you want to [experiment](https://github.com/automatictester/lightning/wiki/Java-API-%28experimental%29) with calling Lightning directly from your Java code, it's available for download from Maven Central.
-
 ### Quick start guide
 
 You will find complete, executable usage example in [lightning-example](https://github.com/automatictester/lightning-example) repo.
