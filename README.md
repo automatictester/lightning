@@ -11,7 +11,7 @@ Lightning is the most advanced tool providing that kind of integration and this 
 
 :white_check_mark: Lightning allows you to make a decision on performance build results, based on very broad range of client-side statistics. These include: throughput, average response time, median response time, maximum response time, n-th percentile response time, response time standard deviation and percentage of failed transactions. Learn more about available [test types](https://github.com/automatictester/lightning/wiki/Test-Types).
 
-:white_check_mark: There is no need to configure anything on CI/CD server side to run the above tests. You can have your [first Lightning test](https://github.com/automatictester/lightning/wiki/Quick-Start-Guide) running in minutes.
+:white_check_mark: There is no need to configure anything on CI/CD server side to run the above tests. You can have your first Lightning test running in minutes.
 
 :white_check_mark: Lightning understands you may have different SLA different transactions types, and therefore allows you to define different thresholds for every transaction type.
 
