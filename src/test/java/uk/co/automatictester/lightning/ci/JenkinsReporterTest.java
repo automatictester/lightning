@@ -27,7 +27,7 @@ public class JenkinsReporterTest {
         String text = new Scanner(lightningFile).useDelimiter("\\A").next();
         lightningFile.delete();
 
-        assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
+        assertThat(text, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
         assertThat(text, containsString("result.string=Tests executed\\: 3, failed\\: 2"));
     }
 }
