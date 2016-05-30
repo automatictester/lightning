@@ -5,4 +5,4 @@
 [![codecov](https://codecov.io/gh/automatictester/lightning/branch/master/graph/badge.svg)](https://codecov.io/gh/automatictester/lightning)
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning)
 
-[Home page](http://automatictester.github.io/lightning/standalone_jar.html)
+Visit our [website](http://automatictester.github.io/lightning/)
