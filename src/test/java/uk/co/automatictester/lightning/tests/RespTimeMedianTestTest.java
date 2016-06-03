@@ -75,7 +75,7 @@ public class RespTimeMedianTestTest {
 
     @Test
     public void testExecuteFail() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 5);
+        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 4);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(SEARCH_1_SUCCESS);
         jmeterTransactions.add(SEARCH_2_SUCCESS);
@@ -94,7 +94,7 @@ public class RespTimeMedianTestTest {
 
     @Test
     public void testExecuteAllTransactionsFail() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", null, 5);
+        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", null, 4);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1_SUCCESS);
         jmeterTransactions.add(LOGIN_2_SUCCESS);

@@ -4,7 +4,6 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,8 +23,6 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
-        Locale.setDefault(Locale.ENGLISH);
-
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
@@ -36,14 +33,10 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
                 ds.addValue(Double.parseDouble(elapsed));
             }
             longestTransactions = transactions.getLongestTransactions();
-            actualResult = ds.getMean();
+            actualResult = (int) ds.getMean();
+            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            DecimalFormat df = new DecimalFormat("#.##");
-            double roundedAvgRespTime = Double.valueOf(df.format(actualResult));
-
-            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, roundedAvgRespTime);
-
-            if (roundedAvgRespTime > maxAvgRespTime) {
+            if (actualResult > maxAvgRespTime) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;

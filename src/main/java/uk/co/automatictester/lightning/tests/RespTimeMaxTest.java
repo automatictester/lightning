@@ -33,7 +33,7 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
                 ds.addValue(Double.parseDouble(elapsed));
             }
             longestTransactions = transactions.getLongestTransactions();
-            actualResult = (long) ds.getMax();
+            actualResult = (int) ds.getMax();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
             if ((long) actualResult > this.maxRespTime) {

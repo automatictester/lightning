@@ -75,7 +75,7 @@ public class RespTimeNthPercentileTestTest {
 
     @Test
     public void testExecuteFail() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 9);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 8);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(SEARCH_1_SUCCESS);
         jmeterTransactions.add(SEARCH_2_SUCCESS);
@@ -94,7 +94,7 @@ public class RespTimeNthPercentileTestTest {
 
     @Test
     public void testExecuteAllTransactionsFail() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 9);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 8);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1_SUCCESS);
         jmeterTransactions.add(LOGIN_2_SUCCESS);
@@ -127,7 +127,7 @@ public class RespTimeNthPercentileTestTest {
 
     @Test
     public void verifyIsNotEqualOtherTestType() {
-        assertThat((ClientSideTest) RESP_TIME_PERC_TEST_A, is(not(equalTo((ClientSideTest) AVG_RESP_TIME_TEST_A))));
+        assertThat(RESP_TIME_PERC_TEST_A, is(not(equalTo((ClientSideTest) AVG_RESP_TIME_TEST_A))));
     }
 
     @Test

@@ -52,7 +52,7 @@ public class PassedTransactionsTest extends ClientSideTest {
                 this.actualResult = failureCount;
                 actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), failureCount);
             } else {
-                float percentOfFailedTransactions = ((float) failureCount / transactionCount) * 100;
+                int percentOfFailedTransactions = (int) (((float) failureCount / transactionCount) * 100);
                 if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getPercent()) {
                     result = TestResult.FAIL;
                 } else {

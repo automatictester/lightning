@@ -4,10 +4,8 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 public class RespTimeMedianTest extends RespTimeBasedTest {
@@ -25,7 +23,6 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
-        Locale.setDefault(Locale.ENGLISH);
 
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
@@ -37,12 +34,10 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
                 ds.addValue(Double.parseDouble(elapsed));
             }
             longestTransactions = transactions.getLongestTransactions();
-            double actualRespTimePercentile = ds.getPercentile(50);
-            DecimalFormat df = new DecimalFormat("#.##");
-            actualResult = Double.valueOf(df.format(actualRespTimePercentile));
+            actualResult = (int) ds.getPercentile(50);
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            if ((double) actualResult > maxRespTime) {
+            if (actualResult > maxRespTime) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;

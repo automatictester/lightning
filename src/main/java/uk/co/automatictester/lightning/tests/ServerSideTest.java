@@ -5,7 +5,6 @@ import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.enums.TestResult;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -39,8 +38,6 @@ public class ServerSideTest extends LightningTest {
     }
 
     public void execute(ArrayList<ArrayList<String>> originalDataEntries) {
-        Locale.setDefault(Locale.ENGLISH);
-
         try {
             PerfMonDataEntries dataEntries = filterDataEntries((PerfMonDataEntries) originalDataEntries);
             dataEntriesCount = dataEntries.getDataEntriesCount();
@@ -50,29 +47,26 @@ public class ServerSideTest extends LightningTest {
                 String elapsed = transaction.get(1);
                 ds.addValue(Double.parseDouble(elapsed));
             }
-            double avg = ds.getMean();
-
-            DecimalFormat df = new DecimalFormat("#.##");
-            actualResult = Double.valueOf(df.format(avg));
+            actualResult = (int) ds.getMean();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
             if (subtype.equals(ServerSideTestType.GREATER_THAN)) {
                 expectedResultDescription = String.format(expectedResultMessage, metricValueA);
-                if ((double) actualResult > metricValueA) {
+                if (actualResult > metricValueA) {
                     result = TestResult.PASS;
                 } else {
                     result = TestResult.FAIL;
                 }
             } else if (subtype.equals(ServerSideTestType.LESS_THAN)) {
                 expectedResultDescription = String.format(expectedResultMessage, metricValueA);
-                if ((double) actualResult < metricValueA) {
+                if (actualResult < metricValueA) {
                     result = TestResult.PASS;
                 } else {
                     result = TestResult.FAIL;
                 }
             } else if (subtype.equals(ServerSideTestType.BETWEEN)) {
                 expectedResultDescription = String.format(expectedResultMessage, metricValueA, metricValueB);
-                if (((double) actualResult > metricValueA) && ((double) actualResult < metricValueB)) {
+                if ((actualResult > metricValueA) && (actualResult < metricValueB)) {
                     result = TestResult.PASS;
                 } else {
                     result = TestResult.FAIL;

@@ -5,7 +5,6 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.utils.IntToOrdConverter;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,8 +27,6 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
-        Locale.setDefault(Locale.ENGLISH);
-
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
@@ -40,13 +37,10 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
                 ds.addValue(Double.parseDouble(elapsed));
             }
             longestTransactions = transactions.getLongestTransactions();
-            double actualRespTimePercentile = ds.getPercentile((double) percentile);
-            DecimalFormat df = new DecimalFormat("#.##");
-            actualResult = Double.valueOf(df.format(actualRespTimePercentile));
-
+            actualResult = (int) ds.getPercentile((double) percentile);
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), actualResult);
 
-            if ((double) actualResult > maxRespTime) {
+            if (actualResult > maxRespTime) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;

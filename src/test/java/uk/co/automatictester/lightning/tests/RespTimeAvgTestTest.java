@@ -105,7 +105,7 @@ public class RespTimeAvgTestTest extends ConsoleOutputTest {
                 "Test description:     my description%n" +
                 "Transaction name:     Search%n" +
                 "Expected result:      Average response time <= 800%n" +
-                "Actual result:        Average response time = 800.0%n" +
+                "Actual result:        Average response time = 800%n" +
                 "Transaction count:    1%n" +
                 "Longest transactions: [800]%n" +
                 "Test result:          Pass");

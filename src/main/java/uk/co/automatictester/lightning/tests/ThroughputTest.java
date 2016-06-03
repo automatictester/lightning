@@ -24,10 +24,10 @@ public class ThroughputTest extends ClientSideTest {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
 
-            actualResult = transactions.getThroughput();
+            actualResult = (int) transactions.getThroughput();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            if ((double) actualResult < minThroughput) {
+            if (actualResult < minThroughput) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;

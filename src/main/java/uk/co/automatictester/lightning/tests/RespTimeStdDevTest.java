@@ -4,7 +4,6 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,8 +23,6 @@ public class RespTimeStdDevTest extends ClientSideTest {
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
-        Locale.setDefault(Locale.ENGLISH);
-
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
@@ -35,12 +32,10 @@ public class RespTimeStdDevTest extends ClientSideTest {
                 String elapsed = transaction.get(1);
                 ds.addValue(Double.parseDouble(elapsed));
             }
-            double actualRespTimeStdDev = ds.getStandardDeviation();
-            DecimalFormat df = new DecimalFormat("#.##");
-            actualResult = Double.valueOf(df.format(actualRespTimeStdDev));
+            actualResult = (int) ds.getStandardDeviation();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
-            if ((double) actualResult > maxRespTimeStdDev) {
+            if (actualResult > maxRespTimeStdDev) {
                 result = TestResult.FAIL;
             } else {
                 result = TestResult.PASS;

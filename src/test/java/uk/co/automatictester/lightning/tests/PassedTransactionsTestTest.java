@@ -53,7 +53,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10.0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10.0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10"));
     }
 
     @Test

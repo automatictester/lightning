@@ -12,7 +12,7 @@ public abstract class LightningTest {
     protected String expectedResultDescription;
     protected String actualResultDescription;
     protected TestResult result;
-    protected Number actualResult;
+    protected int actualResult;
 
     protected LightningTest(String name, String type, String description) {
         this.name = name;
@@ -21,7 +21,7 @@ public abstract class LightningTest {
         this.expectedResultDescription = "";
         this.actualResultDescription = "";
         this.result = null;
-        this.actualResult = null;
+        this.actualResult = 0;
     }
 
     public abstract void printTestExecutionReport();
@@ -62,7 +62,7 @@ public abstract class LightningTest {
         return result;
     }
 
-    public Number getActualResult() {
+    public int getActualResult() {
         return actualResult;
     }
 }

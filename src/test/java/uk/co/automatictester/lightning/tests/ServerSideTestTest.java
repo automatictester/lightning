@@ -115,7 +115,7 @@ public class ServerSideTestTest extends ConsoleOutputTest {
                 "Test description:     Verify CPU utilisation%n" +
                 "Host and metric:      192.168.0.12 CPU%n" +
                 "Expected result:      Average value < 10001%n" +
-                "Actual result:        Average value = 10000.5%n" +
+                "Actual result:        Average value = 10000%n" +
                 "Entries count:        2%n" +
                 "Test result:          Pass");
 

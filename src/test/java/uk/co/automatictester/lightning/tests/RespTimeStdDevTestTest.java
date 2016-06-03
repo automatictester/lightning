@@ -93,7 +93,7 @@ public class RespTimeStdDevTestTest {
 
     @Test
     public void verifyIsNotEqualOtherTestType() {
-        assertThat((ClientSideTest) RESP_TIME_STD_DEV_TEST_A, is(not(equalTo((ClientSideTest) AVG_RESP_TIME_TEST_A))));
+        assertThat(RESP_TIME_STD_DEV_TEST_A, is(not(equalTo((ClientSideTest) AVG_RESP_TIME_TEST_A))));
     }
 
     @Test
