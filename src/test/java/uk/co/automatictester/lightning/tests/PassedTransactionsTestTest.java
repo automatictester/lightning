@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.utils.Percent;
@@ -11,7 +10,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static uk.co.automatictester.lightning.shared.TestData.*;
 
-public class PassedTransactionsTestTest extends ConsoleOutputTest {
+public class PassedTransactionsTestTest {
 
     @Test
     public void verifyExecuteMethodPass() {
@@ -154,11 +153,9 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1000_SUCCESS);
 
-        configureStream();
         test.execute(jmeterTransactions);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 
     @Test
@@ -176,11 +173,9 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1200_FAILURE);
 
-        configureStream();
         test.execute(jmeterTransactions);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 
     @Test
@@ -198,11 +193,9 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1000_SUCCESS);
 
-        configureStream();
         test.execute(jmeterTransactions);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 
     @Test
@@ -219,11 +212,9 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1000_SUCCESS);
 
-        configureStream();
         test.execute(jmeterTransactions);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 
     @Test
@@ -240,10 +231,8 @@ public class PassedTransactionsTestTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_1000_SUCCESS);
 
-        configureStream();
         test.execute(jmeterTransactions);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 }

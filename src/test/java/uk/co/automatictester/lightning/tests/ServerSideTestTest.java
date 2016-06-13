@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.enums.TestResult;
@@ -9,13 +8,11 @@ import uk.co.automatictester.lightning.enums.TestResult;
 import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static uk.co.automatictester.lightning.shared.TestData.*;
 
-public class ServerSideTestTest extends ConsoleOutputTest {
+public class ServerSideTestTest {
 
     @Test
     public void verifyExecute_LessThan_Pass() {
@@ -124,11 +121,9 @@ public class ServerSideTestTest extends ConsoleOutputTest {
         dataEntries.add(CPU_ENTRY_10000);
         dataEntries.add(CPU_ENTRY_10001);
 
-        configureStream();
         test.execute(dataEntries);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 
     @Test

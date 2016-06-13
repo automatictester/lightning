@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.reporters;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,7 +9,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JMeterReporterTest extends ConsoleOutputTest {
+public class JMeterReporterTest {
 
     @DataProvider(name = "counts")
     private Integer[][] counts() {
@@ -28,9 +27,7 @@ public class JMeterReporterTest extends ConsoleOutputTest {
         when(transactions.getTransactionCount()).thenReturn(total);
         when(transactions.getFailCount()).thenReturn(failures);
 
-        configureStream();
-        new JMeterReporter(transactions).printJMeterReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = new JMeterReporter(transactions).getJMeterReport();
+        assertThat(output, containsString(expectedOutput));
     }
 }

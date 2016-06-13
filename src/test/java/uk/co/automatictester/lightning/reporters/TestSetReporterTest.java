@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.reporters;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.TestSet;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -9,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestSetReporterTest extends ConsoleOutputTest {
+public class TestSetReporterTest {
 
     @Test
     public void testPrintTestSetExecutionSummaryReportForPass() {
@@ -18,7 +17,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
                 "Tests passed:      15%n" +
                 "Tests failed:      0%n" +
                 "Tests errors:      0%n" +
-                "Test set status:   Pass%n");
+                "Test set status:   Pass");
 
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(15);
@@ -26,11 +25,8 @@ public class TestSetReporterTest extends ConsoleOutputTest {
         when(testSet.getFailCount()).thenReturn(0);
         when(testSet.getErrorCount()).thenReturn(0);
 
-        configureStream();
-        new TestSetReporter(testSet).printTestSetExecutionSummaryReport();
-        revertStream();
-
-        assertThat(out.toString(), containsString(expectedResult));
+        String output = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        assertThat(output, containsString(expectedResult));
     }
 
     @Test
@@ -40,7 +36,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
                 "Tests passed:      14%n" +
                 "Tests failed:      1%n" +
                 "Tests errors:      0%n" +
-                "Test set status:   FAIL%n");
+                "Test set status:   FAIL");
 
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(15);
@@ -48,11 +44,8 @@ public class TestSetReporterTest extends ConsoleOutputTest {
         when(testSet.getFailCount()).thenReturn(1);
         when(testSet.getErrorCount()).thenReturn(0);
 
-        configureStream();
-        new TestSetReporter(testSet).printTestSetExecutionSummaryReport();
-        revertStream();
-
-        assertThat(out.toString(), containsString(expectedResult));
+        String output = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        assertThat(output, containsString(expectedResult));
     }
 
     @Test
@@ -62,7 +55,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
                 "Tests passed:      14%n" +
                 "Tests failed:      0%n" +
                 "Tests errors:      1%n" +
-                "Test set status:   FAIL%n");
+                "Test set status:   FAIL");
 
         TestSet testSet = mock(TestSet.class);
         when(testSet.getTestCount()).thenReturn(15);
@@ -70,12 +63,7 @@ public class TestSetReporterTest extends ConsoleOutputTest {
         when(testSet.getFailCount()).thenReturn(0);
         when(testSet.getErrorCount()).thenReturn(1);
 
-        configureStream();
-        new TestSetReporter(testSet).printTestSetExecutionSummaryReport();
-        revertStream();
-
-        assertThat(out.toString(), containsString(expectedResult));
+        String output = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        assertThat(output, containsString(expectedResult));
     }
-
-
 }

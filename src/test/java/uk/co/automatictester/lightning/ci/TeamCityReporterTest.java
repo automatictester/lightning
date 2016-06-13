@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.ci;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
@@ -15,7 +14,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TeamCityReporterTest extends ConsoleOutputTest {
+public class TeamCityReporterTest
+{
 
     @Test
     public void testPrintTeamCityReportStatistics() {
@@ -23,11 +23,9 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(jmeterTransactions.getTransactionCount()).thenReturn(1204);
         when(jmeterTransactions.getFailCount()).thenReturn(25);
 
-        configureStream();
-        new TeamCityReporter(jmeterTransactions).printTeamCityReportStatistics();
-        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Failed transactions' value='25']"));
-        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Total transactions' value='1204']"));
-        revertStream();
+        String output = new TeamCityReporter(jmeterTransactions).getTeamCityReportStatistics();
+        assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='25']"));
+        assertThat(output, containsString("##teamcity[buildStatisticValue key='Total transactions' value='1204']"));
     }
 
     @Test
@@ -44,38 +42,32 @@ public class TeamCityReporterTest extends ConsoleOutputTest {
         when(testSet.getClientSideTests()).thenReturn(new ArrayList<ClientSideTest>() {{ add(clientTest); }});
         when(testSet.getServerSideTests()).thenReturn(new ArrayList<ServerSideTest>() {{ add(serverTest); }});
 
-        configureStream();
-        new TeamCityReporter(testSet).printTeamCityVerifyStatistics();
-        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));
-        assertThat(out.toString(), containsString("##teamcity[buildStatisticValue key='Memory utilization' value='45']"));
-        revertStream();
+        String output = new TeamCityReporter(testSet).getTeamCityVerifyStatistics();
+        assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));
+        assertThat(output, containsString("##teamcity[buildStatisticValue key='Memory utilization' value='45']"));
     }
 
     @Test
     public void testSetTeamCityBuildStatusTextTest_report_passed() {
-        String expectedOutput = String.format("##teamcity[buildStatus text='Transactions executed: 10, failed: 0']%n");
+        String expectedOutput = String.format("##teamcity[buildStatus text='Transactions executed: 10, failed: 0']");
 
         JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
         when(jmeterTransactions.getTransactionCount()).thenReturn(10);
         when(jmeterTransactions.getFailCount()).thenReturn(0);
 
-        configureStream();
-        new TeamCityReporter(jmeterTransactions).printTeamCityBuildStatusText();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = new TeamCityReporter(jmeterTransactions).getTeamCityBuildStatusText();
+        assertThat(output, containsString(expectedOutput));
     }
 
     @Test
     public void testSetTeamCityBuildStatusTextTest_report_failed() {
-        String expectedOutput = String.format("##teamcity[buildProblem description='Transactions executed: 10, failed: 1']%n");
+        String expectedOutput = String.format("##teamcity[buildProblem description='Transactions executed: 10, failed: 1']");
 
         JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
         when(jmeterTransactions.getTransactionCount()).thenReturn(10);
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 
-        configureStream();
-        new TeamCityReporter(jmeterTransactions).printTeamCityBuildStatusText();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = new TeamCityReporter(jmeterTransactions).getTeamCityBuildStatusText();
+        assertThat(output, containsString(expectedOutput));
     }
 }

@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.ConsoleOutputTest;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 
@@ -12,7 +11,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static uk.co.automatictester.lightning.shared.TestData.*;
 
-public class RespTimeAvgTestTest extends ConsoleOutputTest {
+public class RespTimeAvgTestTest {
 
     @Test
     public void verifyExecutePass() {
@@ -86,7 +85,7 @@ public class RespTimeAvgTestTest extends ConsoleOutputTest {
 
     @Test
     public void verifyIsNotEqualOtherTestType() {
-        assertThat((ClientSideTest) AVG_RESP_TIME_TEST_A, is(not(equalTo((ClientSideTest) RESP_TIME_PERC_TEST_A))));
+        assertThat(AVG_RESP_TIME_TEST_A, is(not(equalTo((ClientSideTest) RESP_TIME_PERC_TEST_A))));
     }
 
     @Test
@@ -110,10 +109,8 @@ public class RespTimeAvgTestTest extends ConsoleOutputTest {
                 "Longest transactions: [800]%n" +
                 "Test result:          Pass");
 
-        configureStream();
         test.execute(jmeterTransactions);
-        test.printTestExecutionReport();
-        assertThat(out.toString(), containsString(expectedOutput));
-        revertStream();
+        String output = test.getTestExecutionReport();
+        assertThat(output, containsString(expectedOutput));
     }
 }
