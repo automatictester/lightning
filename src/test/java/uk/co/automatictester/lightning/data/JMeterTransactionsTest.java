@@ -60,10 +60,10 @@ public class JMeterTransactionsTest {
     @Test
     public void testGetThroughputForOrderedTransactions() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291243000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291244000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291245000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "123", "true", "1434291243000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "213", "true", "1434291244000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "222", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "333", "true", "1434291246000")));
 
         assertThat(jmeterTransactions.getThroughput(), is(closeTo(1.33, 0.01)));
     }
@@ -71,10 +71,10 @@ public class JMeterTransactionsTest {
     @Test
     public void testGetThroughputForUnorderedTransactions() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291246000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291244000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291245000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291243000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "560", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "650", "true", "1434291244000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "700", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "400", "true", "1434291243000")));
 
         assertThat(jmeterTransactions.getThroughput(), is(closeTo(1.33, 0.01)));
     }
@@ -82,9 +82,9 @@ public class JMeterTransactionsTest {
     @Test
     public void testGetThroughputForOneTransactionPerMillisecond() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240001")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240002")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240004")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "111", "true", "1434291240001")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "157", "true", "1434291240002")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "243", "true", "1434291240004")));
 
         assertThat(jmeterTransactions.getThroughput(), is(closeTo(1000, 0.01)));
     }
@@ -92,10 +92,10 @@ public class JMeterTransactionsTest {
     @Test
     public void testGetThroughputForMoreThanOneTransactionPerMillisecond() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240001")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240002")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240003")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240004")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "123", "true", "1434291240001")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "142", "true", "1434291240002")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "165", "true", "1434291240003")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "109", "true", "1434291240004")));
 
         assertThat(jmeterTransactions.getThroughput(), is(closeTo(1333.33, 0.01)));
     }
@@ -103,9 +103,9 @@ public class JMeterTransactionsTest {
     @Test
     public void testGetThroughputForLessThanOneTransactionPerSecond() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291240000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291245000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "100", "true", "1434291240000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "124", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "250", "true", "1434291246000")));
 
         assertThat(jmeterTransactions.getThroughput(), is(closeTo(0.5, 0.01)));
     }
@@ -114,14 +114,14 @@ public class JMeterTransactionsTest {
     public void testGetLongestTransactions_moreThanFive() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "421", "true", "1434291240000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "2432", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "500", "true", "1434291245000")));
         jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "345", "true", "1434291246000")));
         jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "2", "true", "1434291245000")));
         jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "334", "true", "1434291246000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "29876", "true", "1434291245000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "90000", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "650", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "721", "true", "1434291246000")));
 
-        List<Integer> expectedResult = new ArrayList<>(Arrays.asList(90000, 29876, 2432, 421, 345));
+        List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 500, 421, 345));
         assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
     }
 
@@ -129,23 +129,23 @@ public class JMeterTransactionsTest {
     public void testGetLongestTransactions_five() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "421", "true", "1434291240000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "2432", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "500", "true", "1434291245000")));
         jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "345", "true", "1434291246000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "29876", "true", "1434291245000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "90000", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "650", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "721", "true", "1434291246000")));
 
-        List<Integer> expectedResult = new ArrayList<>(Arrays.asList(90000, 29876, 2432, 421, 345));
+        List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 500, 421, 345));
         assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
     }
 
     @Test
     public void testGetLongestTransactions_lessThanFive() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "421", "true", "1434291240000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "2432", "true", "1434291245000")));
-        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "90000", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "345", "true", "1434291246000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "650", "true", "1434291245000")));
+        jmeterTransactions.add(new ArrayList<>(Arrays.asList("Login", "721", "true", "1434291246000")));
 
-        List<Integer> expectedResult = new ArrayList<>(Arrays.asList(90000, 2432, 421));
+        List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 345));
         assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
     }
 }

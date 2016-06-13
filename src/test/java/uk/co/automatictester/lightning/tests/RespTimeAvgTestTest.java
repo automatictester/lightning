@@ -27,7 +27,7 @@ public class RespTimeAvgTestTest {
     public void verifyExecutePassOnNonDefaultLocale() {
         Locale.setDefault(Locale.FRENCH);
 
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 6011);
+        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 6010);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(SEARCH_800_SUCCESS);
         jmeterTransactions.add(SEARCH_11221_SUCCESS);
@@ -49,7 +49,7 @@ public class RespTimeAvgTestTest {
 
     @Test
     public void verifyExecuteFail() {
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 800);
+        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 11220);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(SEARCH_11221_SUCCESS);
 

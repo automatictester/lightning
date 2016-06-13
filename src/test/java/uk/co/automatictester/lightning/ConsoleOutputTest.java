@@ -5,7 +5,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-public class ConsoleOutputTest {
+public abstract class ConsoleOutputTest {
 
     protected final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
