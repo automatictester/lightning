@@ -1,5 +1,6 @@
 package uk.co.automatictester.lightning.runners;
 
+import com.beust.jcommander.MissingCommandException;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
@@ -56,7 +57,12 @@ public class CliTestRunner {
     }
 
     private static void parseParams(String[] args) {
-        params = new CommandLineInterface(args);
+        try {
+            params = new CommandLineInterface(args);
+        } catch (MissingCommandException e) {
+            System.out.println("Invalid command, should be one of these: report, verify");
+            setExitCode(1);
+        }
     }
 
     private static void runTests() {
@@ -120,5 +126,9 @@ public class CliTestRunner {
 
     private static void setExitCode() {
         System.exit(exitCode);
+    }
+
+    private static void setExitCode(int code) {
+        System.exit(code);
     }
 }
