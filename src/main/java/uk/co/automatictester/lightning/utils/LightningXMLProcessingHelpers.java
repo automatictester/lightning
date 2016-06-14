@@ -43,11 +43,11 @@ public abstract class LightningXMLProcessingHelpers {
         Node descriptionElement = element.getElementsByTagName("subType").item(0);
         String subType = (descriptionElement != null) ? descriptionElement.getTextContent() : "";
         ServerSideTestType testSubType;
-        if (subType.toUpperCase().equals(ServerSideTestType.LESS_THAN.name())) {
+        if (subType.equalsIgnoreCase(ServerSideTestType.LESS_THAN.name())) {
             testSubType = ServerSideTestType.LESS_THAN;
-        } else if (subType.toUpperCase().equals(ServerSideTestType.GREATER_THAN.name())) {
+        } else if (subType.equalsIgnoreCase(ServerSideTestType.GREATER_THAN.name())) {
             testSubType = ServerSideTestType.GREATER_THAN;
-        } else if (subType.toUpperCase().equals(ServerSideTestType.BETWEEN.name())) {
+        } else if (subType.equalsIgnoreCase(ServerSideTestType.BETWEEN.name())) {
             testSubType = ServerSideTestType.BETWEEN;
         } else {
             throw new XMLFileNoValidSubTypeException("Value of subType element is not in set (LESS_THAN, BETWEEN, GREATER_THAN)");
