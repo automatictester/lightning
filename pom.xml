@@ -5,7 +5,7 @@
     <groupId>uk.co.automatictester</groupId>
     <artifactId>lightning</artifactId>
     <packaging>jar</packaging>
-    <version>5.1.0</version>
+    <version>5.1.1-SNAPSHOT</version>
     <name>lightning</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>https://github.com/automatictester/lightning</url>
@@ -29,7 +29,7 @@
         <connection>scm:git:git@github.com:automatictester/lightning.git</connection>
         <developerConnection>scm:git:git@github.com:automatictester/lightning.git</developerConnection>
         <url>git@github.com:automatictester/lightning.git</url>
-        <tag>5.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
