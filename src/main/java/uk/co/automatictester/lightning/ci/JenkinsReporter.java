@@ -3,10 +3,7 @@ package uk.co.automatictester.lightning.ci;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Properties;
 
 public class JenkinsReporter extends CIReporter {
@@ -31,8 +28,7 @@ public class JenkinsReporter extends CIReporter {
         try {
             Properties props = new Properties();
             props.setProperty("result.string", summary);
-            File jenkinsBuildNameSetterFile = new File("lightning-jenkins.properties");
-            OutputStream out = new FileOutputStream(jenkinsBuildNameSetterFile);
+            OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream("lightning-jenkins.properties"), "UTF-8");
             props.store(out, "In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}");
         } catch (IOException e) {
             e.printStackTrace();
