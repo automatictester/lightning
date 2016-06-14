@@ -87,6 +87,7 @@ public class JUnitReporter {
         }
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         DOMSource source = new DOMSource(doc);
 
         File junitReport = new File("junit.xml");
