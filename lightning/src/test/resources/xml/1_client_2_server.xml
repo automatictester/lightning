@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <passedTransactionsTest>
+        <testName>Failed transactions</testName>
+        <description>Verify number of passed tests</description>
+        <transactionName>Login</transactionName>
+        <allowedPercentOfFailedTransactions>0</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
+
+    <serverSideTest>
+         <testName>CPU range</testName>
+         <subType>BETWEEN</subType> 
+        <description>Verify server-side resource utilisation</description> 
+        <hostAndMetric>192.168.0.12 CPU</hostAndMetric>
+         <metricValueA>10000</metricValueA> 
+        <metricValueB>40000</metricValueB> 
+    </serverSideTest>
+
+    <serverSideTest>
+         <testName>CPU upper limit</testName>
+         <subType>LESS_THAN</subType> 
+        <description>Verify server-side resource utilisation</description> 
+        <hostAndMetric>192.168.0.12 CPU</hostAndMetric>
+         <metricValueA>60000</metricValueA>
+    </serverSideTest>
+
+
+</testSet>

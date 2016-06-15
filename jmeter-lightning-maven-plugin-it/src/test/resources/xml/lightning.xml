@@ -1,0 +1,13 @@
+<testSet>
+    <passedTransactionsTest>
+        <testName>JMeter home page - failed tests</testName>
+        <transactionName>JMeter home page</transactionName>
+        <allowedNumberOfFailedTransactions>0</allowedNumberOfFailedTransactions>
+    </passedTransactionsTest>
+
+    <avgRespTimeTest>
+        <testName>JMeter home page - average response time</testName>
+        <transactionName>JMeter home page</transactionName>
+        <maxAvgRespTime>1000</maxAvgRespTime>
+    </avgRespTimeTest>
+</testSet>

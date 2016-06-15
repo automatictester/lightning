@@ -1,7 +1,7 @@
 target/
 target.lib/
 .idea/
-src/test/resources/results/actual/
+*/src/test/resources/results/actual/
 *.iml
 lightning-jenkins.properties
 junit.xml

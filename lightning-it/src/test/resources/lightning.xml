@@ -1,0 +1,7 @@
+<testSet>
+    <passedTransactionsTest>
+        <testName>Access JMeter project main page</testName>
+        <transactionName>Main page</transactionName>
+        <allowedPercentOfFailedTransactions>100</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
+</testSet>
