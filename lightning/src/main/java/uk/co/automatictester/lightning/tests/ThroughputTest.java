@@ -1,10 +1,10 @@
 package uk.co.automatictester.lightning.tests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ThroughputTest extends ClientSideTest {
 
@@ -39,20 +39,6 @@ public class ThroughputTest extends ClientSideTest {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof ThroughputTest) {
-            ThroughputTest test = (ThroughputTest) obj;
-            return name.equals(test.name) &&
-                    description.equals(test.description) &&
-                    Objects.equals(transactionName, test.transactionName) &&
-                    expectedResultDescription.equals(test.expectedResultDescription) &&
-                    actualResultDescription.equals(test.actualResultDescription) &&
-                    result == test.result &&
-                    minThroughput == test.minThroughput &&
-                    transactionCount == test.transactionCount &&
-                    Objects.equals(actualResult, test.actualResult) &&
-                    type.equals(test.type);
-        } else {
-            return false;
-        }
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }

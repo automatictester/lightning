@@ -1,5 +1,6 @@
 package uk.co.automatictester.lightning.utils;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import uk.co.automatictester.lightning.exceptions.PercentException;
 
 public class Percent {
@@ -16,6 +17,10 @@ public class Percent {
 
     public int getPercent() {
         return percent;
+    }
+
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     private boolean isPercent(int percent) {

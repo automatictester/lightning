@@ -1,5 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
@@ -7,8 +8,6 @@ import uk.co.automatictester.lightning.utils.IntToOrdConverter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
@@ -52,21 +51,6 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof RespTimeNthPercentileTest) {
-            RespTimeNthPercentileTest test = (RespTimeNthPercentileTest) obj;
-            return name.equals(test.name) &&
-                    description.equals(test.description) &&
-                    transactionName.equals(test.transactionName) &&
-                    expectedResultDescription.equals(test.expectedResultDescription) &&
-                    actualResultDescription.equals(test.actualResultDescription) &&
-                    result == test.result &&
-                    maxRespTime == test.maxRespTime &&
-                    percentile == test.percentile &&
-                    transactionCount == test.transactionCount &&
-                    Objects.equals(actualResult, test.actualResult) &&
-                    type.equals(test.type);
-        } else {
-            return false;
-        }
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }

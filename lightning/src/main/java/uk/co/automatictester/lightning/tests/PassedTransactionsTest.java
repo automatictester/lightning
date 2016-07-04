@@ -1,5 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.enums.ThresholdType;
@@ -7,7 +8,6 @@ import uk.co.automatictester.lightning.utils.Percent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class PassedTransactionsTest extends ClientSideTest {
 
@@ -68,29 +68,7 @@ public class PassedTransactionsTest extends ClientSideTest {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof PassedTransactionsTest) {
-            PassedTransactionsTest test = (PassedTransactionsTest) obj;
-            return name.equals(test.name) &&
-                    description.equals(test.description) &&
-                    Objects.equals(transactionName, test.transactionName) &&
-                    expectedResultDescription.equals(test.expectedResultDescription) &&
-                    actualResultDescription.equals(test.actualResultDescription) &&
-                    result == test.result &&
-                    allowedNumberOfFailedTransactions == test.allowedNumberOfFailedTransactions &&
-                    percentEquals(test) &&
-                    type == test.type &&
-                    transactionCount == test.transactionCount &&
-                    Objects.equals(actualResult, test.actualResult) &&
-                    type.equals(test.type);
-        } else {
-            return false;
-        }
-    }
-
-    private boolean percentEquals(PassedTransactionsTest test) {
-        if (allowedPercentOfFailedTransactions != null && test.allowedPercentOfFailedTransactions != null) {
-            return (allowedPercentOfFailedTransactions.getPercent() == test.allowedPercentOfFailedTransactions.getPercent());
-        } else return allowedPercentOfFailedTransactions == null && test.allowedPercentOfFailedTransactions == null;
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
 }

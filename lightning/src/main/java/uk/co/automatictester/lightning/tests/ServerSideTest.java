@@ -1,5 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
@@ -7,8 +8,6 @@ import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class ServerSideTest extends LightningTest {
 
@@ -123,23 +122,7 @@ public class ServerSideTest extends LightningTest {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof ServerSideTest) {
-            ServerSideTest test = (ServerSideTest) obj;
-            return name.equals(test.name) &&
-                    description.equals(test.description) &&
-                    hostAndMetric.equals(test.hostAndMetric) &&
-                    type.equals(test.type) &&
-                    subtype.equals(test.subtype) &&
-                    expectedResultDescription.equals(test.expectedResultDescription) &&
-                    actualResultDescription.equals(test.actualResultDescription) &&
-                    Objects.equals(result, test.result) &&
-                    dataEntriesCount == test.dataEntriesCount &&
-                    metricValueA == test.metricValueA &&
-                    Objects.equals(actualResult, test.actualResult) &&
-                    Objects.equals(metricValueB, test.metricValueB);
-        } else {
-            return false;
-        }
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     private String getExpectedResultMessage() {
