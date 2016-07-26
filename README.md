@@ -7,7 +7,7 @@ Visit our [website](http://automatictester.github.io/lightning/).
 
 ### lightning
 
-Lightning Standalone Java JAR. Integrates JMeter non-functional tests with CI server.
+Core Lightning library used as a key dependencies by Standalone Java JAR and Maven Plugin.
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning)
 [![codecov](https://codecov.io/gh/automatictester/lightning/branch/master/graph/badge.svg)](https://codecov.io/gh/automatictester/lightning)
@@ -15,6 +15,10 @@ Lightning Standalone Java JAR. Integrates JMeter non-functional tests with CI se
 ### lightning-it
 
 End-to-end integration tests for Lightning.
+
+### lightning-standalone
+
+Lightning Standalone Java JAR. Integrates JMeter non-functional tests with CI server.
 
 ### jmeter-lightning-maven-plugin
 

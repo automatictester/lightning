@@ -2,13 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.co.automatictester</groupId>
     <artifactId>lightning</artifactId>
     <packaging>jar</packaging>
-    <version>5.1.1-SNAPSHOT</version>
+    <version>${lightning.version}</version>
     <name>lightning</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>https://github.com/automatictester/lightning</url>
+
+    <parent>
+        <groupId>uk.co.automatictester</groupId>
+        <artifactId>lightning-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
     <licenses>
         <license>
@@ -35,7 +40,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <standalone.jar.filename>${project.name}-standalone-${project.version}</standalone.jar.filename>
     </properties>
 
     <build>
@@ -81,29 +85,6 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                </configuration>
-            </plugin>
-
-            <!-- generate standalone jar with all dependencies -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <finalName>${standalone.jar.filename}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <attach>false</attach>
-                    <archive>
-                        <manifest>
-                            <mainClass>uk.co.automatictester.lightning.runners.CliTestRunner</mainClass>
-                        </manifest>
-                        <manifestEntries>
-                            <Built-By>automatictester</Built-By>
-                        </manifestEntries>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
                 </configuration>
             </plugin>
 

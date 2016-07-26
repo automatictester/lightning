@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <passedTransactionsTest>
+        <testName>Failed transactions (%)</testName>
+        <description>Verify number of passed tests</description>
+        <transactionName>Login</transactionName>
+        <allowedPercentOfFailedTransactions>0</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
+
+    <passedTransactionsTest>
+        <testName>Failed transactions</testName>
+        <description>Verify number of passed tests</description>
+        <allowedNumberOfFailedTransactions>0</allowedNumberOfFailedTransactions>
+    </passedTransactionsTest>
+
+    <nthPercRespTimeTest>
+        <testName>80th percentile</testName>
+        <description>Verify nth percentile</description>
+        <transactionName>Search</transactionName>
+        <percentile>80</percentile>
+        <maxRespTime>11245</maxRespTime>
+    </nthPercRespTimeTest>
+
+
+</testSet>
