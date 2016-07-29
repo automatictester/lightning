@@ -10,12 +10,6 @@
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>https://github.com/automatictester/lightning</url>
 
-    <parent>
-        <groupId>uk.co.automatictester</groupId>
-        <artifactId>lightning-parent</artifactId>
-        <version>1.0.0</version>
-    </parent>
-
     <licenses>
         <license>
             <name>MIT License</name>

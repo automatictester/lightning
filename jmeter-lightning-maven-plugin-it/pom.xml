@@ -8,12 +8,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <parent>
-        <groupId>uk.co.automatictester</groupId>
-        <artifactId>lightning-parent</artifactId>
-        <version>1.0.0</version>
-    </parent>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

@@ -9,12 +9,6 @@
     <description>Maven plugin encapsulating Lightning functionality</description>
     <url>https://github.com/automatictester/jmeter-lightning-maven-plugin</url>
 
-    <parent>
-        <groupId>uk.co.automatictester</groupId>
-        <artifactId>lightning-parent</artifactId>
-        <version>1.0.0</version>
-    </parent>
-
     <licenses>
         <license>
             <name>MIT License</name>
