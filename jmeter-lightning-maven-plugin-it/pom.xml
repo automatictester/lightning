@@ -31,7 +31,7 @@
                     <plugin>
                         <groupId>uk.co.automatictester</groupId>
                         <artifactId>jmeter-lightning-maven-plugin</artifactId>
-                        <version>${jmeter.lightning.maven.plugin.version}</version>
+                        <version>1.0.1-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -83,7 +83,7 @@
                     <plugin>
                         <groupId>uk.co.automatictester</groupId>
                         <artifactId>jmeter-lightning-maven-plugin</artifactId>
-                        <version>${jmeter.lightning.maven.plugin.version}</version>
+                        <version>1.0.1-SNAPSHOT</version>
                         <executions>
                             <execution>
                                 <goals>

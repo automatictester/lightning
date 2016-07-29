@@ -5,7 +5,7 @@
 
     <artifactId>lightning-standalone</artifactId>
     <packaging>jar</packaging>
-    <version>${lightning.version}</version>
+    <version>5.1.1-SNAPSHOT</version>
     <name>lightning-standalone</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>https://github.com/automatictester/lightning</url>
@@ -75,8 +75,8 @@
 
         <dependency>
             <groupId>uk.co.automatictester</groupId>
-            <artifactId>lightning</artifactId>
-            <version>${lightning.version}</version>
+            <artifactId>lightning-core</artifactId>
+            <version>5.1.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>

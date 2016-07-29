@@ -10,17 +10,12 @@
     <name>lightning-parent</name>
 
     <modules>
-        <module>lightning</module>
-        <module>lightning-it</module>
         <module>jmeter-lightning-maven-plugin</module>
         <module>jmeter-lightning-maven-plugin-it</module>
+        <module>lightning-core</module>
         <module>lightning-standalone</module>
+        <module>lightning-standalone-it</module>
     </modules>
-
-    <properties>
-        <lightning.version>5.1.1-SNAPSHOT</lightning.version>
-        <jmeter.lightning.maven.plugin.version>1.0.1-SNAPSHOT</jmeter.lightning.maven.plugin.version>
-    </properties>
 
 </project>
 
