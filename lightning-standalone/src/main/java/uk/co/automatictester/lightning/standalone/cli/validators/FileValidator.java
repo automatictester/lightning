@@ -7,7 +7,8 @@ import java.io.File;
 
 public class FileValidator implements IParameterValidator {
 
-    public void validate(String name, String value) throws ParameterException {
+    @Override
+    public void validate(String name, String value) {
         File f = new File(value);
         if (!f.canRead()) {
             throw new ParameterException("Error reading file: " + value);

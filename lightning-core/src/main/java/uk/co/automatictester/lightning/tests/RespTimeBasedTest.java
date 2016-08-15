@@ -10,12 +10,14 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
         super(name, type, description, transactionName);
     }
 
+    @Override
     public List<Integer> getLongestTransactions() {
         return longestTransactions;
     }
 
+    @Override
     public String getTestExecutionReport() {
-        String executionReport = String.format("Test name:            %s%n" +
+        return String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
                         "%s" +
                         "%s" +
@@ -33,10 +35,9 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
                 getTransactionCount(),
                 getLongestTransactions(),
                 getResultForReport());
-
-        return executionReport;
     }
 
+    @Override
     public void printTestExecutionReport() {
         System.out.println(getTestExecutionReport());
     }

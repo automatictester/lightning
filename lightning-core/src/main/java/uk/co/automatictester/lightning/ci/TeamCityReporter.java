@@ -37,16 +37,16 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public String getTeamCityVerifyStatistics() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (ClientSideTest test : testSet.getClientSideTests()) {
-            output += String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
+            output.append(String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult()));
         }
         if (testSet.getServerSideTests() != null) {
             for (ServerSideTest test : testSet.getServerSideTests()) {
-                output += String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
+                output.append(String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult()));
             }
         }
-        return output;
+        return output.toString();
     }
 
     public TeamCityReporter printTeamCityReportStatistics() {

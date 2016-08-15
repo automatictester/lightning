@@ -8,7 +8,8 @@ import java.util.List;
 
 public class CIServerValidator implements IParameterValidator {
 
-    public void validate(String name, String value) throws ParameterException {
+    @Override
+    public void validate(String name, String value) {
         List<String> ciServers = new ArrayList<>();
         ciServers.add("jenkins");
         ciServers.add("teamcity");

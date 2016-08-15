@@ -37,6 +37,7 @@ public class ServerSideTest extends LightningTest {
         this.expectedResultMessage = getExpectedResultMessage();
     }
 
+    @Override
     public void execute(ArrayList<ArrayList<String>> originalDataEntries) {
         try {
             PerfMonDataEntries dataEntries = filterDataEntries((PerfMonDataEntries) originalDataEntries);
@@ -84,7 +85,7 @@ public class ServerSideTest extends LightningTest {
     }
 
     public String getTestExecutionReport() {
-        String executionReport = String.format("Test name:            %s%n" +
+        return String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
                         "Test subtype:         %s%n" +
                         "%s" +
@@ -102,8 +103,6 @@ public class ServerSideTest extends LightningTest {
                 getActualResultDescription(),
                 getDataEntriesCount(),
                 getResultForReport());
-
-        return executionReport;
     }
 
     public void printTestExecutionReport() {

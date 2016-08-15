@@ -33,6 +33,7 @@ public class PassedTransactionsTest extends ClientSideTest {
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getValue());
     }
 
+    @Override
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);

@@ -25,21 +25,21 @@ public class TestSet {
     }
 
     public void executeClientSideTests(JMeterTransactions dataEntires) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (ClientSideTest test : getClientSideTests()) {
             test.execute(dataEntires);
             setCounts(test);
-            output += test.getTestExecutionReport() + System.lineSeparator();
+            output.append(test.getTestExecutionReport()).append(System.lineSeparator());
         }
         testExecutionReport += output;
     }
 
     public void executeServerSideTests(PerfMonDataEntries dataEntires) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (ServerSideTest test : getServerSideTests()) {
             test.execute(dataEntires);
             setCounts(test);
-            output += test.getTestExecutionReport() + System.lineSeparator();
+            output.append(test.getTestExecutionReport()).append(System.lineSeparator());
         }
         testExecutionReport += output;
     }

@@ -22,6 +22,7 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxAvgRespTime);
     }
 
+    @Override
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);

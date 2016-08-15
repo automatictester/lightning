@@ -27,6 +27,7 @@ public class LightningMojo extends ConfigurationMojo {
     private TestSet testSet;
     private JMeterTransactions jmeterTransactions;
 
+    @Override
     public void execute() throws MojoExecutionException {
         switch (mode) {
             case verify:

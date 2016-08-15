@@ -7,6 +7,8 @@ import uk.co.automatictester.lightning.exceptions.*;
 
 public abstract class LightningXMLProcessingHelpers {
 
+    private static final String EXCEPTION_MESSAGE = "Incorrect %s value for %s: %s";
+
     protected String getSubElementValueByTagName(Element element, String subElement) {
         String elementValue = getNodeByTagName(element, subElement).getTextContent();
         if (elementValue.length() == 0) {
@@ -78,7 +80,7 @@ public abstract class LightningXMLProcessingHelpers {
             return Integer.parseInt(elementValue);
         } catch (NumberFormatException e) {
             String parentNodeName = element.getNodeName();
-            throw new XMLFileNumberFormatException(String.format("Incorrect %s value for %s: %s", subElement, parentNodeName, elementValue));
+            throw new XMLFileNumberFormatException(String.format(EXCEPTION_MESSAGE, subElement, parentNodeName, elementValue));
         }
     }
 
@@ -89,7 +91,7 @@ public abstract class LightningXMLProcessingHelpers {
             return Double.parseDouble(elementValue);
         } catch (NumberFormatException e) {
             String parentNodeName = element.getNodeName();
-            throw new XMLFileNumberFormatException(String.format("Incorrect %s value for %s: %s", subElement, parentNodeName, elementValue));
+            throw new XMLFileNumberFormatException(String.format(EXCEPTION_MESSAGE, subElement, parentNodeName, elementValue));
         }
     }
 
@@ -99,7 +101,7 @@ public abstract class LightningXMLProcessingHelpers {
         if (new Percentile().isPercentile(elementValue)) {
             return elementValue;
         } else {
-            throw new XMLFilePercentileException(String.format("Incorrect %s value for %s: %s", subElement, parentNodeName, elementValue));
+            throw new XMLFilePercentileException(String.format(EXCEPTION_MESSAGE, subElement, parentNodeName, elementValue));
         }
     }
 

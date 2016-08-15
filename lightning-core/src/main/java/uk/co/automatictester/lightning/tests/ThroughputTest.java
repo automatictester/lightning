@@ -20,6 +20,7 @@ public class ThroughputTest extends ClientSideTest {
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, minThroughput);
     }
 
+    @Override
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
