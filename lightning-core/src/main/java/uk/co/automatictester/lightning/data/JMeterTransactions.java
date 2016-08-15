@@ -58,9 +58,7 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
         long minTimestamp = 0;
         for (ArrayList<String> transaction : this) {
             long currentTransactionTimestamp = Long.parseLong(transaction.get(3));
-            if (minTimestamp == 0) {
-                minTimestamp = currentTransactionTimestamp;
-            } else if (currentTransactionTimestamp < minTimestamp) {
+            if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
                 minTimestamp = currentTransactionTimestamp;
             }
         }
@@ -71,9 +69,7 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
         long maxTimestamp = 0;
         for (ArrayList<String> transaction : this) {
             long currentTransactionTimestamp = Long.parseLong(transaction.get(3));
-            if (maxTimestamp == 0) {
-                maxTimestamp = currentTransactionTimestamp;
-            } else if (currentTransactionTimestamp > maxTimestamp) {
+            if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
                 maxTimestamp = currentTransactionTimestamp;
             }
         }
