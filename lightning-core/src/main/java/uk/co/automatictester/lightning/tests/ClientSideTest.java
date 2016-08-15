@@ -31,8 +31,9 @@ public abstract class ClientSideTest extends LightningTest {
         return transactionName;
     }
 
+    @Override
     public String getTestExecutionReport() {
-        String executionReport = String.format("Test name:            %s%n" +
+        return String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
                         "%s" +
                         "%s" +
@@ -48,16 +49,15 @@ public abstract class ClientSideTest extends LightningTest {
                 getActualResultDescription(),
                 getTransactionCount(),
                 getResultForReport());
-
-        return executionReport;
     }
 
+    @Override
     public void printTestExecutionReport() {
         System.out.println(getTestExecutionReport());
     }
 
     protected String getTransactionNameForReport() {
-        return (getTransactionName() != null) ? (String.format("Transaction name:     %s%n", getTransactionName())) : "";
+        return (getTransactionName() != null) ? String.format("Transaction name:     %s%n", getTransactionName()) : "";
     }
 
     public List<Integer> getLongestTransactions() {

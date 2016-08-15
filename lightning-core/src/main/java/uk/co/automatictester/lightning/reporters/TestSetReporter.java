@@ -15,17 +15,16 @@ public class TestSetReporter {
     }
 
     public String getTestSetExecutionSummaryReport() {
-        String summaryReport = String.format("%n============= EXECUTION SUMMARY =============%n"
+        return String.format("%n============= EXECUTION SUMMARY =============%n"
                 + "Tests executed:    %s%n"
                 + "Tests passed:      %s%n"
                 + "Tests failed:      %s%n"
                 + "Tests errors:      %s%n"
                 + "Test set status:   %s", testSet.getTestCount(), testSet.getPassCount(), testSet.getFailCount(), testSet.getErrorCount(), getTestSetStatus());
-        return summaryReport;
     }
 
     private String getTestSetStatus() {
-        return (((testSet.getFailCount() != 0) || (testSet.getErrorCount() != 0)) ? "FAIL" : "Pass");
+        return ((testSet.getFailCount() != 0) || (testSet.getErrorCount() != 0)) ? "FAIL" : "Pass";
     }
 
 }
