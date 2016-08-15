@@ -27,7 +27,7 @@ public class JUnitReporter {
         try {
             db = dbf.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new JunitReportGenerationException(e.getMessage());
+            throw new JunitReportGenerationException(e);
         }
         doc = db.newDocument();
         doc.setXmlStandalone(true);
@@ -84,7 +84,7 @@ public class JUnitReporter {
         try {
             transformer = TransformerFactory.newInstance().newTransformer();
         } catch (TransformerConfigurationException e) {
-            throw new JunitReportGenerationException(e.getMessage());
+            throw new JunitReportGenerationException(e);
         }
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -96,7 +96,7 @@ public class JUnitReporter {
         try {
             transformer.transform(source, file);
         } catch (TransformerException e) {
-            throw new JunitReportGenerationException(e.getMessage());
+            throw new JunitReportGenerationException(e);
         }
     }
 }

@@ -32,7 +32,7 @@ public class JenkinsReporter extends CIReporter {
             OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
             props.store(out, "In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}");
         } catch (IOException e) {
-            throw new JenkinsReportGenerationException(e.getMessage());
+            throw new JenkinsReportGenerationException(e);
         }
     }
 }

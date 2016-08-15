@@ -41,7 +41,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
             addServerSideTests(doc);
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new XMLFileException(e.getMessage());
+            throw new XMLFileException(e);
         }
 
         if (getTestCount() == 0) {

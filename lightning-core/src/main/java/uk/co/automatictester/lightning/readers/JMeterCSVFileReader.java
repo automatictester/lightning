@@ -41,7 +41,7 @@ public class JMeterCSVFileReader {
                     successValue = jmeterTransaction[successIndex];
                     timeStampValue = jmeterTransaction[timeStampIndex];
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new CSVFileMalformedDataException();
+                    throw new CSVFileMalformedDataException(e);
                 }
                 currentTransaction.add(labelValue);     // 0
                 currentTransaction.add(elapsedValue);   // 1
@@ -50,7 +50,7 @@ public class JMeterCSVFileReader {
                 jmeterTransactions.add(currentTransaction);
             }
         } catch (IOException e) {
-            throw new CSVFileIOException(e.getMessage());
+            throw new CSVFileIOException(e);
         }
         if (jmeterTransactions.isEmpty()) {
             throw new CSVFileNoTransactionsException();

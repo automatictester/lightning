@@ -41,7 +41,9 @@ public class PassedTransactionsTest extends ClientSideTest {
             int failureCount = 0;
             for (List<String> transaction : transactions) {
                 String success = transaction.get(2);
-                if (!Boolean.parseBoolean(success)) failureCount++;
+                if (!Boolean.parseBoolean(success)) {
+                    failureCount++;
+                }
             }
 
             if (type.equals(ThresholdType.NUMBER)) {

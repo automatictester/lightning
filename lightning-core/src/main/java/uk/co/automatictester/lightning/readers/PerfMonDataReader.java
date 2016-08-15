@@ -37,7 +37,7 @@ public class PerfMonDataReader {
                 perfMonDataEntries.add(currentDataEntry);
             }
         } catch (IOException e) {
-            throw new CSVFileIOException(e.getMessage());
+            throw new CSVFileIOException(e);
         }
         if (perfMonDataEntries.isEmpty()) {
             throw new CSVFileNoTransactionsException();
