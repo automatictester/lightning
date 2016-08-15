@@ -38,7 +38,7 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
     public int getFailCount() {
         int failCount = 0;
         for (ArrayList<String> transaction : this) {
-            if (transaction.get(2).equals("false")) {
+            if ("false".equals(transaction.get(2))) {
                 failCount++;
             }
         }

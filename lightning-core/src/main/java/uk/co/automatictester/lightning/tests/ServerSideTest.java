@@ -84,6 +84,7 @@ public class ServerSideTest extends LightningTest {
         return originalPerfMonDataEntries.excludeHostAndMetricOtherThan(getHostAndMetric());
     }
 
+    @Override
     public String getTestExecutionReport() {
         return String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
@@ -105,6 +106,7 @@ public class ServerSideTest extends LightningTest {
                 getResultForReport());
     }
 
+    @Override
     public void printTestExecutionReport() {
         System.out.println(getTestExecutionReport());
     }
