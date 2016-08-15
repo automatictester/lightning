@@ -105,7 +105,7 @@ public abstract class LightningXMLProcessingHelpers {
 
     protected int getPercent(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
-        return new Percent(elementValue).getPercent();
+        return new Percent(elementValue).getValue();
     }
 
 }

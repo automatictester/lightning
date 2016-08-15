@@ -18,8 +18,8 @@ public class PerfMonDataReader {
 
     public PerfMonDataEntries getDataEntires(File csvFile) {
         PerfMonDataEntries perfMonDataEntries = new PerfMonDataEntries();
-        try {
-            CSVReader reader = new CSVReader(new FileReader(csvFile));
+        try (FileReader fr = new FileReader(csvFile)) {
+            CSVReader reader = new CSVReader(fr);
 
             String[] perfMonDataEntry;
             String timestamp;

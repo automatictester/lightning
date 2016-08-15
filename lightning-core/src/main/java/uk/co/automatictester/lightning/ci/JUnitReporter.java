@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.exceptions.JunitReportGenerationException;
 import uk.co.automatictester.lightning.tests.LightningTest;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -26,7 +27,7 @@ public class JUnitReporter {
         try {
             db = dbf.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
+            throw new JunitReportGenerationException(e.getMessage());
         }
         doc = db.newDocument();
         doc.setXmlStandalone(true);
@@ -83,7 +84,7 @@ public class JUnitReporter {
         try {
             transformer = TransformerFactory.newInstance().newTransformer();
         } catch (TransformerConfigurationException e) {
-            throw new RuntimeException(e);
+            throw new JunitReportGenerationException(e.getMessage());
         }
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -95,7 +96,7 @@ public class JUnitReporter {
         try {
             transformer.transform(source, file);
         } catch (TransformerException e) {
-            throw new RuntimeException(e);
+            throw new JunitReportGenerationException(e.getMessage());
         }
     }
 }

@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.enums.ThresholdType;
@@ -29,7 +30,7 @@ public class PassedTransactionsTest extends ClientSideTest {
         super(name, type, description, transactionName);
         this.type = ThresholdType.PERCENT;
         this.allowedPercentOfFailedTransactions = percent;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getPercent());
+        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getValue());
     }
 
     public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
@@ -53,7 +54,7 @@ public class PassedTransactionsTest extends ClientSideTest {
                 actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), failureCount);
             } else {
                 int percentOfFailedTransactions = (int) (((float) failureCount / transactionCount) * 100);
-                if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getPercent()) {
+                if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getValue()) {
                     result = TestResult.FAIL;
                 } else {
                     result = TestResult.PASS;
@@ -67,8 +68,14 @@ public class PassedTransactionsTest extends ClientSideTest {
         }
     }
 
+    @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
 }

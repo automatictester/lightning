@@ -29,7 +29,7 @@ public class PercentTest {
     @Test(dataProvider = "positiveTestData")
     public void testIsPercentileTrue(int integer) {
         Percent p = new Percent(integer);
-        assertThat(p.getPercent(), is(equalTo((integer))));
+        assertThat(p.getValue(), is(equalTo((integer))));
     }
 
     @Test(dataProvider = "negativeTestData", expectedExceptions = PercentException.class)

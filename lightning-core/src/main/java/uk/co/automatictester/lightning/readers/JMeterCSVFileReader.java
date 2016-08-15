@@ -21,8 +21,8 @@ public class JMeterCSVFileReader {
 
     public JMeterTransactions getTransactions(File csvFile) {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        try {
-            CSVReader reader = new CSVReader(new FileReader(csvFile));
+        try (FileReader fr = new FileReader(csvFile)) {
+            CSVReader reader = new CSVReader(fr);
 
             String[] columnNames = reader.readNext();
             getColumnIndexes(columnNames);
