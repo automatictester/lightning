@@ -64,7 +64,7 @@
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="1383304260">jetty-maven-plugin</stringProp>
               </collectionProp>
-              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data_as_document</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
