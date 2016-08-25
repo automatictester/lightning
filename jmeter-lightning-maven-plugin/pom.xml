@@ -8,7 +8,7 @@
     <version>1.0.1-SNAPSHOT</version>
     <name>jmeter-lightning-maven-plugin</name>
     <description>Maven plugin encapsulating Lightning functionality</description>
-    <url>https://github.com/automatictester/jmeter-lightning-maven-plugin</url>
+    <url>http://automatictester.github.io/lightning</url>
 
     <licenses>
         <license>
