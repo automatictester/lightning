@@ -1,6 +1,8 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import java.util.List;
@@ -9,6 +11,7 @@ public abstract class ClientSideTest extends LightningTest {
 
     protected final String transactionName;
     protected int transactionCount;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected ClientSideTest(String name, String type, String description, String transactionName) {
         super(name, type, description);
@@ -53,7 +56,7 @@ public abstract class ClientSideTest extends LightningTest {
 
     @Override
     public void printTestExecutionReport() {
-        System.out.println(getTestExecutionReport());
+        logger.info(getTestExecutionReport());
     }
 
     protected String getTransactionNameForReport() {

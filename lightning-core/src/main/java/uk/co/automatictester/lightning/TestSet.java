@@ -1,5 +1,7 @@
 package uk.co.automatictester.lightning;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.TestResult;
@@ -18,6 +20,7 @@ public class TestSet {
     private int failCount = 0;
     private int ignoreCount = 0;
     private String testExecutionReport = "";
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TestSet(List<ClientSideTest> clientSideTests, List<ServerSideTest> serverSideTests) {
         this.clientSideTests = clientSideTests;
@@ -55,7 +58,7 @@ public class TestSet {
     }
 
     public void printTestExecutionReport() {
-        System.out.println(getTestExecutionReport());
+        logger.info(getTestExecutionReport());
     }
 
     public String getTestExecutionReport() {

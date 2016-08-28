@@ -6,7 +6,7 @@ java \
     -jar target/lightning*.jar \
     report \
     --jmeter-csv src/test/resources/csv/jmeter/2_transactions_1_failed.csv \
-    > src/test/resources/results/actual/report_2_1.txt
+    &> src/test/resources/results/actual/report_2_1.txt
 OUT=$?
 
 echo -e ''; echo `basename "$0"`

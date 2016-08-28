@@ -4,7 +4,9 @@ import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.exceptions.JenkinsReportGenerationException;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Properties;
 
 public class JenkinsReporter extends CIReporter {

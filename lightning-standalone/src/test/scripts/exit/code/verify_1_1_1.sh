@@ -7,7 +7,7 @@ java \
     verify \
     -xml src/test/resources/xml/1_1_1.xml \
     --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
-    > src/test/resources/results/actual/1_1_1.txt
+    &> src/test/resources/results/actual/1_1_1.txt
 OUT=$?
 
 echo -e ''; echo `basename "$0"`

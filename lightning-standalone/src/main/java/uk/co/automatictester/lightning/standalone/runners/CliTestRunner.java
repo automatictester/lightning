@@ -1,6 +1,8 @@
 package uk.co.automatictester.lightning.standalone.runners;
 
 import com.beust.jcommander.MissingCommandException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
@@ -33,6 +35,8 @@ public class CliTestRunner {
     private static PerfMonDataEntries perfMonDataEntries;
     private static Mode mode;
 
+    private static final Logger logger = LoggerFactory.getLogger(CliTestRunner.class);
+
     public static void main(String[] args) throws TransformerException, ParserConfigurationException {
         parseParams(args);
 
@@ -62,7 +66,7 @@ public class CliTestRunner {
         try {
             params = new CommandLineInterface(args);
         } catch (MissingCommandException e) {
-            System.out.println("Invalid command, should be one of these: report, verify");
+            logger.error("Invalid command, should be one of these: report, verify");
             setExitCode(1);
         }
     }
@@ -96,7 +100,7 @@ public class CliTestRunner {
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        System.out.println(String.format("Execution time:    %dms", testExecTime));
+        logger.info(String.format("Execution time:    %dms", testExecTime));
 
         if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
             exitCode = 1;

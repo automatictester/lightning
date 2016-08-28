@@ -1,5 +1,7 @@
 package uk.co.automatictester.lightning.ci;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
@@ -8,10 +10,10 @@ import uk.co.automatictester.lightning.tests.ServerSideTest;
 public class TeamCityReporter extends CIReporter {
 
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
-
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
-
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TeamCityReporter(TestSet testSet) {
         super(testSet);
@@ -22,7 +24,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityBuildStatusText() {
-        System.out.println(getTeamCityBuildStatusText());
+        logger.info(getTeamCityBuildStatusText());
         return this;
     }
 
@@ -32,7 +34,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityVerifyStatistics() {
-        System.out.println(getTeamCityVerifyStatistics());
+        logger.info(getTeamCityVerifyStatistics());
         return this;
     }
 
@@ -50,7 +52,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityReportStatistics() {
-        System.out.println(getTeamCityReportStatistics());
+        logger.info(getTeamCityReportStatistics());
         return this;
     }
 

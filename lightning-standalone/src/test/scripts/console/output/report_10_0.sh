@@ -4,14 +4,19 @@ mkdir -p src/test/resources/results/actual/
 
 EXPECTED_RESULT="src/test/resources/results/expected/report.txt"
 ACTUAL_RESULT="src/test/resources/results/actual/report.txt"
+PROCESSED_ACTUAL_RESULT="src/test/resources/results/actual/processed_report.txt"
 
 java \
     -jar target/lightning*.jar \
     report \
     --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
-    > $ACTUAL_RESULT
+    &> $ACTUAL_RESULT
 
-DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT`
+sed -e "s/\[main\] INFO uk.co.automatictester.lightning.reporters.JMeterReporter - //g" $ACTUAL_RESULT | \
+    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.ci.TeamCityReporter - //g" \
+    > $PROCESSED_ACTUAL_RESULT
+
+DIFF_OUTPUT=`diff $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`
 OUT=$?
 
 echo -e ''; echo `basename "$0"`

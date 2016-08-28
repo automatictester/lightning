@@ -1,10 +1,14 @@
 package uk.co.automatictester.lightning.tests;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 public abstract class RespTimeBasedTest extends ClientSideTest {
 
     protected List<Integer> longestTransactions;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public RespTimeBasedTest(String name, String type, String description, String transactionName) {
         super(name, type, description, transactionName);
@@ -39,6 +43,6 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
 
     @Override
     public void printTestExecutionReport() {
-        System.out.println(getTestExecutionReport());
+        logger.info(getTestExecutionReport());
     }
 }

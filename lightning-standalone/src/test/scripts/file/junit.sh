@@ -12,7 +12,7 @@ java \
     -xml src/test/resources/xml/junit_report.xml \
     --jmeter-csv src/test/resources/csv/jmeter/2_transactions.csv \
     --perfmon-csv src/test/resources/csv/perfmon/junit_report.csv \
-    > /dev/null
+    &> /dev/null
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT`
 OUT=$?

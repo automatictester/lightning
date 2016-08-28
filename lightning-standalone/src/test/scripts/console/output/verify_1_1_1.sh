@@ -4,15 +4,22 @@ mkdir -p src/test/resources/results/actual/
 
 EXPECTED_RESULT="src/test/resources/results/expected/1_1_1.txt"
 ACTUAL_RESULT="src/test/resources/results/actual/1_1_1.txt"
+PROCESSED_ACTUAL_RESULT="src/test/resources/results/actual/processed_1_1_1.txt"
 
 java \
     -jar target/lightning*.jar \
     verify \
     -xml src/test/resources/xml/1_1_1.xml \
     --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
-    | grep -v "Execution time:" > $ACTUAL_RESULT
+    &> $ACTUAL_RESULT
 
-DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT`
+cat $ACTUAL_RESULT | grep -v "Execution time:" | \
+    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.TestSet - //g" | \
+    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.reporters.TestSetReporter - //g" | \
+    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.ci.TeamCityReporter - //g" \
+    &> $PROCESSED_ACTUAL_RESULT
+
+DIFF_OUTPUT=`diff $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`
 OUT=$?
 
 echo -e ''; echo `basename "$0"`

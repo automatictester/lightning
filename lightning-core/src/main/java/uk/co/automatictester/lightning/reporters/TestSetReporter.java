@@ -1,17 +1,20 @@
 package uk.co.automatictester.lightning.reporters;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.TestSet;
 
 public class TestSetReporter {
 
     private TestSet testSet;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TestSetReporter(TestSet testSet) {
         this.testSet = testSet;
     }
 
     public void printTestSetExecutionSummaryReport() {
-        System.out.println(getTestSetExecutionSummaryReport());
+        logger.info(getTestSetExecutionSummaryReport());
     }
 
     public String getTestSetExecutionSummaryReport() {

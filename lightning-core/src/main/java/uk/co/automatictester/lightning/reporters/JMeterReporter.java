@@ -1,17 +1,20 @@
 package uk.co.automatictester.lightning.reporters;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 public class JMeterReporter {
 
     private JMeterTransactions jmeterTransactions;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public JMeterReporter(JMeterTransactions jmeterTransactions) {
         this.jmeterTransactions = jmeterTransactions;
     }
 
     public void printJMeterReport() {
-        System.out.println(getJMeterReport());
+        logger.info(getJMeterReport());
     }
 
     public String getJMeterReport() {

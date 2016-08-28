@@ -4,7 +4,10 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
-import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.tests.ClientSideTest;
+import uk.co.automatictester.lightning.tests.PassedTransactionsTest;
+import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
+import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import java.util.ArrayList;
 import java.util.List;

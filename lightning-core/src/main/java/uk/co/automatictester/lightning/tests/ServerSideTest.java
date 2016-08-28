@@ -3,6 +3,8 @@ package uk.co.automatictester.lightning.tests;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.enums.TestResult;
@@ -23,6 +25,8 @@ public class ServerSideTest extends LightningTest {
     private final long metricValueA;
     private long metricValueB;
     private String expectedResultMessage;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public ServerSideTest(String name, String type, ServerSideTestType subtype, String description, String hostAndMetric, long metricValueA, long metricValueB) {
         this(name, type, subtype, description, hostAndMetric, metricValueA);
@@ -108,7 +112,7 @@ public class ServerSideTest extends LightningTest {
 
     @Override
     public void printTestExecutionReport() {
-        System.out.println(getTestExecutionReport());
+        logger.info(getTestExecutionReport());
     }
 
     public String getHostAndMetric() {
