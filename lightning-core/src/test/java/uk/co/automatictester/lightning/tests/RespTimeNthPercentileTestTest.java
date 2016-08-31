@@ -16,18 +16,18 @@ import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class RespTimeNthPercentileTestTest {
 
-    private static final ArrayList<String> SEARCH_121_SUCCESS = new ArrayList<>(Arrays.asList("Search", "121", "true"));
-    private static final ArrayList<String> SEARCH_125_SUCCESS = new ArrayList<>(Arrays.asList("Search", "125", "true"));
-    private static final ArrayList<String> SEARCH_129_SUCCESS = new ArrayList<>(Arrays.asList("Search", "129", "true"));
-    private static final ArrayList<String> SEARCH_135_SUCCESS = new ArrayList<>(Arrays.asList("Search", "135", "true"));
-    private static final ArrayList<String> SEARCH_143_SUCCESS = new ArrayList<>(Arrays.asList("Search", "143", "true"));
-    private static final ArrayList<String> SEARCH_148_SUCCESS = new ArrayList<>(Arrays.asList("Search", "148", "true"));
-    private static final ArrayList<String> SEARCH_178_SUCCESS = new ArrayList<>(Arrays.asList("Search", "178", "true"));
-    private static final ArrayList<String> SEARCH_198_SUCCESS = new ArrayList<>(Arrays.asList("Search", "198", "true"));
-    private static final ArrayList<String> SEARCH_221_SUCCESS = new ArrayList<>(Arrays.asList("Search", "221", "true"));
-    private static final ArrayList<String> SEARCH_249_SUCCESS = new ArrayList<>(Arrays.asList("Search", "249", "true"));
-    private static final ArrayList<String> LOGIN_121_SUCCESS = new ArrayList<>(Arrays.asList("Login", "121", "true"));
-    private static final ArrayList<String> LOGIN_125_SUCCESS = new ArrayList<>(Arrays.asList("Login", "125", "true"));
+    private static final String[] SEARCH_121_SUCCESS = new String[] {"Search", "121", "true"};
+    private static final String[] SEARCH_125_SUCCESS = new String[] {"Search", "125", "true"};
+    private static final String[] SEARCH_129_SUCCESS = new String[] {"Search", "129", "true"};
+    private static final String[] SEARCH_135_SUCCESS = new String[] {"Search", "135", "true"};
+    private static final String[] SEARCH_143_SUCCESS = new String[] {"Search", "143", "true"};
+    private static final String[] SEARCH_148_SUCCESS = new String[] {"Search", "148", "true"};
+    private static final String[] SEARCH_178_SUCCESS = new String[] {"Search", "178", "true"};
+    private static final String[] SEARCH_198_SUCCESS = new String[] {"Search", "198", "true"};
+    private static final String[] SEARCH_221_SUCCESS = new String[] {"Search", "221", "true"};
+    private static final String[] SEARCH_249_SUCCESS = new String[] {"Search", "249", "true"};
+    private static final String[] LOGIN_121_SUCCESS = new String[] {"Login", "121", "true"};
+    private static final String[] LOGIN_125_SUCCESS = new String[] {"Login", "125", "true"};
 
     @Test
     public void testExecutePass() {

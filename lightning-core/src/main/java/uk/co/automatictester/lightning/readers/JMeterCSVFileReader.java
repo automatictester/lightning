@@ -1,76 +1,52 @@
 package uk.co.automatictester.lightning.readers;
 
-import com.opencsv.CSVReader;
+import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
+import com.univocity.parsers.common.processor.RowListProcessor;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.exceptions.CSVFileMalformedDataException;
-import uk.co.automatictester.lightning.exceptions.CSVFileMissingColumnNameException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class JMeterCSVFileReader {
 
-    private int labelIndex;
-    private int elapsedIndex;
-    private int successIndex;
-    private int timeStampIndex;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public JMeterTransactions getTransactions(File csvFile) {
+        long start = System.currentTimeMillis();
+        logger.info("Reading CSV file - start");
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
+
         try (FileReader fr = new FileReader(csvFile)) {
-            CSVReader reader = new CSVReader(fr);
-
-            String[] columnNames = reader.readNext();
-            getColumnIndexes(columnNames);
-
-            String[] jmeterTransaction;
-            String labelValue;
-            String elapsedValue;
-            String successValue;
-            String timeStampValue;
-
-            while ((jmeterTransaction = reader.readNext()) != null) {
-                ArrayList<String> currentTransaction = new ArrayList<>();
-                try {
-                    labelValue = jmeterTransaction[labelIndex];
-                    elapsedValue = jmeterTransaction[elapsedIndex];
-                    successValue = jmeterTransaction[successIndex];
-                    timeStampValue = jmeterTransaction[timeStampIndex];
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new CSVFileMalformedDataException(e);
-                }
-                currentTransaction.add(labelValue);     // 0
-                currentTransaction.add(elapsedValue);   // 1
-                currentTransaction.add(successValue);   // 2
-                currentTransaction.add(timeStampValue); // 3
-                jmeterTransactions.add(currentTransaction);
-            }
+            jmeterTransactions.addAll(getParser().parseAll(fr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
+
         if (jmeterTransactions.isEmpty()) {
             throw new CSVFileNoTransactionsException();
         }
+
+        long finish = System.currentTimeMillis();
+        long millisecondsBetween = finish - start;
+        logger.info("Reading CSV file - finish, read {} rows, took {}ms", jmeterTransactions.size(), millisecondsBetween);
+
         return jmeterTransactions;
     }
 
-    private void getColumnIndexes(String[] columnNames) {
-        labelIndex = getColumnIndexFor(columnNames, "label");
-        elapsedIndex = getColumnIndexFor(columnNames, "elapsed");
-        successIndex = getColumnIndexFor(columnNames, "success");
-        timeStampIndex = getColumnIndexFor(columnNames, "timeStamp");
-    }
-
-    private int getColumnIndexFor(String[] columnNames, String searchedColumnName) {
-        for (int i = 0; i < columnNames.length; i++) {
-            if (columnNames[i].equals(searchedColumnName)) {
-                return i;
-            }
-        }
-        throw new CSVFileMissingColumnNameException(searchedColumnName);
+    private CsvParser getParser() {
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setLineSeparatorDetectionEnabled(true);
+        parserSettings.setHeaderExtractionEnabled(true);
+        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
+        RowListProcessor rowProcessor = new RowListProcessor();
+        parserSettings.setProcessor(new ConcurrentRowProcessor(rowProcessor));
+        return new CsvParser(parserSettings);
     }
 }

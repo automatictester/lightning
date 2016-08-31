@@ -42,14 +42,14 @@ public class ServerSideTest extends LightningTest {
     }
 
     @Override
-    public void execute(ArrayList<ArrayList<String>> originalDataEntries) {
+    public void execute(ArrayList<String[]> originalDataEntries) {
         try {
             PerfMonDataEntries dataEntries = filterDataEntries((PerfMonDataEntries) originalDataEntries);
             dataEntriesCount = dataEntries.getDataEntriesCount();
 
             DescriptiveStatistics ds = new DescriptiveStatistics();
-            for (List<String> transaction : dataEntries) {
-                String elapsed = transaction.get(1);
+            for (String[] transaction : dataEntries) {
+                String elapsed = transaction[1];
                 ds.addValue(Double.parseDouble(elapsed));
             }
             actualResult = (int) ds.getMean();

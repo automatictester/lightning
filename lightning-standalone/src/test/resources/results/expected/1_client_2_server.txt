@@ -27,8 +27,6 @@ Actual result:        Percent of failed transactions = 0
 Transaction count:    5
 Test result:          Pass
 
-
-
 ============= EXECUTION SUMMARY =============
 Tests executed:    3
 Tests passed:      3

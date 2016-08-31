@@ -4,12 +4,12 @@ import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentHostAndMetri
 
 import java.util.ArrayList;
 
-public class PerfMonDataEntries extends ArrayList<ArrayList<String>> {
+public class PerfMonDataEntries extends ArrayList<String[]> {
 
     public PerfMonDataEntries excludeHostAndMetricOtherThan(String hostAndMetric) {
         PerfMonDataEntries dataEntries = new PerfMonDataEntries();
-        for (ArrayList<String> dataEntry : this) {
-            if (dataEntry.get(2).equals(hostAndMetric)) {
+        for (String[] dataEntry : this) {
+            if (dataEntry[2].equals(hostAndMetric)) {
                 dataEntries.add(dataEntry);
             }
         }

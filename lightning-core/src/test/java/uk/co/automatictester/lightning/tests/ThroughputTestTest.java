@@ -19,9 +19,9 @@ public class ThroughputTestTest {
     private static final ThroughputTest THROUGHPUT_TEST_B = new ThroughputTest("Test #1", "throughputTest", "", "Login", 3);
     private static final ThroughputTest THROUGHPUT_TEST_NO_TRANS_NAME = new ThroughputTest("Test #1", "throughputTest", "", null, 2);
 
-    public static final ArrayList<String> TRANSACTION_0 = new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291252000"));
-    public static final ArrayList<String> TRANSACTION_1 = new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291253000"));
-    public static final ArrayList<String> TRANSACTION_2 = new ArrayList<>(Arrays.asList("Login", "1000", "true", "1434291254000"));
+    private static final String[] TRANSACTION_0 = new String[] {"Login", "1000", "true", "1434291252000"};
+    private static final String[] TRANSACTION_1 = new String[] {"Login", "1000", "true", "1434291253000"};
+    private static final String[] TRANSACTION_2 = new String[] {"Login", "1000", "true", "1434291254000"};
 
     @Test
     public void testExecuteMethodPass() {

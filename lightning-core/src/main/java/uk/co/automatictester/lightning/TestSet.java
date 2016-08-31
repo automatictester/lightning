@@ -10,6 +10,7 @@ import uk.co.automatictester.lightning.tests.LightningTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestSet {
@@ -58,7 +59,9 @@ public class TestSet {
     }
 
     public void printTestExecutionReport() {
-        logger.info(getTestExecutionReport());
+        for (String line : Arrays.asList(getTestExecutionReport().split(System.lineSeparator()))) {
+            logger.info(line);
+        }
     }
 
     public String getTestExecutionReport() {

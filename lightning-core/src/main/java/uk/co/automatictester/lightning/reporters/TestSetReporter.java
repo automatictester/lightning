@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.TestSet;
 
+import java.util.Arrays;
+
 public class TestSetReporter {
 
     private TestSet testSet;
@@ -14,7 +16,9 @@ public class TestSetReporter {
     }
 
     public void printTestSetExecutionSummaryReport() {
-        logger.info(getTestSetExecutionSummaryReport());
+        for (String line : Arrays.asList(getTestSetExecutionSummaryReport().split(System.lineSeparator()))) {
+            logger.info(line);
+        }
     }
 
     public String getTestSetExecutionSummaryReport() {

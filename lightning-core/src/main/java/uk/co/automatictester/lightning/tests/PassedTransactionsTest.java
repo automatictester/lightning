@@ -34,14 +34,14 @@ public class PassedTransactionsTest extends ClientSideTest {
     }
 
     @Override
-    public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
+    public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
 
             int failureCount = 0;
-            for (List<String> transaction : transactions) {
-                String success = transaction.get(2);
+            for (String[] transaction : transactions) {
+                String success = transaction[2];
                 if (!Boolean.parseBoolean(success)) {
                     failureCount++;
                 }

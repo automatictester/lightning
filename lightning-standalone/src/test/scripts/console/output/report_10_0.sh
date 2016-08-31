@@ -12,9 +12,7 @@ java \
     --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
     &> $ACTUAL_RESULT
 
-sed -e "s/\[main\] INFO uk.co.automatictester.lightning.reporters.JMeterReporter - //g" $ACTUAL_RESULT | \
-    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.ci.TeamCityReporter - //g" \
-    > $PROCESSED_ACTUAL_RESULT
+sed -e "s/\[main\] INFO //g" $ACTUAL_RESULT > $PROCESSED_ACTUAL_RESULT
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`
 OUT=$?

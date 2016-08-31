@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class JMeterTransactions extends ArrayList<ArrayList<String>> {
+public class JMeterTransactions extends ArrayList<String[]> {
 
     public JMeterTransactions excludeLabelsOtherThan(String label) {
         JMeterTransactions transactions = new JMeterTransactions();
-        for (ArrayList<String> transaction : this) {
-            if (transaction.get(0).equals(label)) {
+        for (String[] transaction : this) {
+            if (transaction[0].equals(label)) {
                 transactions.add(transaction);
             }
         }
@@ -22,8 +22,8 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
 
     public List<Integer> getLongestTransactions() {
         List<Integer> longestTransactions = new ArrayList<>();
-        for (List<String> transaction : this) {
-            String elapsed = transaction.get(1);
+        for (String[] transaction : this) {
+            String elapsed = transaction[1];
             longestTransactions.add(Integer.parseInt(elapsed));
         }
         Collections.sort(longestTransactions);
@@ -37,8 +37,8 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
 
     public int getFailCount() {
         int failCount = 0;
-        for (ArrayList<String> transaction : this) {
-            if ("false".equals(transaction.get(2))) {
+        for (String[] transaction : this) {
+            if ("false".equals(transaction[2])) {
                 failCount++;
             }
         }
@@ -56,8 +56,8 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
 
     private long getFirstTransactionTimestamp() {
         long minTimestamp = 0;
-        for (ArrayList<String> transaction : this) {
-            long currentTransactionTimestamp = Long.parseLong(transaction.get(3));
+        for (String[] transaction : this) {
+            long currentTransactionTimestamp = Long.parseLong(transaction[3]);
             if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
                 minTimestamp = currentTransactionTimestamp;
             }
@@ -67,8 +67,8 @@ public class JMeterTransactions extends ArrayList<ArrayList<String>> {
 
     private long getLastTransactionTimestamp() {
         long maxTimestamp = 0;
-        for (ArrayList<String> transaction : this) {
-            long currentTransactionTimestamp = Long.parseLong(transaction.get(3));
+        for (String[] transaction : this) {
+            long currentTransactionTimestamp = Long.parseLong(transaction[3]);
             if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
                 maxTimestamp = currentTransactionTimestamp;
             }

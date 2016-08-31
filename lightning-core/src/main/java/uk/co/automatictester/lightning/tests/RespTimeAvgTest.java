@@ -23,14 +23,14 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     }
 
     @Override
-    public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
+    public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
 
             DescriptiveStatistics ds = new DescriptiveStatistics();
-            for (List<String> transaction : transactions) {
-                String elapsed = transaction.get(1);
+            for (String[] transaction : transactions) {
+                String elapsed = transaction[1];
                 ds.addValue(Double.parseDouble(elapsed));
             }
             longestTransactions = transactions.getLongestTransactions();

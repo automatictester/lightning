@@ -21,7 +21,7 @@ public class ThroughputTest extends ClientSideTest {
     }
 
     @Override
-    public void execute(ArrayList<ArrayList<String>> originalJMeterTransactions) {
+    public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();

@@ -100,7 +100,7 @@ public class CliTestRunner {
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        logger.info(String.format("Execution time:    %dms", testExecTime));
+        logger.info("Total execution time:    {}ms", testExecTime);
 
         if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
             exitCode = 1;

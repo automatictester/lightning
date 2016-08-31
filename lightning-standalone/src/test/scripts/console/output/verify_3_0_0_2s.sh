@@ -14,11 +14,8 @@ java \
     --perfmon-csv src/test/resources/csv/perfmon/2_entries.csv \
     &> $ACTUAL_RESULT
 
-cat $ACTUAL_RESULT | grep -v "Execution time:" | \
-    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.TestSet - //g" | \
-    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.reporters.TestSetReporter - //g" | \
-    sed -e "s/\[main\] INFO uk.co.automatictester.lightning.ci.TeamCityReporter - //g" \
-    &> $PROCESSED_ACTUAL_RESULT
+cat $ACTUAL_RESULT | grep -v "Total execution time:" | \
+    sed -e "s/\[main\] INFO //g" &> $PROCESSED_ACTUAL_RESULT
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`
 OUT=$?

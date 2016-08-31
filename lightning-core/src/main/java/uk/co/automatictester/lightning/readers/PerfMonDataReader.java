@@ -1,6 +1,9 @@
 package uk.co.automatictester.lightning.readers;
 
-import com.opencsv.CSVReader;
+import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
+import com.univocity.parsers.common.processor.RowListProcessor;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
@@ -8,7 +11,6 @@ import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PerfMonDataReader {
 
@@ -19,23 +21,7 @@ public class PerfMonDataReader {
     public PerfMonDataEntries getDataEntires(File csvFile) {
         PerfMonDataEntries perfMonDataEntries = new PerfMonDataEntries();
         try (FileReader fr = new FileReader(csvFile)) {
-            CSVReader reader = new CSVReader(fr);
-
-            String[] perfMonDataEntry;
-            String timestamp;
-            String value;
-            String hostAndMetric;
-
-            while ((perfMonDataEntry = reader.readNext()) != null) {
-                ArrayList<String> currentDataEntry = new ArrayList<>();
-                timestamp = perfMonDataEntry[TIMESTAMP];
-                value = perfMonDataEntry[VALUE];
-                hostAndMetric = perfMonDataEntry[HOST_AND_METRIC];
-                currentDataEntry.add(timestamp);
-                currentDataEntry.add(value);
-                currentDataEntry.add(hostAndMetric);
-                perfMonDataEntries.add(currentDataEntry);
-            }
+            perfMonDataEntries.addAll(getParser().parseAll(fr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
@@ -43,5 +29,15 @@ public class PerfMonDataReader {
             throw new CSVFileNoTransactionsException();
         }
         return perfMonDataEntries;
+    }
+
+    private CsvParser getParser() {
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setLineSeparatorDetectionEnabled(true);
+        parserSettings.setHeaderExtractionEnabled(false);
+        parserSettings.selectIndexes(TIMESTAMP, VALUE, HOST_AND_METRIC);
+        RowListProcessor rowProcessor = new RowListProcessor();
+        parserSettings.setProcessor(new ConcurrentRowProcessor(rowProcessor));
+        return new CsvParser(parserSettings);
     }
 }

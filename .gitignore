@@ -1,9 +1,13 @@
 target/
 target.lib/
 .idea/
+lightning-data-generator/.gradle/
+lightning-data-generator/gradle/wrapper/*
+lightning-data-generator/build/classes/main/
 */src/test/resources/results/actual/
 *.iml
 lightning-jenkins.properties
 junit.xml
+generated.csv
 pom.xml.releaseBackup
 release.properties

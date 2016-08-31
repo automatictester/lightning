@@ -16,11 +16,11 @@ import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class RespTimeStdDevTestTest {
 
-    private static final ArrayList<String> LOGIN_198_SUCCESS = new ArrayList<>(Arrays.asList("Search", "198", "true"));
-    private static final ArrayList<String> LOGIN_221_SUCCESS = new ArrayList<>(Arrays.asList("Search", "221", "true"));
-    private static final ArrayList<String> SEARCH_198_SUCCESS = new ArrayList<>(Arrays.asList("Search", "198", "true"));
-    private static final ArrayList<String> SEARCH_221_SUCCESS = new ArrayList<>(Arrays.asList("Search", "221", "true"));
-    private static final ArrayList<String> SEARCH_249_SUCCESS = new ArrayList<>(Arrays.asList("Search", "249", "true"));
+    private static final String[] LOGIN_198_SUCCESS = new String[] {"Search", "198", "true"};
+    private static final String[] LOGIN_221_SUCCESS = new String[] {"Search", "221", "true"};
+    private static final String[] SEARCH_198_SUCCESS = new String[] {"Search", "198", "true"};
+    private static final String[] SEARCH_221_SUCCESS = new String[] {"Search", "221", "true"};
+    private static final String[] SEARCH_249_SUCCESS = new String[] {"Search", "249", "true"};
 
     @Test
     public void verifyExecutePass() {

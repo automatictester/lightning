@@ -28,7 +28,7 @@ public abstract class LightningTest {
 
     public abstract String getTestExecutionReport();
 
-    public abstract void execute(ArrayList<ArrayList<String>> dataEntries);
+    public abstract void execute(ArrayList<String[]> dataEntries);
 
     protected String getDescriptionForReport() {
         return (!getDescription().isEmpty()) ? String.format("Test description:     %s%n", getDescription()) : "";
