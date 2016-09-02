@@ -20,7 +20,7 @@ public class JMeterCSVFileReader {
 
     public JMeterTransactions getTransactions(File csvFile) {
         long start = System.currentTimeMillis();
-        logger.info("Reading CSV file - start");
+        logger.debug("Reading CSV file - start");
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
 
         try (FileReader fr = new FileReader(csvFile)) {
@@ -35,7 +35,7 @@ public class JMeterCSVFileReader {
 
         long finish = System.currentTimeMillis();
         long millisecondsBetween = finish - start;
-        logger.info("Reading CSV file - finish, read {} rows, took {}ms", jmeterTransactions.size(), millisecondsBetween);
+        logger.debug("Reading CSV file - finish, read {} rows, took {}ms", jmeterTransactions.size(), millisecondsBetween);
 
         return jmeterTransactions;
     }
