@@ -7,6 +7,8 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
+import java.util.Arrays;
+
 public class TeamCityReporter extends CIReporter {
 
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
@@ -24,7 +26,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityBuildStatusText() {
-        logger.info(getTeamCityBuildStatusText());
+        log(getTeamCityBuildStatusText());
         return this;
     }
 
@@ -34,7 +36,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityVerifyStatistics() {
-        logger.info(getTeamCityVerifyStatistics());
+        log(getTeamCityVerifyStatistics());
         return this;
     }
 
@@ -52,7 +54,7 @@ public class TeamCityReporter extends CIReporter {
     }
 
     public TeamCityReporter printTeamCityReportStatistics() {
-        logger.info(getTeamCityReportStatistics());
+        log(getTeamCityReportStatistics());
         return this;
     }
 
@@ -63,5 +65,11 @@ public class TeamCityReporter extends CIReporter {
         String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", jmeterTransactions.getTransactionCount());
         output += totalTransactionsStats;
         return output;
+    }
+
+    private void log(String output) {
+        for (String line : Arrays.asList(output.split(System.lineSeparator()))) {
+            logger.info(line);
+        }
     }
 }

@@ -17,7 +17,7 @@ java \
 cat $ACTUAL_RESULT | grep -v "Total execution time:" | \
     sed -e "s/\[main\] INFO //g" &> $PROCESSED_ACTUAL_RESULT
 
-DIFF_OUTPUT=`diff $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`
+DIFF_OUTPUT=`diff -B $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`
 OUT=$?
 
 echo -e ''; echo `basename "$0"`

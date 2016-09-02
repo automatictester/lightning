@@ -34,4 +34,3 @@ Test set status:   Pass
 ##teamcity[buildStatisticValue key='Failed transactions (%)' value='0']
 ##teamcity[buildStatisticValue key='Failed transactions' value='0']
 ##teamcity[buildStatisticValue key='80th percentile' value='11244']
-
