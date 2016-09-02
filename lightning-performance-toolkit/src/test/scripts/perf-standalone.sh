@@ -13,5 +13,5 @@ DATA_GENERATION_MODULE_RESOURCES="../../test/resources"
 java -jar ${STANDALONE_MODULE_ROOT_DIR}/target/lightning-standalone-*.jar verify -xml ${DATA_GENERATION_MODULE_RESOURCES}/perf-lightning.xml --jmeter-csv ${DATA_GENERATION_MODULE_RESOURCES}/generated.csv
 
 # 15500000 records = 500MB
-(cd ${DATA_GENERATION_SCRIPT_DIR} && date && groovy JmeterCsvGenerator.groovy 15500000 > ${DATA_GENERATION_MODULE_RESOURCES}/generated.csv && date && ls -lsh ${DATA_GENERATION_MODULE_RESOURCES})
-java -jar -Xmx6G ${STANDALONE_MODULE_ROOT_DIR}/target/lightning-standalone-*.jar verify -xml ${DATA_GENERATION_MODULE_RESOURCES}/perf-lightning.xml --jmeter-csv ${DATA_GENERATION_MODULE_RESOURCES}/generated.csv
+#(cd ${DATA_GENERATION_SCRIPT_DIR} && date && groovy JmeterCsvGenerator.groovy 15500000 > ${DATA_GENERATION_MODULE_RESOURCES}/generated.csv && date && ls -lsh ${DATA_GENERATION_MODULE_RESOURCES})
+#java -jar -Xmx6G ${STANDALONE_MODULE_ROOT_DIR}/target/lightning-standalone-*.jar verify -xml ${DATA_GENERATION_MODULE_RESOURCES}/perf-lightning.xml --jmeter-csv ${DATA_GENERATION_MODULE_RESOURCES}/generated.csv
