@@ -1,9 +1,9 @@
 target/
 target.lib/
 .idea/
-lightning-data-generator/.gradle/
-lightning-data-generator/gradle/wrapper/*
-lightning-data-generator/build/classes/main/
+lightning-performance-toolkit/.gradle/
+lightning-performance-toolkit/gradle/wrapper/*
+lightning-performance-toolkit/build/classes/main/
 */src/test/resources/results/actual/
 *.iml
 lightning-jenkins.properties
