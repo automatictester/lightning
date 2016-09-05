@@ -12,6 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jmeter.lightning.maven.plugin.version>1.1.0</jmeter.lightning.maven.plugin.version>
     </properties>
 
     <profiles>
@@ -26,7 +27,7 @@
                     <plugin>
                         <groupId>uk.co.automatictester</groupId>
                         <artifactId>jmeter-lightning-maven-plugin</artifactId>
-                        <version>1.0.1-SNAPSHOT</version>
+                        <version>${jmeter.lightning.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -78,7 +79,7 @@
                     <plugin>
                         <groupId>uk.co.automatictester</groupId>
                         <artifactId>jmeter-lightning-maven-plugin</artifactId>
-                        <version>1.0.1-SNAPSHOT</version>
+                        <version>${jmeter.lightning.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
