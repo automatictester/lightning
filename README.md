@@ -29,3 +29,7 @@ Lightning functionality embedded in a Maven plugin.
 ### jmeter-lightning-maven-plugin-it
 
 Integration tests for JMeter Lightning Maven Plugin.
+
+### lightning-performance-toolkit
+
+Performance tests for Maven Plugin and Standalone JAR.
