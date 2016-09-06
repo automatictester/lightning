@@ -9,7 +9,7 @@ Visit our [website](http://automatictester.github.io/lightning/).
 
 Core Lightning library used as a key dependencies by Standalone Java JAR and Maven Plugin.
 
-[![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning)
+[![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.automatictester/lightning-core)
 [![codecov](https://codecov.io/gh/automatictester/lightning/branch/master/graph/badge.svg)](https://codecov.io/gh/automatictester/lightning)
 
 ### lightning-standalone
