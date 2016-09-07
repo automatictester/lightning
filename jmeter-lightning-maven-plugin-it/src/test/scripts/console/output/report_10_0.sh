@@ -11,7 +11,7 @@ mvn clean verify \
     -DjmeterCsv=src/test/resources/csv/jmeter/10_transactions.csv \
     > $ACTUAL_RESULT
 
-sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,29d' | sed '5,$d' | grep -v '\-\-\-\-\-\-\-\-\-\-\-\-\-' > $ACTUAL_RESULT_PARSED
+sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,29d' | sed '5,$d' > $ACTUAL_RESULT_PARSED
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT_PARSED`
 OUT=$?
@@ -26,5 +26,9 @@ else
     echo "INCORRECT CONSOLE OUTPUT - DIFF:"
     echo $DIFF_OUTPUT
     echo "TEST FAILED"
+    echo $ACTUAL_RESULT
+    cat $ACTUAL_RESULT
+    echo $ACTUAL_RESULT_PARSED
+    cat $ACTUAL_RESULT_PARSED
     exit 1
 fi
