@@ -8,6 +8,6 @@
     <avgRespTimeTest>
         <testName>Average response time</testName>
         <transactionName>WireMock - index.html</transactionName>
-        <maxAvgRespTime>10</maxAvgRespTime>
+        <maxAvgRespTime>50</maxAvgRespTime>
     </avgRespTimeTest>
 </testSet>

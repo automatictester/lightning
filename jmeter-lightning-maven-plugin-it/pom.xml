@@ -102,7 +102,7 @@
                                 <goal>run</goal>
                             </goals>
                             <configuration>
-                                <params>--root-dir=target/classes --port=8089</params>
+                                <params>--root-dir=target/classes --port=8089 -v</params>
                             </configuration>
                         </execution>
                     </executions>
