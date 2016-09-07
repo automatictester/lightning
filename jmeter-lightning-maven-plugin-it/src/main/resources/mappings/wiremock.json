@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "urlPattern": "/index.html"
+    "url": "/index.html"
   },
   "response": {
     "status": 200,
