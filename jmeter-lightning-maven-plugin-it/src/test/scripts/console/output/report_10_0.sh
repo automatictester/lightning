@@ -11,7 +11,7 @@ mvn clean verify \
     -DjmeterCsv=src/test/resources/csv/jmeter/10_transactions.csv \
     > $ACTUAL_RESULT
 
-sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,29d' | sed '5,$d' > $ACTUAL_RESULT_PARSED
+sed 's/^\[INFO] //g' $ACTUAL_RESULT | egrep -i "transaction"  > $ACTUAL_RESULT_PARSED
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT_PARSED`
 OUT=$?
