@@ -1,13 +1,13 @@
 <testSet>
     <passedTransactionsTest>
         <testName>No failed transactions</testName>
-        <transactionName>Jetty - index.html</transactionName>
+        <transactionName>WireMock - index.html</transactionName>
         <allowedNumberOfFailedTransactions>0</allowedNumberOfFailedTransactions>
     </passedTransactionsTest>
 
     <avgRespTimeTest>
         <testName>Average response time</testName>
-        <transactionName>Jetty - index.html</transactionName>
+        <transactionName>WireMock - index.html</transactionName>
         <maxAvgRespTime>10</maxAvgRespTime>
     </avgRespTimeTest>
 </testSet>

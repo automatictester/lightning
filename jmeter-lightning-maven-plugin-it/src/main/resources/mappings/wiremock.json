@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/index.html"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "text/html"
+    },
+    "body": "<html><head><title>This is WireMock</title></head><body><h1>Static asset served by wiremock-maven-plugin</h1></body></html>"
+  }
+}
