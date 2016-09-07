@@ -13,7 +13,7 @@ mvn clean verify \
     -DperfmonCsv=src/test/resources/csv/perfmon/2_entries.csv \
     | grep -v "Execution time:" > $ACTUAL_RESULT
 
-sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,9d' | sed '39,$d' > $ACTUAL_RESULT_PARSED
+sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,29d' | sed '39,$d' > $ACTUAL_RESULT_PARSED
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT_PARSED`
 OUT=$?

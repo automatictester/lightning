@@ -12,7 +12,7 @@ mvn clean verify \
     -DjmeterCsv=src/test/resources/csv/jmeter/10_transactions.csv \
     | grep -v "Execution time:" > $ACTUAL_RESULT
 
-sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,9d' | sed '37,$d' > $ACTUAL_RESULT_PARSED
+sed 's/^\[INFO] //g' $ACTUAL_RESULT | sed '1,29d' | sed '37,$d' > $ACTUAL_RESULT_PARSED
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT_PARSED`
 OUT=$?
