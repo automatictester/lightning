@@ -2,8 +2,7 @@ target/
 target.lib/
 .idea/
 lightning-performance-toolkit/.gradle/
-lightning-performance-toolkit/gradle/wrapper/*
-lightning-performance-toolkit/build/classes/main/
+lightning-performance-toolkit/build/
 */src/test/resources/results/actual/
 *.iml
 lightning-jenkins.properties
