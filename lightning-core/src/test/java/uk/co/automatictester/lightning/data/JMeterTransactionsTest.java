@@ -34,6 +34,26 @@ public class JMeterTransactionsTest {
     }
 
     @Test
+    public void testExcludeLabelsNotMatchingMethod() {
+        JMeterTransactions jmeterTransactions = new JMeterTransactions();
+        jmeterTransactions.add(new String[] {"Login", "1200", "true"});
+        jmeterTransactions.add(new String[] {"My Login", "1000", "true"});
+        jmeterTransactions.add(new String[] {"Logout", "800", "true"});
+        jmeterTransactions.add(new String[] {"Logo", "800", "true"});
+        jmeterTransactions.add(new String[] {"LogANY", "1100", "true"});
+
+        assertThat(jmeterTransactions.excludeLabelsNotMatching("Log.{2,3}").size(), is(3));
+    }
+
+    @Test(expectedExceptions = CSVFileNonexistentLabelException.class)
+    public void testExcludeLabelsNotMatchingMethodException() {
+        JMeterTransactions jmeterTransactions = new JMeterTransactions();
+        jmeterTransactions.add(new String[] {"Login", "1200", "true"});
+
+        jmeterTransactions.excludeLabelsNotMatching("nonexistent");
+    }
+
+    @Test
     public void testGetFailCount() {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(new String[] {"Login", "1200", "true"});

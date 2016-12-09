@@ -15,8 +15,22 @@ public class JMeterTransactions extends ArrayList<String[]> {
                 transactions.add(transaction);
             }
         }
-        if (transactions.size() == 0)
+        if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(label);
+        }
+        return transactions;
+    }
+
+    public JMeterTransactions excludeLabelsNotMatching(String labelPattern) {
+        JMeterTransactions transactions = new JMeterTransactions();
+        for (String[] transaction : this) {
+            if (transaction[0].matches(labelPattern)) {
+                transactions.add(transaction);
+            }
+        }
+        if (transactions.size() == 0) {
+            throw new CSVFileNonexistentLabelException(labelPattern);
+        }
         return transactions;
     }
 
