@@ -11,13 +11,12 @@ public abstract class ClientSideTest extends LightningTest {
 
     protected final String transactionName;
     protected int transactionCount;
-    protected boolean regexp;
+    protected boolean regexp = false;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected ClientSideTest(String name, String type, String description, String transactionName) {
         super(name, type, description);
         this.transactionName = transactionName;
-        this.regexp = false;
     }
 
     public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {

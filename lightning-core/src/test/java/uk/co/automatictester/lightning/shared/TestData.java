@@ -27,6 +27,7 @@ public class TestData {
     public static final File TEST_SET_PASSED_PERCENT = new File(XML_RESOURCES + "passedTransactionsPercentTest.xml");
     public static final File TEST_SET_STD_DEV = new File(XML_RESOURCES + "respTimeStdDevTest.xml");
     public static final File TEST_SET_THROUGHPUT = new File(XML_RESOURCES + "throughputTest.xml");
+    public static final File TEST_SET_THROUGHPUT_WITH_REGEXP = new File(XML_RESOURCES + "throughputTest_regexp.xml");
     public static final File TEST_SET_MEDIAN = new File(XML_RESOURCES + "medianRespTimeTest.xml");
     public static final File TEST_SET_NOT_WELL_FORMED = new File(XML_RESOURCES + "not_well_formed.xml");
     public static final File TEST_SET_SERVER_LESS = new File(XML_RESOURCES + "serverSideTest_lessThan.xml");
@@ -65,6 +66,8 @@ public class TestData {
     public static final String[] LOGIN_1200_SUCCESS = new String[] {"Login", "1200", "true"};
     public static final String[] LOGIN_1200_FAILURE = new String[] {"Login", "1200", "false"};
     public static final String[] LOGIN_1000_SUCCESS = new String[] {"Login", "1000", "true"};
+    public static final String[] LOGOUT_1000_SUCCESS = new String[] {"Logout", "1000", "true"};
+    public static final String[] LOGOUT_1000_FAILURE = new String[] {"Logout", "1000", "false"};
 
     public static final String[] SEARCH_800_SUCCESS = new String[] {"Search", "800", "true"};
     public static final String[] SEARCH_800_FAILURE = new String[] {"Search", "800", "false"};

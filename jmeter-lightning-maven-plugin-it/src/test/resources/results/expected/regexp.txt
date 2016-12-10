@@ -1,0 +1,15 @@
+Test name:            Failed transactions
+Test type:            passedTransactionsTest
+Transaction name:     [A-Z]{1}[a-z]+
+Expected result:      Number of failed transactions <= 0
+Actual result:        Number of failed transactions = 0
+Transaction count:    10
+Test result:          Pass
+
+============= EXECUTION SUMMARY =============
+Tests executed:    1
+Tests passed:      1
+Tests failed:      0
+Tests errors:      0
+Test set status:   Pass
+##teamcity[buildStatisticValue key='Failed transactions' value='0']

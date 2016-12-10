@@ -24,6 +24,32 @@ public class PassedTransactionsTestTest {
     }
 
     @Test
+    public void verifyExecuteMethodRegexpPass() {
+        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Log[a-z]{2,3}", 0);
+        test.setRegexp(true);
+        JMeterTransactions jmeterTransactions = new JMeterTransactions();
+        jmeterTransactions.add(LOGIN_1000_SUCCESS);
+        jmeterTransactions.add(LOGOUT_1000_SUCCESS);
+
+        test.execute(jmeterTransactions);
+        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+    }
+
+    @Test
+    public void verifyExecuteMethodRegexpFail() {
+        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Log[a-z]ut", 0);
+        test.setRegexp(true);
+        JMeterTransactions jmeterTransactions = new JMeterTransactions();
+        jmeterTransactions.add(LOGOUT_1000_SUCCESS);
+        jmeterTransactions.add(LOGOUT_1000_FAILURE);
+
+        test.execute(jmeterTransactions);
+        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+    }
+
+    @Test
     public void verifyExecuteMethodAllTransactionsPass() {
         PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", null, 0);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();

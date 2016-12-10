@@ -60,7 +60,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
     private int getTestCount() {
         return
                 (clientSideTests != null ? clientSideTests.size() : 0) +
-                (serverSideTests != null ? serverSideTests.size() : 0);
+                        (serverSideTests != null ? serverSideTests.size() : 0);
     }
 
     private void addPassedTransactionsTestNodes(Document xmlDoc) {

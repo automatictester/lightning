@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+    <passedTransactionsTest>
+        <testName>Failed transactions</testName>
+        <transactionName>[A-Z]{1}[a-z]+</transactionName>
+        <regexp/>
+        <allowedNumberOfFailedTransactions>0</allowedNumberOfFailedTransactions>
+    </passedTransactionsTest>
+</testSet>

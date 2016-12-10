@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <throughputTest>
+        <testName>Test #2</testName>
+        <description>Verify throughput</description>
+        <transactionName>Log[a-z]{2,10}</transactionName>
+        <regexp/>
+        <minThroughput>2</minThroughput>
+    </throughputTest>
+
+</testSet>
