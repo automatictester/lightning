@@ -11,16 +11,22 @@ public abstract class ClientSideTest extends LightningTest {
 
     protected final String transactionName;
     protected int transactionCount;
+    protected boolean regexp;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected ClientSideTest(String name, String type, String description, String transactionName) {
         super(name, type, description);
         this.transactionName = transactionName;
+        this.regexp = false;
     }
 
     public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
         if (getTransactionName() != null) {
-            return originalJMeterTransactions.excludeLabelsOtherThan(getTransactionName());
+            if (isRegexp()) {
+                return originalJMeterTransactions.excludeLabelsNotMatching(getTransactionName());
+            } else {
+                return originalJMeterTransactions.excludeLabelsOtherThan(getTransactionName());
+            }
         } else {
             return originalJMeterTransactions;
         }
@@ -32,6 +38,14 @@ public abstract class ClientSideTest extends LightningTest {
 
     public String getTransactionName() {
         return transactionName;
+    }
+
+    public boolean isRegexp() {
+        return regexp;
+    }
+
+    public void setRegexp(boolean regexp) {
+        this.regexp = regexp;
     }
 
     @Override
