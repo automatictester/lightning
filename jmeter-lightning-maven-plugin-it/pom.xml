@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jmeter.lightning.maven.plugin.version>1.1.1-SNAPSHOT</jmeter.lightning.maven.plugin.version>
+        <jmeter.lightning.maven.plugin.version>1.2.0</jmeter.lightning.maven.plugin.version>
     </properties>
 
     <profiles>
