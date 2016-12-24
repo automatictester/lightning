@@ -1,4 +1,4 @@
-group 'uk.co.automatictester'
+group 'uk.co.deliverymind'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'groovy'

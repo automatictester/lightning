@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.co.automatictester</groupId>
-    <artifactId>lightning-parent</artifactId>
+    <groupId>uk.co.deliverymind</groupId>
+    <artifactId>lightning</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>lightning-parent</name>
+    <name>lightning</name>
 
     <modules>
         <module>jmeter-lightning-maven-plugin</module>

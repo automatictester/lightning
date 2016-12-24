@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.co.automatictester</groupId>
+    <groupId>uk.co.deliverymind</groupId>
     <artifactId>lightning-standalone</artifactId>
     <packaging>jar</packaging>
     <version>5.3.1-SNAPSHOT</version>
@@ -50,11 +50,8 @@
                     <attach>false</attach>
                     <archive>
                         <manifest>
-                            <mainClass>uk.co.automatictester.lightning.standalone.runners.CliTestRunner</mainClass>
+                            <mainClass>uk.co.deliverymind.lightning.standalone.runners.CliTestRunner</mainClass>
                         </manifest>
-                        <manifestEntries>
-                            <Built-By>automatictester</Built-By>
-                        </manifestEntries>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -69,7 +66,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>uk.co.automatictester</groupId>
+            <groupId>uk.co.deliverymind</groupId>
             <artifactId>lightning-core</artifactId>
             <version>5.3.1-SNAPSHOT</version>
         </dependency>
