@@ -1,7 +1,5 @@
 # Lightning
 
-[![Build Status](https://snap-ci.com/automatictester/lightning/branch/master/build_image)](https://snap-ci.com/automatictester/lightning/branch/master)
-
 Visit our [website](http://automatictester.github.io/lightning/).
 
 ### lightning-core
