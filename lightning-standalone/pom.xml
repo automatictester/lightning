@@ -9,7 +9,7 @@
     <version>5.3.1-SNAPSHOT</version>
     <name>lightning-standalone</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
-    <url>http://automatictester.github.io/lightning</url>
+    <url>http://deliverymind.github.io/lightning</url>
 
     <licenses>
         <license>
