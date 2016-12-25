@@ -102,7 +102,7 @@
                                 <goal>run</goal>
                             </goals>
                             <configuration>
-                                <params>--port=8080</params>
+                                <params>--port=8081</params>
                             </configuration>
                         </execution>
                     </executions>
