@@ -8,5 +8,5 @@ lightning-performance-toolkit/build/
 lightning-jenkins.properties
 junit.xml
 generated.csv
-pom.xml.releaseBackup
+*/pom.xml.releaseBackup
 release.properties
