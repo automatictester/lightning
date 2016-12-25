@@ -1,6 +1,6 @@
 # Lightning
 
-Visit our [website](http://automatictester.github.io/lightning/).
+Visit our [website](http://deliverymind.github.io/lightning/).
 
 ### lightning-core
 
