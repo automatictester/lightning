@@ -24,7 +24,7 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.util.List;
 
-import static uk.co.deliverymind.lightning.enums.Mode.*;
+import static uk.co.deliverymind.lightning.enums.Mode.valueOf;
 
 public class CliTestRunner {
 
