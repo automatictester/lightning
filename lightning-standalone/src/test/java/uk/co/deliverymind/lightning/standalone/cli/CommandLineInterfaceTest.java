@@ -85,7 +85,7 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
         if (System.getProperty("os.name").startsWith("Windows")) {
             actual = actual.replace("\n", "\r\n");
         }
-        assertThat(actual, containsString(expectedOutput));
+        assertThat(actual, equalToIgnoringWhiteSpace(expectedOutput));
         revertStream();
     }
 }
