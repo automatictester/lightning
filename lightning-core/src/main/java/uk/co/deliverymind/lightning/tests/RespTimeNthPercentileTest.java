@@ -3,6 +3,7 @@ package uk.co.deliverymind.lightning.tests;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import uk.co.deliverymind.lightning.data.JMeterTransactions;
 import uk.co.deliverymind.lightning.enums.TestResult;
 import uk.co.deliverymind.lightning.utils.IntToOrdConverter;
@@ -32,10 +33,12 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
             transactionCount = transactions.getTransactionCount();
 
             DescriptiveStatistics ds = new DescriptiveStatistics();
+            ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
             for (String[] transaction : transactions) {
                 String elapsed = transaction[1];
                 ds.addValue(Double.parseDouble(elapsed));
             }
+
             longestTransactions = transactions.getLongestTransactions();
             actualResult = (int) ds.getPercentile((double) percentile);
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), actualResult);

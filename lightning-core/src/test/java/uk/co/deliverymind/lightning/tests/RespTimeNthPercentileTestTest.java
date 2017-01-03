@@ -88,7 +88,7 @@ public class RespTimeNthPercentileTestTest {
 
     @Test
     public void testExecuteFail() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 245);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 220);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(SEARCH_121_SUCCESS);
         jmeterTransactions.add(SEARCH_125_SUCCESS);
@@ -107,7 +107,7 @@ public class RespTimeNthPercentileTestTest {
 
     @Test
     public void testExecuteAllTransactionsFail() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 245);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 220);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(LOGIN_121_SUCCESS);
         jmeterTransactions.add(LOGIN_125_SUCCESS);
