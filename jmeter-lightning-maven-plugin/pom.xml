@@ -5,7 +5,7 @@
     <groupId>uk.co.deliverymind</groupId>
     <artifactId>jmeter-lightning-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>1.3.1-SNAPSHOT</version>
+    <version>1.4.0</version>
     <name>jmeter-lightning-maven-plugin</name>
     <description>Maven plugin encapsulating Lightning functionality</description>
     <url>http://deliverymind.github.io/lightning</url>
@@ -140,7 +140,7 @@
         <dependency>
             <groupId>uk.co.deliverymind</groupId>
             <artifactId>lightning-core</artifactId>
-            <version>5.4.1-SNAPSHOT</version>
+            <version>5.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
