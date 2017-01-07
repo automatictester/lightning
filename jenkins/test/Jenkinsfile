@@ -1,0 +1,74 @@
+#!groovy
+
+node {
+    def mvn
+    stage('Prepare') {
+        def mvnHome = tool 'M3'
+        mvn = "${mvnHome}/bin/mvn"
+        step([$class: 'WsCleanup'])
+        git credentialsId: "${GIT_CREDENTIALS_ID}", url: "${REPO_URL}", branch: "${GIT_BRANCH}"
+    }
+    stage('CORE - Test and install') {
+        sh "${mvn} -pl lightning-core clean test install"
+    }
+    stage('STANDALONE - Generate JAR file') {
+        sh "${mvn} -pl lightning-standalone clean compile test assembly:single"
+    }
+    stage('STANDALONE - Help') {
+        // Check no exception is thrown (regression issue). Output is verified elsewhere.
+        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar"
+        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar -h"
+        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar --help"
+    }
+    stage('STANDALONE - Stubbed ITs') {
+        sh "(cd lightning-standalone; ./src/test/scripts/console/output/report_10_0.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_1_1_1.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_0.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_1.sh)"
+        sh "(cd lightning-standalone; ./src/test/scripts/file/junit.sh)"
+    }
+//     Disabled until we find out how to run nohup from Jenkins job on macOS
+//    stage('STANDALONE - ITs (CSV)') {
+//        sh "${mvn} -pl lightning-standalone-it -P jetty jetty:run &"
+//        sleep 5
+//        sh "${mvn} -pl lightning-standalone-it clean verify -Djmx.file=csv-test.jmx -Dresults.file.format=csv"
+//        sh "${mvn} -pl lightning-standalone-it -P jetty jetty:stop"
+//        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar verify -xml lightning-standalone-it/src/test/resources/lightning.xml --jmeter-csv lightning-standalone-it/target/jmeter/results/csv-test.csv"
+//    }
+//     Disabled until we find out how to run nohup from Jenkins job on macOS
+//    stage('STANDALONE - ITs (SDW)') {
+//        sh "${mvn} -pl lightning-standalone-it -P jetty jetty:run &"
+//        sleep 5
+//        sh "${mvn} -pl lightning-standalone-it clean verify -Djmx.file=sdw-test.jmx -Dresults.file.format=xml"
+//        sh "${mvn} -pl lightning-standalone-it -P jetty jetty:stop"
+//        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar verify -xml lightning-standalone-it/src/test/resources/lightning.xml --jmeter-csv lightning-standalone-it/target/jmeter/bin/sdw-results.csv"
+//    }
+    stage('MAVEN-PLUGIN - Install') {
+        sh "${mvn} -pl jmeter-lightning-maven-plugin clean install"
+    }
+    stage('MAVEN-PLUGIN - Stubbed ITs') {
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/report_10_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_1_1_1.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_regexp.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_regexp.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_1.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/file/junit.sh)"
+    }
+    stage('MAVEN-PLUGIN - ITs') {
+        sh "${mvn} -pl jmeter-lightning-maven-plugin-it clean verify -P jmeter"
+        // Check the following files were generated. Content is verified elsewhere.
+        sh "cat jmeter-lightning-maven-plugin-it/target/jmeter/bin/junit.xml"
+        sh "cat lightning-jenkins.properties"
+    }
+}
