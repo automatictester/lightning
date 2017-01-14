@@ -5,7 +5,7 @@ STANDALONE_MODULE_ROOT_DIR="../../../../lightning-standalone"
 DATA_GENERATION_SCRIPT_DIR="../../main/groovy"
 DATA_GENERATION_MODULE_RESOURCES="../../test/resources"
 
-(cd ${CORE_MODULE_ROOT_DIR} && mvn clean install)
+(cd ${CORE_MODULE_ROOT_DIR} && mvn clean install -DskipTests)
 (cd ${STANDALONE_MODULE_ROOT_DIR} && mvn clean compile assembly:single)
 
 # 1550000 records = 50MB

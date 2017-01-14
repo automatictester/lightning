@@ -7,7 +7,7 @@ DATA_GENERATION_SCRIPT_DIR="../../main/groovy"
 DATA_GENERATION_MODULE_RESOURCES="../../test/resources"
 DATA_GENERATION_MODULE_RESOURCES_FROM_PLUGIN_MODULE_IT_ROOT_DIR="../../lightning/lightning-performance-toolkit/src/test/resources"
 
-(cd ${CORE_MODULE_ROOT_DIR} && mvn clean install)
+(cd ${CORE_MODULE_ROOT_DIR} && mvn clean install -DskipTests)
 (cd ${PLUGIN_MODULE_ROOT_DIR} && mvn clean install)
 
 # 1550000 records = 50MB
