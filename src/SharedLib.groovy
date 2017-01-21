@@ -28,19 +28,23 @@ def runStandaloneJarStubbedITs() {
 }
 
 def runStandaloneCsvITs() {
-    sh "mvn -pl lightning-standalone-it -P jetty jetty:run &"
-    sleep 5
-    sh "mvn -pl lightning-standalone-it clean verify -Djmx.file=csv-test.jmx -Dresults.file.format=csv"
-    sh "mvn -pl lightning-standalone-it -P jetty jetty:stop"
-    sh "java -jar lightning-standalone/target/lightning-standalone-*.jar verify -xml lightning-standalone-it/src/test/resources/lightning.xml --jmeter-csv lightning-standalone-it/target/jmeter/results/csv-test.csv"
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl lightning-standalone-it -P jetty jetty:run &"
+        sleep 5
+        sh "mvn -pl lightning-standalone-it clean verify -Djmx.file=csv-test.jmx -Dresults.file.format=csv"
+        sh "mvn -pl lightning-standalone-it -P jetty jetty:stop"
+        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar verify -xml lightning-standalone-it/src/test/resources/lightning.xml --jmeter-csv lightning-standalone-it/target/jmeter/results/csv-test.csv"
+    }
 }
 
 def runStandaloneSdwITs() {
-    sh "mvn -pl lightning-standalone-it -P jetty jetty:run &"
-    sleep 5
-    sh "mvn -pl lightning-standalone-it clean verify -Djmx.file=sdw-test.jmx -Dresults.file.format=xml"
-    sh "mvn -pl lightning-standalone-it -P jetty jetty:stop"
-    sh "java -jar lightning-standalone/target/lightning-standalone-*.jar verify -xml lightning-standalone-it/src/test/resources/lightning.xml --jmeter-csv lightning-standalone-it/target/jmeter/bin/sdw-results.csv"
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl lightning-standalone-it -P jetty jetty:run &"
+        sleep 5
+        sh "mvn -pl lightning-standalone-it clean verify -Djmx.file=sdw-test.jmx -Dresults.file.format=xml"
+        sh "mvn -pl lightning-standalone-it -P jetty jetty:stop"
+        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar verify -xml lightning-standalone-it/src/test/resources/lightning.xml --jmeter-csv lightning-standalone-it/target/jmeter/bin/sdw-results.csv"
+    }
 }
 
 def checkStandaloneJarHelpExitCodes() {
@@ -93,25 +97,33 @@ def buildStandaloneJar() {
 }
 
 def commitReleaseVersion() {
-    sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION})"
-    sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
-    sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${PLUGIN_RELEASE_VERSION})"
-    sh "git add -A; git commit -m 'Release version bump'"
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION})"
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${PLUGIN_RELEASE_VERSION})"
+        sh "git add -A; git commit -m 'Release version bump'"
+    }
 }
 
 def commitSnapshotVersion() {
-    sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION})"
-    sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_POST_RELEASE_SNAPSHOT_VERSION})"
-    sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
-    sh "git add -A; git commit -m 'Post-release version bump'"
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "git add -A; git commit -m 'Post-release version bump'"
+    }
 }
 
 def releaseCore() {
-    sh "mvn -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+    }
 }
 
 def releaseMavenPlugin() {
-    sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+    }
 }
 
 def tagCoreRelease() {
