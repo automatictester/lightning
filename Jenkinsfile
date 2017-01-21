@@ -8,16 +8,22 @@ node {
         sharedLib.purge()
     }
     stage('Set release version number') {
-        sharedLib.commitReleaseVersion()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitReleaseVersion()
+        }
     }
     stage('CORE - Test and install') {
         sharedLib.testAndInstallCore()
     }
     stage('CORE - Tag release') {
-        sharedLib.tagCoreRelease()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.tagCoreRelease()
+        }
     }
     stage('CORE - Release') {
-        sharedLib.releaseCore()
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.releaseCore()
+        }
     }
     stage('STANDALONE - Generate JAR file') {
         sharedLib.buildStandaloneJar()
@@ -36,10 +42,14 @@ node {
 //        sharedLib.runStandaloneSdwITs()
 //    }
     stage('STANDALONE - Tag release') {
-        sharedLib.tagMavenPluginRelease()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.tagMavenPluginRelease()
+        }
     }
     stage('STANDALONE - Archive JAR') {
-        sharedLib.archiveStandaloneJar()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.archiveStandaloneJar()
+        }
     }
     stage('MAVEN-PLUGIN - Install') {
         sharedLib.installMavenPlugin()
@@ -51,43 +61,69 @@ node {
         sharedLib.runMavenPluginITs()
     }
     stage('MAVEN-PLUGIN - Tag release') {
-        sharedLib.runMavenPluginITs()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.runMavenPluginITs()
+        }
     }
     stage('MAVEN-PLUGIN - Release') {
-        sharedLib.releaseMavenPlugin()
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.releaseMavenPlugin()
+        }
     }
     stage('Set snapshot version number') {
-        sharedLib.commitSnapshotVersion()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitSnapshotVersion()
+        }
     }
     stage('CORE - Test and install - snapshot') {
-        sharedLib.testAndInstallCore()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.testAndInstallCore()
+        }
     }
     stage('STANDALONE - Generate JAR file - snapshot') {
-        sharedLib.buildStandaloneJar()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.buildStandaloneJar()
+        }
     }
     stage('STANDALONE - Help - snapshot') {
-        sharedLib.checkStandaloneJarHelpExitCodes()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.checkStandaloneJarHelpExitCodes()
+        }
     }
     stage('STANDALONE - Stubbed ITs - snapshot') {
-        sharedLib.runStandaloneJarStubbedITs()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.runStandaloneJarStubbedITs()
+        }
     }
 //     Disabled until we find out how to run nohup from Jenkins job on macOS
 //    stage('STANDALONE - ITs (CSV)') {
-//        sharedLib.runStandaloneCsvITs()
+//        if ("${TEST_ONLY}" == "false") {
+//            sharedLib.runStandaloneCsvITs()
+//        }
 //    }
 //    stage('STANDALONE - ITs (SDW)') {
-//        sharedLib.runStandaloneSdwITs()
+//        if ("${TEST_ONLY}" == "false") {
+//            sharedLib.runStandaloneSdwITs()
+//        }
 //    }
     stage('MAVEN-PLUGIN - Install - snapshot') {
-        sharedLib.installMavenPlugin()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.installMavenPlugin()
+        }
     }
     stage('MAVEN-PLUGIN - Stubbed ITs - snapshot') {
-        sharedLib.runMavenPluginStubbedITs()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.runMavenPluginStubbedITs()
+        }
     }
     stage('MAVEN-PLUGIN - ITs - snapshot') {
-        sharedLib.runMavenPluginITs()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.runMavenPluginITs()
+        }
     }
     stage('Push release to origin/master') {
-        sharedLib.push()
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.push()
+        }
     }
 }
