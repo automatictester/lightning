@@ -7,23 +7,17 @@ node {
         sharedLib.prepare()
         sharedLib.purge()
     }
-    stage('Create release branch') {
-        sh "git checkout -b feature/release"
-    }
     stage('Set release version number') {
-        sh "(cd lightning-core; ${mvn} versions:set -DnewVersion=${CORE_RELEASE_VERSION})"
-        sh "(cd lightning-standalone; ${mvn} versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
-        sh "(cd jmeter-lightning-maven-plugin; ${mvn} versions:set -DnewVersion=${PLUGIN_RELEASE_VERSION})"
-        sh "git add -A; git commit -m 'Release version bump'"
+        sharedLib.commitReleaseVersion()
     }
     stage('CORE - Test and install') {
         sharedLib.testAndInstallCore()
     }
     stage('CORE - Tag release') {
-        sh "git tag core-${CORE_RELEASE_VERSION}"
+        sharedLib.tagCoreRelease()
     }
     stage('CORE - Release') {
-        sh "${mvn} -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+        sharedLib.releaseCore()
     }
     stage('STANDALONE - Generate JAR file') {
         sharedLib.buildStandaloneJar()
@@ -35,10 +29,10 @@ node {
         sharedLib.runStandaloneJarStubbedITs()
     }
     stage('STANDALONE - Tag release') {
-        sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
+        sharedLib.tagMavenPluginRelease()
     }
     stage('STANDALONE - Archive JAR') {
-        archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
+        sharedLib.archiveStandaloneJar()
     }
     stage('MAVEN-PLUGIN - Install') {
         sharedLib.installMavenPlugin()
@@ -53,13 +47,10 @@ node {
         sharedLib.runMavenPluginITs()
     }
     stage('MAVEN-PLUGIN - Release') {
-        sh "${mvn} -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+        sharedLib.releaseMavenPlugin()
     }
     stage('Set snapshot version number') {
-        sh "(cd lightning-core; ${mvn} versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION})"
-        sh "(cd lightning-standalone; ${mvn} versions:set -DnewVersion=${STANDALONE_POST_RELEASE_SNAPSHOT_VERSION})"
-        sh "(cd jmeter-lightning-maven-plugin; ${mvn} versions:set -DnewVersion=${PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
-        sh "git add -A; git commit -m 'Post-release version bump'"
+        sharedLib.commitSnapshotVersion()
     }
     stage('CORE - Test and install - snapshot') {
         sharedLib.testAndInstallCore()
@@ -83,8 +74,6 @@ node {
         sharedLib.runMavenPluginITs()
     }
     stage('Push release to origin/master') {
-        sshagent(["${GIT_CREDENTIALS_ID}"]) {
-            sh "git push --set-upstream origin master; git push --tags"
-        }
+        sharedLib.push()
     }
 }

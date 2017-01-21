@@ -91,3 +91,43 @@ def buildStandaloneJar() {
         sh 'mvn -pl lightning-standalone clean compile test assembly:single'
     }
 }
+
+def commitReleaseVersion() {
+    sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION})"
+    sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
+    sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${PLUGIN_RELEASE_VERSION})"
+    sh "git add -A; git commit -m 'Release version bump'"
+}
+
+def commitSnapshotVersion() {
+    sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION})"
+    sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_POST_RELEASE_SNAPSHOT_VERSION})"
+    sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
+    sh "git add -A; git commit -m 'Post-release version bump'"
+}
+
+def releaseCore() {
+    sh "mvn -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+}
+
+def releaseMavenPlugin() {
+    sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+}
+
+def tagCoreRelease() {
+    sh "git tag core-${CORE_RELEASE_VERSION}"
+}
+
+def tagMavenPluginRelease() {
+    sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
+}
+
+def archiveStandaloneJar() {
+    archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
+}
+
+def push() {
+    sshagent(["${GIT_CREDENTIALS_ID}"]) {
+        sh "git push --set-upstream origin master; git push --tags"
+    }
+}
