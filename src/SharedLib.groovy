@@ -131,6 +131,10 @@ def tagCoreRelease() {
 }
 
 def tagMavenPluginRelease() {
+    sh "git tag maven-plugin-${MAVEN_PLUGIN_RELEASE_VERSION}"
+}
+
+def tagStandaloneRelease() {
     sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
 }
 

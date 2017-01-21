@@ -43,11 +43,11 @@ node {
 //    }
     stage('STANDALONE - Tag release') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.tagMavenPluginRelease()
+            sharedLib.tagStandaloneRelease()
         }
     }
     stage('STANDALONE - Archive JAR') {
-        if ("${TEST_ONLY}" == "false") {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
             sharedLib.archiveStandaloneJar()
         }
     }
@@ -62,7 +62,7 @@ node {
     }
     stage('MAVEN-PLUGIN - Tag release') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.runMavenPluginITs()
+            sharedLib.tagMavenPluginRelease()
         }
     }
     stage('MAVEN-PLUGIN - Release') {
