@@ -3,7 +3,6 @@
 def sharedLib = new SharedLib()
 
 node {
-    def mvn
     stage('Prepare') {
         sharedLib.prepare()
         sharedLib.purge()

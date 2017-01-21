@@ -1,12 +1,11 @@
 #!groovy
 
+def sharedLib = new SharedLib()
+
 node {
-    def mvn
     stage('Prepare') {
-        def mvnHome = tool 'M3'
-        mvn = "${mvnHome}/bin/mvn"
-        step([$class: 'WsCleanup'])
-        git credentialsId: "${GIT_CREDENTIALS_ID}", url: "${REPO_URL}"
+        sharedLib.prepare()
+        sharedLib.purge()
     }
     stage('Create release branch') {
         sh "git checkout -b feature/release"
@@ -18,7 +17,7 @@ node {
         sh "git add -A; git commit -m 'Release version bump'"
     }
     stage('CORE - Test and install') {
-        sh "${mvn} -pl lightning-core clean test install"
+        sharedLib.testAndInstallCore()
     }
     stage('CORE - Tag release') {
         sh "git tag core-${CORE_RELEASE_VERSION}"
@@ -27,24 +26,13 @@ node {
         sh "${mvn} -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
     }
     stage('STANDALONE - Generate JAR file') {
-        sh "${mvn} -pl lightning-standalone clean compile test assembly:single"
+        sharedLib.buildStandaloneJar()
     }
     stage('STANDALONE - Help') {
-        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar"
-        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar -h"
-        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar --help"
+        sharedLib.checkStandaloneJarHelpExitCodes()
     }
     stage('STANDALONE - Stubbed ITs') {
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_1_1_1.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/report_10_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_1.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/file/junit.sh)"
+        sharedLib.runStandaloneJarStubbedITs()
     }
     stage('STANDALONE - Tag release') {
         sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
@@ -53,29 +41,16 @@ node {
         archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
     }
     stage('MAVEN-PLUGIN - Install') {
-        sh "${mvn} -pl jmeter-lightning-maven-plugin clean install"
+        sharedLib.installMavenPlugin()
     }
     stage('MAVEN-PLUGIN - Stubbed ITs') {
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/report_10_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_1_1_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_regexp.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_regexp.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/file/junit.sh)"
+        sharedLib.runMavenPluginStubbedITs()
     }
     stage('MAVEN-PLUGIN - ITs') {
-        sh "${mvn} -pl jmeter-lightning-maven-plugin-it clean verify -P jmeter"
-        sh "cat jmeter-lightning-maven-plugin-it/target/jmeter/bin/junit.xml"
-        sh "cat lightning-jenkins.properties"
+        sharedLib.runMavenPluginITs()
     }
     stage('MAVEN-PLUGIN - Tag release') {
-        sh "git tag maven-plugin-${PLUGIN_RELEASE_VERSION}"
+        sharedLib.runMavenPluginITs()
     }
     stage('MAVEN-PLUGIN - Release') {
         sh "${mvn} -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
@@ -87,53 +62,25 @@ node {
         sh "git add -A; git commit -m 'Post-release version bump'"
     }
     stage('CORE - Test and install - snapshot') {
-        sh "${mvn} -pl lightning-core clean test install"
+        sharedLib.testAndInstallCore()
     }
     stage('STANDALONE - Generate JAR file - snapshot') {
-        sh "${mvn} -pl lightning-standalone clean compile test assembly:single"
+        sharedLib.buildStandaloneJar()
     }
     stage('STANDALONE - Help - snapshot') {
-        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar"
-        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar -h"
-        sh "java -jar lightning-standalone/target/lightning-standalone-*.jar --help"
+        sharedLib.checkStandaloneJarHelpExitCodes()
     }
     stage('STANDALONE - Stubbed ITs - snapshot') {
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_1_1_1.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/report_10_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_0.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_1.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
-        sh "(cd lightning-standalone; ./src/test/scripts/file/junit.sh)"
+        sharedLib.runStandaloneJarStubbedITs()
     }
     stage('MAVEN-PLUGIN - Install - snapshot') {
-        sh "${mvn} -pl jmeter-lightning-maven-plugin clean install"
+        sharedLib.installMavenPlugin()
     }
     stage('MAVEN-PLUGIN - Stubbed ITs - snapshot') {
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/report_10_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_1_1_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_regexp.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_regexp.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/file/junit.sh)"
+        sharedLib.runMavenPluginStubbedITs()
     }
     stage('MAVEN-PLUGIN - ITs - snapshot') {
-        sh "${mvn} -pl jmeter-lightning-maven-plugin-it clean verify -P jmeter"
-        sh "cat jmeter-lightning-maven-plugin-it/target/jmeter/bin/junit.xml"
-        sh "cat lightning-jenkins.properties"
-    }
-    stage('Merge release to master') {
-        sh "git checkout master; git rebase feature/release"
-        sh "git branch -d feature/release"
+        sharedLib.runMavenPluginITs()
     }
     stage('Push release to origin/master') {
         sshagent(["${GIT_CREDENTIALS_ID}"]) {
