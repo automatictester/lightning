@@ -28,6 +28,13 @@ node {
     stage('STANDALONE - Stubbed ITs') {
         sharedLib.runStandaloneJarStubbedITs()
     }
+//     Disabled until we find out how to run nohup from Jenkins job on macOS
+//    stage('STANDALONE - ITs (CSV)') {
+//        sharedLib.runStandaloneCsvITs()
+//    }
+//    stage('STANDALONE - ITs (SDW)') {
+//        sharedLib.runStandaloneSdwITs()
+//    }
     stage('STANDALONE - Tag release') {
         sharedLib.tagMavenPluginRelease()
     }
@@ -64,6 +71,13 @@ node {
     stage('STANDALONE - Stubbed ITs - snapshot') {
         sharedLib.runStandaloneJarStubbedITs()
     }
+//     Disabled until we find out how to run nohup from Jenkins job on macOS
+//    stage('STANDALONE - ITs (CSV)') {
+//        sharedLib.runStandaloneCsvITs()
+//    }
+//    stage('STANDALONE - ITs (SDW)') {
+//        sharedLib.runStandaloneSdwITs()
+//    }
     stage('MAVEN-PLUGIN - Install - snapshot') {
         sharedLib.installMavenPlugin()
     }
