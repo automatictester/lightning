@@ -6,10 +6,7 @@ EXPECTED_RESULT="src/test/resources/results/expected/regexp.txt"
 ACTUAL_RESULT="src/test/resources/results/actual/regexp.txt"
 ACTUAL_RESULT_PARSED="src/test/resources/results/actual/regexp_parsed.txt"
 
-SHARED="src/test/scripts/shared.sh"
-source ${SHARED}
-
-${MVN} clean verify \
+mvn clean verify \
     -Dmode=verify \
     -DtestSetXml=src/test/resources/xml/regexp.xml \
     -DjmeterCsv=src/test/resources/csv/jmeter/10_transactions.csv \

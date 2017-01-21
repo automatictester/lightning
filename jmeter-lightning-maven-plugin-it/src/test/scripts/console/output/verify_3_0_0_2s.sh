@@ -6,10 +6,7 @@ EXPECTED_RESULT="src/test/resources/results/expected/1_client_2_server.txt"
 ACTUAL_RESULT="src/test/resources/results/actual/1_client_2_server.txt"
 ACTUAL_RESULT_PARSED="src/test/resources/results/actual/1_client_2_server_parsed.txt"
 
-SHARED="src/test/scripts/shared.sh"
-source ${SHARED}
-
-${MVN} clean verify \
+mvn clean verify \
     -Dmode=verify \
     -DtestSetXml=src/test/resources/xml/1_client_2_server.xml \
     -DjmeterCsv=src/test/resources/csv/jmeter/10_transactions.csv \

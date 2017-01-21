@@ -2,10 +2,7 @@
 
 mkdir -p src/test/resources/results/actual/
 
-SHARED="src/test/scripts/shared.sh"
-source ${SHARED}
-
-${MVN} clean verify \
+mvn clean verify \
     -Dmode=verify \
     -DjmeterCsv=src/test/resources/csv/jmeter/10_transactions.csv \
     -DtestSetXml=src/test/resources/xml/1_1_1.xml \

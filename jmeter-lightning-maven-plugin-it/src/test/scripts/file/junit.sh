@@ -5,10 +5,7 @@ mkdir -p src/test/resources/results/actual/junit/
 EXPECTED_RESULT="src/test/resources/results/expected/junit/junit-expected.xml"
 ACTUAL_RESULT="junit.xml"
 
-SHARED="src/test/scripts/shared.sh"
-source ${SHARED}
-
-${MVN} clean verify \
+mvn clean verify \
     -Dmode=verify \
     -DjmeterCsv=src/test/resources/csv/jmeter/2_transactions.csv \
     -DtestSetXml=src/test/resources/xml/junit_report.xml \
