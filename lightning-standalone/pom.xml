@@ -61,6 +61,17 @@
 
         </plugins>
 
+        <!-- to have access to library version at runtime -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>version.properties</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
     </build>
 
     <dependencies>
