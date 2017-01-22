@@ -48,7 +48,7 @@ public class CommandLineInterface {
         return jc.getParsedCommand();
     }
 
-    private String getVersion() {
+    public String getVersion() {
         Properties prop = new Properties();
         try {
             prop.load(getClass().getClassLoader().getResourceAsStream("version.properties"));

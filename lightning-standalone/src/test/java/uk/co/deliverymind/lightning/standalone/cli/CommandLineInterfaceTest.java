@@ -60,7 +60,8 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
 
     @Test
     public void testPrintHelp() {
-        String expectedOutput = String.format("Usage: java -jar lightning-<version_number>.jar [options] [command] [command options]%n" +
+        CommandLineInterface params = new CommandLineInterface(new String[]{});
+        String expectedOutput = String.format("Usage: java -jar lightning-%s.jar [options] [command] [command options]%n" +
                 "  Commands:%n" +
                 "    verify      Execute Lightning tests against JMeter output%n" +
                 "      Usage: verify [options]%n" +
@@ -76,9 +77,7 @@ public class CommandLineInterfaceTest extends ConsoleOutputTest {
                 "      Usage: report [options]%n" +
                 "        Options:%n" +
                 "        * --jmeter-csv%n" +
-                "             JMeter CSV result file%n");
-
-        CommandLineInterface params = new CommandLineInterface(new String[]{});
+                "             JMeter CSV result file%n", params.getVersion());
         configureStream();
         params.printHelp();
         String actual = out.toString();
