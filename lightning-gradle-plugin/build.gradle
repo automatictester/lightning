@@ -1,0 +1,19 @@
+group 'uk.co.deliverymind'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'maven'
+apply plugin: 'java-gradle-plugin'
+
+test {
+    useTestNG()
+}
+
+dependencies {
+    compile 'uk.co.deliverymind:lightning-core:5.5.1-SNAPSHOT'
+    testCompile 'org.testng:testng:6.10'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}

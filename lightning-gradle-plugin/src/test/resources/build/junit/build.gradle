@@ -1,0 +1,9 @@
+plugins {
+    id 'uk.co.deliverymind.lightning'
+}
+
+lightningSettings {
+    testSetXml = new File('src/test/resources/xml/junit_report.xml')
+    jmeterCsv = new File('src/test/resources/csv/2_transactions.csv')
+    perfmonCsv = new File('src/test/resources/perfmon/junit_report.csv')
+}

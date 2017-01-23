@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,threadName,dataType,success,bytes,Latency
+1434291247743,3514,Login,200,Thread Group 1-2,,true,444013,0
+1434291247541,3780,Login,200,Thread Group 1-1,,true,444236,0
+1434291247949,3474,Login,200,Thread Group 1-3,,true,444041,0
+1434291248160,3448,Login,200,Thread Group 1-4,,true,444712,0
+1434291248359,3700,Login,200,Thread Group 1-5,,true,444054,0
+1434291251330,10769,Search,200,Thread Group 1-1,,true,1912363,0
+1434291251624,10626,Search,200,Thread Group 1-4,,true,1912352,0
+1434291251436,11086,Search,200,Thread Group 1-3,,true,1912321,0
+1434291251272,11250,Search,200,Thread Group 1-2,,true,1912264,0
+1434291252072,11221,Search,200,Thread Group 1-5,,true,1912175,0

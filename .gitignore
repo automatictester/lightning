@@ -1,8 +1,6 @@
 target/
 target.lib/
 .idea/
-lightning-performance-toolkit/.gradle/
-lightning-performance-toolkit/build/
 */src/test/resources/results/actual/
 *.iml
 lightning-jenkins.properties
@@ -11,3 +9,6 @@ generated.csv
 */pom.xml.releaseBackup
 */pom.xml.versionsBackup
 release.properties
+*/.gradle/
+*/build/
+**/taskArtifacts.lock

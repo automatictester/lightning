@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <!-- expected result: 1 pass, 1 fail, 1 error -->
+
+    <avgRespTimeTest>
+        <testName>Test #1</testName>
+        <description>Verify average login times</description>
+        <transactionName>Login</transactionName>
+        <maxAvgRespTime>4000</maxAvgRespTime>
+    </avgRespTimeTest>
+
+    <avgRespTimeTest>
+        <testName>Test #2</testName>
+        <description>Verify average login times</description>
+        <transactionName>Login</transactionName>
+        <maxAvgRespTime>3000</maxAvgRespTime>
+    </avgRespTimeTest>
+
+    <avgRespTimeTest>
+        <testName>Test #3</testName>
+        <description>Verify average login times</description>
+        <transactionName>just wrong</transactionName>
+        <maxAvgRespTime>1</maxAvgRespTime>
+    </avgRespTimeTest>
+
+</testSet>

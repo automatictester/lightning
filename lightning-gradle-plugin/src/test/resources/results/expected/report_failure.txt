@@ -1,0 +1,4 @@
+Transactions executed: 2, failed: 1
+##teamcity[buildProblem description='Transactions executed: 2, failed: 1']
+##teamcity[buildStatisticValue key='Failed transactions' value='1']
+##teamcity[buildStatisticValue key='Total transactions' value='2']
