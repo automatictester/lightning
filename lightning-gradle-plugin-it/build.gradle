@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'uk.co.deliverymind:lightning-gradle-plugin:1.0.0-SNAPSHOT'
+        classpath "uk.co.deliverymind:lightning-gradle-plugin:${lightningGradlePluginVersion}"
     }
 }
 

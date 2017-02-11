@@ -1,5 +1,5 @@
 group 'uk.co.deliverymind'
-version '1.0.0-SNAPSHOT'
+version lightningGradlePluginVersion
 
 apply plugin: 'maven'
 apply plugin: 'java-gradle-plugin'
@@ -14,7 +14,7 @@ However, this will be handled automatically for you and will happen only once.
 }
 
 dependencies {
-    compile 'uk.co.deliverymind:lightning-core:5.5.1-SNAPSHOT'
+    compile "uk.co.deliverymind:lightning-core:${lightningCoreVersion}"
     testCompile 'org.testng:testng:6.10'
 }
 
