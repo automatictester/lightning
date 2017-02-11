@@ -33,9 +33,11 @@ node {
         }
     }
     stage('Test, install and run ITs - snapshot') {
-        sharedLib.testGradlePlugin()
-        sharedLib.installGradlePlugin()
-        sharedLib.runGradlePluginITs()
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.testGradlePlugin()
+            sharedLib.installGradlePlugin()
+            sharedLib.runGradlePluginITs()
+        }
     }
     stage('Push release to origin/master') {
         if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
