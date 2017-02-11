@@ -149,3 +149,35 @@ def push() {
         sh "git push --set-upstream origin master; git push --tags"
     }
 }
+
+def commitGradlePluginReleaseVersion() {
+    sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_RELEASE_VERSION}/“ gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_RELEASE_VERSION}/“ gradle.properties)"
+    sh "git add -A; git commit -m 'Release version bump'"
+}
+
+def commitGradlePluginSnapshotVersion() {
+    sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/“ gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/“ gradle.properties)"
+    sh "git add -A; git commit -m 'Release version bump'"
+}
+
+def testGradlePlugin() {
+    sh "(cd lightning-gradle-plugin; ./gradlew clean test)"
+}
+
+def installGradlePlugin() {
+    sh "(cd lightning-gradle-plugin; ./gradlew clean install)"
+}
+
+def runGradlePluginITs() {
+    sh "(cd lightning-gradle-plugin-it; ./gradlew report verify)"
+}
+
+def tagGradlePluginRelease() {
+    sh "git tag gradle-plugin-${GRADLE_PLUGIN_RELEASE_VERSION}"
+}
+
+def releaseGradlePlugin() {
+    // TODO
+}

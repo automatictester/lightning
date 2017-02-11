@@ -1,0 +1,45 @@
+#!groovy
+
+def sharedLib = new SharedLib()
+
+node {
+    stage('Prepare') {
+        sharedLib.prepare()
+        sharedLib.purge()
+    }
+    stage('Set release version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitGradlePluginReleaseVersion()
+        }
+    }
+    stage('Test, install and run ITs') {
+        sharedLib.testGradlePlugin()
+        sharedLib.installGradlePlugin()
+        sharedLib.runGradlePluginITs()
+    }
+    stage('Tag release') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.tagGradlePluginRelease()
+        }
+    }
+    stage('Release') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.releaseGradlePlugin()
+        }
+    }
+    stage('Set snapshot version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitGradlePluginSnapshotVersion()
+        }
+    }
+    stage('Test, install and run ITs - snapshot') {
+        sharedLib.testGradlePlugin()
+        sharedLib.installGradlePlugin()
+        sharedLib.runGradlePluginITs()
+    }
+    stage('Push release to origin/master') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.push()
+        }
+    }
+}
