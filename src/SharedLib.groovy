@@ -163,7 +163,7 @@ def commitGradlePluginSnapshotVersion() {
 }
 
 def testGradlePlugin() {
-    sh "(cd lightning-gradle-plugin; ./gradlew clean test)"
+    sh "(cd lightning-gradle-plugin; ./gradlew clean test -i)"
 }
 
 def installGradlePlugin() {
