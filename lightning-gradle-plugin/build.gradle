@@ -6,11 +6,10 @@ apply plugin: 'java-gradle-plugin'
 
 test {
     useTestNG()
-    println """
-If you execute this task for first time, it may take a good while to run.
-This is because our tests cover compatibility with different Gradle versions, which may need to be downloaded first.
-However, this will be handled automatically for you and will happen only once.
-"""
+
+    doFirst {
+        println "\nIf you execute this task for first time, it may take a good while to run. This is because our tests cover compatibility with different Gradle versions, which may need to be downloaded first. However, this will be handled automatically for you and will happen only once.\n"
+    }
 }
 
 dependencies {
