@@ -152,13 +152,17 @@ def push() {
 
 def commitGradlePluginReleaseVersion() {
     sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_RELEASE_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin; cat gradle.properties)"
     sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_RELEASE_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; cat gradle.properties)"
     sh "git add -A; git commit -m 'Release version bump'"
 }
 
 def commitGradlePluginSnapshotVersion() {
     sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin; cat gradle.properties)"
     sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; cat gradle.properties)"
     sh "git add -A; git commit -m 'Release version bump'"
 }
 
