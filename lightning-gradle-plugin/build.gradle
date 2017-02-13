@@ -1,8 +1,6 @@
-group 'uk.co.deliverymind'
-version lightningGradlePluginVersion
-
 apply plugin: 'maven'
 apply plugin: 'java-gradle-plugin'
+apply plugin: 'signing'
 
 gradlePlugin {
     plugins {
@@ -29,4 +27,68 @@ dependencies {
 repositories {
     mavenCentral()
     mavenLocal()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                group 'uk.co.deliverymind'
+                name 'lightning-gradle-plugin'
+                version lightningGradlePluginVersion
+                packaging 'jar'
+                description 'Gradle plugin encapsulating Lightning functionality'
+                url 'http://deliverymind.github.io/lightning'
+
+                scm {
+                    connection 'scm:git:git@github.com:deliverymind/lightning.git'
+                    developerConnection 'scm:git:git@github.com:deliverymind/lightning.git'
+                    url 'git@github.com:deliverymind/lightning.git'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+
+                developers {
+                    developer {
+                        name 'Irek Pastusiak'
+                        email 'irek@deliverymind.co.uk'
+                        organizationUrl 'https://github.com/deliverymind'
+                    }
+                }
+            }
+        }
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
 }
