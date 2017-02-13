@@ -4,6 +4,15 @@ version lightningGradlePluginVersion
 apply plugin: 'maven'
 apply plugin: 'java-gradle-plugin'
 
+gradlePlugin {
+    plugins {
+        lightning {
+            id = 'uk.co.deliverymind.lightning'
+            implementationClass = 'uk.co.deliverymind.lightning.gradle.plugin.LightningPlugin'
+        }
+    }
+}
+
 test {
     useTestNG()
 
