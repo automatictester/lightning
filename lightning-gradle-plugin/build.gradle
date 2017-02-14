@@ -1,15 +1,10 @@
+group = 'uk.co.deliverymind'
+version = lightningGradlePluginVersion
+
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'signing'
-
-gradlePlugin {
-    plugins {
-        lightning {
-            id = 'uk.co.deliverymind.lightning'
-            implementationClass = 'uk.co.deliverymind.lightning.gradle.plugin.LightningPlugin'
-        }
-    }
-}
 
 test {
     useTestNG()
@@ -29,6 +24,18 @@ repositories {
     mavenLocal()
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId group
+            artifactId 'lightning-gradle-plugin'
+            version lightningGradlePluginVersion
+
+            from components.java
+        }
+    }
+}
+
 uploadArchives {
     repositories {
         mavenDeployer {
@@ -43,7 +50,7 @@ uploadArchives {
             }
 
             pom.project {
-                group 'uk.co.deliverymind'
+                group group
                 name 'lightning-gradle-plugin'
                 version lightningGradlePluginVersion
                 packaging 'jar'

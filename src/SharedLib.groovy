@@ -171,7 +171,7 @@ def testGradlePlugin() {
 }
 
 def installGradlePlugin() {
-    sh "(cd lightning-gradle-plugin; ./gradlew clean install)"
+    sh "(cd lightning-gradle-plugin; ./gradlew clean pTML -x test)"
 }
 
 def runGradlePluginITs() {
@@ -183,5 +183,5 @@ def tagGradlePluginRelease() {
 }
 
 def releaseGradlePlugin() {
-    sh '(cd lightning-gradle-plugin; ./gradlew uploadArchives)'
+    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives)'
 }
