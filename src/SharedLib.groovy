@@ -183,5 +183,5 @@ def tagGradlePluginRelease() {
 }
 
 def releaseGradlePlugin() {
-    // TODO
+    sh '(cd lightning-gradle-plugin; ./gradlew uploadArchives)'
 }
