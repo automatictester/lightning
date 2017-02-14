@@ -1,6 +1,6 @@
 # Lightning
 
-Visit our [website](http://deliverymind.github.io/lightning/).
+Lightning integrates JMeter non-functional tests with CI servers. Visit Lightning [website](http://deliverymind.github.io/lightning/).
 
 ### jmeter-lightning-maven-plugin-it
 
@@ -28,7 +28,7 @@ Lightning functionality embedded in a Gradle plugin.
 
 ### lightning-performance-toolkit
 
-Performance tests for Maven Plugin and Standalone JAR.
+Performance tests.
 
 ### lightning-standalone-it
 
@@ -36,6 +36,6 @@ Integration tests for Lightning.
 
 ### lightning-standalone
 
-Lightning Standalone Java JAR. Integrates JMeter non-functional tests with CI server.
+Lightning Standalone Java JAR.
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/jmeter-lightning-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/jmeter-lightning-maven-plugin)
