@@ -12,7 +12,7 @@ Lightning functionality embedded in a Maven plugin.
 
 ### lightning-core
 
-Core Lightning library used as a key dependencies by Standalone Java JAR and Maven Plugin.
+Core Lightning library used as a key dependency by Lightning Standalone Java JAR, Gradle and Maven plugins.
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-core)
 
