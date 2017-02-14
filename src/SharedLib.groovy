@@ -163,7 +163,7 @@ def commitGradlePluginSnapshotVersion() {
     sh "(cd lightning-gradle-plugin; cat gradle.properties)"
     sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/\" gradle.properties)"
     sh "(cd lightning-gradle-plugin-it; cat gradle.properties)"
-    sh "git add -A; git commit -m 'Release version bump'"
+    sh "git add -A; git commit -m 'Post-release version bump'"
 }
 
 def testGradlePlugin() {
@@ -183,5 +183,5 @@ def tagGradlePluginRelease() {
 }
 
 def releaseGradlePlugin() {
-    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives)'
+    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives -i)'
 }
