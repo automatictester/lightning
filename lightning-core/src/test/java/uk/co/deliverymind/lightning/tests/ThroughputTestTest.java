@@ -32,6 +32,28 @@ public class ThroughputTestTest {
     }
 
     @Test
+    public void testExecuteMethodPassNonInteger() {
+        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.5);
+        JMeterTransactions jmeterTransactions = new JMeterTransactions();
+        jmeterTransactions.add(TRANSACTION_0);
+        jmeterTransactions.add(TRANSACTION_2);
+
+        test.execute(jmeterTransactions);
+        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+    }
+
+    @Test
+    public void testExecuteMethodFailNonInteger() {
+        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 2.5);
+        JMeterTransactions jmeterTransactions = new JMeterTransactions();
+        jmeterTransactions.add(TRANSACTION_0);
+        jmeterTransactions.add(TRANSACTION_2);
+
+        test.execute(jmeterTransactions);
+        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+    }
+
+    @Test
     public void testExecuteMethodAllTransactionsFail() {
         ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", null, 3);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();

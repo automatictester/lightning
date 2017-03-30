@@ -4,15 +4,19 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.deliverymind.lightning.data.JMeterTransactions;
 import uk.co.deliverymind.lightning.enums.TestResult;
+import uk.co.deliverymind.lightning.utils.IntToOrdConverter;
 
 import java.util.ArrayList;
 
 public class ThroughputTest extends ClientSideTest {
 
-    private static final String EXPECTED_RESULT_MESSAGE = "Throughput >= %s / second";
-    private static final String ACTUAL_RESULT_MESSAGE = "Throughput = %s / second";
+    private static final String EXPECTED_RESULT_MESSAGE = "Throughput >= %.2f / second";
+    private static final String ACTUAL_RESULT_MESSAGE = "Throughput = %.2f / second";
 
     private final double minThroughput;
+
+    // Use double for this value in ThroughputTest
+    private double actualResult;
 
     public ThroughputTest(String name, String type, String description, String transactionName, double minThroughput) {
         super(name, type, description, transactionName);
@@ -26,7 +30,7 @@ public class ThroughputTest extends ClientSideTest {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.getTransactionCount();
 
-            actualResult = (int) transactions.getThroughput();
+            actualResult = transactions.getThroughput();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
 
             if (actualResult < minThroughput) {
