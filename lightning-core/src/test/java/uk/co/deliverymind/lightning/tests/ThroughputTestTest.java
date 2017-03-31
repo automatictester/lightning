@@ -19,6 +19,7 @@ public class ThroughputTestTest {
     private static final String[] TRANSACTION_0 = new String[] {"Login", "1000", "true", "1434291252000"};
     private static final String[] TRANSACTION_1 = new String[] {"Login", "1000", "true", "1434291253000"};
     private static final String[] TRANSACTION_2 = new String[] {"Login", "1000", "true", "1434291254000"};
+    private static final String[] TRANSACTION_3 = new String[] {"Login", "1000", "true", "1434291255000"};
 
     @Test
     public void testExecuteMethodPass() {
@@ -33,10 +34,10 @@ public class ThroughputTestTest {
 
     @Test
     public void testExecuteMethodPassNonInteger() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.5);
+        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.6);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(TRANSACTION_0);
-        jmeterTransactions.add(TRANSACTION_2);
+        jmeterTransactions.add(TRANSACTION_3);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -44,10 +45,10 @@ public class ThroughputTestTest {
 
     @Test
     public void testExecuteMethodFailNonInteger() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 2.5);
+        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.7);
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         jmeterTransactions.add(TRANSACTION_0);
-        jmeterTransactions.add(TRANSACTION_2);
+        jmeterTransactions.add(TRANSACTION_3);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
