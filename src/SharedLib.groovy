@@ -100,7 +100,7 @@ def buildStandaloneJar() {
 
 def commitCoreReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION})"
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION} -DprocessDependencies=false)"
         sh "git add -A; git commit -m 'Lightning Core release version bump'"
     }
 }
@@ -121,7 +121,7 @@ def commitMavenPluginReleaseVersion() {
 
 def commitCoreSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false)"
         sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
     }
 }
