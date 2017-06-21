@@ -2,38 +2,96 @@
 
 def sharedLib = new SharedLib()
 
+def runMavenPluginStubbedITs() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/report_10_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_1_1_1.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_regexp.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_regexp.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_0.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_1.sh)"
+        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/file/junit.sh)"
+    }
+}
+
+def runMavenPluginITs() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl jmeter-lightning-maven-plugin-it clean verify -P jmeter"
+        // Check the following files were generated. Content is verified elsewhere.
+        sh "cat jmeter-lightning-maven-plugin-it/target/jmeter/bin/junit.xml"
+        sh "cat lightning-jenkins.properties"
+    }
+}
+
+def installMavenPlugin() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh 'mvn -pl jmeter-lightning-maven-plugin clean install'
+    }
+}
+
+def commitMavenPluginReleaseVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_RELEASE_VERSION})"
+        sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
+    }
+}
+
+def commitMavenPluginSnapshotVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
+    }
+}
+
+def tagMavenPluginRelease() {
+    sh "git tag maven-plugin-${MAVEN_PLUGIN_RELEASE_VERSION}"
+}
+
+def releaseMavenPlugin() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+    }
+}
+
+
+
 node {
     stage('Prepare') {
-        sharedLib.prepare()
+        sharedLib.cleanupWorkspaceAndCloneRepo()
         sharedLib.purge()
     }
     stage('Set release version number') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.commitMavenPluginReleaseVersion()
+            commitMavenPluginReleaseVersion()
         }
     }
     stage('Install') {
-        sharedLib.installMavenPlugin()
+        installMavenPlugin()
     }
     stage('Stubbed ITs') {
-        sharedLib.runMavenPluginStubbedITs()
+        runMavenPluginStubbedITs()
     }
     stage('ITs') {
-        sharedLib.runMavenPluginITs()
+        runMavenPluginITs()
     }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.tagMavenPluginRelease()
+            tagMavenPluginRelease()
         }
     }
     stage('Release') {
         if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.releaseMavenPlugin()
+            releaseMavenPlugin()
         }
     }
     stage('Set snapshot version number') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.commitMavenPluginSnapshotVersion()
+            commitMavenPluginSnapshotVersion()
         }
     }
     stage('Push release to origin/master') {

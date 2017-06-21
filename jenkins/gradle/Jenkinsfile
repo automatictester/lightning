@@ -2,34 +2,72 @@
 
 def sharedLib = new SharedLib()
 
+def commitGradlePluginReleaseVersion() {
+    sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_RELEASE_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin; cat gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_RELEASE_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; cat gradle.properties)"
+    sh "git add -A; git commit -m 'Release version bump'"
+}
+
+def commitGradlePluginSnapshotVersion() {
+    sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin; cat gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${GRADLE_PLUGIN_SNAPSHOT_VERSION}/\" gradle.properties)"
+    sh "(cd lightning-gradle-plugin-it; cat gradle.properties)"
+    sh "git add -A; git commit -m 'Post-release version bump'"
+}
+
+def testGradlePlugin() {
+    sh "(cd lightning-gradle-plugin; ./gradlew clean test -i)"
+}
+
+def installGradlePlugin() {
+    sh "(cd lightning-gradle-plugin; ./gradlew clean pTML -x test)"
+}
+
+def runGradlePluginITs() {
+    sh "(cd lightning-gradle-plugin-it; ./gradlew report verify)"
+}
+
+def tagGradlePluginRelease() {
+    sh "git tag gradle-plugin-${GRADLE_PLUGIN_RELEASE_VERSION}"
+}
+
+def releaseGradlePlugin() {
+    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives -i)'
+}
+
+
+
 node {
     stage('Prepare') {
-        sharedLib.prepare()
+        sharedLib.cleanupWorkspaceAndCloneRepo()
         sharedLib.purge()
     }
     stage('Set release version number') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.commitGradlePluginReleaseVersion()
+            commitGradlePluginReleaseVersion()
         }
     }
     stage('Test, install and run ITs') {
-        sharedLib.testGradlePlugin()
-        sharedLib.installGradlePlugin()
-        sharedLib.runGradlePluginITs()
+        testGradlePlugin()
+        installGradlePlugin()
+        runGradlePluginITs()
     }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.tagGradlePluginRelease()
+            tagGradlePluginRelease()
         }
     }
     stage('Release') {
         if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.releaseGradlePlugin()
+            releaseGradlePlugin()
         }
     }
     stage('Set snapshot version number') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.commitGradlePluginSnapshotVersion()
+            commitGradlePluginSnapshotVersion()
         }
     }
     stage('Push release to origin/master') {

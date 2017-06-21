@@ -2,32 +2,64 @@
 
 def sharedLib = new SharedLib()
 
+def testAndInstallCore() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh 'mvn -pl lightning-core clean test install'
+    }
+}
+
+def commitCoreReleaseVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION} -DprocessDependencies=false)"
+        sh "git add -A; git commit -m 'Lightning Core release version bump'"
+    }
+}
+
+def commitCoreSnapshotVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false)"
+        sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
+    }
+}
+
+def releaseCore() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "mvn -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+    }
+}
+
+def tagCoreRelease() {
+    sh "git tag core-${CORE_RELEASE_VERSION}"
+}
+
+
+
 node {
     stage('Prepare') {
-        sharedLib.prepare()
+        sharedLib.cleanupWorkspaceAndCloneRepo()
         sharedLib.purge()
     }
     stage('Set release version number') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.commitCoreReleaseVersion()
+            commitCoreReleaseVersion()
         }
     }
     stage('Test and install') {
-        sharedLib.testAndInstallCore()
+        testAndInstallCore()
     }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.tagCoreRelease()
+            tagCoreRelease()
         }
     }
     stage('Release') {
         if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.releaseCore()
+            releaseCore()
         }
     }
     stage('Set snapshot version number') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.commitCoreSnapshotVersion()
+            commitCoreSnapshotVersion()
         }
     }
     stage('Push release to origin/master') {
