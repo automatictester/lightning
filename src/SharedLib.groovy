@@ -98,21 +98,45 @@ def buildStandaloneJar() {
     }
 }
 
-def commitReleaseVersion() {
+def commitCoreReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION})"
-        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_RELEASE_VERSION})"
-        sh "git add -A; git commit -m 'Release version bump'"
+        sh "git add -A; git commit -m 'Lightning Core release version bump'"
     }
 }
 
-def commitSnapshotVersion() {
+def commitStandaloneReleaseVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
+        sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
+    }
+}
+
+def commitMavenPluginReleaseVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_RELEASE_VERSION})"
+        sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
+    }
+}
+
+def commitCoreSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
+    }
+}
+
+def commitStandaloneSnapshotVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
+    }
+}
+
+def commitMavenPluginSnapshotVersion() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
-        sh "git add -A; git commit -m 'Post-release version bump'"
+        sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
     }
 }
 

@@ -1,0 +1,44 @@
+#!groovy
+
+def sharedLib = new SharedLib()
+
+node {
+    stage('Prepare') {
+        sharedLib.prepare()
+        sharedLib.purge()
+    }
+    stage('Set release version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitMavenPluginReleaseVersion()
+        }
+    }
+    stage('Install') {
+        sharedLib.installMavenPlugin()
+    }
+    stage('Stubbed ITs') {
+        sharedLib.runMavenPluginStubbedITs()
+    }
+    stage('ITs') {
+        sharedLib.runMavenPluginITs()
+    }
+    stage('Tag release') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.tagMavenPluginRelease()
+        }
+    }
+    stage('Release') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.releaseMavenPlugin()
+        }
+    }
+    stage('Set snapshot version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitMavenPluginSnapshotVersion()
+        }
+    }
+    stage('Push release to origin/master') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.push()
+        }
+    }
+}

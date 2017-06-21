@@ -1,0 +1,38 @@
+#!groovy
+
+def sharedLib = new SharedLib()
+
+node {
+    stage('Prepare') {
+        sharedLib.prepare()
+        sharedLib.purge()
+    }
+    stage('Set release version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitCoreReleaseVersion()
+        }
+    }
+    stage('Test and install') {
+        sharedLib.testAndInstallCore()
+    }
+    stage('Tag release') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.tagCoreRelease()
+        }
+    }
+    stage('Release') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.releaseCore()
+        }
+    }
+    stage('Set snapshot version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitCoreSnapshotVersion()
+        }
+    }
+    stage('Push release to origin/master') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.push()
+        }
+    }
+}

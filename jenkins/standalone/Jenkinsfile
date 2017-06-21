@@ -1,0 +1,51 @@
+#!groovy
+
+def sharedLib = new SharedLib()
+
+node {
+    stage('Prepare') {
+        sharedLib.prepare()
+        sharedLib.purge()
+    }
+    stage('Set release version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitStandaloneReleaseVersion()
+        }
+    }
+    stage('Generate JAR file') {
+        sharedLib.buildStandaloneJar()
+    }
+    stage('Test help') {
+        sharedLib.checkStandaloneJarHelpExitCodes()
+    }
+    stage('Stubbed ITs') {
+        sharedLib.runStandaloneJarStubbedITs()
+    }
+//     Disabled until we find out how to run nohup from Jenkins job on macOS
+//    stage('STANDALONE - ITs (CSV)') {
+//        sharedLib.runStandaloneCsvITs()
+//    }
+//    stage('STANDALONE - ITs (SDW)') {
+//        sharedLib.runStandaloneSdwITs()
+//    }
+    stage('Tag release') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.tagStandaloneRelease()
+        }
+    }
+    stage('Archive JAR') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.archiveStandaloneJar()
+        }
+    }
+    stage('Set snapshot version number') {
+        if ("${TEST_ONLY}" == "false") {
+            sharedLib.commitStandaloneSnapshotVersion()
+        }
+    }
+    stage('Push release to origin/master') {
+        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            sharedLib.push()
+        }
+    }
+}
