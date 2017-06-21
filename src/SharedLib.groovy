@@ -160,10 +160,6 @@ def tagMavenPluginRelease() {
     sh "git tag maven-plugin-${MAVEN_PLUGIN_RELEASE_VERSION}"
 }
 
-def tagStandaloneRelease() {
-    sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
-}
-
 def archiveStandaloneJar() {
     archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
 }

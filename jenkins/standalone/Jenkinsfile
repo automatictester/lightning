@@ -2,6 +2,10 @@
 
 def sharedLib = new SharedLib()
 
+def tagStandaloneRelease() {
+    sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
+}
+
 node {
     stage('Prepare') {
         sharedLib.prepare()
@@ -30,7 +34,7 @@ node {
 //    }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {
-            sharedLib.tagStandaloneRelease()
+            tagStandaloneRelease()
         }
     }
     stage('Archive JAR') {
