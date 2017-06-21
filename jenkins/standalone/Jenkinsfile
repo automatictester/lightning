@@ -34,9 +34,7 @@ node {
         }
     }
     stage('Archive JAR') {
-        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.archiveStandaloneJar()
-        }
+        sharedLib.archiveStandaloneJar()
     }
     stage('Set snapshot version number') {
         if ("${TEST_ONLY}" == "false") {
