@@ -47,8 +47,12 @@ def checkStandaloneJarHelpExitCodes() {
 }
 
 def buildStandaloneJar() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh 'mvn -pl lightning-standalone clean compile test assembly:single'
+    try {
+        withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+            sh 'mvn -pl lightning-standalone clean compile test assembly:single'
+        }
+    } finally {
+        junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
     }
 }
 
