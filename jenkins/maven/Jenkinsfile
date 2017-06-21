@@ -36,20 +36,20 @@ def installMavenPlugin() {
 
 def commitMavenPluginReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_RELEASE_VERSION})"
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${RELEASE_VERSION})"
         sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
     }
 }
 
 def commitMavenPluginSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${MAVEN_PLUGIN_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${POST_RELEASE_SNAPSHOT_VERSION})"
         sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
     }
 }
 
 def tagMavenPluginRelease() {
-    sh "git tag maven-plugin-${MAVEN_PLUGIN_RELEASE_VERSION}"
+    sh "git tag maven-plugin-${RELEASE_VERSION}"
 }
 
 def releaseMavenPlugin() {

@@ -10,14 +10,14 @@ def testAndInstallCore() {
 
 def commitCoreReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_RELEASE_VERSION} -DprocessDependencies=false)"
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${RELEASE_VERSION} -DprocessDependencies=false)"
         sh "git add -A; git commit -m 'Lightning Core release version bump'"
     }
 }
 
 def commitCoreSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-core; mvn versions:set -DnewVersion=${CORE_POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false)"
+        sh "(cd lightning-core; mvn versions:set -DnewVersion=${POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false)"
         sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
     }
 }
@@ -29,7 +29,7 @@ def releaseCore() {
 }
 
 def tagCoreRelease() {
-    sh "git tag core-${CORE_RELEASE_VERSION}"
+    sh "git tag core-${RELEASE_VERSION}"
 }
 
 

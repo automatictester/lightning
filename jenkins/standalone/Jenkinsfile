@@ -3,7 +3,7 @@
 def sharedLib = new SharedLib()
 
 def tagStandaloneRelease() {
-    sh "git tag standalone-${STANDALONE_RELEASE_VERSION}"
+    sh "git tag standalone-${RELEASE_VERSION}"
 }
 
 def runStandaloneJarStubbedITs() {
@@ -54,14 +54,14 @@ def buildStandaloneJar() {
 
 def commitStandaloneReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_RELEASE_VERSION})"
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${RELEASE_VERSION})"
         sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
     }
 }
 
 def commitStandaloneSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${STANDALONE_POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${POST_RELEASE_SNAPSHOT_VERSION})"
         sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
     }
 }
