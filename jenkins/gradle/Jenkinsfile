@@ -20,14 +20,14 @@ def commitGradlePluginSnapshotVersion() {
 
 def testGradlePlugin() {
     try {
-        sh "(cd lightning-gradle-plugin; ./gradlew clean test -i)"
+        sh "(cd lightning-gradle-plugin; ./gradlew clean check -i)"
     } finally {
         junit 'lightning-gradle-plugin/build/test-results/*.xml'
     }
 }
 
 def installGradlePlugin() {
-    sh "(cd lightning-gradle-plugin; ./gradlew clean pTML -x test)"
+    sh "(cd lightning-gradle-plugin; ./gradlew clean pTML -x integrationTest)"
 }
 
 def runGradlePluginITs() {

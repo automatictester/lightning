@@ -15,7 +15,7 @@ public class ReportTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runReport() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/complete"))
+                .withProjectDir(new File("src/integrationTest/resources/build/complete"))
                 .withArguments(":report")
                 .withPluginClasspath()
                 .build();
@@ -27,7 +27,7 @@ public class ReportTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runReportWithMissingInput() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/no/csv"))
+                .withProjectDir(new File("src/integrationTest/resources/build/no/csv"))
                 .withArguments(":report")
                 .withPluginClasspath()
                 .buildAndFail();
@@ -38,7 +38,7 @@ public class ReportTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runReportWithFailureExpected() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/failure_report"))
+                .withProjectDir(new File("src/integrationTest/resources/build/failure_report"))
                 .withArguments(":report")
                 .withPluginClasspath()
                 .buildAndFail();

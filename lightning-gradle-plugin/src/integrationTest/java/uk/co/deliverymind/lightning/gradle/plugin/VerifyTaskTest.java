@@ -18,7 +18,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runVerify() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/complete"))
+                .withProjectDir(new File("src/integrationTest/resources/build/complete"))
                 .withArguments(":verify")
                 .withPluginClasspath()
                 .build();
@@ -30,7 +30,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runVerifyWithRegexp() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/regexp"))
+                .withProjectDir(new File("src/integrationTest/resources/build/regexp"))
                 .withArguments(":verify")
                 .withPluginClasspath()
                 .build();
@@ -42,7 +42,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runVerifyWithServerSideTests() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/perfmon"))
+                .withProjectDir(new File("src/integrationTest/resources/build/perfmon"))
                 .withArguments(":verify")
                 .withPluginClasspath()
                 .build();
@@ -54,7 +54,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runVerifyAndCheckJUnitReport() throws IOException {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/junit"))
+                .withProjectDir(new File("src/integrationTest/resources/build/junit"))
                 .withArguments(":verify")
                 .withPluginClasspath()
                 .buildAndFail();
@@ -66,7 +66,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     @Test
     public void runVerifyWithFailureAndError() {
         BuildResult result = GradleRunner.create()
-                .withProjectDir(new File("src/test/resources/build/1_1_1"))
+                .withProjectDir(new File("src/integrationTest/resources/build/1_1_1"))
                 .withArguments(":verify")
                 .withPluginClasspath()
                 .buildAndFail();
@@ -89,8 +89,8 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     @DataProvider
     private Object[][] getProjectDir() {
         return new Object[][]{
-                new Object[]{"src/test/resources/build/no/csv"},
-                new Object[]{"src/test/resources/build/no/xml"}
+                new Object[]{"src/integrationTest/resources/build/no/csv"},
+                new Object[]{"src/integrationTest/resources/build/no/xml"}
         };
     }
 }

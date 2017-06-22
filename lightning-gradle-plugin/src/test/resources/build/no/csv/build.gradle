@@ -1,8 +1,0 @@
-plugins {
-    id 'uk.co.deliverymind.lightning'
-}
-
-lightningSettings {
-    testSetXml = new File('src/test/resources/xml/3_0_0.xml')
-    jmeterCsv = new File('src/test/resources/csv/nonexistent.csv')
-}

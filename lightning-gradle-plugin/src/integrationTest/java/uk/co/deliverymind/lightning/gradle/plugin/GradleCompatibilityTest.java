@@ -17,7 +17,7 @@ public class GradleCompatibilityTest {
     public void checkGradleCompatibility(String gradleVersion) {
         BuildResult result = GradleRunner.create()
                 .withGradleVersion(gradleVersion)
-                .withProjectDir(new File("src/test/resources/build/complete"))
+                .withProjectDir(new File("src/integrationTest/resources/build/complete"))
                 .withArguments(":report")
                 .withPluginClasspath()
                 .build();
