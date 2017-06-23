@@ -22,10 +22,6 @@ def testGradlePlugin() {
     }
 }
 
-def installGradlePlugin() {
-    sh "(cd lightning-gradle-plugin; ./gradlew clean pTML -x integrationTest)"
-}
-
 def tagGradlePluginRelease() {
     sh "git tag gradle-plugin-${RELEASE_VERSION}"
 }
@@ -46,10 +42,8 @@ node {
             commitGradlePluginReleaseVersion()
         }
     }
-    stage('Test, install and run ITs') {
+    stage('Run checks') {
         testGradlePlugin()
-        installGradlePlugin()
-        runGradlePluginITs()
     }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {
