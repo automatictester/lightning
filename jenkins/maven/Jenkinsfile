@@ -2,35 +2,9 @@
 
 def sharedLib = new SharedLib()
 
-def runMavenPluginStubbedITs() {
+def runIntegrationTests() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/report_10_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_1_1_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/console/output/verify_regexp.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/verify_regexp.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_0.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/exit/code/report_2_1.sh)"
-        sh "(cd jmeter-lightning-maven-plugin-it; ./src/test/scripts/file/junit.sh)"
-    }
-}
-
-def runMavenPluginITs() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "mvn -pl jmeter-lightning-maven-plugin-it clean verify -P jmeter"
-        // Check the following files were generated. Content is verified elsewhere.
-        sh "cat jmeter-lightning-maven-plugin-it/target/jmeter/bin/junit.xml"
-        sh "cat lightning-jenkins.properties"
-    }
-}
-
-def installMavenPlugin() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh 'mvn -pl jmeter-lightning-maven-plugin clean install'
+        sh "mvn -pl jmeter-lightning-maven-plugin clean verify"
     }
 }
 
@@ -70,14 +44,8 @@ node {
             commitMavenPluginReleaseVersion()
         }
     }
-    stage('Install') {
-        installMavenPlugin()
-    }
-    stage('Stubbed ITs') {
-        runMavenPluginStubbedITs()
-    }
-    stage('ITs') {
-        runMavenPluginITs()
+    stage('Integration test') {
+        runIntegrationTests()
     }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {

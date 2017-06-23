@@ -2,10 +2,6 @@
 
 Lightning integrates JMeter non-functional tests with CI servers. Visit Lightning [website](http://deliverymind.github.io/lightning/).
 
-### jmeter-lightning-maven-plugin-it
-
-Integration tests for JMeter Lightning Maven Plugin.
-
 ### jmeter-lightning-maven-plugin
 
 Lightning functionality embedded in a Maven plugin.

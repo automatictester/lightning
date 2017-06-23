@@ -1,0 +1,18 @@
+
+File buildLog = new File(basedir, "build.log");
+Scanner scanner = new Scanner(buildLog);
+List buildLogContent = new ArrayList();
+
+while(scanner.hasNextLine()) {
+    buildLogContent.add(scanner.nextLine());
+}
+
+boolean contentFound = buildLogContent.contains("[INFO] Tests executed:    3")
+  && buildLogContent.contains("[INFO] Tests passed:      3")
+  && buildLogContent.contains("[INFO] Tests failed:      0")
+  && buildLogContent.contains("[INFO] Tests errors:      0")
+  && buildLogContent.contains("[INFO] Test set status:   Pass");
+
+if (!contentFound) {
+    throw new RuntimeException("Content not found!");
+}

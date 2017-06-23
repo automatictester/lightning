@@ -1,0 +1,15 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+String basedirPath = basedir.getAbsolutePath();
+
+Path expectedFilePath = Paths.get(basedirPath, new String[] { "data/junit-expected.xml" } );
+byte[] expectedFileContent = Files.readAllBytes(expectedFilePath);
+
+Path expectedFilePath = Paths.get(basedirPath, new String[] { "junit.xml" } );
+byte[] generatedFileContent = Files.readAllBytes(expectedFilePath);
+
+if (!Arrays.equals(expectedFileContent, generatedFileContent)) {
+    throw new RuntimeException("Files are not identical!");
+}
