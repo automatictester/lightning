@@ -14,10 +14,6 @@ Core Lightning library used as a key dependency by Lightning Standalone Java JAR
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-core)
 
-### lightning-gradle-plugin-it
-
-Integration tests for Lightning Gradle Plugin.
-
 ### lightning-gradle-plugin
 
 Lightning functionality embedded in a Gradle plugin.
