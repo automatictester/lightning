@@ -53,6 +53,7 @@ def buildStandaloneJar() {
         }
     } finally {
         junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
+        jacoco execPattern: '**/jacoco.exec'
     }
 }
 
