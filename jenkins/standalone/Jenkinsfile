@@ -6,30 +6,10 @@ def tagStandaloneRelease() {
     sh "git tag standalone-${RELEASE_VERSION}"
 }
 
-def runStandaloneJarStubbedITs() {
-    sh "(cd lightning-standalone; ./src/test/scripts/console/output/report_10_0.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_1_1_1.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/console/output/verify_3_0_0_2s.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_1_1_1.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/exit/code/verify_3_0_0_2s.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_0.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/exit/code/report_2_1.sh)"
-    sh "(cd lightning-standalone; ./src/test/scripts/file/junit.sh)"
-}
-
-def checkStandaloneJarHelpExitCodes() {
-    // Check no exception is thrown (regression issue). Output is verified elsewhere.
-    sh "java -jar lightning-standalone/target/lightning-standalone-*.jar"
-    sh "java -jar lightning-standalone/target/lightning-standalone-*.jar -h"
-    sh "java -jar lightning-standalone/target/lightning-standalone-*.jar --help"
-}
-
-def buildStandaloneJar() {
+def buildAndTest() {
     try {
         withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-            sh 'mvn -pl lightning-standalone clean compile test assembly:single'
+            sh 'mvn -pl lightning-standalone clean compile assembly:single test'
         }
     } finally {
         junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
@@ -67,14 +47,8 @@ node {
             commitStandaloneReleaseVersion()
         }
     }
-    stage('Generate JAR file') {
-        buildStandaloneJar()
-    }
-    stage('Test help') {
-        checkStandaloneJarHelpExitCodes()
-    }
-    stage('Stubbed ITs') {
-        runStandaloneJarStubbedITs()
+    stage('Run unit tests, generate JAR file and run E2E tests') {
+        buildAndTest()
     }
     stage('Tag release') {
         if ("${TEST_ONLY}" == "false") {
