@@ -3,8 +3,12 @@
 def sharedLib = new SharedLib()
 
 def runIntegrationTests() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "mvn -pl jmeter-lightning-maven-plugin clean verify"
+    try {
+        withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+            sh "mvn -pl jmeter-lightning-maven-plugin clean verify"
+        }
+    } finally {
+        jacoco execPattern: '**/jacoco.exec'
     }
 }
 

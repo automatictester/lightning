@@ -1,4 +1,4 @@
-package uk.co.deliverymind;
+package uk.co.deliverymind.jmeter.lightning.maven.plugin;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
