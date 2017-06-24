@@ -9,6 +9,7 @@ def testAndInstallCore() {
         }
     } finally {
         junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
+        jacoco execPattern: '**/jacoco.exec'
     }
 }
 
