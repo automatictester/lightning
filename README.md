@@ -24,10 +24,6 @@ Lightning functionality embedded in a Gradle plugin.
 
 Performance tests.
 
-### lightning-standalone-it
-
-Integration tests for Lightning.
-
 ### lightning-standalone
 
 Lightning Standalone Java JAR.
