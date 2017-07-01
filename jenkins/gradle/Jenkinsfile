@@ -27,7 +27,11 @@ def tagGradlePluginRelease() {
 }
 
 def releaseGradlePlugin() {
+    // Maven Central
     sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives -i)'
+    // Gradle Plugin Portal
+    sh "(cd lightning-gradle-plugin; ./gradlew clean publishPlugins -i)"
+
 }
 
 

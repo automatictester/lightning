@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.7"
+    }
+}
+
 group = 'uk.co.deliverymind'
 version = lightningGradlePluginVersion
 
@@ -5,6 +16,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'signing'
+apply plugin: 'com.gradle.plugin-publish'
 
 sourceSets {
     integrationTest {
@@ -49,6 +61,7 @@ dependencies {
 repositories {
     mavenCentral()
     mavenLocal()
+    jcenter()
 }
 
 publishing {
@@ -125,4 +138,18 @@ artifacts {
 
 signing {
     sign configurations.archives
+}
+
+pluginBundle {
+    website = 'http://deliverymind.github.io/lightning'
+    vcsUrl = 'https://github.com/deliverymind/lightning'
+    description = 'Integrate JMeter non-functional tests with CI/CD server'
+    tags = ['jmeter', 'ci', 'cd', 'continuous-integration', 'continuous-delivery', 'performance-testing', 'non-functional-testing']
+
+    plugins {
+        LightningPlugin {
+            id = 'uk.co.deliverymind.lightning'
+            displayName = 'Lightning Gradle Plugin'
+        }
+    }
 }
