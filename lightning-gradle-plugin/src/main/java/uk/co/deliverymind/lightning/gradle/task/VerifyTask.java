@@ -9,7 +9,7 @@ public class VerifyTask extends LightningTask {
 
     @TaskAction
     public void verify() {
-        if (!getExtension().hasAllVerifyInput()) {
+        if (!extension.hasAllVerifyInput()) {
             throw new GradleException("Not all mandatory input specified for this task or specified files not readable");
         }
         runTests();
@@ -19,7 +19,7 @@ public class VerifyTask extends LightningTask {
     }
 
     private void notifyCIServer() {
-        log(new TeamCityReporter(getTestSet()).getTeamCityVerifyStatistics());
-        new JenkinsReporter(getTestSet()).setJenkinsBuildName();
+        log(new TeamCityReporter(testSet).getTeamCityVerifyStatistics());
+        new JenkinsReporter(testSet).setJenkinsBuildName();
     }
 }

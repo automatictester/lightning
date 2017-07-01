@@ -10,6 +10,6 @@ generated.csv
 */pom.xml.versionsBackup
 release.properties
 */.gradle/
-*/build/
+**/build/
 **/taskArtifacts.lock
 */gradle.properties-e

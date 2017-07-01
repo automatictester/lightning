@@ -21,9 +21,9 @@ import java.util.List;
 abstract class LightningTask extends DefaultTask {
 
     private int exitCode = 0;
-    private TestSet testSet;
-    private JMeterTransactions jmeterTransactions;
-    private LightningExtension extension;
+    protected TestSet testSet;
+    protected JMeterTransactions jmeterTransactions;
+    protected LightningExtension extension;
 
     LightningTask() {
         extension = getProject().getExtensions().findByType(LightningExtension.class);
@@ -48,17 +48,17 @@ abstract class LightningTask extends DefaultTask {
         long testSetExecStart = System.currentTimeMillis();
 
         LightningXMLFileReader xmlFileReader = new LightningXMLFileReader();
-        xmlFileReader.readTests(getExtension().getTestSetXml());
+        xmlFileReader.readTests(extension.getTestSetXml());
 
         List<ClientSideTest> clientSideTests = xmlFileReader.getClientSideTests();
         List<ServerSideTest> serverSideTests = xmlFileReader.getServerSideTests();
 
         testSet = new TestSet(clientSideTests, serverSideTests);
 
-        jmeterTransactions = new JMeterCSVFileReader().getTransactions(getExtension().getJmeterCsv());
+        jmeterTransactions = new JMeterCSVFileReader().getTransactions(extension.getJmeterCsv());
 
-        if (getExtension().getPerfmonCsv() != null) {
-            PerfMonDataEntries perfMonDataEntries = new PerfMonDataReader().getDataEntires(getExtension().getPerfmonCsv());
+        if (extension.getPerfmonCsv() != null) {
+            PerfMonDataEntries perfMonDataEntries = new PerfMonDataReader().getDataEntires(extension.getPerfmonCsv());
             testSet.executeServerSideTests(perfMonDataEntries);
         }
 
@@ -77,7 +77,7 @@ abstract class LightningTask extends DefaultTask {
     }
 
     void runReport() {
-        jmeterTransactions = new JMeterCSVFileReader().getTransactions(getExtension().getJmeterCsv());
+        jmeterTransactions = new JMeterCSVFileReader().getTransactions(extension.getJmeterCsv());
         JMeterReporter reporter = new JMeterReporter(jmeterTransactions);
         log(reporter.getJMeterReport());
         if (jmeterTransactions.getFailCount() != 0) {
@@ -89,17 +89,5 @@ abstract class LightningTask extends DefaultTask {
         for (String line : Arrays.asList(text.split(System.lineSeparator()))) {
             System.out.println(line);
         }
-    }
-
-    LightningExtension getExtension() {
-        return extension;
-    }
-
-    TestSet getTestSet() {
-        return testSet;
-    }
-
-    JMeterTransactions getJmeterTransactions() {
-        return jmeterTransactions;
     }
 }

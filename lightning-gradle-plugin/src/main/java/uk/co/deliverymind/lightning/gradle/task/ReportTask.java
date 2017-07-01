@@ -9,7 +9,7 @@ public class ReportTask extends LightningTask {
 
     @TaskAction
     public void report() {
-        if (!getExtension().hasAllReportInput()) {
+        if (!extension.hasAllReportInput()) {
             throw new GradleException("Not all mandatory input specified for this task or specified files not readable");
         }
         runReport();
@@ -18,9 +18,9 @@ public class ReportTask extends LightningTask {
     }
 
     private void notifyCIServer() {
-        TeamCityReporter teamCityReporter = new TeamCityReporter(getJmeterTransactions());
+        TeamCityReporter teamCityReporter = new TeamCityReporter(jmeterTransactions);
         log(teamCityReporter.getTeamCityBuildStatusText());
         log(teamCityReporter.getTeamCityReportStatistics());
-        new JenkinsReporter(getJmeterTransactions()).setJenkinsBuildName();
+        new JenkinsReporter(jmeterTransactions).setJenkinsBuildName();
     }
 }
