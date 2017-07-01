@@ -16,9 +16,9 @@ def commitGradlePluginSnapshotVersion() {
 
 def testGradlePlugin() {
     try {
-        sh "(cd lightning-gradle-plugin; ./gradlew clean check -i)"
+        sh "(cd lightning-gradle-plugin; ./gradlew clean check)"
     } finally {
-        junit 'lightning-gradle-plugin/build/test-results/*.xml'
+        junit 'lightning-gradle-plugin/build/test-results/integrationTest/*.xml'
     }
 }
 
@@ -28,9 +28,9 @@ def tagGradlePluginRelease() {
 
 def releaseGradlePlugin() {
     // Maven Central
-    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives -i)'
+    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives)'
     // Gradle Plugin Portal
-    sh "(cd lightning-gradle-plugin; ./gradlew clean publishPlugins -i)"
+    sh "(cd lightning-gradle-plugin; ./gradlew clean publishPlugins)"
 
 }
 
