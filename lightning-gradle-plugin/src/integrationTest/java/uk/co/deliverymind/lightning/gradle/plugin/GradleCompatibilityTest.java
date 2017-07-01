@@ -28,19 +28,9 @@ public class GradleCompatibilityTest {
     @DataProvider
     private Object[][] getGradleVersions() {
         return new Object[][] {
-                new Object[] { "2.8" },
-                new Object[] { "2.9" },
-                new Object[] { "2.10" },
-                new Object[] { "2.11" },
-                new Object[] { "2.12" },
-                new Object[] { "2.13" },
-                new Object[] { "2.14" },
                 new Object[] { "2.14.1" },
-                new Object[] { "3.0" },
-                new Object[] { "3.1" },
-                new Object[] { "3.2" },
-                new Object[] { "3.2.1" },
-                new Object[] { "3.3" }
+                new Object[] { "3.5" },
+                new Object[] { "4.0" }
         };
     }
 }
