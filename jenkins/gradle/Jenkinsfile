@@ -35,38 +35,39 @@ def releaseGradlePlugin() {
 }
 
 
-
-node {
-    stage('Prepare') {
-        sharedLib.cleanupWorkspaceAndCloneRepo()
-        sharedLib.purge()
-    }
-    stage('Set release version number') {
-        if ("${TEST_ONLY}" == "false") {
-            commitGradlePluginReleaseVersion()
+timestamps {
+    node {
+        stage('Prepare') {
+            sharedLib.cleanupWorkspaceAndCloneRepo()
+            sharedLib.purge()
         }
-    }
-    stage('Run checks') {
-        testGradlePlugin()
-    }
-    stage('Tag release') {
-        if ("${TEST_ONLY}" == "false") {
-            tagGradlePluginRelease()
+        stage('Set release version number') {
+            if ("${TEST_ONLY}" == "false") {
+                commitGradlePluginReleaseVersion()
+            }
         }
-    }
-    stage('Release') {
-        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            releaseGradlePlugin()
+        stage('Run checks') {
+            testGradlePlugin()
         }
-    }
-    stage('Set snapshot version number') {
-        if ("${TEST_ONLY}" == "false") {
-            commitGradlePluginSnapshotVersion()
+        stage('Tag release') {
+            if ("${TEST_ONLY}" == "false") {
+                tagGradlePluginRelease()
+            }
         }
-    }
-    stage('Push release to origin/master') {
-        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.push()
+        stage('Release') {
+            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+                releaseGradlePlugin()
+            }
+        }
+        stage('Set snapshot version number') {
+            if ("${TEST_ONLY}" == "false") {
+                commitGradlePluginSnapshotVersion()
+            }
+        }
+        stage('Push release to origin/master') {
+            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+                sharedLib.push()
+            }
         }
     }
 }

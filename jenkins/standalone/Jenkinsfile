@@ -36,36 +36,37 @@ def archiveStandaloneJar() {
 }
 
 
-
-node {
-    stage('Prepare') {
-        sharedLib.cleanupWorkspaceAndCloneRepo()
-        sharedLib.purge()
-    }
-    stage('Set release version number') {
-        if ("${TEST_ONLY}" == "false") {
-            commitStandaloneReleaseVersion()
+timestamps {
+    node {
+        stage('Prepare') {
+            sharedLib.cleanupWorkspaceAndCloneRepo()
+            sharedLib.purge()
         }
-    }
-    stage('Run unit tests, generate JAR file and run E2E tests') {
-        buildAndTest()
-    }
-    stage('Tag release') {
-        if ("${TEST_ONLY}" == "false") {
-            tagStandaloneRelease()
+        stage('Set release version number') {
+            if ("${TEST_ONLY}" == "false") {
+                commitStandaloneReleaseVersion()
+            }
         }
-    }
-    stage('Archive JAR') {
-        archiveStandaloneJar()
-    }
-    stage('Set snapshot version number') {
-        if ("${TEST_ONLY}" == "false") {
-            commitStandaloneSnapshotVersion()
+        stage('Run unit tests, generate JAR file and run E2E tests') {
+            buildAndTest()
         }
-    }
-    stage('Push release to origin/master') {
-        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.push()
+        stage('Tag release') {
+            if ("${TEST_ONLY}" == "false") {
+                tagStandaloneRelease()
+            }
+        }
+        stage('Archive JAR') {
+            archiveStandaloneJar()
+        }
+        stage('Set snapshot version number') {
+            if ("${TEST_ONLY}" == "false") {
+                commitStandaloneSnapshotVersion()
+            }
+        }
+        stage('Push release to origin/master') {
+            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+                sharedLib.push()
+            }
         }
     }
 }

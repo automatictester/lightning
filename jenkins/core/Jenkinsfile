@@ -38,38 +38,39 @@ def tagCoreRelease() {
 }
 
 
-
-node {
-    stage('Prepare') {
-        sharedLib.cleanupWorkspaceAndCloneRepo()
-        sharedLib.purge()
-    }
-    stage('Set release version number') {
-        if ("${TEST_ONLY}" == "false") {
-            commitCoreReleaseVersion()
+timestamps {
+    node {
+        stage('Prepare') {
+            sharedLib.cleanupWorkspaceAndCloneRepo()
+            sharedLib.purge()
         }
-    }
-    stage('Test and install') {
-        testAndInstallCore()
-    }
-    stage('Tag release') {
-        if ("${TEST_ONLY}" == "false") {
-            tagCoreRelease()
+        stage('Set release version number') {
+            if ("${TEST_ONLY}" == "false") {
+                commitCoreReleaseVersion()
+            }
         }
-    }
-    stage('Release') {
-        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            releaseCore()
+        stage('Test and install') {
+            testAndInstallCore()
         }
-    }
-    stage('Set snapshot version number') {
-        if ("${TEST_ONLY}" == "false") {
-            commitCoreSnapshotVersion()
+        stage('Tag release') {
+            if ("${TEST_ONLY}" == "false") {
+                tagCoreRelease()
+            }
         }
-    }
-    stage('Push release to origin/master') {
-        if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
-            sharedLib.push()
+        stage('Release') {
+            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+                releaseCore()
+            }
+        }
+        stage('Set snapshot version number') {
+            if ("${TEST_ONLY}" == "false") {
+                commitCoreSnapshotVersion()
+            }
+        }
+        stage('Push release to origin/master') {
+            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+                sharedLib.push()
+            }
         }
     }
 }
