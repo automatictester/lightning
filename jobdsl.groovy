@@ -17,11 +17,7 @@ folder(folderName) {
                                 git {
                                     id 'lightning-git-repo'
                                     remote 'git@github.com:deliverymind/lightning.git'
-                                    rawRefSpecs ''
                                     credentialsId gitCreds
-                                    ignoreOnPushNotifications false
-                                    includes '*'
-                                    excludes ''
                                 }
                             }
                         }
