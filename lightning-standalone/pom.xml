@@ -83,7 +83,7 @@
                         <id>c-report-10-0</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/console/output/report_10_0.sh</argument>
                             </arguments>
@@ -96,7 +96,7 @@
                         <id>c-verify-1-1-1</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/console/output/verify_1_1_1.sh</argument>
                             </arguments>
@@ -109,7 +109,7 @@
                         <id>c-verify-3-0-0</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/console/output/verify_3_0_0.sh</argument>
                             </arguments>
@@ -122,7 +122,7 @@
                         <id>c-verify-3-0-0-2s</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/console/output/verify_3_0_0_2s.sh</argument>
                             </arguments>
@@ -135,7 +135,7 @@
                         <id>e-verify-1-1-1</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/exit/code/verify_1_1_1.sh</argument>
                             </arguments>
@@ -148,7 +148,7 @@
                         <id>e-verify-3-0-0</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/exit/code/verify_3_0_0.sh</argument>
                             </arguments>
@@ -161,7 +161,7 @@
                         <id>e-verify-3-0-0-2s</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/exit/code/verify_3_0_0_2s.sh</argument>
                             </arguments>
@@ -174,7 +174,7 @@
                         <id>e-report-2-0</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/exit/code/report_2_0.sh</argument>
                             </arguments>
@@ -187,7 +187,7 @@
                         <id>e-report-2-1</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/exit/code/report_2_1.sh</argument>
                             </arguments>
@@ -200,7 +200,7 @@
                         <id>junit</id>
                         <phase>test</phase>
                         <configuration>
-                            <executable>sh</executable>
+                            <executable>bash</executable>
                             <arguments>
                                 <argument>src/test/scripts/file/junit.sh</argument>
                             </arguments>
