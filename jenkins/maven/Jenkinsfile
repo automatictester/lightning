@@ -1,5 +1,15 @@
 #!groovy
 
+properties([
+        parameters([
+                string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
+                string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
+                string(name: 'GPG_PASSPHRASE', defaultValue: '', description: ''),
+                string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
+                string(name: 'DRY_RUN', defaultValue: 'true', description: '')
+        ])
+])
+
 def sharedLib = new SharedLib()
 
 def runIntegrationTests() {
@@ -14,28 +24,29 @@ def runIntegrationTests() {
 
 def commitMavenPluginReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${RELEASE_VERSION})"
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${params.RELEASE_VERSION})"
         sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
     }
 }
 
 def commitMavenPluginSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION})"
         sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
     }
 }
 
 def tagMavenPluginRelease() {
-    sh "git tag maven-plugin-${RELEASE_VERSION}"
+    sh "git tag maven-plugin-${params.RELEASE_VERSION}"
 }
 
 def releaseMavenPlugin() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPG_PASSPHRASE}"
+        sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${params.GPG_PASSPHRASE}"
     }
 }
 
+disableConcurrentBuilds()
 
 timestamps {
     node {
@@ -44,7 +55,7 @@ timestamps {
             sharedLib.purge()
         }
         stage('Set release version number') {
-            if ("${TEST_ONLY}" == "false") {
+            if ("${params.TEST_ONLY}" == "false") {
                 commitMavenPluginReleaseVersion()
             }
         }
@@ -52,22 +63,22 @@ timestamps {
             runIntegrationTests()
         }
         stage('Tag release') {
-            if ("${TEST_ONLY}" == "false") {
+            if ("${params.TEST_ONLY}" == "false") {
                 tagMavenPluginRelease()
             }
         }
         stage('Release') {
-            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false") {
                 releaseMavenPlugin()
             }
         }
         stage('Set snapshot version number') {
-            if ("${TEST_ONLY}" == "false") {
+            if ("${params.TEST_ONLY}" == "false") {
                 commitMavenPluginSnapshotVersion()
             }
         }
         stage('Push release to origin/master') {
-            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false") {
                 sharedLib.push()
             }
         }

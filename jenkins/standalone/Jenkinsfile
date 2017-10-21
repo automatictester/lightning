@@ -1,9 +1,18 @@
 #!groovy
 
+properties([
+        parameters([
+                string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
+                string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
+                string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
+                string(name: 'DRY_RUN', defaultValue: 'true', description: '')
+        ])
+])
+
 def sharedLib = new SharedLib()
 
 def tagStandaloneRelease() {
-    sh "git tag standalone-${RELEASE_VERSION}"
+    sh "git tag standalone-${params.RELEASE_VERSION}"
 }
 
 def buildAndTest() {
@@ -19,14 +28,14 @@ def buildAndTest() {
 
 def commitStandaloneReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${RELEASE_VERSION})"
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${params.RELEASE_VERSION})"
         sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
     }
 }
 
 def commitStandaloneSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${POST_RELEASE_SNAPSHOT_VERSION})"
+        sh "(cd lightning-standalone; mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION})"
         sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
     }
 }
@@ -35,6 +44,7 @@ def archiveStandaloneJar() {
     archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
 }
 
+disableConcurrentBuilds()
 
 timestamps {
     node {
@@ -43,7 +53,7 @@ timestamps {
             sharedLib.purge()
         }
         stage('Set release version number') {
-            if ("${TEST_ONLY}" == "false") {
+            if ("${params.TEST_ONLY}" == "false") {
                 commitStandaloneReleaseVersion()
             }
         }
@@ -51,7 +61,7 @@ timestamps {
             buildAndTest()
         }
         stage('Tag release') {
-            if ("${TEST_ONLY}" == "false") {
+            if ("${params.TEST_ONLY}" == "false") {
                 tagStandaloneRelease()
             }
         }
@@ -59,12 +69,12 @@ timestamps {
             archiveStandaloneJar()
         }
         stage('Set snapshot version number') {
-            if ("${TEST_ONLY}" == "false") {
+            if ("${params.TEST_ONLY}" == "false") {
                 commitStandaloneSnapshotVersion()
             }
         }
         stage('Push release to origin/master') {
-            if ("${TEST_ONLY}" == "false" && "${DRY_RUN}" == "false") {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false") {
                 sharedLib.push()
             }
         }
