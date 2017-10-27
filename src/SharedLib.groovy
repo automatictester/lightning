@@ -1,6 +1,6 @@
 
 def cleanupWorkspaceAndCloneRepo() {
-    step([$class: 'WsCleanup'])
+    cleanWs()
     git credentialsId: 'github-creds', url: 'git@github.com:deliverymind/lightning.git'
 }
 
