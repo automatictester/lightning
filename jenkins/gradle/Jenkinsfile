@@ -12,20 +12,26 @@ properties([
 def sharedLib = new SharedLib()
 
 def commitGradlePluginReleaseVersion() {
-    sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.RELEASE_VERSION}/\" gradle.properties)"
-    sh "(cd lightning-gradle-plugin; cat gradle.properties)"
+    dir('lightning-gradle-plugin') {
+        sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.RELEASE_VERSION}/\" gradle.properties"
+        sh "cat gradle.properties"
+    }
     sh "git add -A; git commit -m 'Release version bump'"
 }
 
 def commitGradlePluginSnapshotVersion() {
-    sh "(cd lightning-gradle-plugin; sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.POST_RELEASE_SNAPSHOT_VERSION}/\" gradle.properties)"
-    sh "(cd lightning-gradle-plugin; cat gradle.properties)"
+    dir('lightning-gradle-plugin') {
+        sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.POST_RELEASE_SNAPSHOT_VERSION}/\" gradle.properties"
+        sh "cat gradle.properties"
+    }
     sh "git add -A; git commit -m 'Post-release version bump'"
 }
 
 def testGradlePlugin() {
     try {
-        sh "(cd lightning-gradle-plugin; ./gradlew clean check)"
+        dir('lightning-gradle-plugin') {
+            sh "./gradlew clean check"
+        }
     } finally {
         junit 'lightning-gradle-plugin/build/test-results/integrationTest/*.xml'
     }
@@ -36,47 +42,51 @@ def tagGradlePluginRelease() {
 }
 
 def releaseGradlePlugin() {
-    // Maven Central
-    sh '(cd lightning-gradle-plugin; ./gradlew clean uploadArchives)'
-    // Gradle Plugin Portal
-    sh "(cd lightning-gradle-plugin; ./gradlew clean publishPlugins)"
+    dir('lightning-gradle-plugin') {
+        // Maven Central
+        sh './gradlew clean uploadArchives'
+        // Gradle Plugin Portal
+        sh './gradlew clean publishPlugins'
+    }
 
 }
 
 disableConcurrentBuilds()
 
 timestamps {
-    node {
-        stage('Prepare') {
-            sharedLib.cleanupWorkspaceAndCloneRepo()
-            sharedLib.purge()
-        }
-        stage('Set release version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitGradlePluginReleaseVersion()
+    lock('lightning-pipeline') {
+        node('linux') {
+            stage('Prepare') {
+                sharedLib.cleanupWorkspaceAndCloneRepo()
+                sharedLib.purge()
             }
-        }
-        stage('Run checks') {
-            testGradlePlugin()
-        }
-        stage('Tag release') {
-            if ("${params.TEST_ONLY}" == "false") {
-                tagGradlePluginRelease()
+            stage('Set release version number') {
+                if ("${params.TEST_ONLY}" == "false") {
+                    commitGradlePluginReleaseVersion()
+                }
             }
-        }
-        stage('Release') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
-                releaseGradlePlugin()
+            stage('Run checks') {
+                testGradlePlugin()
             }
-        }
-        stage('Set snapshot version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitGradlePluginSnapshotVersion()
+            stage('Tag release') {
+                if ("${params.TEST_ONLY}" == "false") {
+                    tagGradlePluginRelease()
+                }
             }
-        }
-        stage('Push release to origin/master') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
-                sharedLib.push()
+            stage('Release') {
+                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
+                    releaseGradlePlugin()
+                }
+            }
+            stage('Set snapshot version number') {
+                if ("${params.TEST_ONLY}" == "false") {
+                    commitGradlePluginSnapshotVersion()
+                }
+            }
+            stage('Push release to origin/master') {
+                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
+                    sharedLib.push()
+                }
             }
         }
     }

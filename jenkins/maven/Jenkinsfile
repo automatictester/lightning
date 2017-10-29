@@ -24,14 +24,18 @@ def runIntegrationTests() {
 
 def commitMavenPluginReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${params.RELEASE_VERSION})"
+        dir('jmeter-lightning-maven-plugin') {
+            sh "mvn versions:set -DnewVersion=${params.RELEASE_VERSION}"
+        }
         sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
     }
 }
 
 def commitMavenPluginSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "(cd jmeter-lightning-maven-plugin; mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION})"
+        dir('jmeter-lightning-maven-plugin') {
+            sh "mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
+        }
         sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
     }
 }
@@ -49,37 +53,39 @@ def releaseMavenPlugin() {
 disableConcurrentBuilds()
 
 timestamps {
-    node {
-        stage('Prepare') {
-            sharedLib.cleanupWorkspaceAndCloneRepo()
-            sharedLib.purge()
-        }
-        stage('Set release version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitMavenPluginReleaseVersion()
+    lock('lightning-pipeline') {
+        node('linux') {
+            stage('Prepare') {
+                sharedLib.cleanupWorkspaceAndCloneRepo()
+                sharedLib.purge()
             }
-        }
-        stage('Integration test') {
-            runIntegrationTests()
-        }
-        stage('Tag release') {
-            if ("${params.TEST_ONLY}" == "false") {
-                tagMavenPluginRelease()
+            stage('Set release version number') {
+                if ("${params.TEST_ONLY}" == "false") {
+                    commitMavenPluginReleaseVersion()
+                }
             }
-        }
-        stage('Release') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
-                releaseMavenPlugin()
+            stage('Integration test') {
+                runIntegrationTests()
             }
-        }
-        stage('Set snapshot version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitMavenPluginSnapshotVersion()
+            stage('Tag release') {
+                if ("${params.TEST_ONLY}" == "false") {
+                    tagMavenPluginRelease()
+                }
             }
-        }
-        stage('Push release to origin/master') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
-                sharedLib.push()
+            stage('Release') {
+                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
+                    releaseMavenPlugin()
+                }
+            }
+            stage('Set snapshot version number') {
+                if ("${params.TEST_ONLY}" == "false") {
+                    commitMavenPluginSnapshotVersion()
+                }
+            }
+            stage('Push release to origin/master') {
+                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
+                    sharedLib.push()
+                }
             }
         }
     }

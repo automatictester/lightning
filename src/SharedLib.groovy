@@ -5,7 +5,7 @@ def cleanupWorkspaceAndCloneRepo() {
 }
 
 def purge() {
-    sh 'rm -rf ~/.m2/repository/uk/co/deliverymind/'
+    sh 'rm -rf ~/.m2/repository/uk/co/deliverymind/*lightning*/'
 }
 
 def push() {
