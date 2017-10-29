@@ -74,7 +74,7 @@ timestamps {
                 }
             }
             stage('Release') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
+                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
                     releaseGradlePlugin()
                 }
             }
@@ -84,7 +84,7 @@ timestamps {
                 }
             }
             stage('Push release to origin/master') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master") {
+                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
                     sharedLib.push()
                 }
             }
