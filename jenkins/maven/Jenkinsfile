@@ -4,7 +4,6 @@ properties([
         parameters([
                 string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
                 string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
-                string(name: 'GPG_PASSPHRASE', defaultValue: '', description: ''),
                 string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
                 string(name: 'DRY_RUN', defaultValue: 'true', description: '')
         ])
@@ -46,7 +45,9 @@ def tagMavenPluginRelease() {
 
 def releaseMavenPlugin() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${params.GPG_PASSPHRASE}"
+        withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
+            sh "mvn -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPGPP}"
+        }
     }
 }
 
