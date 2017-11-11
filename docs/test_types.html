@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Test types</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <p>This page describes all test types which can be defined in Lightning XML config file:</p>
+
+    <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;testSet&gt;
+
+    &lt;!-- tests go here --&gt;
+
+&lt;/testSet&gt;</code></pre>
+
+    <h3><a id="average-response-time" class="anchor" href="#average-response-time" aria-hidden="true"></a>Average Response Time Test</h3>
+
+    <p>Verify if average response time is not higher than given value.</p>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;avgRespTimeTest&gt;
+    &lt;testName&gt;Test #1&lt;/testName&gt;
+    &lt;description&gt;Verify average login times&lt;/description&gt;
+    &lt;transactionName&gt;Login&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;maxAvgRespTime&gt;4000&lt;/maxAvgRespTime&gt;
+&lt;/avgRespTimeTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>maxAvgRespTime - maximum average response value for given transaction name, which will not fail the test,
+            <code>required</code>, <code>positive integer</code>
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #1
+Test type:            avgRespTimeTest
+Test description:     Verify average login times
+Transaction name:     Login
+Expected result:      Average response time &lt;= 4000
+Actual result:        Average response time = 3583
+Transaction count:    5
+Longest transactions: [3780, 3700, 3514, 3474, 3448]
+Test result:          Pass
+</code></pre>
+
+    <h3><a id="max-response-time" class="anchor" href="#max-response-time" aria-hidden="true"></a>Maximum Response Time Test</h3>
+
+    <p>Verify if maximum response time is not higher than given value.</p>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;maxRespTimeTest&gt;
+    &lt;testName&gt;Test #1&lt;/testName&gt;
+    &lt;description&gt;Verify maximum login times&lt;/description&gt;
+    &lt;transactionName&gt;Login&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;maxAllowedRespTime&gt;4000&lt;/maxAllowedRespTime&gt;
+&lt;/maxRespTimeTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>maxAllowedRespTime - maximum response value for given transaction name, which will not fail the test, <code>required</code>,
+            <code>positive integer</code>
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #1
+Test type:            maxRespTimeTest
+Test description:     Verify maximum login times
+Transaction name:     Login
+Expected result:      Max response time &lt;= 4000
+Actual result:        Max response time = 3780
+Transaction count:    5
+Longest transactions: [3780, 3700, 3514, 3474, 3448]
+Test result:          Pass
+</code></pre>
+
+    <h3><a id="response-time-standard-deviation" class="anchor" href="#response-time-standard-deviation" aria-hidden="true"></a>Response Time Standard Deviation Test
+    </h3>
+
+    <p>Verify if standard deviation of response time is not higher than given value.</p>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;respTimeStdDevTest&gt;
+    &lt;testName&gt;Test #2&lt;/testName&gt;
+    &lt;description&gt;Verify standard deviation&lt;/description&gt;
+    &lt;transactionName&gt;Search&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;maxRespTimeStdDev&gt;500&lt;/maxRespTimeStdDev&gt;
+&lt;/respTimeStdDevTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>maxRespTimeStdDev - maximum value of standard deviation for given transaction name, which will not fail the
+            test, <code>required</code>, <code>positive integer</code>
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #2
+Test type:            respTimeStdDevTest
+Test description:     Verify standard deviation
+Transaction name:     Search
+Expected result:      Average standard deviance time &lt;= 500
+Actual result:        Average standard deviance time = 279
+Transaction count:    5
+Test result:          Pass
+</code></pre>
+
+    <p><b>Note</b>: There is more than one way to calculate <a href="https://en.wikipedia.org/wiki/Standard_deviation" target="_blank">standard deviation</a>. Lightning calculates the sample standard deviation
+        using <code>org.apache.commons.math3.stat.descriptive.DescriptiveStatistics</code> (which gives same results as STDEV.S in MS Excel),
+        not the population standard deviation (STDEV.P in MS Excel).</p>
+
+    <h3><a id="passed-transactions" class="anchor" href="#passed-transactions" aria-hidden="true"></a>Passed Transactions Test
+    </h3>
+
+    <p>Verify if number of failed transactions is not higher than given value.</p>
+
+    <h4>Absolute Number</h4>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;passedTransactionsTest&gt;
+    &lt;testName&gt;Test #3&lt;/testName&gt;
+    &lt;description&gt;Verify number of passed tests&lt;/description&gt;
+    &lt;transactionName&gt;Login&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;allowedNumberOfFailedTransactions&gt;0&lt;/allowedNumberOfFailedTransactions&gt;
+&lt;/passedTransactionsTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>allowedNumberOfFailedTransactions - maximum number of failed transactions for given transaction name, which
+            will not fail the test, <code>required</code>, <code>non-negative integer</code>
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #3
+Test type:            passedTransactionsTest
+Test description:     Verify number of passed tests
+Transaction name:     Login
+Expected result:      Number of failed transactions &lt;= 0
+Actual result:        Number of failed transactions = 0
+Transaction count:    5
+Test result:          Pass
+</code></pre>
+
+    <h4>Percentage
+    </h4>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;passedTransactionsTest&gt;
+    &lt;testName&gt;Test #3&lt;/testName&gt;
+    &lt;description&gt;Verify number of passed tests&lt;/description&gt;
+    &lt;transactionName&gt;Login&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;allowedPercentOfFailedTransactions&gt;0&lt;/allowedPercentOfFailedTransactions&gt;
+&lt;/passedTransactionsTest&gt;
+</code></pre>
+
+    <ul>
+        <li>allowedPercentOfFailedTransactions - maximum percentage of failed transactions for given transaction name,
+            which will not fail the test, <code>required</code>, <code>integer</code> in range 0-100
+        </li>
+        <li>other elements same as above</li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #3
+Test type:            passedTransactionsTest
+Test description:     Verify number of passed tests
+Transaction name:     Login
+Expected result:      Percentage of failed transactions &lt;= 0%
+Actual result:        Percentage of failed transactions = 0%
+Transaction count:    5
+Test result:          Pass
+</code></pre>
+
+    <h3><a id="n-th-percentile-response-time" class="anchor" href="#n-th-percentile-response-time" aria-hidden="true"></a>n-th Percentile Response Time Test
+    </h3>
+
+    <p>Verify if response time for n-th percentile of transactions is not higher than given value.</p>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;nthPercRespTimeTest&gt;
+    &lt;testName&gt;Test #4&lt;/testName&gt;
+    &lt;description&gt;Verify nth percentile&lt;/description&gt;
+    &lt;transactionName&gt;Search&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;percentile&gt;80&lt;/percentile&gt;
+    &lt;maxRespTime&gt;11244&lt;/maxRespTime&gt;
+&lt;/nthPercRespTimeTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>percentile - percentile, <code>required</code>, integer in range 1-100</li>
+        <li>maxRespTime - maximum percentile response time for given transaction name, which will not fail the
+            test, <code>required</code>, <code>integer</code>
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #4
+Test type:            nthPercRespTimeTest
+Test description:     Verify nth percentile
+Transaction name:     Search
+Expected result:      80th percentile of transactions have response time &lt;= 11244
+Actual result:        80th percentile of transactions have response time = 11244
+Transaction count:    5
+Longest transactions: [3780, 3700, 3514, 3474, 3448]
+Test result:          Pass
+</code></pre>
+
+    <p><b>Note</b>: There is more than one way to calculate <a href="https://en.wikipedia.org/wiki/Percentile" target="_blank">percentile</a>.
+        Lightning calculates percentile using <code>org.apache.commons.math3.stat.descriptive.DescriptiveStatistics</code>
+        <a href="http://commons.apache.org/proper/commons-math/javadocs/api-3.5/org/apache/commons/math3/stat/descriptive/rank/Percentile.EstimationType.html#R_3">R_3 method</a>
+        , which is consistent with JMeter.</p>
+
+    <h3><a id="throughput" class="anchor" href="#throughput" aria-hidden="true"></a>Throughput Test
+    </h3>
+
+    <p>Verify if throughput (transactions per second) is not lower than given value.</p>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;throughputTest&gt;
+    &lt;testName&gt;Test #5&lt;/testName&gt;
+    &lt;description&gt;Verify throughput&lt;/description&gt;
+    &lt;transactionName&gt;Search&lt;/transactionName&gt;
+    &lt;regexp/&gt;
+    &lt;minThroughput&gt;2&lt;/minThroughput&gt;
+&lt;/throughputTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>minThroughput - minimum throughput, which will not fail the test, <code>required</code>, <code>double</code>
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #5
+Test type:            throughputTest
+Test description:     Verify throughput
+Transaction name:     Search
+Expected result:      Throughput &gt;= 2 / second
+Actual result:        Throughput = 6 / second
+Transaction count:    5
+Test result:          Pass
+</code></pre>
+
+    <h3><a id="median-response-time" class="anchor" href="#median-response-time" aria-hidden="true"></a>Median Response Time Test
+    </h3>
+
+    <p>Verify if median response time is not higher than given value.</p>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;medianRespTimeTest&gt;
+   &lt;testName&gt;Test #4&lt;/testName&gt;
+   &lt;description&gt;Verify median response time&lt;/description&gt;
+   &lt;transactionName&gt;Search&lt;/transactionName&gt;
+   &lt;regexp/&gt;
+   &lt;maxRespTime&gt;11244&lt;/maxRespTime&gt;
+&lt;/medianRespTimeTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>transactionName - name of transaction, <code>optional</code>, if provided must match value in JMeter CSV
+            file in
+            <code>label</code> column, if not provided, test applies to all records in JMeter CSV file
+        </li>
+        <li>regexp - if name of transaction should be considered to be a regular expression, <code>optional</code></li>
+        <li>maxRespTime - maximum response time, which will not fail the test, <code>required</code>, integer</li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #4
+Test type:            medianRespTimeTest
+Test description:     Verify median response time
+Transaction name:     Search
+Expected result:      median response time &lt;= 11244
+Actual result:        median response time = 11244
+Transaction count:    5
+Longest transactions: [3780, 3700, 3514, 3474, 3448]
+Test result:          Pass
+</code></pre>
+
+    <h3><a id="server-side" class="anchor" href="#server-side" aria-hidden="true"></a>Server Side Test
+    </h3>
+
+    <p>Verify server-side metrics.</p>
+
+    <h4>Less or greater than
+    </h4>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;serverSideTest&gt;
+    &lt;testName&gt;Test #2&lt;/testName&gt;
+    &lt;subType&gt;LESS_THAN&lt;/subType&gt;
+    &lt;description&gt;Verify server-side resource utilisation&lt;/description&gt;
+    &lt;hostAndMetric&gt;192.168.0.12 CPU&lt;/hostAndMetric&gt;
+    &lt;metricValueA&gt;80000&lt;/metricValueA&gt;
+&lt;/serverSideTest&gt;
+</code></pre>
+
+    <ul>
+        <li>testName - included in test results, <code>required</code>, <code>non-empty string</code>
+        </li>
+        <li>subType - specifies if average value needs to be above or below threshold given in <code>metricValueA</code>,
+            <code>required</code>, <code>LESS_THAN</code> or <code>GREATER_THAN</code>
+        </li>
+        <li>description - included in test results, <code>optional</code>, <code>string</code>
+        </li>
+        <li>hostAndMetric - name of host and metric, <code>required</code>, if provided must match value in <a
+                href="http://jmeter-plugins.org/wiki/PerfMonAgent" target="_blank">PerfMon Server Agent</a> CSV file
+            collected by <a
+                    href="http://jmeter-plugins.org/wiki/PerfMon" target="_blank">JMeter PerfMon Metrics Collector</a>
+        </li>
+        <li>metricValueA - maximum or minimum average value of given metric, which will not fail the test,
+            <code>required</code>, integer
+        </li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #3 
+Test type:            serverSideTest 
+Test subtype:         Less than 
+Test description:     Verify server-side resource utilisation 
+Host and metric:      192.168.0.12 CPU 
+Expected result:      Average value &lt; 60000 
+Actual result:        Average value = 15189
+Entries count:        2 
+Test result:          Pass
+</code></pre>
+
+    <h4>Between
+    </h4>
+
+    <p>Sample configuration:</p>
+
+<pre><code>&lt;serverSideTest&gt;
+    &lt;testName&gt;Test #2&lt;/testName&gt;
+    &lt;subType&gt;BETWEEN&lt;/subType&gt;
+    &lt;description&gt;Verify server-side resource utilisation&lt;/description&gt;
+    &lt;hostAndMetric&gt;192.168.0.12 CPU&lt;/hostAndMetric&gt;
+    &lt;metricValueA&gt;40000&lt;/metricValueA&gt;
+    &lt;metricValueB&gt;80000&lt;/metricValueB&gt;
+&lt;/serverSideTest&gt;
+</code></pre>
+
+    <ul>
+        <li>subType - specifies if average value, <code>required</code>, <code>BETWEEN</code>
+        </li>
+        <li>metricValueA - minimum average value of given metric, which will not fail the test, <code>required</code>,
+            integer
+        </li>
+        <li>metricValueB - maximum average value of given metric, which will not fail the test, <code>required</code>,
+            integer
+        </li>
+        <li>other elements same as above</li>
+    </ul>
+
+    <p>Sample output:</p>
+
+<pre><code>Test name:            Test #2 
+Test type:            serverSideTest 
+Test subtype:         Between 
+Test description:     Verify server-side resource utilisation 
+Host and metric:      192.168.0.12 CPU 
+Expected result:      Average value between 10000 and 40000 
+Actual result:        Average value = 15189
+Entries count:        2 
+Test result:          Pass
+</code></pre>
+
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

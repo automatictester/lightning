@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Enhanced TeamCity integration</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <h3><a id="build-status" class="anchor" href="#build-status" aria-hidden="true"></a>Build status</h3>
+
+    <p><a href="ci_cd_server_integration.html#exit-code" target="_blank">Exit code</a> produced by Lightning will set build status to passed or failed.</p>
+
+    <h3><a id="build-status-text" class="anchor" href="#build-status-text" aria-hidden="true"></a>Build status text</h3>
+
+    <p>TeamCity build status text will be set to include:</p>
+
+    <ul>
+        <li>in <code>verify</code> mode - number of executed/failed tests</li>
+        <li>in <code>report</code> mode - number of executed/failed transactions</li>
+    </ul>
+
+    <p>instead of default message (<code>Success</code> or other)</p>
+
+    <p><img src="images/teamcity.png" width="400" alt="TeamCity build results history"></p>
+
+    <h3><a id="test-report" class="anchor" href="#test-report" aria-hidden="true"></a>Test report</h3>
+
+    <p><a href="ci_cd_server_integration.html#junit-xml-report" target="_blank">JUnit XML report</a> produced by Lightning provides insight into particular failures.</p>
+
+    <p>Required build configuration:</p>
+
+    <p><img src="images/teamcity_xml_cfg.png" width="700" alt="TeamCity build configuration"></p>
+
+    <p>Test results:</p>
+
+    <p><img src="images/teamcity_xml.png" width="700" alt="TeamCity test results"></p>
+
+    <h3><a id="build-statistics" class="anchor" href="#build-statistics" aria-hidden="true"></a>Build statistics</h3>
+
+    <p>For each of the tests, Lightning generates <a href="https://confluence.jetbrains.com/display/TCD9/Build+Script+Interaction+with+TeamCity#BuildScriptInteractionwithTeamCity-ReportingBuildStatistics" target="_blank">console output</a> which lets you configure <a href="https://confluence.jetbrains.com/display/TCD9/Statistic+Charts#StatisticCharts-BCStatistics" target="_blank">build statistics</a>:</p>
+
+    <p><img src="images/teamcity_statistics.png" width="850" alt="TeamCity build statistics"></p>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

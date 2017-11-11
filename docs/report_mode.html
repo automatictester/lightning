@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Report mode</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <h3><a id="report-mode" class="anchor" href="#report-mode" aria-hidden="true"></a>Report mode</h3>
+
+    <p>In report mode, Lightning requires only one source of input data, JMeter CSV result file. In this mode Lightning
+        parses JMeter output and reports total number of transactions and number of failed transactions. No further
+        verification is performed. Lightning returns non-zero exit code on non-zero number of failed transactions.</p>
+
+    <p>To run Lightning standalone JAR:</p>
+
+    <pre><code>java -jar lightning-&lt;version&gt;.jar report --jmeter-csv=path/to/csv/file</code></pre>
+
+    <p>To configure JMeter Lightning Maven Plugin:</p>
+
+    <pre><code>&lt;configuration&gt;
+    &lt;mode&gt;report&lt;/mode&gt;
+    &lt;jmeterCsv&gt;path/to/csv/file&lt;/jmeterCsv&gt;
+&lt;/configuration&gt;</code></pre>
+
+    <p>To configure Lightning Gradle Plugin:</p>
+
+    <pre><code>lightningSettings {
+    jmeterCsv = new File('path/to/csv/file')
+}</code></pre>
+
+    <p>Sample output:</p>
+
+    <pre><code>Transactions executed: 1320, failed: 0</code></pre>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

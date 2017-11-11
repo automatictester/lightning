@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">CI/CD server integration</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <h3><a id="exit-code" class="anchor" href="#exit-code" aria-hidden="true"></a>Exit code</h3>
+
+    <p>By default, CI/CD servers mark build as passed or failed based on exit code of executed build steps. This
+        behaviour can be amended using server-specific features or plugins, which allow to fail build based on build
+        console output. Lightning returns non-zero exit code on non-zero number of failed tests.</p>
+
+    <h3><a id="junit-xml-report" class="anchor" href="#junit-xml-report" aria-hidden="true"></a>JUnit XML report</h3>
+
+    <p>Lightning produces JUnit XML report (<code>junit.xml</code>) for every run. Depending on which version of
+        Lightning you use, this file will be located in:</p>
+
+    <ul>
+        <li>current working directory - if you use Lightning</li>
+        <li><code>target/jmeter/bin</code> - if you use JMeter Lightning Maven Plugin</li>
+    </ul>
+
+    <p>Sample report:</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;testsuite errors="0" failures="0" name="Lightning" tests="3" time="0"&gt;
+    &lt;testcase name="Failed transactions (%)" time="0"/&gt;
+    &lt;testcase name="Failed transactions" time="0"/&gt;
+    &lt;testcase name="80th percentile" time="0"/&gt;
+&lt;/testsuite&gt;
+</code></pre>
+
+    <p>This is a well-established test execution report format which can be picked up by your CI/CD server with
+        no-to-minimal configuration. Check your CI/CD server help if it's not detected automatically.</p>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

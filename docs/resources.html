@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="resources.js"></script>
+</head>
+<body data-ng-app="resourceApp">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Resources</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+
+<section class="main-content" data-ng-controller="ResourceListController">
+
+    <h3><a id="resource-list" class="anchor" href="#resource-list" aria-hidden="true"></a>Resource list</h3>
+
+    <p data-ng-repeat="resource in resources"><a href="{{resource.title}}.html">{{resource.url}}</a></p>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

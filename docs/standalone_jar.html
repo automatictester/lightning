@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Standalone JAR</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <h3><a id="quick-start-guide" class="anchor" href="#quick-start-guide" aria-hidden="true"></a>Quick start guide</h3>
+
+    <p>This is a Lightning standalone JAR usage example.</p>
+
+    <p>Prerequisites:</p>
+
+    <ul>
+        <li>Java 7 or above</li>
+        <li>Git</li>
+    </ul>
+
+    <p>Steps:</p>
+
+    <ul>
+        <li>Clone repo with sample project: <code>git clone https://github.com/deliverymind/lightning-example.git</code></li>
+        <li>Go to cloned directory: <code>cd lightning-example</code></li>
+        <li>Run Lightning: <code>java -jar bin/lightning-standalone-*.jar verify -xml
+            src/test/resources/xml/example.xml --jmeter-csv src/test/resources/csv/example.csv</code>.
+        </li>
+        <li>You should get console output similar to this:</li>
+    </ul>
+
+<pre><code>[main] INFO Test name:            Failed transactions (%)
+[main] INFO Test type:            passedTransactionsTest
+[main] INFO Test description:     Verify number of passed tests
+[main] INFO Transaction name:     Login
+[main] INFO Expected result:      Percent of failed transactions <= 0
+[main] INFO Actual result:        Percent of failed transactions = 0
+[main] INFO Transaction count:    5
+[main] INFO Test result:          Pass
+[main] INFO
+[main] INFO Test name:            Failed transactions
+[main] INFO Test type:            passedTransactionsTest
+[main] INFO Test description:     Verify number of passed tests
+[main] INFO Expected result:      Number of failed transactions <= 0
+[main] INFO Actual result:        Number of failed transactions = 0
+[main] INFO Transaction count:    10
+[main] INFO Test result:          Pass
+[main] INFO
+[main] INFO Test name:            80th percentile
+[main] INFO Test type:            nthPercRespTimeTest
+[main] INFO Test description:     Verify nth percentile
+[main] INFO Transaction name:     Search
+[main] INFO Expected result:      80th percentile of transactions have response time <= 11245
+[main] INFO Actual result:        80th percentile of transactions have response time = 11244
+[main] INFO Transaction count:    5
+[main] INFO Longest transactions: [11250, 11221, 11086, 10769, 10626]
+[main] INFO Test result:          Pass
+[main] INFO
+[main] INFO ============= EXECUTION SUMMARY =============
+[main] INFO Tests executed:    3
+[main] INFO Tests passed:      3
+[main] INFO Tests failed:      0
+[main] INFO Tests errors:      0
+[main] INFO Test set status:   Pass
+[main] INFO Total execution time:    123ms
+[main] INFO ##teamcity[buildStatisticValue key='Failed transactions (%)' value='0']
+[main] INFO ##teamcity[buildStatisticValue key='Failed transactions' value='0']
+[main] INFO ##teamcity[buildStatisticValue key='80th percentile' value='11244']</code></pre>
+
+    <p>JUnit XML report will be saved to <code>junit.xml</code>:</p>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;testsuite errors="0" failures="0" name="Lightning" tests="3" time="0"&gt;
+    &lt;testcase name="Failed transactions (%)" time="0"/&gt;
+    &lt;testcase name="Failed transactions" time="0"/&gt;
+    &lt;testcase name="80th percentile" time="0"/&gt;
+&lt;/testsuite&gt;
+</code></pre>
+
+    <p>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
+    </p>
+
+<pre><code>#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file="lightning-jenkins.properties",property="result.string"}
+#Tue Feb 14 22:18:18 GMT 2017
+result.string=Tests executed\: 3, failed\: 0
+</code></pre>
+
+    <p>Feel free to play with Lightning config file <code>src/test/resources/xml/example.xml</code>.
+        Once you familiarised yourself with the tool, create your own JMeter tests, Lightning configuration and plug it
+        into your CI/CD server.</p>
+
+    <h3><a id="download" class="anchor" href="#download" aria-hidden="true"></a>Download</h3>
+
+    <p>Standalone JAR is available for download from <a href="https://github.com/deliverymind/lightning/releases/latest" target="_blank">GitHub</a>.
+    </p>
+
+    <h3><a id="changelog" class="anchor" href="#changelog" aria-hidden="true"></a>Changelog</h3>
+
+    <p>All new features and bugfixes are included in the <a href="https://github.com/deliverymind/lightning/releases"
+                                                            target="_blank">release notes</a>.</p>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

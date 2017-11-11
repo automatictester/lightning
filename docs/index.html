@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Integrate JMeter non-functional tests with CI/CD server</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <h3><a id="use-cases" class="anchor" href="#use-cases" aria-hidden="true"></a>Use cases</h3>
+    <p>JMeter is a great non-functional testing tool. However, on its own, it struggles in two particular areas:
+        automatic analysis of aggregated performance characteristics and integration with CI/CD servers. </p>
+
+    <p>Lightning integrates JMeter non-functional tests with your CI/CD server. It analyses results of your
+        JMeter tests and provides your server with unequivocal information allowing it to make autonomous
+        decision whether to pass or fail the build - with no human involvement needed.</p>
+
+    <p>Lightning is available as a standalone JAR, Gradle and Maven plugins. All versions accept same input and provide the same
+        functionality. You can use the one you prefer.</p>
+
+    <h3><a id="why-lightning" class="anchor" href="#why-lightning" aria-hidden="true"></a>Why Lightning</h3>
+
+    <p>Benefits of using Lightning include:</p>
+
+    <ul>
+
+        <li>Lightning allows you to make a decision on performance build results, based on very broad range of
+            client-side statistics. This is much more than just average response times. You can measure: throughput,
+            median response time, maximum response time, n-th percentile response time, response time standard deviation
+            and percentage of failed transactions. Learn more about available <a href="test_types.html" target="_blank">test types</a>.
+        </li>
+
+        <li>There is no need to configure anything on CI/CD server to run the above tests. You can have your first
+            Lightning test running in minutes.
+        </li>
+
+        <li>Lightning understands you may have different SLA for different transactions types and allows you to
+            define different thresholds for every transaction type.
+        </li>
+
+        <li>Lightning is not only about client-side statistics. It also gives you ability to measure <a href="server_side_tests.html" target="_blank">server-side
+            metrics</a> (CPU, memory, network usage etc) and fail the build if certain metrics go above defined threshold.
+            Or below. Your JMeter tests are no longer pure performance tests, they are now powerful non-functional
+            tests. This lets you test load balancing and other non-functional characteristics of your system.
+        </li>
+
+        <li>No disk space considerations - there is no need for extremely verbose JMeter results in XML format.
+            Lightning processes JMeter results in <a href="jmeter_configuration.html" target="_blank">CSV format</a> with just a few columns.
+        </li>
+
+        <li>No security concerns - your data is not uploaded to any 3rd party servers.</li>
+
+        <li>Lightning integrates seamlessly with CI/CD servers using "language" which they understand - <a href="ci_cd_server_integration.html" target="_blank">exit code and
+            JUnit XML report</a>.
+        </li>
+
+        <li>Lightning is open source and free for commercial and non-commercial use.</li>
+
+        <li>If you use <a href="enhanced_jenkins_integration.html" target="_blank">Jenkins</a>, you can set the build name to something more meaningful than the defaults. Build name
+            can now include number of passed and failed tests.
+        </li>
+
+        <li>If you use <a href="enhanced_teamcity_integration.html" target="_blank">TeamCity</a>, you will benefit from build statistics charts.</li>
+
+        <li>If all you need is number of executed an failed JMeter transactions, Lightning can check that for you <a href="report_mode.html" target="_blank">as
+            well</a>.
+        </li>
+
+    </ul>
+
+    <h3><a id="issues" class="anchor" href="#issues" aria-hidden="true"></a>Issues</h3>
+
+    <p>Raise issues using GitHub <a href="https://github.com/deliverymind/lightning/issues" target="_blank">issue
+        tracker</a>.</p>
+
+    <h3><a id="license" class="anchor" href="#license" aria-hidden="true"></a>License</h3>
+
+    <p>Lightning is released under the MIT license.</p>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>

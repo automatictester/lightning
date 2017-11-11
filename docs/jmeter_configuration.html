@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Lightning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="">
+<section class="page-header">
+    <h1 class="project-name">Lightning</h1>
+    <h2 class="project-tagline">Configure JMeter to save relevant data</h2>
+    <div data-ng-include="'top_level_links.html'"></div>
+</section>
+<section class="main-content">
+
+    <p>In order to run Lightning, you need to configure your JMeter tests to produce output in CSV format with relevant
+        columns. Following columns must be included: <code>timeStamp</code>, <code>elapsed</code>, <code>label</code>,
+        <code>success</code>. Depending on how you run JMeter tests, this can be configured in a number of ways.</p>
+
+    <h3><a id="jmeter-non-gui-mode" class="anchor" href="#jmeter-non-gui-mode" aria-hidden="true"></a>JMeter non-GUI mode</h3>
+    <p>If you run JMeter from command-line in non-GUI mode, include following configuration in additional <code>jmeter.properties</code> file:</p>
+
+    <pre><code>jmeter.save.saveservice.output_format=csv
+jmeter.save.saveservice.print_field_names=true
+jmeter.save.saveservice.successful=true
+jmeter.save.saveservice.label=true
+jmeter.save.saveservice.time=true</code></pre>
+
+    <p>Point at this file when running JMeter in non-GUI mode:</p>
+
+    <pre><code>./jmeter.sh -n -t path/to/your/jmx/file -q path/to/above/jmeter.properties -l path/to/results/csv/file</code></pre>
+
+    <h3><a id="jmeter-maven-plugin" class="anchor" href="#jmeter-maven-plugin" aria-hidden="true"></a>JMeter Maven Plugin</h3>
+
+    <p>If you run JMeter tests using JMeter Maven Plugin, include following configuration in your <code>pom.xml</code>.</p>
+
+    <pre><code>&lt;configuration&gt;
+    &lt;resultsFileFormat&gt;csv&lt;/resultsFileFormat&gt;
+    &lt;propertiesJMeter&gt;
+        &lt;jmeter.save.saveservice.print_field_names&gt;true&lt;/jmeter.save.saveservice.print_field_names&gt;
+        &lt;jmeter.save.saveservice.successful&gt;true&lt;/jmeter.save.saveservice.successful&gt;
+        &lt;jmeter.save.saveservice.label&gt;true&lt;/jmeter.save.saveservice.label&gt;
+        &lt;jmeter.save.saveservice.time&gt;true&lt;/jmeter.save.saveservice.time&gt;
+    &lt;/propertiesJMeter&gt;
+&lt;/configuration&gt;
+</code></pre>
+
+    <p>Check <a href="https://github.com/jmeter-maven-plugin/jmeter-maven-plugin/wiki">JMeter Maven Plugin Wiki</a> for
+        more configuration options.</p>
+
+    <h3><a id="simple-data-writer" class="anchor" href="#simple-data-writer" aria-hidden="true"></a>Simple Data Writer</h3>
+
+    <p>If you can't switch to CSV results format because you still need XML for any reason, you can keep existing config
+        unchanged. Instead of changing any properties, add a <code>Simple Data Writer</code> listener to your JMeter
+        tests:</p>
+
+    <p><img src="images/simple_data_writer_2.png" width="850" alt="Simple Data Writer configuration"></p>
+
+    <p>This way you can save results to CSV for Lightning analysis and keep XML results for any other purposes.</p>
+
+    <footer class="site-footer" data-ng-include="'footer.html'"></footer>
+
+</section>
+
+
+</body>
+</html>
