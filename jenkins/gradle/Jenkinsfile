@@ -58,6 +58,7 @@ timestamps {
         node('linux') {
             stage('Prepare') {
                 sharedLib.cleanupWorkspaceAndCloneRepo()
+                sh "git checkout ${env.BRANCH_NAME}"
                 sharedLib.purge()
             }
             stage('Set release version number') {
