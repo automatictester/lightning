@@ -11,7 +11,7 @@ properties([
 
 def sharedLib = new SharedLib()
 
-def tagStandaloneRelease() {
+def tagLambdaRelease() {
     sh "git tag lambda-${params.RELEASE_VERSION}"
 }
 
@@ -26,7 +26,7 @@ def buildAndUnitTest() {
     }
 }
 
-def commitStandaloneReleaseVersion() {
+def commitLambdaReleaseVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         dir('lightning-aws-lambda') {
             sh "mvn versions:set -DnewVersion=${params.RELEASE_VERSION}"
@@ -35,7 +35,7 @@ def commitStandaloneReleaseVersion() {
     }
 }
 
-def commitStandaloneSnapshotVersion() {
+def commitLambdaSnapshotVersion() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         dir('lightning-aws-lambda') {
             sh "mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
@@ -64,7 +64,7 @@ timestamps {
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {
-                    commitStandaloneReleaseVersion()
+                    commitLambdaReleaseVersion()
                 }
             }
             stage('Build and unit test') {
@@ -94,7 +94,7 @@ timestamps {
             }
             stage('Tag release') {
                 if ("${params.TEST_ONLY}" == "false") {
-                    tagStandaloneRelease()
+                    tagLambdaRelease()
                 }
             }
             stage('Archive JAR') {
@@ -102,7 +102,7 @@ timestamps {
             }
             stage('Set snapshot version number') {
                 if ("${params.TEST_ONLY}" == "false") {
-                    commitStandaloneSnapshotVersion()
+                    commitLambdaSnapshotVersion()
                 }
             }
             stage('Push release to origin/master') {

@@ -60,7 +60,7 @@ timestamps {
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {
-                    commitStandaloneReleaseVersion()
+                    commitLambdaReleaseVersion()
                 }
             }
             stage('Run unit tests, generate JAR file and run E2E tests') {
@@ -68,7 +68,7 @@ timestamps {
             }
             stage('Tag release') {
                 if ("${params.TEST_ONLY}" == "false") {
-                    tagStandaloneRelease()
+                    tagLambdaRelease()
                 }
             }
             stage('Archive JAR') {
@@ -76,7 +76,7 @@ timestamps {
             }
             stage('Set snapshot version number') {
                 if ("${params.TEST_ONLY}" == "false") {
-                    commitStandaloneSnapshotVersion()
+                    commitLambdaSnapshotVersion()
                 }
             }
             stage('Push release to origin/master') {
