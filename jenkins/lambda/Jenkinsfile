@@ -58,7 +58,7 @@ timestamps {
     lock('lightning-pipeline') {
         node('linux') {
             stage('Prepare') {
-                echo ${env.BRANCH_NAME}
+                echo "${env.BRANCH_NAME}"
                 sharedLib.cleanupWorkspaceAndCloneRepo()
                 sharedLib.purge()
             }
