@@ -5,7 +5,7 @@
     <groupId>uk.co.deliverymind</groupId>
     <artifactId>lightning-core</artifactId>
     <packaging>jar</packaging>
-    <version>5.5.1-SNAPSHOT</version>
+    <version>5.6.0</version>
     <name>lightning-core</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>http://deliverymind.github.io/lightning</url>
