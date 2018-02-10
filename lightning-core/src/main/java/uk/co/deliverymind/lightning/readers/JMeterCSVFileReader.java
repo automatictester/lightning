@@ -40,7 +40,7 @@ public class JMeterCSVFileReader {
         return jmeterTransactions;
     }
 
-    private CsvParser getParser() {
+    protected CsvParser getParser() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(true);

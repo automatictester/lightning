@@ -18,8 +18,8 @@ import java.io.File;
 
 public class JUnitReporter {
 
-    private TestSet testSet;
-    private Document doc;
+    protected TestSet testSet;
+    protected Document doc;
 
     public JUnitReporter() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
