@@ -57,13 +57,13 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         return serverSideTests;
     }
 
-    private int getTestCount() {
+    protected int getTestCount() {
         return
                 (clientSideTests != null ? clientSideTests.size() : 0) +
                         (serverSideTests != null ? serverSideTests.size() : 0);
     }
 
-    private void addPassedTransactionsTestNodes(Document xmlDoc) {
+    protected void addPassedTransactionsTestNodes(Document xmlDoc) {
         String testType = "passedTransactionsTest";
         NodeList passedTransactionsTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < passedTransactionsTestNodes.getLength(); i++) {
@@ -92,7 +92,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
 
     }
 
-    private void addRespTimeStdDevTestNodes(Document xmlDoc) {
+    protected void addRespTimeStdDevTestNodes(Document xmlDoc) {
         String testType = "respTimeStdDevTest";
         NodeList respTimeStdDevTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeStdDevTestNodes.getLength(); i++) {
@@ -110,7 +110,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         }
     }
 
-    private void addRespTimeAvgTests(Document xmlDoc) {
+    protected void addRespTimeAvgTests(Document xmlDoc) {
         String testType = "avgRespTimeTest";
         NodeList avgRespTimeTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < avgRespTimeTestNodes.getLength(); i++) {
@@ -128,7 +128,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         }
     }
 
-    private void addRespTimeMaxTests(Document xmlDoc) {
+    protected void addRespTimeMaxTests(Document xmlDoc) {
         String testType = "maxRespTimeTest";
         NodeList avgRespTimeTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < avgRespTimeTestNodes.getLength(); i++) {
@@ -146,7 +146,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         }
     }
 
-    private void addRespTimeNthPercTests(Document xmlDoc) {
+    protected void addRespTimeNthPercTests(Document xmlDoc) {
         String testType = "nthPercRespTimeTest";
         NodeList respTimeNthPercTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeNthPercTestNodes.getLength(); i++) {
@@ -165,7 +165,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         }
     }
 
-    private void addRespTimeMedianTests(Document xmlDoc) {
+    protected void addRespTimeMedianTests(Document xmlDoc) {
         String testType = "medianRespTimeTest";
         NodeList respTimeMedianTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeMedianTestNodes.getLength(); i++) {
@@ -183,7 +183,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         }
     }
 
-    private void addThroughputTests(Document xmlDoc) {
+    protected void addThroughputTests(Document xmlDoc) {
         String testType = "throughputTest";
         NodeList respTimeNthPercTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeNthPercTestNodes.getLength(); i++) {
@@ -201,7 +201,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         }
     }
 
-    private void addServerSideTests(Document xmlDoc) {
+    protected void addServerSideTests(Document xmlDoc) {
         String testType = "serverSideTest";
         NodeList serverSideTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < serverSideTestNodes.getLength(); i++) {

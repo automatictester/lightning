@@ -13,6 +13,7 @@
         <module>jmeter-lightning-maven-plugin</module>
         <module>lightning-core</module>
         <module>lightning-standalone</module>
+        <module>lightning-aws-lambda</module>
     </modules>
 
 </project>

@@ -1,0 +1,36 @@
+Test name:            Failed transactions (%)
+Test type:            passedTransactionsTest
+Test description:     Verify number of passed tests
+Transaction name:     Login
+Expected result:      Percent of failed transactions <= 0
+Actual result:        Percent of failed transactions = 0
+Transaction count:    5
+Test result:          Pass
+
+Test name:            Failed transactions
+Test type:            passedTransactionsTest
+Test description:     Verify number of passed tests
+Expected result:      Number of failed transactions <= 0
+Actual result:        Number of failed transactions = 0
+Transaction count:    10
+Test result:          Pass
+
+Test name:            80th percentile
+Test type:            nthPercRespTimeTest
+Test description:     Verify nth percentile
+Transaction name:     Search
+Expected result:      80th percentile of transactions have response time <= 11245
+Actual result:        80th percentile of transactions have response time = 11221
+Transaction count:    5
+Longest transactions: [11250, 11221, 11086, 10769, 10626]
+Test result:          Pass
+
+============= EXECUTION SUMMARY =============
+Tests executed:    3
+Tests passed:      3
+Tests failed:      0
+Tests errors:      0
+Test set status:   Pass
+##teamcity[buildStatisticValue key='Failed transactions (%)' value='0']
+##teamcity[buildStatisticValue key='Failed transactions' value='0']
+##teamcity[buildStatisticValue key='80th percentile' value='11221']

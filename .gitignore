@@ -13,3 +13,8 @@ release.properties
 **/build/
 **/taskArtifacts.lock
 */gradle.properties-e
+/lightning-aws-lambda/response.json
+/lightning-aws-lambda/report-2.log
+/lightning-aws-lambda/report-combined.log
+/lightning-aws-lambda/report.log
+/lightning-aws-lambda/report-1.log

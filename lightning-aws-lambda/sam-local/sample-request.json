@@ -1,0 +1,8 @@
+{
+  "region": "eu-west-2",
+  "bucket": "your-bucket-name",
+  "mode": "verify",
+  "jmeterCsv": "input/csv/jmeter/10_transactions.csv",
+  "perfmonCsv": "input/csv/perfmon/2_entries.csv",
+  "xml": "input/xml/1_client_2_server.xml"
+}

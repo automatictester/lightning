@@ -1,0 +1,41 @@
+
+Test name:            Test #1
+Test type:            avgRespTimeTest
+Test description:     Verify average login times
+Transaction name:     Login
+Expected result:      Average response time <= 4000
+Actual result:        Average response time = 3583
+Transaction count:    5
+Longest transactions: [3780, 3700, 3514, 3474, 3448]
+Test result:          Pass
+
+Test name:            Test #2
+Test type:            avgRespTimeTest
+Test description:     Verify average login times
+Transaction name:     Login
+Expected result:      Average response time <= 3000
+Actual result:        Average response time = 3583
+Transaction count:    5
+Longest transactions: [3780, 3700, 3514, 3474, 3448]
+Test result:          FAIL
+
+Test name:            Test #3
+Test type:            avgRespTimeTest
+Test description:     Verify average login times
+Transaction name:     just wrong
+Expected result:      Average response time <= 1
+Actual result:        No transactions with label equal to 'just wrong' found in CSV file
+Transaction count:    0
+Longest transactions: null
+Test result:          ERROR
+
+
+============= EXECUTION SUMMARY =============
+Tests executed:    3
+Tests passed:      1
+Tests failed:      1
+Tests errors:      1
+Test set status:   FAIL
+##teamcity[buildStatisticValue key='Test #1' value='3583']
+##teamcity[buildStatisticValue key='Test #2' value='3583']
+##teamcity[buildStatisticValue key='Test #3' value='0']

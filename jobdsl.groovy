@@ -2,7 +2,7 @@
 
 folder('lightning')
 
-['core', 'standalone', 'maven', 'gradle'].each { module ->
+['core', 'standalone', 'maven', 'gradle', 'lambda'].each { module ->
 
     multibranchPipelineJob("lightning/${module}") {
         branchSources {
