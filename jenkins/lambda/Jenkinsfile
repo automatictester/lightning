@@ -58,9 +58,9 @@ timestamps {
     lock('lightning-pipeline') {
         node('linux') {
             stage('Prepare') {
-                echo "${env.BRANCH_NAME}"
                 sharedLib.cleanupWorkspaceAndCloneRepo()
                 sharedLib.purge()
+                echo "${env.BRANCH_NAME}"
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {
