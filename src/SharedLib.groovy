@@ -2,6 +2,7 @@
 def cleanupWorkspaceAndCloneRepo() {
     cleanWs()
     git credentialsId: 'github-creds', url: 'git@github.com:deliverymind/lightning.git'
+    sh "git checkout ${env.BRANCH_NAME}"
 }
 
 def purge() {

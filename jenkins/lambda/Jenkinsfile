@@ -60,7 +60,6 @@ timestamps {
             stage('Prepare') {
                 sharedLib.cleanupWorkspaceAndCloneRepo()
                 sharedLib.purge()
-                echo "${env.BRANCH_NAME}"
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {
