@@ -24,10 +24,6 @@ Lightning functionality embedded in a Gradle plugin.
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-gradle-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-gradle-plugin)
 
-### lightning-performance-toolkit
-
-Performance tests.
-
 ### lightning-standalone
 
 Lightning Standalone Java JAR.

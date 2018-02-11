@@ -1,9 +1,0 @@
-<testSet>
-
-   <passedTransactionsTest>
-      <testName>No failed transactions</testName>
-      <transactionName>Login (admin)</transactionName>
-      <allowedPercentOfFailedTransactions>15</allowedPercentOfFailedTransactions>
-   </passedTransactionsTest>
-
-</testSet>
