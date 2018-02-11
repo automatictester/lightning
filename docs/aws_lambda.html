@@ -33,7 +33,8 @@
     <p>Steps:</p>
 
     <ul>
-        <li>Create Java 8 Lambda function in AWS and upload Lightning AWS Lambda JAR file from Releases section on <a href="https://github.com/deliverymind/lightning/releases" target="_blank">GitHub</a>.</li>
+        <li>Create Java 8 Lambda function in AWS and upload Lightning AWS Lambda JAR file from Releases section on <a href="https://github.com/deliverymind/lightning/releases" target="_blank">GitHub</a>.
+        Handler is <code>uk.co.deliverymind.lightning.lambda.LightningHandler</code>.</li>
         <li>Configure other Lambda parameters, including memory allocation limit and execution timeout. Those will vary depending on the workload. It is advised to allocate not
             less than <code>256MB</code> memory to your lambda and set timeout to at least <code>30s</code>. Such an extended timeout will allow for uninterrupted execution when AWS Lambda will first provision
         the underlying infrastructure for your function.</li>
