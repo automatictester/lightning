@@ -142,7 +142,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         jmeterTransactions = new JMeterCSVS3ObjectReader(region, bucket).getTransactions(jmeterCsv);
         JMeterReporter reporter = new JMeterReporter(jmeterTransactions);
         String jmeterReport = reporter.getJMeterReport();
-        String jmeterReportS3Path = s3Client.putS3Object("output/reort.log", jmeterReport);
+        String jmeterReportS3Path = s3Client.putS3Object("output/report.log", jmeterReport);
 
         response.setJmeterReport(jmeterReportS3Path);
         log.info(jmeterReport);
