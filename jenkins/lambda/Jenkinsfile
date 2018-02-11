@@ -95,9 +95,10 @@ timestamps {
                 stage('Volume testing') {
                     dir('lightning-aws-lambda') {
                         sh '(cd large-volume-data-generator; ./generate-100mb-csv.sh)'
-                        sh 'aws lambda update-function-configuration --function-name Lightning --timeout 60 --memory-size 2048 --region eu-west-2'
+                        sh 'aws lambda update-function-configuration --function-name Lightning --timeout 60 --memory-size 1536 --region eu-west-2'
                         sh 'aws s3 cp large-volume-data-generator/jmeter-results.csv s3://deliverymind.co.uk-lightning-aws-lambda/csv/jmeter/100mb.csv --region eu-west-2'
                         sh './src/test/scripts/volume/volume.sh'
+                        sh 'aws lambda update-function-configuration --function-name Lightning --timeout 30 --memory-size 256 --region eu-west-2'
                     }
                 }
             }

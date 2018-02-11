@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <passedTransactionsTest>
+        <testName>Verify not more than 20% transactions have failed</testName>
+        <allowedPercentOfFailedTransactions>20</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
+
+</testSet>
