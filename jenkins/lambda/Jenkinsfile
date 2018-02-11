@@ -73,8 +73,8 @@ timestamps {
             stage('Deploy to AWS') {
                 dir('lightning-aws-lambda') {
                     sh 'aws s3 cp target/lightning-aws-lambda-*.jar s3://deliverymind.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
-                    sh 'aws lambda update-function-code --function-name Lightning --s3-bucket deliverymind.co.uk-lightning-aws-lambda-jar --s3-key lightning-aws-lambda.jar'
-                    sh 'aws lambda update-function-configuration --function-name Lightning --timeout 60 --memory-size 512'
+                    sh 'aws lambda update-function-code --function-name Lightning --s3-bucket deliverymind.co.uk-lightning-aws-lambda-jar --s3-key lightning-aws-lambda.jar --region eu-west-2'
+                    sh 'aws lambda update-function-configuration --function-name Lightning --timeout 60 --memory-size 512 --region eu-west-2'
                 }
             }
             stage('Test end-to-end') {
