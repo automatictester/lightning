@@ -47,7 +47,6 @@ def commitLambdaSnapshotVersion() {
 
 def archiveLambdaJar() {
     dir('lightning-aws-lambda') {
-        sh "mv target/lightning-aws-lambda*.jar target/lightning-aws-lambda-${params.RELEASE_VERSION}.jar"
         archiveArtifacts artifacts: 'target/lightning-aws-lambda*.jar'
     }
 }
