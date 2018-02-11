@@ -6,7 +6,7 @@
     <groupId>uk.co.deliverymind</groupId>
     <artifactId>lightning-aws-lambda</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>lightning-aws-lambda</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>http://deliverymind.github.io/lightning</url>
