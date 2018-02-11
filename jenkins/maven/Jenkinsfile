@@ -1,6 +1,7 @@
 #!groovy
 
 properties([
+        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
         parameters([
                 string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
                 string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
