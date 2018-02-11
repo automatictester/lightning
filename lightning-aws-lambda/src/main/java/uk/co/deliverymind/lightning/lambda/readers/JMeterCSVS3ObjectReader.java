@@ -1,6 +1,5 @@
 package uk.co.deliverymind.lightning.lambda.readers;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.co.deliverymind.lightning.data.JMeterTransactions;
@@ -9,6 +8,7 @@ import uk.co.deliverymind.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.deliverymind.lightning.lambda.s3.S3Client;
 import uk.co.deliverymind.lightning.readers.JMeterCSVFileReader;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -27,7 +27,7 @@ public class JMeterCSVS3ObjectReader extends JMeterCSVFileReader {
         JMeterTransactions jmeterTransactions = new JMeterTransactions();
         String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
 
-        try (InputStreamReader isr = new InputStreamReader(IOUtils.toInputStream(csvObjectContent))) {
+        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
             jmeterTransactions.addAll(getParser().parseAll(isr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);

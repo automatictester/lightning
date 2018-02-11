@@ -1,6 +1,5 @@
 package uk.co.deliverymind.lightning.lambda.readers;
 
-import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.co.deliverymind.lightning.exceptions.XMLFileException;
@@ -11,6 +10,7 @@ import uk.co.deliverymind.lightning.readers.LightningXMLFileReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,7 +25,7 @@ public class LightningXMLS3ObjectReader extends LightningXMLFileReader {
     public void readTests(String xmlObject) {
         String xmlObjectContent = s3Client.getS3ObjectContent(xmlObject);
 
-        try (InputStream is = IOUtils.toInputStream(xmlObjectContent)) {
+        try (InputStream is = new ByteArrayInputStream(xmlObjectContent.getBytes())) {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(is);

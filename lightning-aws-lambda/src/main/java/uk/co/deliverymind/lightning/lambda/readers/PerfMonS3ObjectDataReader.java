@@ -1,12 +1,12 @@
 package uk.co.deliverymind.lightning.lambda.readers;
 
-import org.apache.commons.io.IOUtils;
 import uk.co.deliverymind.lightning.data.PerfMonDataEntries;
 import uk.co.deliverymind.lightning.exceptions.CSVFileIOException;
 import uk.co.deliverymind.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.deliverymind.lightning.lambda.s3.S3Client;
 import uk.co.deliverymind.lightning.readers.PerfMonDataReader;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -21,7 +21,7 @@ public class PerfMonS3ObjectDataReader extends PerfMonDataReader {
     public PerfMonDataEntries getDataEntires(String csvObject) {
         PerfMonDataEntries perfMonDataEntries = new PerfMonDataEntries();
         String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
-        try (InputStreamReader isr = new InputStreamReader(IOUtils.toInputStream(csvObjectContent))) {
+        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
             perfMonDataEntries.addAll(getParser().parseAll(isr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);
