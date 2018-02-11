@@ -74,7 +74,7 @@ timestamps {
                     sh 'aws s3 cp target/lightning-aws-lambda-*.jar s3://deliverymind.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
                     sh 'aws lambda update-function-code --function-name Lightning --s3-bucket deliverymind.co.uk-lightning-aws-lambda-jar --s3-key lightning-aws-lambda.jar --region eu-west-2'
                     sh 'aws lambda update-function-configuration --function-name Lightning --timeout 60 --memory-size 1024 --region eu-west-2'
-                    sh 'aws lambda put-function-concurrency --function-name Lightning --reserved-concurrent-executions 1'
+                    sh 'aws lambda put-function-concurrency --function-name Lightning --reserved-concurrent-executions 1 --region eu-west-2'
                 }
             }
             stage('Test end-to-end') {
