@@ -8,6 +8,10 @@ Lightning functionality embedded in a Maven plugin.
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/jmeter-lightning-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/jmeter-lightning-maven-plugin)
 
+### lightning-aws-lambda
+
+Lightning functionality embedded in an AWS Lambda function.
+
 ### lightning-core
 
 Core Lightning library used as a key dependency by Lightning Standalone Java JAR, Gradle and Maven plugins.
