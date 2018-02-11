@@ -45,11 +45,10 @@ def commitLambdaSnapshotVersion() {
 }
 
 def archiveLambdaJar() {
-    if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false") {
-        sh "mv lightning-aws-lambda/target/lightning-aws-lambda*.jar lightning-aws-lambda/target/lightning-aws-lambda-${params.RELEASE_VERSION}.jar"
-        archiveArtifacts artifacts: 'lightning-aws-lambda/target/lightning-aws-lambda*.jar'
+    dir('lightning-aws-lambda') {
+        sh "mv target/lightning-aws-lambda*.jar target/lightning-aws-lambda-${params.RELEASE_VERSION}.jar"
+        archiveArtifacts artifacts: 'target/lightning-aws-lambda*.jar'
     }
-    archiveArtifacts artifacts: 'lightning-aws-lambda/target/lightning-aws-lambda*.jar'
 }
 
 disableConcurrentBuilds()
