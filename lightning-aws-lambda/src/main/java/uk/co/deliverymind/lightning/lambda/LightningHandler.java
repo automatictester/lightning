@@ -121,7 +121,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         String testExecutionReport = testSet.getTestExecutionReport();
         String testSetExecutionSummaryReport = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
 
-        String combinedTestReport = String.format("\n%s%s", testExecutionReport, testSetExecutionSummaryReport);
+        String combinedTestReport = String.format("\n%s%s\n", testExecutionReport, testSetExecutionSummaryReport);
         String combinedTestReportS3Path = s3Client.putS3Object("output/verify.log", combinedTestReport);
 
         response.setCombinedTestReport(combinedTestReportS3Path);
