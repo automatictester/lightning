@@ -14,7 +14,7 @@ Lightning functionality embedded in an AWS Lambda function.
 
 ### lightning-core
 
-Core Lightning library used as a key dependency by Lightning Standalone Java JAR, Gradle and Maven plugins.
+Core Lightning library used as a key dependency by other Lightning modules.
 
 [![Central status](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/uk.co.deliverymind/lightning-core)
 
