@@ -10,7 +10,7 @@ generated.csv
 */pom.xml.versionsBackup
 release.properties
 */.gradle/
-**/build/
+lightning-gradle-plugin/build/
 **/taskArtifacts.lock
 */gradle.properties-e
 /lightning-aws-lambda/response.json
