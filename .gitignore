@@ -19,3 +19,4 @@ lightning-gradle-plugin/build/
 /lightning-aws-lambda/report.log
 /lightning-aws-lambda/report-1.log
 /lightning-aws-lambda/large-volume-data-generator/*.csv
+/lightning-gradle-plugin/src/integrationTest/resources/build/**/.gradle/
