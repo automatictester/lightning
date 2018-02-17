@@ -75,7 +75,7 @@ timestamps {
                 }
                 dir('lightning-aws-lambda/tf') {
                     sh 'terraform init'
-                    sh 'terraform apply -input=false'
+                    sh 'terraform apply -auto-approve'
                 }
             }
             stage('Test end-to-end') {
@@ -97,14 +97,14 @@ timestamps {
                         sh './generate-100mb-csv.sh'
                     }
                     dir('lightning-aws-lambda/tf') {
-                        sh 'terraform apply -input=false -var-file="volume-test.tfvars"'
+                        sh 'terraform apply -auto-approve -var-file="volume-test.tfvars"'
                     }
                     dir('lightning-aws-lambda') {
                         sh 'aws s3 cp large-volume-data-generator/jmeter-results.csv s3://deliverymind.co.uk-lightning-aws-lambda/csv/jmeter/100mb.csv --region eu-west-2'
                         sh './src/test/scripts/volume/volume.sh'
                     }
                     dir('lightning-aws-lambda/tf') {
-                        sh 'terraform apply -input=false'
+                        sh 'terraform apply -auto-approve'
                     }
                 }
             }
