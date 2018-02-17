@@ -73,7 +73,7 @@ timestamps {
                 dir('lightning-aws-lambda') {
                     sh 'aws s3 cp target/lightning-aws-lambda-*.jar s3://deliverymind.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
                 }
-                dif('lightning-aws-lambda/tf') {
+                dir('lightning-aws-lambda/tf') {
                     sh 'terraform init'
                     sh 'terraform apply'
                 }
@@ -96,14 +96,14 @@ timestamps {
                     dir('lightning-aws-lambda/large-volume-data-generator') {
                         sh './generate-100mb-csv.sh'
                     }
-                    dif('lightning-aws-lambda/tf') {
+                    dir('lightning-aws-lambda/tf') {
                         sh 'terraform apply -var-file="volume-test.tfvars"'
                     }
-                    dif('lightning-aws-lambda') {
+                    dir('lightning-aws-lambda') {
                         sh 'aws s3 cp large-volume-data-generator/jmeter-results.csv s3://deliverymind.co.uk-lightning-aws-lambda/csv/jmeter/100mb.csv --region eu-west-2'
                         sh './src/test/scripts/volume/volume.sh'
                     }
-                    dif('lightning-aws-lambda/tf') {
+                    dir('lightning-aws-lambda/tf') {
                         sh 'terraform apply'
                     }
                 }
