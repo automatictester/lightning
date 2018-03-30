@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.readers;
 
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.exceptions.CSVFileIOException;
-import uk.co.deliverymind.lightning.exceptions.CSVFileNoTransactionsException;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
+import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static uk.co.deliverymind.lightning.shared.TestData.*;
+import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class JMeterCSVFileReaderTest {
 

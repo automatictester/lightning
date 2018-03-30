@@ -6,12 +6,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.exceptions.XMLFileNoTestsException;
-import uk.co.deliverymind.lightning.enums.ServerSideTestType;
-import uk.co.deliverymind.lightning.exceptions.XMLFileException;
-import uk.co.deliverymind.lightning.exceptions.XMLFileNoTestsException;
-import uk.co.deliverymind.lightning.tests.*;
-import uk.co.deliverymind.lightning.utils.LightningXMLProcessingHelpers;
-import uk.co.deliverymind.lightning.utils.Percent;
+import uk.co.automatictester.lightning.enums.ServerSideTestType;
+import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.utils.LightningXMLProcessingHelpers;
+import uk.co.automatictester.lightning.utils.Percent;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.data;
 
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.exceptions.CSVFileNonexistentHostAndMetricException;
+import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentHostAndMetricException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

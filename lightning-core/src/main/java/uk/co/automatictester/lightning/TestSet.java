@@ -8,12 +8,6 @@ import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.LightningTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
-import uk.co.automatictester.lightning.enums.TestResult;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.LightningTest;
-import uk.co.deliverymind.lightning.tests.ServerSideTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;

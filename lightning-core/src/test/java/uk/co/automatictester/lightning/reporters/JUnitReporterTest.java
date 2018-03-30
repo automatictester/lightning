@@ -2,10 +2,10 @@ package uk.co.automatictester.lightning.reporters;
 
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
-import uk.co.deliverymind.lightning.TestSet;
-import uk.co.deliverymind.lightning.ci.JUnitReporter;
-import uk.co.deliverymind.lightning.enums.TestResult;
-import uk.co.deliverymind.lightning.tests.LightningTest;
+import uk.co.automatictester.lightning.TestSet;
+import uk.co.automatictester.lightning.ci.JUnitReporter;
+import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.tests.LightningTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

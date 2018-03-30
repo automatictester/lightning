@@ -3,14 +3,14 @@ package uk.co.automatictester.lightning.tests;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.shared.TestData;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
-import static uk.co.deliverymind.lightning.shared.TestData.LOGIN_1000_SUCCESS;
-import static uk.co.deliverymind.lightning.shared.TestData.SEARCH_800_SUCCESS;
+import static uk.co.automatictester.lightning.shared.TestData.LOGIN_1000_SUCCESS;
+import static uk.co.automatictester.lightning.shared.TestData.SEARCH_800_SUCCESS;
 
 public class LightningTestTest {
 

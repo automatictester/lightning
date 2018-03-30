@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
-import uk.co.deliverymind.lightning.TestSet;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.tests.ClientSideTest;
-import uk.co.deliverymind.lightning.tests.ServerSideTest;
+import uk.co.automatictester.lightning.TestSet;
 
 import java.util.Arrays;
 

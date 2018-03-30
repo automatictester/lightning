@@ -5,9 +5,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.deliverymind.lightning.data.PerfMonDataEntries;
-import uk.co.deliverymind.lightning.enums.ServerSideTestType;
-import uk.co.deliverymind.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.enums.ServerSideTestType;
+import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
 

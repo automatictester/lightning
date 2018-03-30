@@ -3,7 +3,6 @@ package uk.co.automatictester.lightning.utils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.exceptions.PercentException;
-import uk.co.deliverymind.lightning.exceptions.PercentException;
 
 public class Percent {
 

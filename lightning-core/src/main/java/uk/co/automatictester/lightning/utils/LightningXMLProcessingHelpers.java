@@ -2,9 +2,10 @@ package uk.co.automatictester.lightning.utils;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.exceptions.*;
-import uk.co.deliverymind.lightning.enums.ServerSideTestType;
-import uk.co.deliverymind.lightning.exceptions.*;
+import uk.co.automatictester.lightning.enums.ServerSideTestType;
+import uk.co.automatictester.lightning.exceptions.*;
 
 public abstract class LightningXMLProcessingHelpers {
 

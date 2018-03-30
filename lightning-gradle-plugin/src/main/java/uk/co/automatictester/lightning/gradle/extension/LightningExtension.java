@@ -1,4 +1,4 @@
-package uk.co.deliverymind.lightning.gradle.extension;
+package uk.co.automatictester.lightning.gradle.extension;
 
 import java.io.File;
 

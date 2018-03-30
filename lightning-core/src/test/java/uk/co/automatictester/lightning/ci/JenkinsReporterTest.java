@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.ci;
 
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.TestSet;
+import uk.co.automatictester.lightning.TestSet;
 
 import java.io.File;
 import java.io.FileNotFoundException;

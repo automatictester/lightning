@@ -8,9 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.exceptions.CSVFileIOException;
-import uk.co.deliverymind.lightning.exceptions.CSVFileNoTransactionsException;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import java.io.File;
 import java.io.FileReader;

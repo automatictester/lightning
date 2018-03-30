@@ -3,10 +3,9 @@ package uk.co.automatictester.lightning.tests;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.utils.Percent;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.enums.TestResult;
-import uk.co.deliverymind.lightning.enums.ThresholdType;
-import uk.co.deliverymind.lightning.utils.Percent;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.enums.ThresholdType;
 
 import java.util.ArrayList;
 

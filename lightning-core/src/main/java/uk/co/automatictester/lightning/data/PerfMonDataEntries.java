@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.data;
 
 import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentHostAndMetricException;
-import uk.co.deliverymind.lightning.exceptions.CSVFileNonexistentHostAndMetricException;
 
 import java.util.ArrayList;
 

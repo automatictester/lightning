@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.reporters;
 
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.TestSet;
+import uk.co.automatictester.lightning.TestSet;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;

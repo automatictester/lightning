@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.data;
 
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.exceptions.CSVFileNonexistentLabelException;
+import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentLabelException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

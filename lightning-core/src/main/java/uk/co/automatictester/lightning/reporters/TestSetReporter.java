@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.reporters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.deliverymind.lightning.TestSet;
+import uk.co.automatictester.lightning.TestSet;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package uk.co.deliverymind.lightning.gradle.plugin;
+package uk.co.automatictester.lightning.gradle.plugin;
 
 import org.gradle.internal.impldep.org.apache.commons.io.FileUtils;
 import org.gradle.testkit.runner.BuildResult;

@@ -1,5 +1,5 @@
 plugins {
-    id 'uk.co.deliverymind.lightning'
+    id 'uk.co.automatictester.lightning'
 }
 
 lightningSettings {

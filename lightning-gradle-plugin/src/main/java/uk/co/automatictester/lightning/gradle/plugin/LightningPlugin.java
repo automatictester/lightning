@@ -1,10 +1,10 @@
-package uk.co.deliverymind.lightning.gradle.plugin;
+package uk.co.automatictester.lightning.gradle.plugin;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import uk.co.deliverymind.lightning.gradle.extension.LightningExtension;
-import uk.co.deliverymind.lightning.gradle.task.ReportTask;
-import uk.co.deliverymind.lightning.gradle.task.VerifyTask;
+import uk.co.automatictester.lightning.gradle.extension.LightningExtension;
+import uk.co.automatictester.lightning.gradle.task.ReportTask;
+import uk.co.automatictester.lightning.gradle.task.VerifyTask;
 
 public class LightningPlugin implements Plugin<Project> {
 

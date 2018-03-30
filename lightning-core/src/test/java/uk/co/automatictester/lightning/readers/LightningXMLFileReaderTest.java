@@ -1,10 +1,10 @@
 package uk.co.automatictester.lightning.readers;
 
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.enums.ServerSideTestType;
-import uk.co.deliverymind.lightning.exceptions.*;
-import uk.co.deliverymind.lightning.tests.*;
-import uk.co.deliverymind.lightning.utils.Percent;
+import uk.co.automatictester.lightning.enums.ServerSideTestType;
+import uk.co.automatictester.lightning.exceptions.*;
+import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.utils.Percent;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,7 +13,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static uk.co.deliverymind.lightning.shared.TestData.*;
+import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class LightningXMLFileReaderTest {
 

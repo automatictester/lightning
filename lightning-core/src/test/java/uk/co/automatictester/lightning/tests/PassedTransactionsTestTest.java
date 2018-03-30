@@ -3,14 +3,14 @@ package uk.co.automatictester.lightning.tests;
 import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.shared.TestData;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.enums.TestResult;
-import uk.co.deliverymind.lightning.utils.Percent;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.utils.Percent;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
-import static uk.co.deliverymind.lightning.shared.TestData.*;
+import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class PassedTransactionsTestTest {
 

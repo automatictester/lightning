@@ -2,20 +2,20 @@ package uk.co.automatictester.lightning;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.shared.TestData;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.data.PerfMonDataEntries;
-import uk.co.deliverymind.lightning.enums.ServerSideTestType;
-import uk.co.deliverymind.lightning.tests.ClientSideTest;
-import uk.co.deliverymind.lightning.tests.PassedTransactionsTest;
-import uk.co.deliverymind.lightning.tests.RespTimeAvgTest;
-import uk.co.deliverymind.lightning.tests.ServerSideTest;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.enums.ServerSideTestType;
+import uk.co.automatictester.lightning.tests.ClientSideTest;
+import uk.co.automatictester.lightning.tests.PassedTransactionsTest;
+import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
+import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static uk.co.deliverymind.lightning.shared.TestData.*;
+import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class TestSetTest extends ConsoleOutputTest {
 

@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.shared;
 
-import uk.co.deliverymind.lightning.tests.*;
-import uk.co.deliverymind.lightning.utils.Percent;
+import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.utils.Percent;
 
 import java.io.File;
 

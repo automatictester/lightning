@@ -1,6 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
-import uk.co.deliverymind.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.utils;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import uk.co.deliverymind.lightning.exceptions.PercentException;
+import uk.co.automatictester.lightning.exceptions.PercentException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

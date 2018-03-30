@@ -1,4 +1,4 @@
-package uk.co.deliverymind.lightning.gradle.plugin;
+package uk.co.automatictester.lightning.gradle.plugin;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;

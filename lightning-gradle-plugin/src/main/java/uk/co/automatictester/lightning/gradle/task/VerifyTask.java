@@ -1,9 +1,9 @@
-package uk.co.deliverymind.lightning.gradle.task;
+package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
-import uk.co.deliverymind.lightning.ci.JenkinsReporter;
-import uk.co.deliverymind.lightning.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.ci.JenkinsReporter;
+import uk.co.automatictester.lightning.ci.TeamCityReporter;
 
 public class VerifyTask extends LightningTask {
 

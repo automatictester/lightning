@@ -1,8 +1,7 @@
 package uk.co.automatictester.lightning.ci;
 
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.deliverymind.lightning.TestSet;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.TestSet;
 
 public abstract class CIReporter {
 

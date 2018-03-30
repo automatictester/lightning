@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.tests;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.deliverymind.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import java.util.List;
 
