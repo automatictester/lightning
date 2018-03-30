@@ -8,13 +8,13 @@ ACTUAL_RESULT="junit.xml"
 aws lambda invoke \
     --function-name Lightning \
     --region eu-west-2 \
-    --payload '{"region": "eu-west-2","bucket": "deliverymind.co.uk-lightning-aws-lambda","mode": "verify","jmeterCsv": "csv/jmeter/2_transactions.csv","perfmonCsv": "csv/perfmon/junit_report.csv","xml": "xml/junit_report.xml"}' \
+    --payload '{"region": "eu-west-2","bucket": "automatictester.co.uk-lightning-aws-lambda","mode": "verify","jmeterCsv": "csv/jmeter/2_transactions.csv","perfmonCsv": "csv/perfmon/junit_report.csv","xml": "xml/junit_report.xml"}' \
     response.json \
     &> /dev/null
 
 S3_OBJECT=`cat response.json | jq -r '.junitReport'`
 
-aws s3 cp s3://deliverymind.co.uk-lightning-aws-lambda/${S3_OBJECT} --region eu-west-2 junit.xml &> /dev/null
+aws s3 cp s3://automatictester.co.uk-lightning-aws-lambda/${S3_OBJECT} --region eu-west-2 junit.xml &> /dev/null
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT`
 OUT=$?

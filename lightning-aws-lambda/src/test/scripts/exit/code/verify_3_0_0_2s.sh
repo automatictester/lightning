@@ -3,7 +3,7 @@
 aws lambda invoke \
     --function-name Lightning \
     --region eu-west-2 \
-    --payload '{"region": "eu-west-2","bucket": "deliverymind.co.uk-lightning-aws-lambda","mode": "verify","jmeterCsv": "csv/jmeter/10_transactions.csv", "xml": "xml/1_client_2_server.xml", "perfmonCsv": "csv/perfmon/2_entries.csv"}' \
+    --payload '{"region": "eu-west-2","bucket": "automatictester.co.uk-lightning-aws-lambda","mode": "verify","jmeterCsv": "csv/jmeter/10_transactions.csv", "xml": "xml/1_client_2_server.xml", "perfmonCsv": "csv/perfmon/2_entries.csv"}' \
     response.json \
     &> /dev/null
 

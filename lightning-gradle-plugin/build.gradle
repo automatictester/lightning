@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-group = 'uk.co.deliverymind'
+group = 'uk.co.automatictester'
 version = lightningGradlePluginVersion
 
 apply plugin: 'maven'
@@ -54,7 +54,7 @@ tasks.withType(Test) {
 }
 
 dependencies {
-    compile "uk.co.deliverymind:lightning-core:${lightningCoreVersion}"
+    compile "uk.co.automatictester:lightning-core:${lightningCoreVersion}"
     integrationTestCompile 'org.testng:testng:6.10'
 }
 
@@ -95,12 +95,12 @@ uploadArchives {
                 version lightningGradlePluginVersion
                 packaging 'jar'
                 description 'Gradle plugin encapsulating Lightning functionality'
-                url 'http://deliverymind.github.io/lightning'
+                url 'http://automatictester.github.io/lightning'
 
                 scm {
-                    connection 'scm:git:git@github.com:deliverymind/lightning.git'
-                    developerConnection 'scm:git:git@github.com:deliverymind/lightning.git'
-                    url 'git@github.com:deliverymind/lightning.git'
+                    connection 'scm:git:git@github.com:automatictester/lightning.git'
+                    developerConnection 'scm:git:git@github.com:automatictester/lightning.git'
+                    url 'git@github.com:automatictester/lightning.git'
                 }
 
                 licenses {
@@ -112,9 +112,9 @@ uploadArchives {
 
                 developers {
                     developer {
-                        name 'Irek Pastusiak'
-                        email 'irek@deliverymind.co.uk'
-                        organizationUrl 'https://github.com/deliverymind'
+                        name 'Ireneusz Pastusiak'
+                        email 'ireneusz.pastusiak@gmail.com'
+                        organizationUrl 'https://github.com/automatictester'
                     }
                 }
             }
@@ -141,14 +141,14 @@ signing {
 }
 
 pluginBundle {
-    website = 'http://deliverymind.github.io/lightning'
-    vcsUrl = 'https://github.com/deliverymind/lightning'
+    website = 'http://automatictester.github.io/lightning'
+    vcsUrl = 'https://github.com/automatictester/lightning'
     description = 'Integrate JMeter non-functional tests with CI/CD server'
     tags = ['jmeter', 'ci', 'cd', 'continuous-integration', 'continuous-delivery', 'performance-testing', 'non-functional-testing']
 
     plugins {
         LightningPlugin {
-            id = 'uk.co.deliverymind.lightning'
+            id = 'uk.co.automatictester.lightning'
             displayName = 'Lightning Gradle Plugin'
         }
     }

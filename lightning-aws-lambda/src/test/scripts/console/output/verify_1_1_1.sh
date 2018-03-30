@@ -8,15 +8,15 @@ rm -f report-1.log report-2.log $ACTUAL_RESULT
 aws lambda invoke \
     --function-name Lightning \
     --region eu-west-2 \
-    --payload '{"region": "eu-west-2","bucket": "deliverymind.co.uk-lightning-aws-lambda","mode": "verify", "xml": "xml/1_1_1.xml", "jmeterCsv": "csv/jmeter/10_transactions.csv"}' \
+    --payload '{"region": "eu-west-2","bucket": "automatictester.co.uk-lightning-aws-lambda","mode": "verify", "xml": "xml/1_1_1.xml", "jmeterCsv": "csv/jmeter/10_transactions.csv"}' \
     response.json \
     &> /dev/null
 
 S3_OBJECT=`cat response.json | jq -r '.combinedTestReport'`
-aws s3 cp s3://deliverymind.co.uk-lightning-aws-lambda/${S3_OBJECT} --region eu-west-2 report-1.log &> /dev/null
+aws s3 cp s3://automatictester.co.uk-lightning-aws-lambda/${S3_OBJECT} --region eu-west-2 report-1.log &> /dev/null
 
 S3_OBJECT=`cat response.json | jq -r '.teamCityReport'`
-aws s3 cp s3://deliverymind.co.uk-lightning-aws-lambda/${S3_OBJECT} --region eu-west-2 report-2.log &> /dev/null
+aws s3 cp s3://automatictester.co.uk-lightning-aws-lambda/${S3_OBJECT} --region eu-west-2 report-2.log &> /dev/null
 
 cat report-1.log report-2.log > $ACTUAL_RESULT
 

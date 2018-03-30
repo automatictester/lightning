@@ -7,7 +7,7 @@ folder('lightning')
     multibranchPipelineJob("lightning/${module}") {
         branchSources {
             git {
-                remote('git@github.com:deliverymind/lightning.git')
+                remote('git@github.com:automatictester/lightning.git')
                 credentialsId('github-creds')
             }
         }
@@ -21,7 +21,7 @@ folder('lightning')
                                 scm {
                                     git {
                                         id 'lightning-git-repo'
-                                        remote 'git@github.com:deliverymind/lightning.git'
+                                        remote 'git@github.com:automatictester/lightning.git'
                                         credentialsId 'github-creds'
                                     }
                                 }
