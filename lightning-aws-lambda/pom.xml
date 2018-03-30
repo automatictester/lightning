@@ -125,7 +125,7 @@
         <dependency>
             <groupId>uk.co.automatictester</groupId>
             <artifactId>lightning-core</artifactId>
-            <version>5.6.1</version>
+            <version>5.7.0</version>
         </dependency>
 
         <dependency>
