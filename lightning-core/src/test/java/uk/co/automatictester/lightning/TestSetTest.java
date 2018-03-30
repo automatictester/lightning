@@ -1,10 +1,10 @@
 package uk.co.automatictester.lightning;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.shared.TestData;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonDataEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
+import uk.co.automatictester.lightning.shared.TestData;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.PassedTransactionsTest;
 import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
@@ -15,7 +15,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class TestSetTest extends ConsoleOutputTest {
 

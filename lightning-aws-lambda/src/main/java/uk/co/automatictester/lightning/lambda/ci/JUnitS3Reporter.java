@@ -7,11 +7,7 @@ import uk.co.automatictester.lightning.exceptions.JunitReportGenerationException
 import uk.co.automatictester.lightning.lambda.s3.S3Client;
 import uk.co.automatictester.lightning.tests.LightningTest;
 
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;

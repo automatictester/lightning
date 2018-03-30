@@ -3,10 +3,10 @@ package uk.co.automatictester.lightning.ci;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.exceptions.JunitReportGenerationException;
 import uk.co.automatictester.lightning.tests.LightningTest;
-import uk.co.automatictester.lightning.TestSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

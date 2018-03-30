@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.ci;
 
+import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.exceptions.JenkinsReportGenerationException;
-import uk.co.automatictester.lightning.TestSet;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -2,9 +2,9 @@ package uk.co.automatictester.lightning.tests;
 
 import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.shared.TestData;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.shared.TestData;
 
 import java.util.Locale;
 
@@ -12,7 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
-import static uk.co.automatictester.lightning.shared.TestData.*;
 
 public class RespTimeStdDevTestTest {
 

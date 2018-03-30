@@ -3,7 +3,6 @@ package uk.co.automatictester.lightning.standalone.cli.delegates;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import uk.co.automatictester.lightning.standalone.cli.validators.FileValidator;
-import uk.co.automatictester.lightning.standalone.cli.validators.FileValidator;
 
 import java.io.File;
 

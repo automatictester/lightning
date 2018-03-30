@@ -6,9 +6,9 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 import java.io.File;
 import java.io.FileReader;

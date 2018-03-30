@@ -5,8 +5,6 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.ParametersDelegate;
 import uk.co.automatictester.lightning.standalone.cli.delegates.JmeterCsvFile;
 import uk.co.automatictester.lightning.standalone.cli.validators.FileValidator;
-import uk.co.automatictester.lightning.standalone.cli.delegates.JmeterCsvFile;
-import uk.co.automatictester.lightning.standalone.cli.validators.FileValidator;
 
 import java.io.File;
 
