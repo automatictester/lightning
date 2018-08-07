@@ -6,6 +6,8 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.shared.TestData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,17 +33,18 @@ public class RespTimeMedianTestTest {
     @Test
     public void testExecutePass() {
         RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 145);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_121_SUCCESS);
-        jmeterTransactions.add(SEARCH_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_121_SUCCESS);
+        testData.add(SEARCH_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -52,17 +55,18 @@ public class RespTimeMedianTestTest {
         Locale.setDefault(Locale.FRENCH);
 
         RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 145);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_121_SUCCESS);
-        jmeterTransactions.add(SEARCH_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_121_SUCCESS);
+        testData.add(SEARCH_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -71,17 +75,18 @@ public class RespTimeMedianTestTest {
     @Test
     public void testExecuteAllTransactionsPass() {
         RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", null, 145);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_121_SUCCESS);
-        jmeterTransactions.add(LOGIN_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_121_SUCCESS);
+        testData.add(LOGIN_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -90,17 +95,18 @@ public class RespTimeMedianTestTest {
     @Test
     public void testExecuteFail() {
         RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 144);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_121_SUCCESS);
-        jmeterTransactions.add(SEARCH_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_121_SUCCESS);
+        testData.add(SEARCH_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -109,17 +115,18 @@ public class RespTimeMedianTestTest {
     @Test
     public void testExecuteAllTransactionsFail() {
         RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", null, 144);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_121_SUCCESS);
-        jmeterTransactions.add(LOGIN_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_121_SUCCESS);
+        testData.add(LOGIN_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -128,8 +135,9 @@ public class RespTimeMedianTestTest {
     @Test
     public void verifyExecuteError() {
         RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "nonexistent", 800);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TestData.SEARCH_11221_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.SEARCH_11221_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));

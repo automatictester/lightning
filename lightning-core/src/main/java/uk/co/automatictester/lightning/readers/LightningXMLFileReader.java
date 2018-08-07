@@ -25,28 +25,9 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
     private List<ServerSideTest> serverSideTests = new ArrayList<>();
 
     public void readTests(File xmlFile) {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(xmlFile);
-            doc.getDocumentElement().normalize();
-
-            addRespTimeAvgTests(doc);
-            addRespTimeStdDevTestNodes(doc);
-            addPassedTransactionsTestNodes(doc);
-            addRespTimeNthPercTests(doc);
-            addThroughputTests(doc);
-            addRespTimeMaxTests(doc);
-            addRespTimeMedianTests(doc);
-            addServerSideTests(doc);
-
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new XMLFileException(e);
-        }
-
-        if (getTestCount() == 0) {
-            throw new XMLFileNoTestsException("No tests of expected type found in XML file");
-        }
+        Document doc = readXmlFile(xmlFile);
+        loadAllTests(doc);
+        throwExceptionIfNoTests();
     }
 
     public List<ClientSideTest> getClientSideTests() {
@@ -57,10 +38,40 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         return serverSideTests;
     }
 
+    protected Document readXmlFile(File xmlFile) {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xmlFile);
+            doc.getDocumentElement().normalize();
+            return doc;
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new XMLFileException(e);
+        }
+    }
+
+    protected void loadAllTests(Document doc) {
+        addRespTimeAvgTests(doc);
+        addRespTimeStdDevTestNodes(doc);
+        addPassedTransactionsTestNodes(doc);
+        addRespTimeNthPercTests(doc);
+        addThroughputTests(doc);
+        addRespTimeMaxTests(doc);
+        addRespTimeMedianTests(doc);
+        addServerSideTests(doc);
+    }
+
+    protected void throwExceptionIfNoTests() {
+        if (getTestCount() == 0) {
+            throw new XMLFileNoTestsException("No tests of expected type found in XML file");
+        }
+    }
+
     protected int getTestCount() {
-        return
-                (clientSideTests != null ? clientSideTests.size() : 0) +
-                        (serverSideTests != null ? serverSideTests.size() : 0);
+        List<LightningTest> alltests = new ArrayList<>();
+        alltests.addAll(clientSideTests);
+        alltests.addAll(serverSideTests);
+        return alltests.size();
     }
 
     protected void addPassedTransactionsTestNodes(Document xmlDoc) {

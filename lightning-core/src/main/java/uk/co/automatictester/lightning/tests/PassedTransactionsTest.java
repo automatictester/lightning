@@ -36,7 +36,7 @@ public class PassedTransactionsTest extends ClientSideTest {
     public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
-            transactionCount = transactions.getTransactionCount();
+            transactionCount = transactions.size();
 
             int failureCount = 0;
             for (String[] transaction : transactions) {

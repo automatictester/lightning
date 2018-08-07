@@ -22,9 +22,9 @@ public abstract class ClientSideTest extends LightningTest {
     public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
         if (getTransactionName() != null) {
             if (isRegexp()) {
-                return originalJMeterTransactions.excludeLabelsNotMatching(getTransactionName());
+                return originalJMeterTransactions.getTransactionsMatching(getTransactionName());
             } else {
-                return originalJMeterTransactions.excludeLabelsOtherThan(getTransactionName());
+                return originalJMeterTransactions.getTransactionsWith(getTransactionName());
             }
         } else {
             return originalJMeterTransactions;

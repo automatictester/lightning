@@ -27,7 +27,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
 
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
-            transactionCount = transactions.getTransactionCount();
+            transactionCount = transactions.size();
 
             DescriptiveStatistics ds = new DescriptiveStatistics();
             for (String[] transaction : transactions) {

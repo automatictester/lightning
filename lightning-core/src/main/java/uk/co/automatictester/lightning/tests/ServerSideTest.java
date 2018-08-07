@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.enums.TestResult;
 
@@ -43,8 +43,8 @@ public class ServerSideTest extends LightningTest {
     @Override
     public void execute(ArrayList<String[]> originalDataEntries) {
         try {
-            PerfMonDataEntries dataEntries = filterDataEntries((PerfMonDataEntries) originalDataEntries);
-            dataEntriesCount = dataEntries.getDataEntriesCount();
+            PerfMonEntries dataEntries = filterDataEntries((PerfMonEntries) originalDataEntries);
+            dataEntriesCount = dataEntries.size();
 
             DescriptiveStatistics ds = new DescriptiveStatistics();
             for (String[] transaction : dataEntries) {
@@ -83,8 +83,8 @@ public class ServerSideTest extends LightningTest {
         }
     }
 
-    public PerfMonDataEntries filterDataEntries(PerfMonDataEntries originalPerfMonDataEntries) {
-        return originalPerfMonDataEntries.excludeHostAndMetricOtherThan(getHostAndMetric());
+    public PerfMonEntries filterDataEntries(PerfMonEntries originalPerfMonEntries) {
+        return originalPerfMonEntries.getEntriesWith(getHostAndMetric());
     }
 
     @Override

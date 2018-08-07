@@ -11,23 +11,39 @@ import java.util.Properties;
 
 public class JenkinsReporter extends CIReporter {
 
-    public JenkinsReporter(TestSet testSet) {
+    private JenkinsReporter(TestSet testSet) {
         super(testSet);
     }
 
-    public JenkinsReporter(JMeterTransactions jmeterTransactions) {
+    private JenkinsReporter(JMeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
     }
 
-    public void setJenkinsBuildName() {
-        if (testSet != null) {
-            writeJenkinsFile(getVerifySummary(testSet));
-        } else if (jmeterTransactions != null) {
-            writeJenkinsFile(getReportSummary(jmeterTransactions));
-        }
+    public static JenkinsReporter fromTestSet(TestSet testSet) {
+        return new JenkinsReporter(testSet);
     }
 
-    private void writeJenkinsFile(String summary) {
+    public static JenkinsReporter fromJMeterTransactions(JMeterTransactions jmeterTransactions) {
+        return new JenkinsReporter(jmeterTransactions);
+    }
+
+    public void setJenkinsBuildName() {
+        String fileContent = null;
+        if (testSet != null) {
+            fileContent = getVerifySummary();
+        } else if (jmeterTransactions != null) {
+            fileContent = getReportSummary();
+        }
+        writeJenkinsBuildNameSetterFile(fileContent);
+    }
+
+    private String getVerifySummary() {
+        int executed = testSet.getTestCount();
+        int failed = testSet.getFailCount() + testSet.getErrorCount();
+        return String.format("Tests executed: %s, failed: %s", executed, failed);
+    }
+
+    private void writeJenkinsBuildNameSetterFile(String summary) {
         try (FileOutputStream fos = new FileOutputStream("lightning-jenkins.properties")) {
             Properties props = new Properties();
             props.setProperty("result.string", summary);

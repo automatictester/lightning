@@ -18,10 +18,9 @@ import java.io.File;
 
 public class JUnitReporter {
 
-    protected TestSet testSet;
-    protected Document doc;
+    protected static Document doc;
 
-    public JUnitReporter() {
+    static {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
         try {
@@ -33,56 +32,70 @@ public class JUnitReporter {
         doc.setXmlStandalone(true);
     }
 
-    public void setTestSet(TestSet testSet) {
-        this.testSet = testSet;
-    }
-
-    public void generateJUnitReport() {
-        Node rootElement = doc.appendChild(getTestsuite());
-        for (LightningTest test : testSet.getTests()) {
-            rootElement.appendChild(getTestcase(test));
+    public static void generateJUnitReport(TestSet testSet) {
+        Element testsuite = getTestsuite(testSet);
+        Node rootElement = doc.appendChild(testsuite);
+        for (LightningTest test : testSet.getAllTests()) {
+            Element testcase = getTestcase(test);
+            rootElement.appendChild(testcase);
         }
         saveReportToDisk();
     }
 
-    public Element getTestsuite() {
+    public static Element getTestsuite(TestSet testSet) {
         Element testsuite = doc.createElement("testsuite");
-        testsuite.setAttribute("tests", String.valueOf(testSet.getTestCount()));
-        testsuite.setAttribute("failures", String.valueOf(testSet.getFailCount()));
-        testsuite.setAttribute("errors", String.valueOf(testSet.getErrorCount()));
+        String testCount = String.valueOf(testSet.getTestCount());
+        String failCount = String.valueOf(testSet.getFailCount());
+        String errorCount = String.valueOf(testSet.getErrorCount());
+
+        testsuite.setAttribute("tests", testCount);
+        testsuite.setAttribute("failures", failCount);
+        testsuite.setAttribute("errors", errorCount);
         testsuite.setAttribute("time", "0");
         testsuite.setAttribute("name", "Lightning");
+
         return testsuite;
     }
 
-    public Element getTestcase(LightningTest test) {
+    public static Element getTestcase(LightningTest test) {
         Element testcase = doc.createElement("testcase");
         testcase.setAttribute("time", "0");
-        testcase.setAttribute("name", test.getName());
+        String testName = test.getName();
+        testcase.setAttribute("name", testName);
 
-        if (test.getResult().equals(TestResult.FAIL)) {
-            Element failure = doc.createElement("failure");
-            setCommonFailureData(failure, test);
-            testcase.appendChild(failure);
-
-        } else if (test.getResult().equals(TestResult.ERROR)) {
-            Element error = doc.createElement("error");
-            setCommonFailureData(error, test);
-            testcase.appendChild(error);
+        TestResult testResult = test.getResult();
+        Element resultElement = null;
+        switch (testResult) {
+            case FAIL:
+                resultElement = doc.createElement("failure");
+                break;
+            case ERROR:
+                resultElement = doc.createElement("error");
+                break;
         }
+        if (resultElement != null) {
+            setCommonFailureData(resultElement, test);
+            testcase.appendChild(resultElement);
+        }
+
         return testcase;
     }
 
-    private void setCommonFailureData(Element e, LightningTest test) {
-        e.setAttribute("type", test.getType());
-        e.setAttribute("message", test.getActualResultDescription());
-        e.setTextContent(test.getTestExecutionReport());
+    private static void setCommonFailureData(Element element, LightningTest test) {
+        String testType = test.getType();
+        String actualResultDescription = test.getActualResultDescription();
+        String testExecutionReport = test.getTestExecutionReport();
+
+        element.setAttribute("type", testType);
+        element.setAttribute("message", actualResultDescription);
+        element.setTextContent(testExecutionReport);
     }
 
-    private void saveReportToDisk() {
+    private static void saveReportToDisk() {
         Transformer transformer;
         try {
-            transformer = TransformerFactory.newInstance().newTransformer();
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
         } catch (TransformerConfigurationException e) {
             throw new JunitReportGenerationException(e);
         }

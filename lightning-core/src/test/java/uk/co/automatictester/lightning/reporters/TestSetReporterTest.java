@@ -25,7 +25,7 @@ public class TestSetReporterTest {
         when(testSet.getFailCount()).thenReturn(0);
         when(testSet.getErrorCount()).thenReturn(0);
 
-        String output = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        String output = TestSetReporter.getTestSetExecutionSummaryReport(testSet);
         assertThat(output, containsString(expectedResult));
     }
 
@@ -44,7 +44,7 @@ public class TestSetReporterTest {
         when(testSet.getFailCount()).thenReturn(1);
         when(testSet.getErrorCount()).thenReturn(0);
 
-        String output = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        String output = TestSetReporter.getTestSetExecutionSummaryReport(testSet);
         assertThat(output, containsString(expectedResult));
     }
 
@@ -63,7 +63,7 @@ public class TestSetReporterTest {
         when(testSet.getFailCount()).thenReturn(0);
         when(testSet.getErrorCount()).thenReturn(1);
 
-        String output = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        String output = TestSetReporter.getTestSetExecutionSummaryReport(testSet);
         assertThat(output, containsString(expectedResult));
     }
 }

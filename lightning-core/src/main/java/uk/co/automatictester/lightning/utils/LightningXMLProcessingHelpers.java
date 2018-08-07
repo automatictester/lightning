@@ -98,7 +98,7 @@ public abstract class LightningXMLProcessingHelpers {
     protected int getPercentile(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
         String parentNodeName = element.getNodeName();
-        if (new Percentile().isPercentile(elementValue)) {
+        if (Percentile.isPercentile(elementValue)) {
             return elementValue;
         } else {
             throw new XMLFilePercentileException(String.format(EXCEPTION_MESSAGE, subElement, parentNodeName, elementValue));

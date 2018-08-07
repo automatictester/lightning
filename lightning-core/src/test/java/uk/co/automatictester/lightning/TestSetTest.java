@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.shared.TestData;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
@@ -20,26 +20,37 @@ public class TestSetTest extends ConsoleOutputTest {
 
     @Test
     public void verifyExecuteServerMethod_1_1_1() {
+        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        List<ClientSideTest> clientSideTests = new ArrayList<>();
+        clientSideTests.add(passedTransactionsTestA);
+
+        List<String[]> clientSideTestData = new ArrayList<>();
+        clientSideTestData.add(TestData.LOGIN_3514_SUCCESS);
+        clientSideTestData.add(TestData.SEARCH_11221_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(clientSideTestData);
+
         ServerSideTest testA = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
         ServerSideTest testB = new ServerSideTest("Test #2", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
         ServerSideTest testC = new ServerSideTest("Test #3", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify CPU utilisation", "192.168.0.240 CPU", 10001);
 
-        PerfMonDataEntries dataEntries = new PerfMonDataEntries();
-        dataEntries.add(TestData.CPU_ENTRY_10000);
-        dataEntries.add(TestData.CPU_ENTRY_10001);
+        List<String[]> serverSideTestData = new ArrayList<>();
+        serverSideTestData.add(TestData.CPU_ENTRY_10000);
+        serverSideTestData.add(TestData.CPU_ENTRY_10001);
+        PerfMonEntries dataEntries = PerfMonEntries.fromList(serverSideTestData);
 
-        List<ServerSideTest> tests = new ArrayList<>();
-        tests.add(testA);
-        tests.add(testB);
-        tests.add(testC);
+        List<ServerSideTest> serverSideTests = new ArrayList<>();
+        serverSideTests.add(testA);
+        serverSideTests.add(testB);
+        serverSideTests.add(testC);
 
-        TestSet testSet = new TestSet(null, tests);
+        TestSet testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
         configureStream();
+        testSet.executeClientSideTests(jmeterTransactions);
         testSet.executeServerSideTests(dataEntries);
         revertStream();
 
-        assertThat(testSet.getTestCount(), is(3));
-        assertThat(testSet.getPassCount(), is(1));
+        assertThat(testSet.getTestCount(), is(4));
+        assertThat(testSet.getPassCount(), is(2));
         assertThat(testSet.getFailCount(), is(1));
         assertThat(testSet.getErrorCount(), is(1));
     }
@@ -49,17 +60,18 @@ public class TestSetTest extends ConsoleOutputTest {
         PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
         PassedTransactionsTest passedTransactionsTestB = new PassedTransactionsTest("Test #2", "passedTransactionsTest", "Verify number of passed tests", null, 0);
 
-        JMeterTransactions transactions = new JMeterTransactions();
-        transactions.add(TestData.LOGIN_3514_SUCCESS);
-        transactions.add(TestData.SEARCH_11221_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.LOGIN_3514_SUCCESS);
+        testData.add(TestData.SEARCH_11221_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         List<ClientSideTest> tests = new ArrayList<>();
         tests.add(passedTransactionsTestA);
         tests.add(passedTransactionsTestB);
 
-        TestSet testSet = new TestSet(tests, null);
+        TestSet testSet = TestSet.fromClientSideTest(tests);
         configureStream();
-        testSet.executeClientSideTests(transactions);
+        testSet.executeClientSideTests(jmeterTransactions);
         revertStream();
 
         assertThat(testSet.getTestCount(), is(2));
@@ -74,18 +86,19 @@ public class TestSetTest extends ConsoleOutputTest {
         RespTimeAvgTest respTimeAvgTestB = new RespTimeAvgTest("Test #2", "avgRespTimeTest", "", "Search", 5000);
         RespTimeAvgTest respTimeAvgTestC = new RespTimeAvgTest("Test #3", "avgRespTimeTest", "", "Sear", 1000);
 
-        JMeterTransactions transactions = new JMeterTransactions();
-        transactions.add(TestData.LOGIN_3514_SUCCESS);
-        transactions.add(TestData.SEARCH_11221_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.LOGIN_3514_SUCCESS);
+        testData.add(TestData.SEARCH_11221_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         List<ClientSideTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
         tests.add(respTimeAvgTestB);
         tests.add(respTimeAvgTestC);
 
-        TestSet testSet = new TestSet(tests, null);
+        TestSet testSet = TestSet.fromClientSideTest(tests);
         configureStream();
-        testSet.executeClientSideTests(transactions);
+        testSet.executeClientSideTests(jmeterTransactions);
         revertStream();
 
         assertThat(testSet.getTestCount(), is(3));

@@ -24,10 +24,10 @@ public class JMeterReporterTest {
         String expectedOutput = String.format("Transactions executed: %d, failed: %d", total, failures);
 
         JMeterTransactions transactions = mock(JMeterTransactions.class);
-        when(transactions.getTransactionCount()).thenReturn(total);
+        when(transactions.size()).thenReturn(total);
         when(transactions.getFailCount()).thenReturn(failures);
 
-        String output = new JMeterReporter(transactions).getJMeterReport();
+        String output = JMeterReporter.getJMeterReport(transactions);
         assertThat(output, containsString(expectedOutput));
     }
 }

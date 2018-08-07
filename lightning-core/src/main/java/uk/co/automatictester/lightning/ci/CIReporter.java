@@ -16,14 +16,8 @@ public abstract class CIReporter {
         this.jmeterTransactions = jmeterTransactions;
     }
 
-    public static String getVerifySummary(TestSet testSet) {
-        int executed = testSet.getTestCount();
-        int failed = testSet.getFailCount() + testSet.getErrorCount();
-        return String.format("Tests executed: %s, failed: %s", executed, failed);
-    }
-
-    public static String getReportSummary(JMeterTransactions jmeterTransactions) {
-        int executed = jmeterTransactions.getTransactionCount();
+    public String getReportSummary() {
+        int executed = jmeterTransactions.size();
         int failed = jmeterTransactions.getFailCount();
         return String.format("Transactions executed: %s, failed: %s", executed, failed);
     }

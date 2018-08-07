@@ -6,6 +6,9 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.shared.TestData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -16,8 +19,9 @@ public class RespTimeMaxTestTest {
     @Test
     public void verifyExecutePass() {
         RespTimeMaxTest test = new RespTimeMaxTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 800);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TestData.SEARCH_800_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.SEARCH_800_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -26,9 +30,10 @@ public class RespTimeMaxTestTest {
     @Test
     public void verifyExecuteAllTransactionsPass() {
         RespTimeMaxTest test = new RespTimeMaxTest("Test #1", "avgRespTimeTest", "Verify response times", null, 1000);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TestData.SEARCH_800_SUCCESS);
-        jmeterTransactions.add(TestData.LOGIN_1000_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.SEARCH_800_SUCCESS);
+        testData.add(TestData.LOGIN_1000_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -37,8 +42,9 @@ public class RespTimeMaxTestTest {
     @Test
     public void verifyExecuteFail() {
         RespTimeMaxTest test = new RespTimeMaxTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 11220);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TestData.SEARCH_11221_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.SEARCH_11221_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -48,9 +54,10 @@ public class RespTimeMaxTestTest {
     @Test
     public void verifyExecuteAllTransactionsFail() {
         RespTimeMaxTest test = new RespTimeMaxTest("Test #1", "avgRespTimeTest", "Verify response times", null, 999);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TestData.SEARCH_800_SUCCESS);
-        jmeterTransactions.add(TestData.LOGIN_1000_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.SEARCH_800_SUCCESS);
+        testData.add(TestData.LOGIN_1000_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -59,8 +66,9 @@ public class RespTimeMaxTestTest {
     @Test
     public void verifyExecuteError() {
         RespTimeMaxTest test = new RespTimeMaxTest("Test #1", "avgRespTimeTest", "Verify response times", "nonexistent", 800);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TestData.SEARCH_11221_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TestData.SEARCH_11221_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));

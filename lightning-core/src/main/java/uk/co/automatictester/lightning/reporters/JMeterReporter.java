@@ -6,19 +6,15 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 public class JMeterReporter {
 
-    private JMeterTransactions jmeterTransactions;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(JMeterReporter.class);
 
-    public JMeterReporter(JMeterTransactions jmeterTransactions) {
-        this.jmeterTransactions = jmeterTransactions;
+    public static void printJMeterReport(JMeterTransactions jmeterTransactions) {
+        String report = getJMeterReport(jmeterTransactions);
+        logger.info(report);
     }
 
-    public void printJMeterReport() {
-        logger.info(getJMeterReport());
-    }
-
-    public String getJMeterReport() {
-        int transactionCount = jmeterTransactions.getTransactionCount();
+    public static String getJMeterReport(JMeterTransactions jmeterTransactions) {
+        int transactionCount = jmeterTransactions.size();
         int failCount = jmeterTransactions.getFailCount();
         return String.format("Transactions executed: %d, failed: %d", transactionCount, failCount);
     }

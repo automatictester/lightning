@@ -6,6 +6,8 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.shared.TestData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,10 +26,11 @@ public class RespTimeStdDevTestTest {
     @Test
     public void verifyExecutePass() {
         RespTimeStdDevTest test = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviance", "Search", 25);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -38,10 +41,11 @@ public class RespTimeStdDevTestTest {
         Locale.setDefault(Locale.FRANCE);
 
         RespTimeStdDevTest test = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviance", "Search", 25);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -50,10 +54,11 @@ public class RespTimeStdDevTestTest {
     @Test
     public void verifyExecuteAllTransactionsPass() {
         RespTimeStdDevTest test = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviance", null, 25);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_198_SUCCESS);
-        jmeterTransactions.add(LOGIN_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_198_SUCCESS);
+        testData.add(LOGIN_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -62,10 +67,11 @@ public class RespTimeStdDevTestTest {
     @Test
     public void verifyExecuteFail() {
         RespTimeStdDevTest test = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviance", "Search", 24);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -74,10 +80,11 @@ public class RespTimeStdDevTestTest {
     @Test
     public void verifyExecuteAllTransactionsFail() {
         RespTimeStdDevTest test = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviance", null, 24);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_198_SUCCESS);
-        jmeterTransactions.add(LOGIN_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_198_SUCCESS);
+        testData.add(LOGIN_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -86,8 +93,9 @@ public class RespTimeStdDevTestTest {
     @Test
     public void verifyExecuteError() {
         RespTimeStdDevTest test = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviance", "nonexistent", 8);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_198_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_198_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));

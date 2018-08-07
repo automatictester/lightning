@@ -6,6 +6,8 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.shared.TestData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,17 +33,18 @@ public class RespTimeNthPercentileTestTest {
     @Test
     public void testExecutePass() {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 246);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_121_SUCCESS);
-        jmeterTransactions.add(SEARCH_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_121_SUCCESS);
+        testData.add(SEARCH_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -52,17 +55,18 @@ public class RespTimeNthPercentileTestTest {
         Locale.setDefault(Locale.FRENCH);
 
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 246);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_121_SUCCESS);
-        jmeterTransactions.add(SEARCH_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_121_SUCCESS);
+        testData.add(SEARCH_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -71,17 +75,18 @@ public class RespTimeNthPercentileTestTest {
     @Test
     public void testExecuteAllTransactionsPass() {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 246);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_121_SUCCESS);
-        jmeterTransactions.add(LOGIN_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_121_SUCCESS);
+        testData.add(LOGIN_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -90,17 +95,18 @@ public class RespTimeNthPercentileTestTest {
     @Test
     public void testExecuteFail() {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 220);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_121_SUCCESS);
-        jmeterTransactions.add(SEARCH_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_121_SUCCESS);
+        testData.add(SEARCH_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -109,17 +115,18 @@ public class RespTimeNthPercentileTestTest {
     @Test
     public void testExecuteAllTransactionsFail() {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 220);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(LOGIN_121_SUCCESS);
-        jmeterTransactions.add(LOGIN_125_SUCCESS);
-        jmeterTransactions.add(SEARCH_129_SUCCESS);
-        jmeterTransactions.add(SEARCH_135_SUCCESS);
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
-        jmeterTransactions.add(SEARCH_148_SUCCESS);
-        jmeterTransactions.add(SEARCH_178_SUCCESS);
-        jmeterTransactions.add(SEARCH_198_SUCCESS);
-        jmeterTransactions.add(SEARCH_221_SUCCESS);
-        jmeterTransactions.add(SEARCH_249_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LOGIN_121_SUCCESS);
+        testData.add(LOGIN_125_SUCCESS);
+        testData.add(SEARCH_129_SUCCESS);
+        testData.add(SEARCH_135_SUCCESS);
+        testData.add(SEARCH_143_SUCCESS);
+        testData.add(SEARCH_148_SUCCESS);
+        testData.add(SEARCH_178_SUCCESS);
+        testData.add(SEARCH_198_SUCCESS);
+        testData.add(SEARCH_221_SUCCESS);
+        testData.add(SEARCH_249_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -128,8 +135,9 @@ public class RespTimeNthPercentileTestTest {
     @Test
     public void testExecuteError() {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", -90, 9);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(SEARCH_143_SUCCESS);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_143_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }

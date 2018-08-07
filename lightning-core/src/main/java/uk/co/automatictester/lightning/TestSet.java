@@ -3,14 +3,13 @@ package uk.co.automatictester.lightning;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.LightningTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TestSet {
@@ -23,43 +22,63 @@ public class TestSet {
     private String testExecutionReport = "";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public TestSet(List<ClientSideTest> clientSideTests, List<ServerSideTest> serverSideTests) {
+    private TestSet(List<ClientSideTest> clientSideTests) {
+        this.clientSideTests = clientSideTests;
+    }
+
+    private TestSet(List<ClientSideTest> clientSideTests, List<ServerSideTest> serverSideTests) {
         this.clientSideTests = clientSideTests;
         this.serverSideTests = serverSideTests;
     }
 
-    public void executeClientSideTests(JMeterTransactions dataEntires) {
+    public static TestSet fromClientSideTest(List<ClientSideTest> clientSideTests) {
+        return new TestSet(clientSideTests);
+    }
+
+    public static TestSet fromClientAndServerSideTest(List<ClientSideTest> clientSideTests, List<ServerSideTest> serverSideTests) {
+        return new TestSet(clientSideTests, serverSideTests);
+    }
+
+    public void executeClientSideTests(JMeterTransactions jmeterTransactions) {
         StringBuilder output = new StringBuilder();
         for (ClientSideTest test : getClientSideTests()) {
-            test.execute(dataEntires);
+            test.execute(jmeterTransactions);
             setCounts(test);
-            output.append(test.getTestExecutionReport()).append(System.lineSeparator());
+            String testExecutionReport = test.getTestExecutionReport();
+            output.append(testExecutionReport).append(System.lineSeparator());
         }
         testExecutionReport += output;
     }
 
-    public void executeServerSideTests(PerfMonDataEntries dataEntires) {
+    public void executeServerSideTests(PerfMonEntries perfMonEntries) {
         StringBuilder output = new StringBuilder();
         for (ServerSideTest test : getServerSideTests()) {
-            test.execute(dataEntires);
+            test.execute(perfMonEntries);
             setCounts(test);
-            output.append(test.getTestExecutionReport()).append(System.lineSeparator());
+            String testExecutionReport = test.getTestExecutionReport();
+            output.append(testExecutionReport).append(System.lineSeparator());
         }
         testExecutionReport += output;
     }
 
     private void setCounts(LightningTest test) {
-        if (test.getResult() == TestResult.PASS) {
-            passCount++;
-        } else if (test.getResult() == TestResult.FAIL) {
-            failCount++;
-        } else if (test.getResult() == TestResult.ERROR) {
-            ignoreCount++;
+        TestResult testResult = test.getResult();
+        switch (testResult) {
+            case PASS:
+                passCount++;
+                break;
+            case FAIL:
+                failCount++;
+                break;
+            case ERROR:
+                ignoreCount++;
+                break;
         }
     }
 
     public void printTestExecutionReport() {
-        for (String line : Arrays.asList(getTestExecutionReport().split(System.lineSeparator()))) {
+        String[] testExecutionReport = getTestExecutionReport().split(System.lineSeparator());
+        for (String line : testExecutionReport) {
             logger.info(line);
         }
     }
@@ -69,9 +88,7 @@ public class TestSet {
     }
 
     public int getTestCount() {
-        return
-                ((clientSideTests != null) ? clientSideTests.size() : 0) +
-                        ((serverSideTests != null) ? serverSideTests.size() : 0);
+        return getAllTests().size();
     }
 
     public int getPassCount() {
@@ -94,7 +111,7 @@ public class TestSet {
         return serverSideTests;
     }
 
-    public List<LightningTest> getTests() {
+    public List<LightningTest> getAllTests() {
         List<LightningTest> tests = new ArrayList<>();
         tests.addAll(clientSideTests);
         tests.addAll(serverSideTests);

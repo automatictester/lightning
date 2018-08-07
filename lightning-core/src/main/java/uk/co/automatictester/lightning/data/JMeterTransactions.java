@@ -1,17 +1,62 @@
 package uk.co.automatictester.lightning.data;
 
+import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
+import com.univocity.parsers.common.processor.RowListProcessor;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
+import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentLabelException;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class JMeterTransactions extends ArrayList<String[]> {
 
-    public JMeterTransactions excludeLabelsOtherThan(String label) {
+    private static final int TRANSACTION_LABEL_INDEX = 0;
+    private static final int TRANSACTION_DURATION_INDEX = 1;
+    private static final int TRANSACTION_RESULT_INDEX = 2;
+    private static final int TRANSACTION_TIMESTAMP = 3;
+    private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private JMeterTransactions() {}
+
+    private JMeterTransactions(File csvFile) {
+        long start = System.currentTimeMillis();
+        logger.debug("Reading CSV file - start");
+
+        loadFromFile(csvFile);
+        throwExceptionIfEmpty();
+
+        long finish = System.currentTimeMillis();
+        long millisecondsBetween = finish - start;
+        logger.debug("Reading CSV file - finish, read {} rows, took {}ms", this.size(), millisecondsBetween);
+    }
+
+    private JMeterTransactions(List<String[]> jmeterTransactions) {
+        this.addAll(jmeterTransactions);
+    }
+
+    public static JMeterTransactions fromList(List<String[]> jmeterTransactions) {
+        return new JMeterTransactions(jmeterTransactions);
+    }
+
+    public static JMeterTransactions fromFile(File csvFile) {
+        return new JMeterTransactions(csvFile);
+    }
+
+    public JMeterTransactions getTransactionsWith(String label) {
         JMeterTransactions transactions = new JMeterTransactions();
         for (String[] transaction : this) {
-            if (transaction[0].equals(label)) {
+            if (transaction[TRANSACTION_LABEL_INDEX].equals(label)) {
                 transactions.add(transaction);
             }
         }
@@ -21,10 +66,10 @@ public class JMeterTransactions extends ArrayList<String[]> {
         return transactions;
     }
 
-    public JMeterTransactions excludeLabelsNotMatching(String labelPattern) {
+    public JMeterTransactions getTransactionsMatching(String labelPattern) {
         JMeterTransactions transactions = new JMeterTransactions();
         for (String[] transaction : this) {
-            if (transaction[0].matches(labelPattern)) {
+            if (transaction[TRANSACTION_LABEL_INDEX].matches(labelPattern)) {
                 transactions.add(transaction);
             }
         }
@@ -35,43 +80,56 @@ public class JMeterTransactions extends ArrayList<String[]> {
     }
 
     public List<Integer> getLongestTransactions() {
-        List<Integer> longestTransactions = new ArrayList<>();
-        for (String[] transaction : this) {
-            String elapsed = transaction[1];
-            longestTransactions.add(Integer.parseInt(elapsed));
-        }
-        Collections.sort(longestTransactions);
-        Collections.reverse(longestTransactions);
-        if (longestTransactions.size() >= 5) {
-            return longestTransactions.subList(0, 5);
-        } else {
-            return longestTransactions.subList(0, longestTransactions.size());
-        }
+        List<Integer> transactionDurations = getTransactionDurationsDesc();
+        return getLongestTransactionDurations(transactionDurations);
     }
 
     public int getFailCount() {
         int failCount = 0;
         for (String[] transaction : this) {
-            if ("false".equals(transaction[2])) {
+            if ("false".equals(transaction[TRANSACTION_RESULT_INDEX])) {
                 failCount++;
             }
         }
         return failCount;
     }
 
-    public int getTransactionCount() {
-        return this.size();
-    }
-
     public double getThroughput() {
         double transactionTimespanInMilliseconds = getLastTransactionTimestamp() - getFirstTransactionTimestamp();
-        return getTransactionCount() / (transactionTimespanInMilliseconds / 1000);
+        return size() / (transactionTimespanInMilliseconds / 1000);
+    }
+
+    protected CsvParser getParser() {
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setLineSeparatorDetectionEnabled(true);
+        parserSettings.setHeaderExtractionEnabled(true);
+        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
+        RowListProcessor rowProcessor = new RowListProcessor();
+        parserSettings.setProcessor(new ConcurrentRowProcessor(rowProcessor));
+        return new CsvParser(parserSettings);
+    }
+
+    private List<Integer> getTransactionDurationsDesc() {
+        List<Integer> transactionDurations = new ArrayList<>();
+        for (String[] transaction : this) {
+            int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX]);
+            transactionDurations.add(elapsed);
+        }
+        Collections.sort(transactionDurations);
+        Collections.reverse(transactionDurations);
+        return transactionDurations;
+    }
+
+    private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
+        // TODO: (Java 8) potential for refactor
+        int transactionDurationsCount = (transactionDurations.size() >= MAX_NUMBER_OF_LONGEST_TRANSACTIONS) ? MAX_NUMBER_OF_LONGEST_TRANSACTIONS : transactionDurations.size();
+        return transactionDurations.subList(0, transactionDurationsCount);
     }
 
     private long getFirstTransactionTimestamp() {
         long minTimestamp = 0;
         for (String[] transaction : this) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[3]);
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
             if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
                 minTimestamp = currentTransactionTimestamp;
             }
@@ -82,11 +140,25 @@ public class JMeterTransactions extends ArrayList<String[]> {
     private long getLastTransactionTimestamp() {
         long maxTimestamp = 0;
         for (String[] transaction : this) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[3]);
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
             if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
                 maxTimestamp = currentTransactionTimestamp;
             }
         }
         return maxTimestamp;
+    }
+
+    private void loadFromFile(File csvFile) {
+        try (FileReader fr = new FileReader(csvFile)) {
+            this.addAll(getParser().parseAll(fr));
+        } catch (IOException e) {
+            throw new CSVFileIOException(e);
+        }
+    }
+
+    private void throwExceptionIfEmpty() {
+        if (this.isEmpty()) {
+            throw new CSVFileNoTransactionsException();
+        }
     }
 }

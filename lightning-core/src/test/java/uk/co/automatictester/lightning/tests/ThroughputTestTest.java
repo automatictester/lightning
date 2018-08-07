@@ -5,6 +5,9 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.shared.TestData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -24,9 +27,10 @@ public class ThroughputTestTest {
     @Test
     public void testExecuteMethodPass() {
         ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 1);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TRANSACTION_0);
-        jmeterTransactions.add(TRANSACTION_2);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TRANSACTION_0);
+        testData.add(TRANSACTION_2);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -35,9 +39,10 @@ public class ThroughputTestTest {
     @Test
     public void testExecuteMethodPassNonInteger() {
         ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.6);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TRANSACTION_0);
-        jmeterTransactions.add(TRANSACTION_3);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TRANSACTION_0);
+        testData.add(TRANSACTION_3);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
@@ -46,9 +51,10 @@ public class ThroughputTestTest {
     @Test
     public void testExecuteMethodFailNonInteger() {
         ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.7);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TRANSACTION_0);
-        jmeterTransactions.add(TRANSACTION_3);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TRANSACTION_0);
+        testData.add(TRANSACTION_3);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -57,9 +63,10 @@ public class ThroughputTestTest {
     @Test
     public void testExecuteMethodAllTransactionsFail() {
         ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", null, 3);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TRANSACTION_0);
-        jmeterTransactions.add(TRANSACTION_1);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TRANSACTION_0);
+        testData.add(TRANSACTION_1);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -67,8 +74,9 @@ public class ThroughputTestTest {
     @Test
     public void testExecuteMethodError() {
         ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "nonexistent", 2);
-        JMeterTransactions jmeterTransactions = new JMeterTransactions();
-        jmeterTransactions.add(TRANSACTION_0);
+        List<String[]> testData = new ArrayList<>();
+        testData.add(TRANSACTION_0);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));

@@ -30,7 +30,7 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
-            transactionCount = transactions.getTransactionCount();
+            transactionCount = transactions.size();
 
             DescriptiveStatistics ds = new DescriptiveStatistics();
             ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));

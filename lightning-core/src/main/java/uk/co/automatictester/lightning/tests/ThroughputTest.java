@@ -25,7 +25,7 @@ public class ThroughputTest extends ClientSideTest {
     public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
-            transactionCount = transactions.getTransactionCount();
+            transactionCount = transactions.size();
 
             actualResult = transactions.getThroughput();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);

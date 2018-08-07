@@ -27,13 +27,11 @@ public class PercentileTest {
 
     @Test(dataProvider = "positiveTestData")
     public void testIsPercentileTrue(int integer) {
-        Percentile p = new Percentile();
-        assertThat(p.isPercentile(integer), is(true));
+        assertThat(Percentile.isPercentile(integer), is(true));
     }
 
     @Test(dataProvider = "negativeTestData")
     public void testIsPercentileFalse(int integer) {
-        Percentile p = new Percentile();
-        assertThat(p.isPercentile(integer), is(false));
+        assertThat(Percentile.isPercentile(integer), is(false));
     }
 }
