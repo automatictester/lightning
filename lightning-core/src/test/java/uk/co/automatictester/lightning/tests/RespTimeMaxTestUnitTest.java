@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
-public class RespTimeMaxTestTest {
+public class RespTimeMaxTestUnitTest {
 
     @Test
     public void verifyExecutePass() {

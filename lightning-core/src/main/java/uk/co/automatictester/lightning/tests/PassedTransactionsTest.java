@@ -9,6 +9,8 @@ import uk.co.automatictester.lightning.utils.Percent;
 
 import java.util.ArrayList;
 
+import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_RESULT_INDEX;
+
 public class PassedTransactionsTest extends ClientSideTest {
 
     private static final String EXPECTED_RESULT_MESSAGE = "%s of failed transactions <= %s";
@@ -37,32 +39,15 @@ public class PassedTransactionsTest extends ClientSideTest {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.size();
+            int failureCount = getFailureCount(transactions);
 
-            int failureCount = 0;
-            for (String[] transaction : transactions) {
-                String success = transaction[2];
-                if (!Boolean.parseBoolean(success)) {
-                    failureCount++;
-                }
-            }
-
-            if (type.equals(ThresholdType.NUMBER)) {
-                if (failureCount > allowedNumberOfFailedTransactions) {
-                    result = TestResult.FAIL;
-                } else {
-                    result = TestResult.PASS;
-                }
-                this.actualResult = failureCount;
-                actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), failureCount);
-            } else {
-                int percentOfFailedTransactions = (int) (((float) failureCount / transactionCount) * 100);
-                if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getValue()) {
-                    result = TestResult.FAIL;
-                } else {
-                    result = TestResult.PASS;
-                }
-                this.actualResult = percentOfFailedTransactions;
-                actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), percentOfFailedTransactions);
+            switch (type) {
+                case NUMBER:
+                    calculateResultForAbsoluteTreshold(failureCount);
+                    break;
+                case PERCENT:
+                    calculateResultForRelativeTreshold(failureCount);
+                    break;
             }
         } catch (Exception e) {
             result = TestResult.ERROR;
@@ -80,4 +65,35 @@ public class PassedTransactionsTest extends ClientSideTest {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    private int getFailureCount(JMeterTransactions jmeterTransactions) {
+        int failureCount = 0;
+        for (String[] transaction : jmeterTransactions) {
+            String success = transaction[TRANSACTION_RESULT_INDEX];
+            if (!Boolean.parseBoolean(success)) {
+                failureCount++;
+            }
+        }
+        return failureCount;
+    }
+
+    private void calculateResultForAbsoluteTreshold(int failureCount) {
+        if (failureCount > allowedNumberOfFailedTransactions) {
+            result = TestResult.FAIL;
+        } else {
+            result = TestResult.PASS;
+        }
+        actualResult = failureCount;
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), failureCount);
+    }
+
+    private void calculateResultForRelativeTreshold(int failureCount) {
+        int percentOfFailedTransactions = (int) (((float) failureCount / transactionCount) * 100);
+        if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getValue()) {
+            result = TestResult.FAIL;
+        } else {
+            result = TestResult.PASS;
+        }
+        actualResult = percentOfFailedTransactions;
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), percentOfFailedTransactions);
+    }
 }

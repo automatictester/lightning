@@ -11,6 +11,8 @@ import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
 
+import static uk.co.automatictester.lightning.constants.PerfMonColumns.VALUE_INDEX;
+
 public class ServerSideTest extends LightningTest {
 
     private static final String GREATER_THAN_MESSAGE = "Average value > %s";
@@ -45,38 +47,9 @@ public class ServerSideTest extends LightningTest {
         try {
             PerfMonEntries dataEntries = filterDataEntries((PerfMonEntries) originalDataEntries);
             dataEntriesCount = dataEntries.size();
-
-            DescriptiveStatistics ds = new DescriptiveStatistics();
-            for (String[] transaction : dataEntries) {
-                String elapsed = transaction[1];
-                ds.addValue(Double.parseDouble(elapsed));
-            }
-            actualResult = (int) ds.getMean();
+            calculateActualResult(dataEntries);
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
-
-            if (subtype.equals(ServerSideTestType.GREATER_THAN)) {
-                expectedResultDescription = String.format(expectedResultMessage, metricValueA);
-                if (actualResult > metricValueA) {
-                    result = TestResult.PASS;
-                } else {
-                    result = TestResult.FAIL;
-                }
-            } else if (subtype.equals(ServerSideTestType.LESS_THAN)) {
-                expectedResultDescription = String.format(expectedResultMessage, metricValueA);
-                if (actualResult < metricValueA) {
-                    result = TestResult.PASS;
-                } else {
-                    result = TestResult.FAIL;
-                }
-            } else if (subtype.equals(ServerSideTestType.BETWEEN)) {
-                expectedResultDescription = String.format(expectedResultMessage, metricValueA, metricValueB);
-                if ((actualResult > metricValueA) && (actualResult < metricValueB)) {
-                    result = TestResult.PASS;
-                } else {
-                    result = TestResult.FAIL;
-                }
-            }
-
+            calculateTestResult();
         } catch (Exception e) {
             result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
@@ -137,12 +110,63 @@ public class ServerSideTest extends LightningTest {
     }
 
     private String getExpectedResultMessage() {
-        if (subtype.equals(ServerSideTestType.GREATER_THAN)) {
-            return GREATER_THAN_MESSAGE;
-        } else if (subtype.equals(ServerSideTestType.BETWEEN)) {
-            return BETWEEN_MESSAGE;
+        switch (subtype) {
+            case GREATER_THAN:
+                return GREATER_THAN_MESSAGE;
+            case BETWEEN:
+                return BETWEEN_MESSAGE;
+            default:
+                return LESS_THAN_MESSAGE;
+        }
+    }
+
+    private void calculateActualResult(PerfMonEntries perfMonEntries) {
+        DescriptiveStatistics ds = new DescriptiveStatistics();
+        for (String[] transaction : perfMonEntries) {
+            String elapsed = transaction[VALUE_INDEX];
+            ds.addValue(Double.parseDouble(elapsed));
+        }
+        actualResult = (int) ds.getMean();
+    }
+
+    private void calculateTestResult() {
+        switch (subtype) {
+            case GREATER_THAN:
+                calculateTestResultForGreaterThan();
+                break;
+            case LESS_THAN:
+                calculateTestResultForLessThan();
+                break;
+            case BETWEEN:
+                calculateTestResultForBetween();
+                break;
+        }
+    }
+
+    private void calculateTestResultForGreaterThan() {
+        expectedResultDescription = String.format(expectedResultMessage, metricValueA);
+        if (actualResult > metricValueA) {
+            result = TestResult.PASS;
         } else {
-            return LESS_THAN_MESSAGE;
+            result = TestResult.FAIL;
+        }
+    }
+
+    private void calculateTestResultForLessThan() {
+        expectedResultDescription = String.format(expectedResultMessage, metricValueA);
+        if (actualResult < metricValueA) {
+            result = TestResult.PASS;
+        } else {
+            result = TestResult.FAIL;
+        }
+    }
+
+    private void calculateTestResultForBetween() {
+        expectedResultDescription = String.format(expectedResultMessage, metricValueA, metricValueB);
+        if ((actualResult > metricValueA) && (actualResult < metricValueB)) {
+            result = TestResult.PASS;
+        } else {
+            result = TestResult.FAIL;
         }
     }
 }

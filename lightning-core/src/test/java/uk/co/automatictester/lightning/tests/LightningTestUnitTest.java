@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
 
-public class LightningTestTest {
+public class LightningTestUnitTest {
 
     @Test
     public void testFilterTransactionsSome() {

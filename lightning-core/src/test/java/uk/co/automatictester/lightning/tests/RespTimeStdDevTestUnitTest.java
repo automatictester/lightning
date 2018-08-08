@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
-public class RespTimeStdDevTestTest {
+public class RespTimeStdDevTestUnitTest {
 
     private static final String[] LOGIN_198_SUCCESS = new String[] {"Search", "198", "true"};
     private static final String[] LOGIN_221_SUCCESS = new String[] {"Search", "221", "true"};

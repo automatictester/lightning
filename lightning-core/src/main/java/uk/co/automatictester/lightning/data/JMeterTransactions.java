@@ -7,7 +7,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentLabelException;
 import uk.co.automatictester.lightning.s3.S3Client;
 
@@ -16,13 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class JMeterTransactions extends ArrayList<String[]> {
+import static uk.co.automatictester.lightning.constants.JMeterColumns.*;
 
-    private static final int TRANSACTION_LABEL_INDEX = 0;
-    private static final int TRANSACTION_DURATION_INDEX = 1;
-    private static final int TRANSACTION_RESULT_INDEX = 2;
-    private static final int TRANSACTION_TIMESTAMP = 3;
-    private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
+public class JMeterTransactions extends CsvEntries {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private static S3Client s3Client;
@@ -56,7 +51,7 @@ public class JMeterTransactions extends ArrayList<String[]> {
     }
 
     private JMeterTransactions(List<String[]> jmeterTransactions) {
-        this.addAll(jmeterTransactions);
+        super(jmeterTransactions);
     }
 
     public static JMeterTransactions fromList(List<String[]> jmeterTransactions) {
@@ -117,16 +112,6 @@ public class JMeterTransactions extends ArrayList<String[]> {
         return size() / (transactionTimespanInMilliseconds / 1000);
     }
 
-    protected CsvParser getParser() {
-        CsvParserSettings parserSettings = new CsvParserSettings();
-        parserSettings.setLineSeparatorDetectionEnabled(true);
-        parserSettings.setHeaderExtractionEnabled(true);
-        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
-        RowListProcessor rowProcessor = new RowListProcessor();
-        parserSettings.setProcessor(new ConcurrentRowProcessor(rowProcessor));
-        return new CsvParser(parserSettings);
-    }
-
     private List<Integer> getTransactionDurationsDesc() {
         List<Integer> transactionDurations = new ArrayList<>();
         for (String[] transaction : this) {
@@ -139,7 +124,6 @@ public class JMeterTransactions extends ArrayList<String[]> {
     }
 
     private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
-        // TODO: (Java 8) potential for refactor
         int transactionDurationsCount = (transactionDurations.size() >= MAX_NUMBER_OF_LONGEST_TRANSACTIONS) ? MAX_NUMBER_OF_LONGEST_TRANSACTIONS : transactionDurations.size();
         return transactionDurations.subList(0, transactionDurationsCount);
     }
@@ -168,7 +152,9 @@ public class JMeterTransactions extends ArrayList<String[]> {
 
     private void loadFromFile(File csvFile) {
         try (FileReader fr = new FileReader(csvFile)) {
-            this.addAll(getParser().parseAll(fr));
+            CsvParser csvParser = getParser();
+            List<String[]> items = csvParser.parseAll(fr);
+            this.addAll(items);
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
@@ -177,15 +163,21 @@ public class JMeterTransactions extends ArrayList<String[]> {
     private void loadFromS3Object(String csvObject) {
         String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
         try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            this.addAll(getParser().parseAll(isr));
+            CsvParser csvParser = getParser();
+            List<String[]> items = csvParser.parseAll(isr);
+            this.addAll(items);
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
     }
 
-    private void throwExceptionIfEmpty() {
-        if (this.isEmpty()) {
-            throw new CSVFileNoTransactionsException();
-        }
+    private CsvParser getParser() {
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setLineSeparatorDetectionEnabled(true);
+        parserSettings.setHeaderExtractionEnabled(true);
+        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
+        RowListProcessor rowProcessor = new RowListProcessor();
+        parserSettings.setProcessor(new ConcurrentRowProcessor(rowProcessor));
+        return new CsvParser(parserSettings);
     }
 }

@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.lambda.readers;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
-import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
+import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.s3.S3Client;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,11 +13,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LightningXMLS3ObjectReader extends LightningXMLFileReader {
+public class LightningLambdaConfig extends LightningConfig {
 
     private static S3Client s3Client;
 
-    public LightningXMLS3ObjectReader(String region, String bucket) {
+    public LightningLambdaConfig(String region, String bucket) {
         s3Client = new S3Client(region, bucket);
     }
 

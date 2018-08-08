@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
-public class ThroughputTestTest {
+public class ThroughputTestUnitTest {
 
     private static final ThroughputTest THROUGHPUT_TEST_A = new ThroughputTest("Test #1", "throughputTest", "", "Login", 2);
     private static final ThroughputTest THROUGHPUT_TEST_B = new ThroughputTest("Test #1", "throughputTest", "", "Login", 3);

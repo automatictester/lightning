@@ -1,11 +1,9 @@
 package uk.co.automatictester.lightning.lambda.ci;
 
-import org.w3c.dom.Node;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.exceptions.JunitReportGenerationException;
-import uk.co.automatictester.lightning.lambda.s3.S3Client;
-import uk.co.automatictester.lightning.tests.LightningTest;
+import uk.co.automatictester.lightning.s3.S3Client;
 
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
@@ -21,23 +19,12 @@ public class JUnitS3Reporter extends JUnitReporter {
     }
 
     public String generateJUnitReportToS3(TestSet testSet) {
-        Node rootElement = doc.appendChild(getTestsuite(testSet));
-        for (LightningTest test : testSet.getAllTests()) {
-            rootElement.appendChild(getTestcase(test));
-        }
+        generateJUnitReportContent(testSet);
         return saveReportToS3();
     }
 
     private String saveReportToS3() {
-        Transformer transformer;
-        try {
-            transformer = TransformerFactory.newInstance().newTransformer();
-        } catch (TransformerConfigurationException e) {
-            throw new JunitReportGenerationException(e);
-        }
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        Transformer transformer = getTransformer();
         DOMSource source = new DOMSource(doc);
 
         StringWriter writer = new StringWriter();

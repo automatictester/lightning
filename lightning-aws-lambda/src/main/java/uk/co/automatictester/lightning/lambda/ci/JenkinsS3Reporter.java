@@ -29,11 +29,11 @@ public class JenkinsS3Reporter extends CIReporter {
 
     public String storeJenkinsBuildNameInS3() {
         if (testSet != null) {
-            return storeJenkinsReportToS3(getVerifySummary(testSet));
-        } else if (jmeterTransactions != null) {
+            String jenkinsReportContent = getVerifySummary(testSet);
+            return storeJenkinsReportToS3(jenkinsReportContent);
+        } else {
             return storeJenkinsReportToS3(getReportSummary());
         }
-        return null;
     }
 
     private static String getVerifySummary(TestSet testSet) {

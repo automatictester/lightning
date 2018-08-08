@@ -49,19 +49,30 @@ public class CommandLineInterface {
     }
 
     public String getVersion() {
+        Properties prop = getPropertriesFromFile();
+        terminateOnMissingVersion(prop);
+        return prop.getProperty("version");
+    }
+
+    private Properties getPropertriesFromFile() {
         Properties prop = new Properties();
         try {
             prop.load(getClass().getClassLoader().getResourceAsStream("version.properties"));
         } catch (IOException | NullPointerException e) {
-            logger.error("Error reading version.properties");
-            System.exit(1);
+            logErrorAndExit("Error reading version.properties");
         }
-        String version = prop.getProperty("version");
-        if (null == version) {
-            logger.error("Error reading version from version.properties");
-            System.exit(1);
-        }
-        return version;
+        return prop;
     }
 
+    private void terminateOnMissingVersion(Properties prop) {
+        String version = prop.getProperty("version");
+        if (null == version) {
+            logErrorAndExit("Error reading version from version.properties");
+        }
+    }
+
+    private void logErrorAndExit(String errorMessage) {
+        logger.error(errorMessage);
+        System.exit(1);
+    }
 }

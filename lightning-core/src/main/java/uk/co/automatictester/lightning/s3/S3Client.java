@@ -6,7 +6,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO: refactor
 public class S3Client {
 
     private static final Logger log = LoggerFactory.getLogger(S3Client.class);
@@ -14,7 +13,8 @@ public class S3Client {
     private String bucket;
 
     public S3Client(String region, String bucket) {
-        amazonS3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
+        AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder.standard().withRegion(region);
+        amazonS3 = amazonS3ClientBuilder.build();
         this.bucket = bucket;
     }
 
@@ -31,6 +31,7 @@ public class S3Client {
     }
 
     private static String getRandomString() {
-        return RandomStringUtils.randomAlphanumeric(8).toUpperCase();
+        int stringLength = 8;
+        return RandomStringUtils.randomAlphanumeric(stringLength).toUpperCase();
     }
 }

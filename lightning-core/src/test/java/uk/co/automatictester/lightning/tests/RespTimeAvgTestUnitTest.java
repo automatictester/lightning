@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 
-public class RespTimeAvgTestTest {
+public class RespTimeAvgTestUnitTest {
 
     @Test
     public void verifyExecutePass() {

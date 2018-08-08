@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 
-public class ServerSideTestTest {
+public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_LessThan_Pass() {

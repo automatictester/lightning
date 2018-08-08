@@ -5,20 +5,15 @@ import com.univocity.parsers.common.processor.RowListProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentHostAndMetricException;
 import uk.co.automatictester.lightning.s3.S3Client;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
-// TODO: extract common methods for this and JMeterTransactions class to a parent abstract class
-public class PerfMonEntries extends ArrayList<String[]> {
+import static uk.co.automatictester.lightning.constants.PerfMonColumns.*;
 
-    private static final int TIMESTAMP_INDEX = 0;
-    private static final int VALUE_INDEX = 1;
-    private static final int HOST_AND_METRIC_INDEX = 2;
+public class PerfMonEntries extends CsvEntries {
 
     private static S3Client s3Client;
 
@@ -31,7 +26,7 @@ public class PerfMonEntries extends ArrayList<String[]> {
     }
 
     private PerfMonEntries(List<String[]> perfMonEntries) {
-        this.addAll(perfMonEntries);
+        super(perfMonEntries);
     }
 
     private PerfMonEntries(String region, String bucket, String csvObject) {
@@ -65,7 +60,28 @@ public class PerfMonEntries extends ArrayList<String[]> {
         return filteredDataEntries;
     }
 
-    protected CsvParser getParser() {
+    private void loadFromFile(File perfMonCsvFile) {
+        try (FileReader fr = new FileReader(perfMonCsvFile)) {
+            CsvParser csvParser = getParser();
+            List<String[]> items = csvParser.parseAll(fr);
+            this.addAll(items);
+        } catch (IOException e) {
+            throw new CSVFileIOException(e);
+        }
+    }
+
+    private void loadFromS3Object(String csvObject) {
+        String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
+        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
+            CsvParser csvParser = getParser();
+            List<String[]> items = csvParser.parseAll(isr);
+            this.addAll(items);
+        } catch (IOException e) {
+            throw new CSVFileIOException(e);
+        }
+    }
+
+    private CsvParser getParser() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(false);
@@ -73,28 +89,5 @@ public class PerfMonEntries extends ArrayList<String[]> {
         RowListProcessor rowProcessor = new RowListProcessor();
         parserSettings.setProcessor(new ConcurrentRowProcessor(rowProcessor));
         return new CsvParser(parserSettings);
-    }
-
-    private void loadFromFile(File perfMonCsvFile) {
-        try (FileReader fr = new FileReader(perfMonCsvFile)) {
-            this.addAll(getParser().parseAll(fr));
-        } catch (IOException e) {
-            throw new CSVFileIOException(e);
-        }
-    }
-
-    private void throwExceptionIfEmpty() {
-        if (this.isEmpty()) {
-            throw new CSVFileNoTransactionsException();
-        }
-    }
-
-    private void loadFromS3Object(String csvObject) {
-        String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
-        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            this.addAll(getParser().parseAll(isr));
-        } catch (IOException e) {
-            throw new CSVFileIOException(e);
-        }
     }
 }

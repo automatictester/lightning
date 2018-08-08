@@ -33,12 +33,7 @@ public class JUnitReporter {
     }
 
     public void generateJUnitReport(TestSet testSet) {
-        Element testsuite = getTestsuite(testSet);
-        Node rootElement = doc.appendChild(testsuite);
-        for (LightningTest test : testSet.getAllTests()) {
-            Element testcase = getTestcase(test);
-            rootElement.appendChild(testcase);
-        }
+        generateJUnitReportContent(testSet);
         saveReportToDisk();
     }
 
@@ -81,6 +76,29 @@ public class JUnitReporter {
         return testcase;
     }
 
+    protected void generateJUnitReportContent(TestSet testSet) {
+        Element testsuite = getTestsuite(testSet);
+        Node rootElement = doc.appendChild(testsuite);
+        for (LightningTest test : testSet.getAllTests()) {
+            Element testcase = getTestcase(test);
+            rootElement.appendChild(testcase);
+        }
+    }
+
+    protected Transformer getTransformer() {
+        Transformer transformer;
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
+        } catch (TransformerConfigurationException e) {
+            throw new JunitReportGenerationException(e);
+        }
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        return transformer;
+    }
+
     private static void setCommonFailureData(Element element, LightningTest test) {
         String testType = test.getType();
         String actualResultDescription = test.getActualResultDescription();
@@ -92,16 +110,7 @@ public class JUnitReporter {
     }
 
     private void saveReportToDisk() {
-        Transformer transformer;
-        try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            transformer = transformerFactory.newTransformer();
-        } catch (TransformerConfigurationException e) {
-            throw new JunitReportGenerationException(e);
-        }
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        Transformer transformer = getTransformer();
         DOMSource source = new DOMSource(doc);
 
         File junitReport = new File("junit.xml");

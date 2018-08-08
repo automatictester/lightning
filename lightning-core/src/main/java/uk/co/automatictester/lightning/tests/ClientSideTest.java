@@ -20,14 +20,15 @@ public abstract class ClientSideTest extends LightningTest {
     }
 
     public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
-        if (getTransactionName() != null) {
-            if (isRegexp()) {
-                return originalJMeterTransactions.getTransactionsMatching(getTransactionName());
-            } else {
-                return originalJMeterTransactions.getTransactionsWith(getTransactionName());
-            }
-        } else {
+        String transactionName = getTransactionName();
+        if (transactionName == null) {
             return originalJMeterTransactions;
+        } else {
+            if (isRegexp()) {
+                return originalJMeterTransactions.getTransactionsMatching(transactionName);
+            } else {
+                return originalJMeterTransactions.getTransactionsWith(transactionName);
+            }
         }
     }
 
@@ -73,7 +74,8 @@ public abstract class ClientSideTest extends LightningTest {
     }
 
     protected String getTransactionNameForReport() {
-        return (getTransactionName() != null) ? String.format("Transaction name:     %s%n", getTransactionName()) : "";
+        String message = String.format("Transaction name:     %s%n", getTransactionName());
+        return getTransactionName() != null ? message : "";
     }
 
     public List<Integer> getLongestTransactions() {

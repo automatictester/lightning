@@ -10,7 +10,7 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.lambda.ci.JUnitS3Reporter;
 import uk.co.automatictester.lightning.lambda.ci.JenkinsS3Reporter;
-import uk.co.automatictester.lightning.lambda.readers.LightningXMLS3ObjectReader;
+import uk.co.automatictester.lightning.lambda.readers.LightningLambdaConfig;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.s3.S3Client;
@@ -98,20 +98,13 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     private void runTests() {
         long testSetExecStart = System.currentTimeMillis();
 
-        LightningXMLS3ObjectReader xmlFileReader = new LightningXMLS3ObjectReader(region, bucket);
-        xmlFileReader.readTests(xml);
-
-        List<ClientSideTest> clientSideTests = xmlFileReader.getClientSideTests();
-        List<ServerSideTest> serverSideTests = xmlFileReader.getServerSideTests();
-
-        testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
+        LightningLambdaConfig lightningLambdaConfig = new LightningLambdaConfig(region, bucket);
+        lightningLambdaConfig.readTests(xml);
+        populateTestSet(lightningLambdaConfig);
 
         jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
 
-        if (perfmonCsv != null) {
-            PerfMonEntries perfMonEntries = PerfMonEntries.fromS3Object(region, bucket, perfmonCsv);
-            testSet.executeServerSideTests(perfMonEntries);
-        }
+        executeServerSideTestsIfPerfMonDataProvided();
 
         testSet.executeClientSideTests(jmeterTransactions);
 
@@ -132,6 +125,22 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
             response.setExitCode(1);
         } else {
             response.setExitCode(0);
+        }
+    }
+
+    private void populateTestSet(LightningLambdaConfig lightningLambdaConfig) {
+        List<ClientSideTest> clientSideTests = lightningLambdaConfig.getClientSideTests();
+        List<ServerSideTest> serverSideTests = lightningLambdaConfig.getServerSideTests();
+        if (serverSideTests.size() == 0) {
+            testSet = TestSet.fromClientSideTest(clientSideTests);
+        } else {
+            testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
+        }
+    }
+    private void executeServerSideTestsIfPerfMonDataProvided() {
+        if (perfmonCsv != null) {
+            PerfMonEntries perfMonEntries = PerfMonEntries.fromS3Object(region, bucket, perfmonCsv);
+            testSet.executeServerSideTests(perfMonEntries);
         }
     }
 

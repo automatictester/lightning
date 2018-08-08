@@ -10,7 +10,7 @@ import uk.co.automatictester.lightning.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.Mode;
-import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
+import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
@@ -35,7 +35,7 @@ public class CliTestRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(CliTestRunner.class);
 
-    public static void main(String[] args) throws TransformerException, ParserConfigurationException {
+    public static void main(String[] args) {
         parseParams(args);
 
         if (params.isHelpRequested() || (params.getParsedCommand() == null)) {
@@ -44,12 +44,16 @@ public class CliTestRunner {
         }
 
         mode = valueOf(params.getParsedCommand().toLowerCase());
-        if (mode.toString().equals("verify")) {
-            runTests();
-            saveJunitReport();
-        } else if (mode.toString().equals("report")) {
-            runReport();
+        switch (mode) {
+            case verify:
+                runTests();
+                saveJunitReport();
+                break;
+            case report:
+                runReport();
+                break;
         }
+
         notifyCIServer();
         setExitCode();
     }
@@ -73,23 +77,13 @@ public class CliTestRunner {
 
         File xmlFile = params.verify.getXmlFile();
         File jmeterCsvFile = params.verify.getJmeterCsvFile();
-        File perfmonCsvFile = params.verify.getPerfmonCsvFile();
 
-        LightningXMLFileReader xmlFileReader = new LightningXMLFileReader();
-        xmlFileReader.readTests(xmlFile);
-
-        List<ClientSideTest> clientSideTests = xmlFileReader.getClientSideTests();
-        List<ServerSideTest> serverSideTests = xmlFileReader.getServerSideTests();
-
-        testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
+        LightningConfig lightningConfig = new LightningConfig();
+        lightningConfig.readTests(xmlFile);
+        populateTestSet(lightningConfig);
 
         jmeterTransactions = JMeterTransactions.fromFile(jmeterCsvFile);
-
-        if (params.verify.isPerfmonCsvFileProvided()) {
-            perfMonEntries = PerfMonEntries.fromFile(perfmonCsvFile);
-            testSet.executeServerSideTests(perfMonEntries);
-        }
-
+        executeServerSideTestsIfPerfMonDataProvided();
         testSet.executeClientSideTests(jmeterTransactions);
         testSet.printTestExecutionReport();
 
@@ -101,6 +95,24 @@ public class CliTestRunner {
 
         if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
             exitCode = 1;
+        }
+    }
+
+    private static void populateTestSet(LightningConfig lightningConfig) {
+        List<ClientSideTest> clientSideTests = lightningConfig.getClientSideTests();
+        List<ServerSideTest> serverSideTests = lightningConfig.getServerSideTests();
+        if (serverSideTests.size() == 0) {
+            testSet = TestSet.fromClientSideTest(clientSideTests);
+        } else {
+            testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
+        }
+    }
+
+    private static void executeServerSideTestsIfPerfMonDataProvided() {
+        if (params.verify.isPerfmonCsvFileProvided()) {
+            File perfmonCsvFile = params.verify.getPerfmonCsvFile();
+            perfMonEntries = PerfMonEntries.fromFile(perfmonCsvFile);
+            testSet.executeServerSideTests(perfMonEntries);
         }
     }
 

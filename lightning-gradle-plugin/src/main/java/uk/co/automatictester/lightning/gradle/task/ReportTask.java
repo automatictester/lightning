@@ -4,6 +4,8 @@ import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.reporters.JMeterReporter;
 
 public class ReportTask extends LightningTask {
 
@@ -15,6 +17,14 @@ public class ReportTask extends LightningTask {
         runReport();
         notifyCIServer();
         setExitCode();
+    }
+
+    private void runReport() {
+        jmeterTransactions = JMeterTransactions.fromFile(extension.getJmeterCsv());
+        log(JMeterReporter.getJMeterReport(jmeterTransactions));
+        if (jmeterTransactions.getFailCount() != 0) {
+            exitCode = 1;
+        }
     }
 
     private void notifyCIServer() {

@@ -10,6 +10,8 @@ import uk.co.automatictester.lightning.utils.IntToOrdConverter;
 
 import java.util.ArrayList;
 
+import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_DURATION_INDEX;
+
 public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
     private static final String MESSAGE = "%s percentile of transactions have response time ";
@@ -31,23 +33,10 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.size();
-
-            DescriptiveStatistics ds = new DescriptiveStatistics();
-            ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
-            for (String[] transaction : transactions) {
-                String elapsed = transaction[1];
-                ds.addValue(Double.parseDouble(elapsed));
-            }
-
+            calculateActualResult(transactions);
             longestTransactions = transactions.getLongestTransactions();
-            actualResult = (int) ds.getPercentile((double) percentile);
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), actualResult);
-
-            if (actualResult > maxRespTime) {
-                result = TestResult.FAIL;
-            } else {
-                result = TestResult.PASS;
-            }
+            calculateTestResult();
         } catch (Exception e) {
             result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
@@ -62,5 +51,23 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    private void calculateActualResult(JMeterTransactions jmeterTransactions) {
+        DescriptiveStatistics ds = new DescriptiveStatistics();
+        ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
+        for (String[] transaction : jmeterTransactions) {
+            String elapsed = transaction[TRANSACTION_DURATION_INDEX];
+            ds.addValue(Double.parseDouble(elapsed));
+        }
+        actualResult = (int) ds.getPercentile((double) percentile);
+    }
+
+    private void calculateTestResult() {
+        if (actualResult > maxRespTime) {
+            result = TestResult.FAIL;
+        } else {
+            result = TestResult.PASS;
+        }
     }
 }

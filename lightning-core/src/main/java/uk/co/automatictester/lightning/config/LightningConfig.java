@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.readers;
+package uk.co.automatictester.lightning.config;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
+public class LightningConfig extends LightningXMLProcessingHelpers {
 
     private List<ClientSideTest> clientSideTests = new ArrayList<>();
     private List<ServerSideTest> serverSideTests = new ArrayList<>();
@@ -52,8 +52,8 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
 
     protected void loadAllTests(Document doc) {
         addRespTimeAvgTests(doc);
-        addRespTimeStdDevTestNodes(doc);
-        addPassedTransactionsTestNodes(doc);
+        addRespTimeStdDevTests(doc);
+        addPassedTransactionsTests(doc);
         addRespTimeNthPercTests(doc);
         addThroughputTests(doc);
         addRespTimeMaxTests(doc);
@@ -74,7 +74,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
         return alltests.size();
     }
 
-    protected void addPassedTransactionsTestNodes(Document xmlDoc) {
+    protected void addPassedTransactionsTests(Document xmlDoc) {
         String testType = "passedTransactionsTest";
         NodeList passedTransactionsTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < passedTransactionsTestNodes.getLength(); i++) {
@@ -103,7 +103,7 @@ public class LightningXMLFileReader extends LightningXMLProcessingHelpers {
 
     }
 
-    protected void addRespTimeStdDevTestNodes(Document xmlDoc) {
+    protected void addRespTimeStdDevTests(Document xmlDoc) {
         String testType = "respTimeStdDevTest";
         NodeList respTimeStdDevTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeStdDevTestNodes.getLength(); i++) {

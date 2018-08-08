@@ -26,15 +26,9 @@ public class ThroughputTest extends ClientSideTest {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.size();
-
             actualResult = transactions.getThroughput();
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
-
-            if (actualResult < minThroughput) {
-                result = TestResult.FAIL;
-            } else {
-                result = TestResult.PASS;
-            }
+            calculateTestResult();
         } catch (Exception e) {
             result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
@@ -49,5 +43,13 @@ public class ThroughputTest extends ClientSideTest {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    private void calculateTestResult() {
+        if (actualResult < minThroughput) {
+            result = TestResult.FAIL;
+        } else {
+            result = TestResult.PASS;
+        }
     }
 }
