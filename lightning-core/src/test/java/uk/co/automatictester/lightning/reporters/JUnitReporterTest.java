@@ -21,7 +21,7 @@ public class JUnitReporterTest {
         when(testSet.getErrorCount()).thenReturn(1);
         when(testSet.getFailCount()).thenReturn(1);
 
-        Element testsuite = JUnitReporter.getTestsuite(testSet);
+        Element testsuite = new JUnitReporter().getTestsuite(testSet);
         assertThat(testsuite.getTagName(), equalTo("testsuite"));
         assertThat(testsuite.getAttribute("tests"), equalTo("3"));
         assertThat(testsuite.getAttribute("errors"), equalTo("1"));
@@ -36,7 +36,7 @@ public class JUnitReporterTest {
         when(test.getResult()).thenReturn(TestResult.PASS);
         when(test.getName()).thenReturn("some name");
 
-        Element testcase = JUnitReporter.getTestcase(test);
+        Element testcase = new JUnitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -51,7 +51,7 @@ public class JUnitReporterTest {
         when(test.getActualResultDescription()).thenReturn("some message");
         when(test.getType()).thenReturn("some type");
 
-        Element testcase = JUnitReporter.getTestcase(test);
+        Element testcase = new JUnitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -69,7 +69,7 @@ public class JUnitReporterTest {
         when(test.getActualResultDescription()).thenReturn("some message");
         when(test.getType()).thenReturn("some type");
 
-        Element testcase = JUnitReporter.getTestcase(test);
+        Element testcase = new JUnitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));

@@ -8,10 +8,8 @@ import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
-import uk.co.automatictester.lightning.readers.JMeterCSVFileReader;
+import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
-import uk.co.automatictester.lightning.readers.PerfMonDataReader;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
@@ -49,9 +47,8 @@ public class LightningMojo extends ConfigurationMojo {
     }
 
     private void saveJunitReport() {
-        JUnitReporter jUnitReporter = new JUnitReporter();
-        jUnitReporter.setTestSet(testSet);
-        jUnitReporter.generateJUnitReport();
+        JUnitReporter junitreporter = new JUnitReporter();
+        junitreporter.generateJUnitReport(testSet);
     }
 
     private void runTests() {
@@ -60,22 +57,23 @@ public class LightningMojo extends ConfigurationMojo {
         LightningXMLFileReader xmlFileReader = new LightningXMLFileReader();
         xmlFileReader.readTests(testSetXml);
 
+        // TODO: here and in other modules - make sure we don't pass nulls
         List<ClientSideTest> clientSideTests = xmlFileReader.getClientSideTests();
         List<ServerSideTest> serverSideTests = xmlFileReader.getServerSideTests();
 
-        testSet = new TestSet(clientSideTests, serverSideTests);
+        testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
 
-        jmeterTransactions = new JMeterCSVFileReader().getTransactions(jmeterCsv);
+        jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
 
         if (perfmonCsv != null) {
-            PerfMonDataEntries perfMonDataEntries = new PerfMonDataReader().getDataEntires(perfmonCsv);
+            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(perfmonCsv);
             testSet.executeServerSideTests(perfMonDataEntries);
         }
 
         testSet.executeClientSideTests(jmeterTransactions);
         log(testSet.getTestExecutionReport());
 
-        log(new TestSetReporter(testSet).getTestSetExecutionSummaryReport());
+        log(TestSetReporter.getTestSetExecutionSummaryReport(testSet));
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
@@ -87,9 +85,8 @@ public class LightningMojo extends ConfigurationMojo {
     }
 
     private void runReport() {
-        jmeterTransactions = new JMeterCSVFileReader().getTransactions(jmeterCsv);
-        JMeterReporter reporter = new JMeterReporter(jmeterTransactions);
-        log(reporter.getJMeterReport());
+        jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
+        log(JMeterReporter.getJMeterReport(jmeterTransactions));
         if (jmeterTransactions.getFailCount() != 0) {
             exitCode = 1;
         }
@@ -98,14 +95,14 @@ public class LightningMojo extends ConfigurationMojo {
     private void notifyCIServer() {
         switch (mode) {
             case verify:
-                log(new TeamCityReporter(testSet).getTeamCityVerifyStatistics());
-                new JenkinsReporter(testSet).setJenkinsBuildName();
+                log(TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics());
+                JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
                 break;
             case report:
-                TeamCityReporter teamCityReporter = new TeamCityReporter(jmeterTransactions);
-                log(teamCityReporter.getTeamCityBuildStatusText());
+                TeamCityReporter teamCityReporter = TeamCityReporter.fromJMeterTransactions(jmeterTransactions);
+                log(teamCityReporter.getTeamCityBuildReportSummary());
                 log(teamCityReporter.getTeamCityReportStatistics());
-                new JenkinsReporter(jmeterTransactions).setJenkinsBuildName();
+                JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
                 break;
         }
     }

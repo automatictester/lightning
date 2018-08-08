@@ -18,9 +18,9 @@ public class ReportTask extends LightningTask {
     }
 
     private void notifyCIServer() {
-        TeamCityReporter teamCityReporter = new TeamCityReporter(jmeterTransactions);
-        log(teamCityReporter.getTeamCityBuildStatusText());
+        TeamCityReporter teamCityReporter = TeamCityReporter.fromJMeterTransactions(jmeterTransactions);
+        log(teamCityReporter.getTeamCityBuildReportSummary());
         log(teamCityReporter.getTeamCityReportStatistics());
-        new JenkinsReporter(jmeterTransactions).setJenkinsBuildName();
+        JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
     }
 }

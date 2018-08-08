@@ -7,15 +7,13 @@ import org.apache.logging.log4j.Logger;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.lambda.ci.JUnitS3Reporter;
 import uk.co.automatictester.lightning.lambda.ci.JenkinsS3Reporter;
-import uk.co.automatictester.lightning.lambda.readers.JMeterCSVS3ObjectReader;
 import uk.co.automatictester.lightning.lambda.readers.LightningXMLS3ObjectReader;
-import uk.co.automatictester.lightning.lambda.readers.PerfMonS3ObjectDataReader;
-import uk.co.automatictester.lightning.lambda.s3.S3Client;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
+import uk.co.automatictester.lightning.s3.S3Client;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
@@ -68,18 +66,18 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     private void notifyCIServer() {
         if (mode.equals("verify")) {
-            String teamCityReport = new TeamCityReporter(testSet).getTeamCityVerifyStatistics();
+            String teamCityReport = TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics();
             String teamCityReportS3Path = s3Client.putS3Object("output/teamcity.log", teamCityReport);
 
             log.info(teamCityReport);
             response.setTeamCityReport(teamCityReportS3Path);
 
-            String jenkinsReportS3Path = new JenkinsS3Reporter(region, bucket, testSet).storeJenkinsBuildNameInS3();
+            String jenkinsReportS3Path = JenkinsS3Reporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
             response.setJenkinsReport(jenkinsReportS3Path);
 
         } else if (mode.equals("report")) {
-            TeamCityReporter teamCityReporter = new TeamCityReporter(jmeterTransactions);
-            String teamCityBuildStatusText = teamCityReporter.getTeamCityBuildStatusText();
+            TeamCityReporter teamCityReporter = TeamCityReporter.fromJMeterTransactions(jmeterTransactions);
+            String teamCityBuildStatusText = teamCityReporter.getTeamCityBuildReportSummary();
             String teamCityReportStatistics = teamCityReporter.getTeamCityReportStatistics();
             String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
             String combinedTeamCityReportS3Path = s3Client.putS3Object("output/teamcity.log", combinedTeamCityReport);
@@ -87,15 +85,14 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
             log.info(combinedTeamCityReport);
             response.setTeamCityReport(combinedTeamCityReportS3Path);
 
-            String jenkinsReportS3Path = new JenkinsS3Reporter(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
+            String jenkinsReportS3Path = JenkinsS3Reporter.fromJMeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
             response.setJenkinsReport(jenkinsReportS3Path);
         }
     }
 
     private String saveJunitReportToS3() {
-        JUnitS3Reporter jUnitS3Reporter = new JUnitS3Reporter(region, bucket);
-        jUnitS3Reporter.setTestSet(testSet);
-        return jUnitS3Reporter.generateJUnitReportToS3();
+        JUnitS3Reporter junitS3Reporter = new JUnitS3Reporter(region, bucket);
+        return junitS3Reporter.generateJUnitReportToS3(testSet);
     }
 
     private void runTests() {
@@ -107,19 +104,19 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         List<ClientSideTest> clientSideTests = xmlFileReader.getClientSideTests();
         List<ServerSideTest> serverSideTests = xmlFileReader.getServerSideTests();
 
-        testSet = new TestSet(clientSideTests, serverSideTests);
+        testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
 
-        jmeterTransactions = new JMeterCSVS3ObjectReader(region, bucket).getTransactions(jmeterCsv);
+        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
 
         if (perfmonCsv != null) {
-            PerfMonDataEntries perfMonDataEntries = new PerfMonS3ObjectDataReader(region, bucket).getDataEntires(perfmonCsv);
-            testSet.executeServerSideTests(perfMonDataEntries);
+            PerfMonEntries perfMonEntries = PerfMonEntries.fromS3Object(region, bucket, perfmonCsv);
+            testSet.executeServerSideTests(perfMonEntries);
         }
 
         testSet.executeClientSideTests(jmeterTransactions);
 
         String testExecutionReport = testSet.getTestExecutionReport();
-        String testSetExecutionSummaryReport = new TestSetReporter(testSet).getTestSetExecutionSummaryReport();
+        String testSetExecutionSummaryReport = TestSetReporter.getTestSetExecutionSummaryReport(testSet);
 
         String combinedTestReport = String.format("\n%s%s\n", testExecutionReport, testSetExecutionSummaryReport);
         String combinedTestReportS3Path = s3Client.putS3Object("output/verify.log", combinedTestReport);
@@ -139,9 +136,8 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     }
 
     private void runReport() {
-        jmeterTransactions = new JMeterCSVS3ObjectReader(region, bucket).getTransactions(jmeterCsv);
-        JMeterReporter reporter = new JMeterReporter(jmeterTransactions);
-        String jmeterReport = reporter.getJMeterReport();
+        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
+        String jmeterReport = JMeterReporter.getJMeterReport(jmeterTransactions);
         String jmeterReportS3Path = s3Client.putS3Object("output/report.log", jmeterReport);
 
         response.setJmeterReport(jmeterReportS3Path);

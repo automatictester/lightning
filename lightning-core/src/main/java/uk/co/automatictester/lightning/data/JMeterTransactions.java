@@ -9,10 +9,9 @@ import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentLabelException;
+import uk.co.automatictester.lightning.s3.S3Client;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,20 +24,35 @@ public class JMeterTransactions extends ArrayList<String[]> {
     private static final int TRANSACTION_TIMESTAMP = 3;
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private static S3Client s3Client;
 
-    private JMeterTransactions() {}
+    protected JMeterTransactions() {
+    }
 
     private JMeterTransactions(File csvFile) {
         long start = System.currentTimeMillis();
-        logger.debug("Reading CSV file - start");
+        log.debug("Reading CSV file - start");
 
         loadFromFile(csvFile);
         throwExceptionIfEmpty();
 
         long finish = System.currentTimeMillis();
         long millisecondsBetween = finish - start;
-        logger.debug("Reading CSV file - finish, read {} rows, took {}ms", this.size(), millisecondsBetween);
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", this.size(), millisecondsBetween);
+    }
+
+    private JMeterTransactions(String region, String bucket, String csvObject) {
+        s3Client = new S3Client(region, bucket);
+        long start = System.currentTimeMillis();
+        log.debug("Reading CSV file - start");
+
+        loadFromS3Object(csvObject);
+        throwExceptionIfEmpty();
+
+        long finish = System.currentTimeMillis();
+        long millisecondsBetween = finish - start;
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", this.size(), millisecondsBetween);
     }
 
     private JMeterTransactions(List<String[]> jmeterTransactions) {
@@ -51,6 +65,10 @@ public class JMeterTransactions extends ArrayList<String[]> {
 
     public static JMeterTransactions fromFile(File csvFile) {
         return new JMeterTransactions(csvFile);
+    }
+
+    public static JMeterTransactions fromS3Object(String region, String bucket, String csvObject) {
+        return new JMeterTransactions(region, bucket, csvObject);
     }
 
     public JMeterTransactions getTransactionsWith(String label) {
@@ -151,6 +169,15 @@ public class JMeterTransactions extends ArrayList<String[]> {
     private void loadFromFile(File csvFile) {
         try (FileReader fr = new FileReader(csvFile)) {
             this.addAll(getParser().parseAll(fr));
+        } catch (IOException e) {
+            throw new CSVFileIOException(e);
+        }
+    }
+
+    private void loadFromS3Object(String csvObject) {
+        String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
+        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
+            this.addAll(getParser().parseAll(isr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }

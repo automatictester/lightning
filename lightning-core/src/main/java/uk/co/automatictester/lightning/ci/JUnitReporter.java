@@ -18,9 +18,9 @@ import java.io.File;
 
 public class JUnitReporter {
 
-    protected static Document doc;
+    protected Document doc;
 
-    static {
+    public JUnitReporter() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
         try {
@@ -32,7 +32,7 @@ public class JUnitReporter {
         doc.setXmlStandalone(true);
     }
 
-    public static void generateJUnitReport(TestSet testSet) {
+    public void generateJUnitReport(TestSet testSet) {
         Element testsuite = getTestsuite(testSet);
         Node rootElement = doc.appendChild(testsuite);
         for (LightningTest test : testSet.getAllTests()) {
@@ -42,7 +42,7 @@ public class JUnitReporter {
         saveReportToDisk();
     }
 
-    public static Element getTestsuite(TestSet testSet) {
+    public Element getTestsuite(TestSet testSet) {
         Element testsuite = doc.createElement("testsuite");
         String testCount = String.valueOf(testSet.getTestCount());
         String failCount = String.valueOf(testSet.getFailCount());
@@ -57,7 +57,7 @@ public class JUnitReporter {
         return testsuite;
     }
 
-    public static Element getTestcase(LightningTest test) {
+    public Element getTestcase(LightningTest test) {
         Element testcase = doc.createElement("testcase");
         testcase.setAttribute("time", "0");
         String testName = test.getName();
@@ -91,7 +91,7 @@ public class JUnitReporter {
         element.setTextContent(testExecutionReport);
     }
 
-    private static void saveReportToDisk() {
+    private void saveReportToDisk() {
         Transformer transformer;
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

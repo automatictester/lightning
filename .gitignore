@@ -11,6 +11,7 @@ generated.csv
 release.properties
 */.gradle/
 lightning-gradle-plugin/build/
+lightning-gradle-plugin/out/
 **/taskArtifacts.lock
 */gradle.properties-e
 /lightning-aws-lambda/response.json

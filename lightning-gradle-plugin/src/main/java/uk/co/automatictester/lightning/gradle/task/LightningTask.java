@@ -5,11 +5,9 @@ import org.gradle.api.GradleException;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonDataEntries;
+import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.gradle.extension.LightningExtension;
-import uk.co.automatictester.lightning.readers.JMeterCSVFileReader;
 import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
-import uk.co.automatictester.lightning.readers.PerfMonDataReader;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
@@ -39,9 +37,8 @@ abstract class LightningTask extends DefaultTask {
     }
 
     void saveJunitReport() {
-        JUnitReporter jUnitReporter = new JUnitReporter();
-        jUnitReporter.setTestSet(testSet);
-        jUnitReporter.generateJUnitReport();
+        JUnitReporter junitreporter = new JUnitReporter();
+        junitreporter.generateJUnitReport(testSet);
     }
 
     void runTests() {
@@ -53,19 +50,19 @@ abstract class LightningTask extends DefaultTask {
         List<ClientSideTest> clientSideTests = xmlFileReader.getClientSideTests();
         List<ServerSideTest> serverSideTests = xmlFileReader.getServerSideTests();
 
-        testSet = new TestSet(clientSideTests, serverSideTests);
+        testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
 
-        jmeterTransactions = new JMeterCSVFileReader().getTransactions(extension.getJmeterCsv());
+        jmeterTransactions = JMeterTransactions.fromFile(extension.getJmeterCsv());
 
         if (extension.getPerfmonCsv() != null) {
-            PerfMonDataEntries perfMonDataEntries = new PerfMonDataReader().getDataEntires(extension.getPerfmonCsv());
+            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(extension.getPerfmonCsv());
             testSet.executeServerSideTests(perfMonDataEntries);
         }
 
         testSet.executeClientSideTests(jmeterTransactions);
         log(testSet.getTestExecutionReport());
 
-        log(new TestSetReporter(testSet).getTestSetExecutionSummaryReport());
+        log(TestSetReporter.getTestSetExecutionSummaryReport(testSet));
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
@@ -77,9 +74,8 @@ abstract class LightningTask extends DefaultTask {
     }
 
     void runReport() {
-        jmeterTransactions = new JMeterCSVFileReader().getTransactions(extension.getJmeterCsv());
-        JMeterReporter reporter = new JMeterReporter(jmeterTransactions);
-        log(reporter.getJMeterReport());
+        jmeterTransactions = JMeterTransactions.fromFile(extension.getJmeterCsv());
+        log(JMeterReporter.getJMeterReport(jmeterTransactions));
         if (jmeterTransactions.getFailCount() != 0) {
             exitCode = 1;
         }

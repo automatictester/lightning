@@ -1,14 +1,15 @@
-package uk.co.automatictester.lightning.lambda.s3;
+package uk.co.automatictester.lightning.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+// TODO: refactor
 public class S3Client {
 
-    private static final Logger log = LogManager.getLogger(S3Client.class);
+    private static final Logger log = LoggerFactory.getLogger(S3Client.class);
     private static AmazonS3 amazonS3;
     private String bucket;
 

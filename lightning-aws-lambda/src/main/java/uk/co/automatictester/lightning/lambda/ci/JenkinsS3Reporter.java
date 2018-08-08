@@ -3,29 +3,43 @@ package uk.co.automatictester.lightning.lambda.ci;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.CIReporter;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.lambda.s3.S3Client;
+import uk.co.automatictester.lightning.s3.S3Client;
 
 public class JenkinsS3Reporter extends CIReporter {
 
     private static S3Client s3Client;
 
-    public JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
+    private JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
         super(testSet);
         s3Client = new S3Client(region, bucket);
     }
 
-    public JenkinsS3Reporter(String region, String bucket, JMeterTransactions jmeterTransactions) {
+    private JenkinsS3Reporter(String region, String bucket, JMeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
         s3Client = new S3Client(region, bucket);
+    }
+
+    public static JenkinsS3Reporter fromTestSet(String region, String bucket, TestSet testSet) {
+        return new JenkinsS3Reporter(region, bucket, testSet);
+    }
+
+    public static JenkinsS3Reporter fromJMeterTransactions(String region, String bucket, JMeterTransactions jmeterTransactions) {
+        return new JenkinsS3Reporter(region, bucket, jmeterTransactions);
     }
 
     public String storeJenkinsBuildNameInS3() {
         if (testSet != null) {
             return storeJenkinsReportToS3(getVerifySummary(testSet));
         } else if (jmeterTransactions != null) {
-            return storeJenkinsReportToS3(getReportSummary(jmeterTransactions));
+            return storeJenkinsReportToS3(getReportSummary());
         }
         return null;
+    }
+
+    private static String getVerifySummary(TestSet testSet) {
+        int executed = testSet.getTestCount();
+        int failed = testSet.getFailCount() + testSet.getErrorCount();
+        return String.format("Tests executed: %s, failed: %s", executed, failed);
     }
 
     private String storeJenkinsReportToS3(String summary) {

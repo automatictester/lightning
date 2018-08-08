@@ -3,9 +3,8 @@ package uk.co.automatictester.lightning.lambda.readers;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
-import uk.co.automatictester.lightning.exceptions.XMLFileNoTestsException;
-import uk.co.automatictester.lightning.lambda.s3.S3Client;
 import uk.co.automatictester.lightning.readers.LightningXMLFileReader;
+import uk.co.automatictester.lightning.s3.S3Client;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,28 +23,20 @@ public class LightningXMLS3ObjectReader extends LightningXMLFileReader {
 
     public void readTests(String xmlObject) {
         String xmlObjectContent = s3Client.getS3ObjectContent(xmlObject);
+        Document doc = readXmlFile(xmlObjectContent);
+        loadAllTests(doc);
+        throwExceptionIfNoTests();
+    }
 
+    private Document readXmlFile(String xmlObjectContent) {
         try (InputStream is = new ByteArrayInputStream(xmlObjectContent.getBytes())) {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(is);
             doc.getDocumentElement().normalize();
-
-            addRespTimeAvgTests(doc);
-            addRespTimeStdDevTestNodes(doc);
-            addPassedTransactionsTestNodes(doc);
-            addRespTimeNthPercTests(doc);
-            addThroughputTests(doc);
-            addRespTimeMaxTests(doc);
-            addRespTimeMedianTests(doc);
-            addServerSideTests(doc);
-
+            return doc;
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new XMLFileException(e);
-        }
-
-        if (getTestCount() == 0) {
-            throw new XMLFileNoTestsException("No tests of expected type found in XML file");
         }
     }
 }

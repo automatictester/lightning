@@ -19,7 +19,7 @@ public class VerifyTask extends LightningTask {
     }
 
     private void notifyCIServer() {
-        log(new TeamCityReporter(testSet).getTeamCityVerifyStatistics());
-        new JenkinsReporter(testSet).setJenkinsBuildName();
+        log(TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics());
+        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
     }
 }

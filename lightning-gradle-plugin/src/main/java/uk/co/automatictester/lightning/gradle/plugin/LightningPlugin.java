@@ -8,7 +8,6 @@ import uk.co.automatictester.lightning.gradle.task.VerifyTask;
 
 public class LightningPlugin implements Plugin<Project> {
 
-    @Override
     public void apply(Project project) {
         project.getExtensions().create("lightningSettings", LightningExtension.class);
         project.getTasks().create("verify", VerifyTask.class).setDescription("Runs Lightning report on JMeter CSV file");

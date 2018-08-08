@@ -20,13 +20,9 @@ public class JUnitS3Reporter extends JUnitReporter {
         s3Client = new S3Client(region, bucket);
     }
 
-    public void setTestSet(TestSet testSet) {
-        this.testSet = testSet;
-    }
-
-    public String generateJUnitReportToS3() {
-        Node rootElement = doc.appendChild(getTestsuite());
-        for (LightningTest test : testSet.getTests()) {
+    public String generateJUnitReportToS3(TestSet testSet) {
+        Node rootElement = doc.appendChild(getTestsuite(testSet));
+        for (LightningTest test : testSet.getAllTests()) {
             rootElement.appendChild(getTestcase(test));
         }
         return saveReportToS3();
