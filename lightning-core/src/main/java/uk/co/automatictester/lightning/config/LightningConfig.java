@@ -116,14 +116,16 @@ public class LightningConfig {
 
             String name = getTestName(element);
             String description = getTestDescription(element);
-            String transactionName = null;
-            if (hasTransactionName(element)) {
-                transactionName = getTransactionName(element);
-            }
             int maxRespTimeStdDevTime = getIntegerValueFromElement(element, "maxRespTimeStdDev");
-
-            RespTimeStdDevTest respTimeStdDevTest = new RespTimeStdDevTest(name, testType, description, transactionName, maxRespTimeStdDevTime);
-            respTimeStdDevTest.setRegexp(isSubElementPresent(element, "regexp"));
+            RespTimeStdDevTest.Builder builder = new RespTimeStdDevTest.Builder(name, maxRespTimeStdDevTime).withDescription(description);
+            if (hasTransactionName(element)) {
+                String transactionName = getTransactionName(element);
+                builder.withTransactionName(transactionName);
+            }
+            if (hasRegexp(element)) {
+                builder.withRegexp();
+            }
+            RespTimeStdDevTest respTimeStdDevTest = builder.build();
 
             clientSideTests.add(respTimeStdDevTest);
         }

@@ -17,10 +17,10 @@ public class RespTimeStdDevTest extends ClientSideTest {
 
     private final long maxRespTimeStdDev;
 
-    public RespTimeStdDevTest(String name, String type, String description, String transactionName, long maxRespTimeStdDev) {
-        super(name, type, description, transactionName);
+    private RespTimeStdDevTest(String testName, long maxRespTimeStdDev) {
+        super("respTimeStdDevTest", testName);
         this.maxRespTimeStdDev = maxRespTimeStdDev;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
     }
 
     @Override
@@ -61,6 +61,43 @@ public class RespTimeStdDevTest extends ClientSideTest {
             result = TestResult.FAIL;
         } else {
             result = TestResult.PASS;
+        }
+    }
+
+    public static class Builder {
+        private String testName;
+        private long maxRespTimeStdDev;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, long maxRespTimeStdDev) {
+            this.testName = testName;
+            this.maxRespTimeStdDev = maxRespTimeStdDev;
+        }
+
+        public RespTimeStdDevTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public RespTimeStdDevTest.Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public RespTimeStdDevTest.Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public RespTimeStdDevTest build() {
+            RespTimeStdDevTest test = new RespTimeStdDevTest(testName, maxRespTimeStdDev);
+            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
         }
     }
 }

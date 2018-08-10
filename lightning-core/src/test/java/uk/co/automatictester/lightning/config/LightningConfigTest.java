@@ -33,7 +33,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_STD_DEV);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        RespTimeStdDevTest test = new RespTimeStdDevTest("Test #2", "respTimeStdDevTest", "Verify standard deviation", "Search", 500);
+        RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
