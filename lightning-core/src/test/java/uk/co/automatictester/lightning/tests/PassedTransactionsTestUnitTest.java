@@ -18,7 +18,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodPass() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -30,8 +30,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodRegexpPass() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Log[a-z]{2,3}", 0);
-        test.setRegexp(true);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Log[a-z]{2,3}").withRegexp().build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         testData.add(TestData.LOGOUT_1000_SUCCESS);
@@ -44,7 +43,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodRegexpFail() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Log[a-z]ut", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Log[a-z]ut").withRegexp().build();
         test.setRegexp(true);
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGOUT_1000_SUCCESS);
@@ -58,7 +57,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodAllTransactionsPass() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         testData.add(TestData.SEARCH_800_SUCCESS);
@@ -71,7 +70,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodPercentPass() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify percent of passed tests", "Search", new Percent(10));
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", new Percent(10)).withDescription("Verify percent of passed tests").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_1_SUCCESS);
         testData.add(TestData.SEARCH_2_SUCCESS);
@@ -92,7 +91,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodPercentFail() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify percent of passed tests", "Search", new Percent(9));
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", new Percent(9)).withDescription("Verify percent of passed tests").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_1_SUCCESS);
         testData.add(TestData.SEARCH_2_SUCCESS);
@@ -113,7 +112,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodFail() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1200_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -125,7 +124,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodAllTransactionsFail() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1200_SUCCESS);
         testData.add(TestData.SEARCH_800_FAILURE);
@@ -138,7 +137,7 @@ public class PassedTransactionsTestUnitTest {
 
     @Test
     public void verifyExecuteMethodError() {
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "nonexistent", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1200_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -188,7 +187,7 @@ public class PassedTransactionsTestUnitTest {
                 "Transaction count:    1%n" +
                 "Test result:          Pass");
 
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -209,7 +208,7 @@ public class PassedTransactionsTestUnitTest {
                 "Transaction count:    1%n" +
                 "Test result:          FAIL");
 
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1200_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -230,7 +229,7 @@ public class PassedTransactionsTestUnitTest {
                 "Transaction count:    0%n" +
                 "Test result:          ERROR");
 
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "incorrect", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("incorrect").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -250,7 +249,7 @@ public class PassedTransactionsTestUnitTest {
                 "Transaction count:    1%n" +
                 "Test result:          Pass");
 
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "", "Login", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -270,7 +269,7 @@ public class PassedTransactionsTestUnitTest {
                 "Transaction count:    1%n" +
                 "Test result:          Pass");
 
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);

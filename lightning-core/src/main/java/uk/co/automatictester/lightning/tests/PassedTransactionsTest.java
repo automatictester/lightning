@@ -20,18 +20,18 @@ public class PassedTransactionsTest extends ClientSideTest {
     private long allowedNumberOfFailedTransactions = 0;
     private Percent allowedPercentOfFailedTransactions;
 
-    public PassedTransactionsTest(String name, String type, String description, String transactionName, long allowedNumberOfFailedTransactions) {
-        super(name, type, description, transactionName);
-        this.type = ThresholdType.NUMBER;
+    private PassedTransactionsTest(String testName, long allowedNumberOfFailedTransactions) {
+        super("passedTransactionsTest", testName);
         this.allowedNumberOfFailedTransactions = allowedNumberOfFailedTransactions;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedNumberOfFailedTransactions);
+        this.type = ThresholdType.NUMBER;
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedNumberOfFailedTransactions);
     }
 
-    public PassedTransactionsTest(String name, String type, String description, String transactionName, Percent percent) {
-        super(name, type, description, transactionName);
-        this.type = ThresholdType.PERCENT;
+    private PassedTransactionsTest(String testName, Percent percent) {
+        super("passedTransactionsTest", testName);
         this.allowedPercentOfFailedTransactions = percent;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getValue());
+        this.type = ThresholdType.PERCENT;
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getValue());
     }
 
     @Override
@@ -95,5 +95,52 @@ public class PassedTransactionsTest extends ClientSideTest {
         }
         actualResult = percentOfFailedTransactions;
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, this.type.toString(), percentOfFailedTransactions);
+    }
+
+    public static class Builder {
+        private String testName;
+        private long allowedNumberOfFailedTransactions;
+        private Percent allowedPercentOfFailedTransactions;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, long allowedNumberOfFailedTransactions) {
+            this.testName = testName;
+            this.allowedNumberOfFailedTransactions = allowedNumberOfFailedTransactions;
+        }
+
+        public Builder(String testName, Percent percent) {
+            this.testName = testName;
+            this.allowedPercentOfFailedTransactions = percent;
+        }
+
+        public PassedTransactionsTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public PassedTransactionsTest.Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public PassedTransactionsTest.Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public PassedTransactionsTest build() {
+            PassedTransactionsTest test;
+            if (allowedPercentOfFailedTransactions == null) {
+                test = new PassedTransactionsTest(testName, allowedNumberOfFailedTransactions);
+            } else {
+                test = new PassedTransactionsTest(testName, allowedPercentOfFailedTransactions);
+            }
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
+        }
     }
 }

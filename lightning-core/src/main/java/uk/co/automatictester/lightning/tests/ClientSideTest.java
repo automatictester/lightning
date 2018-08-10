@@ -48,7 +48,7 @@ public abstract class ClientSideTest extends LightningTest {
         return regexp;
     }
 
-    public void setRegexp(boolean regexp) {
+    public void setRegexp(boolean regexp) { // todo: private/protetcted, only via builder
         this.regexp = regexp;
     }
 

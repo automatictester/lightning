@@ -20,7 +20,7 @@ public class TestSetTest extends ConsoleOutputTest {
 
     @Test
     public void verifyExecuteServerMethod_1_1_1() {
-        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<ClientSideTest> clientSideTests = new ArrayList<>();
         clientSideTests.add(passedTransactionsTestA);
 
@@ -57,8 +57,8 @@ public class TestSetTest extends ConsoleOutputTest {
 
     @Test
     public void verifyExecuteClientMethod_2_0_0() {
-        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
-        PassedTransactionsTest passedTransactionsTestB = new PassedTransactionsTest("Test #2", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsTest passedTransactionsTestB = new PassedTransactionsTest.Builder("Test #2", 0).withDescription("Verify number of passed tests").build();
 
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_3514_SUCCESS);

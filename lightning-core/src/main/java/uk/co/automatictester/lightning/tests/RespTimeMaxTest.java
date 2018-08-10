@@ -17,7 +17,7 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
 
     private final long maxRespTime;
 
-    public RespTimeMaxTest(String testName, long maxRespTime) {
+    private RespTimeMaxTest(String testName, long maxRespTime) {
         super("maxRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
     }

@@ -44,7 +44,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_PASSED);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #3", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #3", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -55,7 +55,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_PASSED_PERCENT);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        PassedTransactionsTest test = new PassedTransactionsTest("Test #3", "passedTransactionsTest", "Verify percent of passed tests", "Login", new Percent(0));
+        PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #3", new Percent(0)).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

@@ -78,19 +78,16 @@ public class TestData {
     public static final String[] SEARCH_7_SUCCESS = new String[] {"Search", "7", "true"};
     public static final String[] SEARCH_8_SUCCESS = new String[] {"Search", "8", "true"};
     public static final String[] SEARCH_9_SUCCESS = new String[] {"Search", "9", "true"};
-    public static final String[] SEARCH_10_SUCCESS = new String[] {"Search", "10", "true"};
-    public static final String[] LOGIN_1_SUCCESS = new String[] {"Login", "1", "true"};
-    public static final String[] LOGIN_2_SUCCESS = new String[] {"Login", "2", "true"};
 
     // Tests
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_A = new PassedTransactionsTest("Failed transactions (%)", "passedTransactionsTest", "Verify number of passed tests", "Login", new Percent(0));
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_B = new PassedTransactionsTest("Failed transactions", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_A = new PassedTransactionsTest.Builder("Failed transactions (%)", new Percent(0)).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_B = new PassedTransactionsTest.Builder("Failed transactions", 0).withDescription("Verify number of passed tests").build();
     public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_3_0_0_C = new RespTimeNthPercentileTest.Builder("80th percentile", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_A = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 1);
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_B = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_PERC = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", new Percent(0));
-    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", null, 0);
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_A = new PassedTransactionsTest.Builder("Test #1", 1).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_B = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_PERC = new PassedTransactionsTest.Builder("Test #1", new Percent(0)).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+    public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
     public static final RespTimeAvgTest AVG_RESP_TIME_TEST_A = new RespTimeAvgTest.Builder("Test #1", 1000).withDescription("Verify average response times").withTransactionName("Search").build();
     public static final RespTimeAvgTest AVG_RESP_TIME_TEST_B = new RespTimeAvgTest.Builder("Test #1", 100).withDescription("Verify average response times").withTransactionName("Search").build();
     public static final RespTimeMaxTest MAX_RESP_TIME_TEST_A = new RespTimeMaxTest.Builder("Test #1", 1000).withDescription("Verify max response times").withTransactionName("Search").build();

@@ -83,23 +83,25 @@ public class LightningConfig {
 
             String name = getTestName(element);
             String description = getTestDescription(element);
-            String transactionName = null;
-            if (hasTransactionName(element)) {
-                transactionName = getTransactionName(element);
-            }
-            int allowedNumberOfFailedTransactions;
-            int allowedPercentOfFailedTransactions;
-            PassedTransactionsTest passedTransactionsTest;
 
+            PassedTransactionsTest.Builder builder;
             if (isSubElementPresent(element, "allowedNumberOfFailedTransactions")) {
-                allowedNumberOfFailedTransactions = getIntegerValueFromElement(element, "allowedNumberOfFailedTransactions");
-                passedTransactionsTest = new PassedTransactionsTest(name, testType, description, transactionName, allowedNumberOfFailedTransactions);
+                int allowedNumberOfFailedTransactions = getIntegerValueFromElement(element, "allowedNumberOfFailedTransactions");
+                builder = new PassedTransactionsTest.Builder(name, allowedNumberOfFailedTransactions);
             } else {
-                allowedPercentOfFailedTransactions = getPercent(element, "allowedPercentOfFailedTransactions");
-                passedTransactionsTest = new PassedTransactionsTest(name, testType, description, transactionName, new Percent(allowedPercentOfFailedTransactions));
+                int allowedPercentOfFailedTransactions = getPercentAsInt(element, "allowedPercentOfFailedTransactions");
+                Percent percent = new Percent(allowedPercentOfFailedTransactions);
+                builder = new PassedTransactionsTest.Builder(name, percent);
             }
-
-            passedTransactionsTest.setRegexp(isSubElementPresent(element, "regexp"));
+            builder.withDescription(description);
+            if (hasTransactionName(element)) {
+                String transactionName = getTransactionName(element);
+                builder.withTransactionName(transactionName);
+            }
+            if (hasRegexp(element)) {
+                builder.withRegexp();
+            }
+            PassedTransactionsTest passedTransactionsTest = builder.build();
 
             clientSideTests.add(passedTransactionsTest);
         }
