@@ -31,6 +31,10 @@ public class LightningConfigProcessingHelper {
         return testSubType;
     }
 
+    public static boolean hasRegexp(Element element) {
+        return isSubElementPresent(element, "regexp");
+    }
+
     public static boolean hasTransactionName(Element element) {
         return isSubElementPresent(element, "transactionName");
     }

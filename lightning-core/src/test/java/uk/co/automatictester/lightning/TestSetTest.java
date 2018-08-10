@@ -82,9 +82,9 @@ public class TestSetTest extends ConsoleOutputTest {
 
     @Test
     public void verifyExecuteClientMethod_1_1_1() {
-        RespTimeAvgTest respTimeAvgTestA = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "", "Login", 4000);
-        RespTimeAvgTest respTimeAvgTestB = new RespTimeAvgTest("Test #2", "avgRespTimeTest", "", "Search", 5000);
-        RespTimeAvgTest respTimeAvgTestC = new RespTimeAvgTest("Test #3", "avgRespTimeTest", "", "Sear", 1000);
+        RespTimeAvgTest respTimeAvgTestA = new RespTimeAvgTest.Builder("Test #1", 4000).withTransactionName("Login").build();
+        RespTimeAvgTest respTimeAvgTestB = new RespTimeAvgTest.Builder("Test #2", 5000).withTransactionName("Search").build();
+        RespTimeAvgTest respTimeAvgTestC = new RespTimeAvgTest.Builder("Test #3", 1000).withTransactionName("Sear").build();
 
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_3514_SUCCESS);

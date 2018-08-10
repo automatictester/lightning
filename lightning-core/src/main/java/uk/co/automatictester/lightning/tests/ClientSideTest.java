@@ -9,10 +9,14 @@ import java.util.List;
 
 public abstract class ClientSideTest extends LightningTest {
 
-    protected final String transactionName;
+    protected String transactionName;
     protected int transactionCount;
     protected boolean regexp = false;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    protected ClientSideTest(String testType, String testName) {
+        super(testType, testName);
+    }
 
     protected ClientSideTest(String name, String type, String description, String transactionName) {
         super(name, type, description);

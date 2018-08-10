@@ -135,14 +135,16 @@ public class LightningConfig {
 
             String name = getTestName(element);
             String description = getTestDescription(element);
-            String transactionName = null;
-            if (hasTransactionName(element)) {
-                transactionName = getTransactionName(element);
-            }
             int maxAvgRespTime = getIntegerValueFromElement(element, "maxAvgRespTime");
-
-            RespTimeAvgTest avgRespTimeTest = new RespTimeAvgTest(name, testType, description, transactionName, maxAvgRespTime);
-            avgRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
+            RespTimeAvgTest.Builder builder = new RespTimeAvgTest.Builder(name, maxAvgRespTime).withDescription(description);
+            if (hasTransactionName(element)) {
+                String transactionName = getTransactionName(element);
+                builder.withTransactionName(transactionName);
+            }
+            if (hasRegexp(element)) {
+                builder.withRegexp();
+            }
+            RespTimeAvgTest avgRespTimeTest = builder.build();
 
             clientSideTests.add(avgRespTimeTest);
         }

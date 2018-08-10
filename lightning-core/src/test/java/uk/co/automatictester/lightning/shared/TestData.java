@@ -91,8 +91,8 @@ public class TestData {
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_B = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_PERC = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", new Percent(0));
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", null, 0);
-    public static final RespTimeAvgTest AVG_RESP_TIME_TEST_A = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify average response times", "Search", 1000);
-    public static final RespTimeAvgTest AVG_RESP_TIME_TEST_B = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify average response times", "Search", 100);
+    public static final RespTimeAvgTest AVG_RESP_TIME_TEST_A = new RespTimeAvgTest.Builder("Test #1", 1000).withDescription("Verify average response times").withTransactionName("Search").build();
+    public static final RespTimeAvgTest AVG_RESP_TIME_TEST_B = new RespTimeAvgTest.Builder("Test #1", 100).withDescription("Verify average response times").withTransactionName("Search").build();
     public static final RespTimeMaxTest MAX_RESP_TIME_TEST_A = new RespTimeMaxTest("Test #1", "maxRespTimeTest", "Verify max response times", "Search", 1000);
     public static final RespTimeMaxTest MAX_RESP_TIME_TEST_B = new RespTimeMaxTest("Test #1", "maxRespTimeTest", "Verify max response times", "Search", 100);
     public static final RespTimeStdDevTest RESP_TIME_STD_DEV_TEST_A = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviation", "Login", 1);

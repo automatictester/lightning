@@ -18,7 +18,7 @@ public class RespTimeAvgTestUnitTest {
 
     @Test
     public void verifyExecutePass() {
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 800);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -31,7 +31,7 @@ public class RespTimeAvgTestUnitTest {
     public void verifyExecutePassOnNonDefaultLocale() {
         Locale.setDefault(Locale.FRENCH);
 
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 6010);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 6010).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_800_SUCCESS);
         testData.add(TestData.SEARCH_11221_SUCCESS);
@@ -43,7 +43,7 @@ public class RespTimeAvgTestUnitTest {
 
     @Test
     public void verifyExecuteAllTransactionsPass() {
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", null, 900);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 900).withDescription("Verify response times").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_800_SUCCESS);
         testData.add(TestData.LOGIN_1000_SUCCESS);
@@ -55,7 +55,7 @@ public class RespTimeAvgTestUnitTest {
 
     @Test
     public void verifyExecuteFail() {
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "Search", 11220);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 11220).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -66,7 +66,7 @@ public class RespTimeAvgTestUnitTest {
 
     @Test
     public void verifyExecuteAllTransactionsFail() {
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", null, 899);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 899).withDescription("Verify response times").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_800_SUCCESS);
         testData.add(TestData.LOGIN_1000_SUCCESS);
@@ -78,7 +78,7 @@ public class RespTimeAvgTestUnitTest {
 
     @Test
     public void verifyExecuteError() {
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify response times", "nonexistent", 800);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -104,13 +104,13 @@ public class RespTimeAvgTestUnitTest {
 
     @Test
     public void testPrintTestExecutionReport() {
-        RespTimeAvgTest test = new RespTimeAvgTest("my name", "my type", "my description", "Search", 800);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("my name", 800).withDescription("my description").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         String expectedOutput = String.format("Test name:            my name%n" +
-                "Test type:            my type%n" +
+                "Test type:            avgRespTimeTest%n" +
                 "Test description:     my description%n" +
                 "Transaction name:     Search%n" +
                 "Expected result:      Average response time <= 800%n" +

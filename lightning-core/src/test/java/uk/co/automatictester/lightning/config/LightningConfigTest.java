@@ -66,7 +66,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_AVG_RESP_TIME);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        RespTimeAvgTest test = new RespTimeAvgTest("Test #1", "avgRespTimeTest", "Verify average login times", "Login", 4000);
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

@@ -4,15 +4,22 @@ import uk.co.automatictester.lightning.enums.TestResult;
 
 import java.util.ArrayList;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 public abstract class LightningTest {
 
     protected final String name;
-    protected final String description;
+    protected String description;
     protected final String type;
     protected String expectedResultDescription;
     protected String actualResultDescription;
     protected TestResult result;
     protected int actualResult;
+
+    protected LightningTest(String testType, String testName) {
+        this.type = testType;
+        this.name = testName;
+    }
 
     protected LightningTest(String name, String type, String description) {
         this.name = name;
@@ -32,7 +39,7 @@ public abstract class LightningTest {
 
     protected String getDescriptionForReport() {
         String message = String.format("Test description:     %s%n", getDescription());
-        return !getDescription().isEmpty() ? message : "";
+        return isBlank(getDescription()) ? "" : message;
     }
 
     protected String getResultForReport() {

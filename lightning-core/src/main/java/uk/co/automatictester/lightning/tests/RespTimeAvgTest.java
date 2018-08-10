@@ -17,10 +17,9 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
 
     private final long maxAvgRespTime;
 
-    public RespTimeAvgTest(String name, String type, String description, String transactionName, long maxAvgRespTime) {
-        super(name, type, description, transactionName);
+    private RespTimeAvgTest(String testName, long maxAvgRespTime) {
+        super("avgRespTimeTest", testName);
         this.maxAvgRespTime = maxAvgRespTime;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxAvgRespTime);
     }
 
     @Override
@@ -62,6 +61,43 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
             result = TestResult.FAIL;
         } else {
             result = TestResult.PASS;
+        }
+    }
+
+    public static class Builder {
+        private String testName;
+        private long maxAvgRespTime;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, long maxAvgRespTime) {
+            this.testName = testName;
+            this.maxAvgRespTime = maxAvgRespTime;
+        }
+
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public RespTimeAvgTest build() {
+            RespTimeAvgTest test = new RespTimeAvgTest(testName, maxAvgRespTime);
+            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxAvgRespTime);
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
         }
     }
 }

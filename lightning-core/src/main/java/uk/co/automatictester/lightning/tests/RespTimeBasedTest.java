@@ -10,7 +10,11 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
     protected List<Integer> longestTransactions;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public RespTimeBasedTest(String name, String type, String description, String transactionName) {
+    protected RespTimeBasedTest(String testType, String testName) {
+        super(testType, testName);
+    }
+
+    protected RespTimeBasedTest(String name, String type, String description, String transactionName) {
         super(name, type, description, transactionName);
     }
 
