@@ -8,7 +8,6 @@ import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.exceptions.XMLFileNoTestsException;
 import uk.co.automatictester.lightning.tests.*;
-import uk.co.automatictester.lightning.utils.LightningXMLProcessingHelpers;
 import uk.co.automatictester.lightning.utils.Percent;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,7 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LightningConfig extends LightningXMLProcessingHelpers {
+import static uk.co.automatictester.lightning.utils.LightningConfigProcessingHelper.*;
+
+public class LightningConfig {
 
     private List<ClientSideTest> clientSideTests = new ArrayList<>();
     private List<ServerSideTest> serverSideTests = new ArrayList<>();
@@ -36,18 +37,6 @@ public class LightningConfig extends LightningXMLProcessingHelpers {
 
     public List<ServerSideTest> getServerSideTests() {
         return serverSideTests;
-    }
-
-    protected Document readXmlFile(File xmlFile) {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(xmlFile);
-            doc.getDocumentElement().normalize();
-            return doc;
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new XMLFileException(e);
-        }
     }
 
     protected void loadAllTests(Document doc) {
@@ -67,168 +56,203 @@ public class LightningConfig extends LightningXMLProcessingHelpers {
         }
     }
 
-    protected int getTestCount() {
+    private Document readXmlFile(File xmlFile) {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xmlFile);
+            doc.getDocumentElement().normalize();
+            return doc;
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new XMLFileException(e);
+        }
+    }
+
+    private int getTestCount() {
         List<LightningTest> alltests = new ArrayList<>();
         alltests.addAll(clientSideTests);
         alltests.addAll(serverSideTests);
         return alltests.size();
     }
 
-    protected void addPassedTransactionsTests(Document xmlDoc) {
+    private void addPassedTransactionsTests(Document xmlDoc) {
         String testType = "passedTransactionsTest";
         NodeList passedTransactionsTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < passedTransactionsTestNodes.getLength(); i++) {
-            Element passedTransactionsElement = (Element) passedTransactionsTestNodes.item(i);
+            Element element = (Element) passedTransactionsTestNodes.item(i);
 
-            String name = getTestName(passedTransactionsElement);
-            String description = getTestDescription(passedTransactionsElement);
-            String transactionName = getTransactionName(passedTransactionsElement);
-
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
             int allowedNumberOfFailedTransactions;
             int allowedPercentOfFailedTransactions;
             PassedTransactionsTest passedTransactionsTest;
 
-            if (isSubElementPresent(passedTransactionsElement, "allowedNumberOfFailedTransactions")) {
-                allowedNumberOfFailedTransactions = getIntegerValueFromElement(passedTransactionsElement, "allowedNumberOfFailedTransactions");
+            if (isSubElementPresent(element, "allowedNumberOfFailedTransactions")) {
+                allowedNumberOfFailedTransactions = getIntegerValueFromElement(element, "allowedNumberOfFailedTransactions");
                 passedTransactionsTest = new PassedTransactionsTest(name, testType, description, transactionName, allowedNumberOfFailedTransactions);
             } else {
-                allowedPercentOfFailedTransactions = getPercent(passedTransactionsElement, "allowedPercentOfFailedTransactions");
+                allowedPercentOfFailedTransactions = getPercent(element, "allowedPercentOfFailedTransactions");
                 passedTransactionsTest = new PassedTransactionsTest(name, testType, description, transactionName, new Percent(allowedPercentOfFailedTransactions));
             }
 
-            passedTransactionsTest.setRegexp(isSubElementPresent(passedTransactionsElement, "regexp"));
+            passedTransactionsTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(passedTransactionsTest);
         }
 
     }
 
-    protected void addRespTimeStdDevTests(Document xmlDoc) {
+    private void addRespTimeStdDevTests(Document xmlDoc) {
         String testType = "respTimeStdDevTest";
         NodeList respTimeStdDevTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeStdDevTestNodes.getLength(); i++) {
-            Element respTimeStdDevTestElement = (Element) respTimeStdDevTestNodes.item(i);
+            Element element = (Element) respTimeStdDevTestNodes.item(i);
 
-            String name = getTestName(respTimeStdDevTestElement);
-            String description = getTestDescription(respTimeStdDevTestElement);
-            String transactionName = getTransactionName(respTimeStdDevTestElement);
-            int maxRespTimeStdDevTime = getIntegerValueFromElement(respTimeStdDevTestElement, "maxRespTimeStdDev");
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
+            int maxRespTimeStdDevTime = getIntegerValueFromElement(element, "maxRespTimeStdDev");
 
             RespTimeStdDevTest respTimeStdDevTest = new RespTimeStdDevTest(name, testType, description, transactionName, maxRespTimeStdDevTime);
-            respTimeStdDevTest.setRegexp(isSubElementPresent(respTimeStdDevTestElement, "regexp"));
+            respTimeStdDevTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(respTimeStdDevTest);
         }
     }
 
-    protected void addRespTimeAvgTests(Document xmlDoc) {
+    private void addRespTimeAvgTests(Document xmlDoc) {
         String testType = "avgRespTimeTest";
         NodeList avgRespTimeTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < avgRespTimeTestNodes.getLength(); i++) {
-            Element avgRespTimeTestElement = (Element) avgRespTimeTestNodes.item(i);
+            Element element = (Element) avgRespTimeTestNodes.item(i);
 
-            String name = getTestName(avgRespTimeTestElement);
-            String description = getTestDescription(avgRespTimeTestElement);
-            String transactionName = getTransactionName(avgRespTimeTestElement);
-            int maxAvgRespTime = getIntegerValueFromElement(avgRespTimeTestElement, "maxAvgRespTime");
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
+            int maxAvgRespTime = getIntegerValueFromElement(element, "maxAvgRespTime");
 
             RespTimeAvgTest avgRespTimeTest = new RespTimeAvgTest(name, testType, description, transactionName, maxAvgRespTime);
-            avgRespTimeTest.setRegexp(isSubElementPresent(avgRespTimeTestElement, "regexp"));
+            avgRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(avgRespTimeTest);
         }
     }
 
-    protected void addRespTimeMaxTests(Document xmlDoc) {
+    private void addRespTimeMaxTests(Document xmlDoc) {
         String testType = "maxRespTimeTest";
         NodeList avgRespTimeTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < avgRespTimeTestNodes.getLength(); i++) {
-            Element maxRespTimeTestElement = (Element) avgRespTimeTestNodes.item(i);
+            Element element = (Element) avgRespTimeTestNodes.item(i);
 
-            String name = getTestName(maxRespTimeTestElement);
-            String description = getTestDescription(maxRespTimeTestElement);
-            String transactionName = getTransactionName(maxRespTimeTestElement);
-            int maxRespTime = getIntegerValueFromElement(maxRespTimeTestElement, "maxAllowedRespTime");
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
+            int maxRespTime = getIntegerValueFromElement(element, "maxAllowedRespTime");
 
             RespTimeMaxTest maxRespTimeTest = new RespTimeMaxTest(name, testType, description, transactionName, maxRespTime);
-            maxRespTimeTest.setRegexp(isSubElementPresent(maxRespTimeTestElement, "regexp"));
+            maxRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(maxRespTimeTest);
         }
     }
 
-    protected void addRespTimeNthPercTests(Document xmlDoc) {
+    private void addRespTimeNthPercTests(Document xmlDoc) {
         String testType = "nthPercRespTimeTest";
         NodeList respTimeNthPercTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeNthPercTestNodes.getLength(); i++) {
-            Element respTimeNthPercTestElement = (Element) respTimeNthPercTestNodes.item(i);
+            Element element = (Element) respTimeNthPercTestNodes.item(i);
 
-            String name = getTestName(respTimeNthPercTestElement);
-            String description = getTestDescription(respTimeNthPercTestElement);
-            String transactionName = getTransactionName(respTimeNthPercTestElement);
-            int percentile = getPercentile(respTimeNthPercTestElement, "percentile");
-            int maxRespTime = getIntegerValueFromElement(respTimeNthPercTestElement, "maxRespTime");
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
+            int percentile = getPercentile(element, "percentile");
+            int maxRespTime = getIntegerValueFromElement(element, "maxRespTime");
 
             RespTimeNthPercentileTest nthPercRespTimeTest = new RespTimeNthPercentileTest(name, testType, description, transactionName, percentile, maxRespTime);
-            nthPercRespTimeTest.setRegexp(isSubElementPresent(respTimeNthPercTestElement, "regexp"));
+            nthPercRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(nthPercRespTimeTest);
         }
     }
 
-    protected void addRespTimeMedianTests(Document xmlDoc) {
+    private void addRespTimeMedianTests(Document xmlDoc) {
         String testType = "medianRespTimeTest";
         NodeList respTimeMedianTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeMedianTestNodes.getLength(); i++) {
-            Element respTimeMedianTestElement = (Element) respTimeMedianTestNodes.item(i);
+            Element element = (Element) respTimeMedianTestNodes.item(i);
 
-            String name = getTestName(respTimeMedianTestElement);
-            String description = getTestDescription(respTimeMedianTestElement);
-            String transactionName = getTransactionName(respTimeMedianTestElement);
-            int maxRespTime = getIntegerValueFromElement(respTimeMedianTestElement, "maxRespTime");
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
+            int maxRespTime = getIntegerValueFromElement(element, "maxRespTime");
 
             RespTimeMedianTest respTimeMedianTest = new RespTimeMedianTest(name, testType, description, transactionName, maxRespTime);
-            respTimeMedianTest.setRegexp(isSubElementPresent(respTimeMedianTestElement, "regexp"));
+            respTimeMedianTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(respTimeMedianTest);
         }
     }
 
-    protected void addThroughputTests(Document xmlDoc) {
+    private void addThroughputTests(Document xmlDoc) {
         String testType = "throughputTest";
         NodeList respTimeNthPercTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < respTimeNthPercTestNodes.getLength(); i++) {
-            Element throughputTestElement = (Element) respTimeNthPercTestNodes.item(i);
+            Element element = (Element) respTimeNthPercTestNodes.item(i);
 
-            String name = getTestName(throughputTestElement);
-            String description = getTestDescription(throughputTestElement);
-            String transactionName = getTransactionName(throughputTestElement);
-            double minThroughput = getDoubleValueFromElement(throughputTestElement, "minThroughput");
+            String name = getTestName(element);
+            String description = getTestDescription(element);
+            String transactionName = null;
+            if (hasTransactionName(element)) {
+                transactionName = getTransactionName(element);
+            }
+            double minThroughput = getDoubleValueFromElement(element, "minThroughput");
 
             ThroughputTest throughputTest = new ThroughputTest(name, testType, description, transactionName, minThroughput);
-            throughputTest.setRegexp(isSubElementPresent(throughputTestElement, "regexp"));
+            throughputTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(throughputTest);
         }
     }
 
-    protected void addServerSideTests(Document xmlDoc) {
+    private void addServerSideTests(Document xmlDoc) {
         String testType = "serverSideTest";
         NodeList serverSideTestNodes = xmlDoc.getElementsByTagName(testType);
         for (int i = 0; i < serverSideTestNodes.getLength(); i++) {
-            Element serverSideTestElement = (Element) serverSideTestNodes.item(i);
+            Element element = (Element) serverSideTestNodes.item(i);
 
-            String name = getTestName(serverSideTestElement);
-            ServerSideTestType subType = getSubType(serverSideTestElement);
-            String description = getTestDescription(serverSideTestElement);
-            String hostAndMetric = getHostAndMetric(serverSideTestElement);
-            int metricValueA = getIntegerValueFromElement(serverSideTestElement, "metricValueA");
+            String name = getTestName(element);
+            ServerSideTestType subType = getSubType(element);
+            String description = getTestDescription(element);
+            String hostAndMetric = null;
+            if (hasHostAndMetric(element)) {
+                hostAndMetric = getHostAndMetric(element);
+            }
+            int metricValueA = getIntegerValueFromElement(element, "metricValueA");
 
             int avgRespTimeB;
             ServerSideTest serverSideTest;
 
             if (subType.name().equals(ServerSideTestType.BETWEEN.name())) {
-                avgRespTimeB = getIntegerValueFromElement(serverSideTestElement, "metricValueB");
+                avgRespTimeB = getIntegerValueFromElement(element, "metricValueB");
                 serverSideTest = new ServerSideTest(name, testType, subType, description, hostAndMetric, metricValueA, avgRespTimeB);
             } else {
                 serverSideTest = new ServerSideTest(name, testType, subType, description, hostAndMetric, metricValueA);
