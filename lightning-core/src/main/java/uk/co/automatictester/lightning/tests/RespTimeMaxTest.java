@@ -17,10 +17,9 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
 
     private final long maxRespTime;
 
-    public RespTimeMaxTest(String name, String type, String description, String transactionName, long maxRespTime) {
-        super(name, type, description, transactionName);
+    public RespTimeMaxTest(String testName, long maxRespTime) {
+        super("maxRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
 
     @Override
@@ -62,6 +61,43 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
             result = TestResult.FAIL;
         } else {
             result = TestResult.PASS;
+        }
+    }
+
+    public static class Builder {
+        private String testName;
+        private long maxRespTime;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, long maxRespTime) {
+            this.testName = testName;
+            this.maxRespTime = maxRespTime;
+        }
+
+        public RespTimeMaxTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public RespTimeMaxTest.Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public RespTimeMaxTest.Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public RespTimeMaxTest build() {
+            RespTimeMaxTest test = new RespTimeMaxTest(testName, maxRespTime);
+            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
         }
     }
 }

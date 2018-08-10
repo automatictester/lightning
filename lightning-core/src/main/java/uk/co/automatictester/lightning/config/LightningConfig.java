@@ -136,6 +136,7 @@ public class LightningConfig {
             String name = getTestName(element);
             String description = getTestDescription(element);
             int maxAvgRespTime = getIntegerValueFromElement(element, "maxAvgRespTime");
+
             RespTimeAvgTest.Builder builder = new RespTimeAvgTest.Builder(name, maxAvgRespTime).withDescription(description);
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
@@ -158,13 +159,18 @@ public class LightningConfig {
 
             String name = getTestName(element);
             String description = getTestDescription(element);
-            String transactionName = null;
-            if (hasTransactionName(element)) {
-                transactionName = getTransactionName(element);
-            }
             int maxRespTime = getIntegerValueFromElement(element, "maxAllowedRespTime");
 
-            RespTimeMaxTest maxRespTimeTest = new RespTimeMaxTest(name, testType, description, transactionName, maxRespTime);
+            RespTimeMaxTest.Builder builder = new RespTimeMaxTest.Builder(name, maxRespTime).withDescription(description);
+            if (hasTransactionName(element)) {
+                String transactionName = getTransactionName(element);
+                builder.withTransactionName(transactionName);
+            }
+            if (hasRegexp(element)) {
+                builder.withRegexp();
+            }
+
+            RespTimeMaxTest maxRespTimeTest = builder.build();
             maxRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(maxRespTimeTest);

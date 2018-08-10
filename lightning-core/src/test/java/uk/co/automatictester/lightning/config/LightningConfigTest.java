@@ -77,7 +77,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_MAX_RESP_TIME);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        RespTimeMaxTest test = new RespTimeMaxTest("Test #1", "maxRespTimeTest", "Verify max login times", "Login", 4000);
+        RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
