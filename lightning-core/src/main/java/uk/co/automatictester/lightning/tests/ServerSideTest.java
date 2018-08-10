@@ -20,7 +20,7 @@ public class ServerSideTest extends LightningTest {
     private static final String BETWEEN_MESSAGE = "Average value between %s and %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Average value = %s";
 
-    private final String hostAndMetric;
+    private String hostAndMetric;
     private final ServerSideTestType subtype;
     private int dataEntriesCount;
     private final long metricValueA;
@@ -29,15 +29,14 @@ public class ServerSideTest extends LightningTest {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public ServerSideTest(String name, String type, ServerSideTestType subtype, String description, String hostAndMetric, long metricValueA, long metricValueB) {
-        this(name, type, subtype, description, hostAndMetric, metricValueA);
+    private ServerSideTest(String testName, ServerSideTestType subtype, long metricValueA, long metricValueB) {
+        this(testName, subtype, metricValueA);
         this.metricValueB = metricValueB;
     }
 
-    public ServerSideTest(String name, String type, ServerSideTestType subtype, String description, String hostAndMetric, long metricValueA) {
-        super(name, type, description);
+    private ServerSideTest(String testName, ServerSideTestType subtype, long metricValueA) {
+        super("serverSideTest", testName);
         this.subtype = subtype;
-        this.hostAndMetric = hostAndMetric;
         this.metricValueA = metricValueA;
         this.expectedResultMessage = getExpectedResultMessage();
     }
@@ -167,6 +166,48 @@ public class ServerSideTest extends LightningTest {
             result = TestResult.PASS;
         } else {
             result = TestResult.FAIL;
+        }
+    }
+
+    public static class Builder {
+        private String hostAndMetric;
+        private final ServerSideTestType subtype;
+        private final long metricValueA;
+        private long metricValueB;
+        private String testName;
+        private String description;
+
+        public Builder(String testName, ServerSideTestType subtype, long metricValueA, long metricValueB) {
+            this(testName, subtype, metricValueA);
+            this.metricValueB = metricValueB;
+        }
+
+        public Builder(String testName, ServerSideTestType subtype, long metricValueA) {
+            this.testName = testName;
+            this.subtype = subtype;
+            this.metricValueA = metricValueA;
+        }
+
+        public ServerSideTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ServerSideTest.Builder withHostAndMetric(String hostAndMetric) {
+            this.hostAndMetric = hostAndMetric;
+            return this;
+        }
+
+        public ServerSideTest build() {
+            ServerSideTest test;
+            if (metricValueB == 0) {
+                test = new ServerSideTest(testName, subtype, metricValueA);
+            } else {
+                test = new ServerSideTest(testName, subtype, metricValueA, metricValueB);
+            }
+            test.description = this.description;
+            test.hostAndMetric = this.hostAndMetric;
+            return test;
         }
     }
 }

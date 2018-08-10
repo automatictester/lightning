@@ -97,9 +97,9 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
-            }
-            if (hasRegexp(element)) {
-                builder.withRegexp();
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
             PassedTransactionsTest passedTransactionsTest = builder.build();
 
@@ -121,9 +121,9 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
-            }
-            if (hasRegexp(element)) {
-                builder.withRegexp();
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
             RespTimeStdDevTest respTimeStdDevTest = builder.build();
 
@@ -145,9 +145,9 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
-            }
-            if (hasRegexp(element)) {
-                builder.withRegexp();
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
             RespTimeAvgTest avgRespTimeTest = builder.build();
 
@@ -169,13 +169,11 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
-            if (hasRegexp(element)) {
-                builder.withRegexp();
-            }
-
             RespTimeMaxTest maxRespTimeTest = builder.build();
-            maxRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(maxRespTimeTest);
         }
@@ -196,13 +194,11 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
-            if (hasRegexp(element)) {
-                builder.withRegexp();
-            }
-
             RespTimeNthPercentileTest nthPercRespTimeTest = builder.build();
-            nthPercRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(nthPercRespTimeTest);
         }
@@ -221,9 +217,9 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
-            }
-            if (hasRegexp(element)) {
-                builder.withRegexp(); // TODO: move all
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
             RespTimeMedianTest respTimeMedianTest = builder.build();
 
@@ -244,9 +240,9 @@ public class LightningConfig {
             if (hasTransactionName(element)) {
                 String transactionName = getTransactionName(element);
                 builder.withTransactionName(transactionName);
-            }
-            if (hasRegexp(element)) {
-                builder.withRegexp();
+                if (hasRegexp(element)) {
+                    builder.withRegexp();
+                }
             }
             ThroughputTest throughputTest = builder.build();
 
@@ -262,22 +258,21 @@ public class LightningConfig {
 
             String name = getTestName(element);
             ServerSideTestType subType = getSubType(element);
-            String description = getTestDescription(element);
-            String hostAndMetric = null;
-            if (hasHostAndMetric(element)) {
-                hostAndMetric = getHostAndMetric(element);
-            }
             int metricValueA = getIntegerValueFromElement(element, "metricValueA");
-
-            int avgRespTimeB;
-            ServerSideTest serverSideTest;
-
+            ServerSideTest.Builder builder;
             if (subType.name().equals(ServerSideTestType.BETWEEN.name())) {
-                avgRespTimeB = getIntegerValueFromElement(element, "metricValueB");
-                serverSideTest = new ServerSideTest(name, testType, subType, description, hostAndMetric, metricValueA, avgRespTimeB);
+                int avgRespTimeB = getIntegerValueFromElement(element, "metricValueB");
+                builder = new ServerSideTest.Builder(name, subType, metricValueA, avgRespTimeB);
             } else {
-                serverSideTest = new ServerSideTest(name, testType, subType, description, hostAndMetric, metricValueA);
+                builder = new ServerSideTest.Builder(name, subType, metricValueA);
             }
+            if (hasHostAndMetric(element)) {
+                String hostAndMetric = getHostAndMetric(element);
+                builder.withHostAndMetric(hostAndMetric);
+            }
+            String description = getTestDescription(element);
+            builder.withDescription(description);
+            ServerSideTest serverSideTest = builder.build();
 
             serverSideTests.add(serverSideTest);
         }

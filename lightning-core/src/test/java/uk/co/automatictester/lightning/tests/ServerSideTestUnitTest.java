@@ -18,7 +18,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_LessThan_Pass() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 12501);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 12501).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         testData.add(TestData.CPU_ENTRY_15000);
@@ -29,7 +29,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_LessThan_Fail() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 27500);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 27500).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_25000);
         testData.add(TestData.CPU_ENTRY_30000);
@@ -40,7 +40,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_GreaterThan_Pass() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 27499);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.GREATER_THAN, 27499).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_25000);
         testData.add(TestData.CPU_ENTRY_30000);
@@ -51,7 +51,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_GreaterThan_Fail() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 12500);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.GREATER_THAN, 12501).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         testData.add(TestData.CPU_ENTRY_15000);
@@ -62,7 +62,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_Between_Pass() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.BETWEEN, "Verify CPU utilisation", "192.168.0.12 CPU", 20000, 27501);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.BETWEEN, 20000, 27501).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_25000);
         testData.add(TestData.CPU_ENTRY_30000);
@@ -73,7 +73,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_Between_Fail() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.BETWEEN, "Verify CPU utilisation", "192.168.0.12 CPU", 10000, 12499);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.BETWEEN, 10000, 12499).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         testData.add(TestData.CPU_ENTRY_15000);
@@ -84,7 +84,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_OneEntry_LessThan_Pass() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
@@ -95,7 +95,7 @@ public class ServerSideTestUnitTest {
     @Test
     public void verifyExecute_LessThan_Pass_NonDefaultLocale() {
         Locale.setDefault(Locale.FRENCH);
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         testData.add(TestData.CPU_ENTRY_10001);
@@ -106,7 +106,7 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyExecute_LessThan_Error() {
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.13 CPU", 10001);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         testData.add(TestData.CPU_ENTRY_10001);
@@ -127,7 +127,7 @@ public class ServerSideTestUnitTest {
                 "Entries count:        2%n" +
                 "Test result:          Pass");
 
-        ServerSideTest test = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.CPU_ENTRY_10000);
         testData.add(TestData.CPU_ENTRY_10001);
@@ -140,22 +140,22 @@ public class ServerSideTestUnitTest {
 
     @Test
     public void verifyIsEqual() {
-        ServerSideTest testA = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.13 CPU", 10000);
-        ServerSideTest testA2 = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.13 CPU", 10000);
-        assertThat(testA, is(equalTo(testA2)));
+        ServerSideTest testA = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10000).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
+        ServerSideTest testB = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10000).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
+        assertThat(testA, is(equalTo(testB)));
     }
 
     @Test
     public void verifyIsNotEqual() {
-        ServerSideTest testA = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.13 CPU", 10000);
-        ServerSideTest testB = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.13 CPU", 10001);
+        ServerSideTest testA = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10000).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
+        ServerSideTest testB = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
         assertThat(testA, is(not(equalTo(testB))));
     }
 
     @Test
     public void verifyIsNotEqualOtherTestType() {
-        ServerSideTest testA = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.13 CPU", 10000);
-        assertThat((Object) testA, is(not(equalTo((Object) TestData.RESP_TIME_PERC_TEST_A))));
+        ServerSideTest test = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10000).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
+        assertThat((Object) test, is(not(equalTo((Object) TestData.RESP_TIME_PERC_TEST_A))));
     }
 
 }

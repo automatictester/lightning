@@ -18,11 +18,6 @@ public abstract class ClientSideTest extends LightningTest {
         super(testType, testName);
     }
 
-    protected ClientSideTest(String name, String type, String description, String transactionName) {
-        super(name, type, description);
-        this.transactionName = transactionName;
-    }
-
     public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
         String transactionName = getTransactionName();
         if (transactionName == null) {
@@ -48,9 +43,6 @@ public abstract class ClientSideTest extends LightningTest {
         return regexp;
     }
 
-    public void setRegexp(boolean regexp) { // todo: private/protetcted, only via builder
-        this.regexp = regexp;
-    }
 
     @Override
     public String getTestExecutionReport() {

@@ -19,12 +19,6 @@ public abstract class LightningTest {
     protected LightningTest(String testType, String testName) {
         this.type = testType;
         this.name = testName;
-    }
-
-    protected LightningTest(String name, String type, String description) {
-        this.name = name;
-        this.type = type;
-        this.description = description;
         this.expectedResultDescription = "";
         this.actualResultDescription = "";
         this.result = null;

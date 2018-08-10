@@ -14,10 +14,6 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
         super(testType, testName);
     }
 
-    protected RespTimeBasedTest(String name, String type, String description, String transactionName) {
-        super(name, type, description, transactionName);
-    }
-
     @Override
     public List<Integer> getLongestTransactions() {
         return longestTransactions;

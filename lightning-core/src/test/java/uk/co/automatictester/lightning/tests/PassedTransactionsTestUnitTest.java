@@ -44,7 +44,6 @@ public class PassedTransactionsTestUnitTest {
     @Test
     public void verifyExecuteMethodRegexpFail() {
         PassedTransactionsTest test = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Log[a-z]ut").withRegexp().build();
-        test.setRegexp(true);
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGOUT_1000_SUCCESS);
         testData.add(TestData.LOGOUT_1000_FAILURE);

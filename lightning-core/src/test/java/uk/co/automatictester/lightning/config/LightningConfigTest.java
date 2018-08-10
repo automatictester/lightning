@@ -110,7 +110,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_SERVER_LESS);
         List<ServerSideTest> tests = xmlFileReader.getServerSideTests();
-        ServerSideTest test = new ServerSideTest("Test #2", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify server-side resource utilisation", "192.168.0.12 CPU", 80000);
+        ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.LESS_THAN, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -121,7 +121,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_SERVER_BETWEEN);
         List<ServerSideTest> tests = xmlFileReader.getServerSideTests();
-        ServerSideTest test = new ServerSideTest("Test #2", "serverSideTest", ServerSideTestType.BETWEEN, "Verify server-side resource utilisation", "192.168.0.12 CPU", 40000, 80000);
+        ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.BETWEEN, 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -132,7 +132,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_SERVER_GREATER);
         List<ServerSideTest> tests = xmlFileReader.getServerSideTests();
-        ServerSideTest test = new ServerSideTest("Test #2", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify server-side resource utilisation", "192.168.0.12 CPU", 20000);
+        ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.GREATER_THAN, 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

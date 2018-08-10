@@ -29,9 +29,9 @@ public class TestSetTest extends ConsoleOutputTest {
         clientSideTestData.add(TestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(clientSideTestData);
 
-        ServerSideTest testA = new ServerSideTest("Test #1", "serverSideTest", ServerSideTestType.LESS_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
-        ServerSideTest testB = new ServerSideTest("Test #2", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify CPU utilisation", "192.168.0.12 CPU", 10001);
-        ServerSideTest testC = new ServerSideTest("Test #3", "serverSideTest", ServerSideTestType.GREATER_THAN, "Verify CPU utilisation", "192.168.0.240 CPU", 10001);
+        ServerSideTest testA = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideTest testB = new ServerSideTest.Builder("Test #2", ServerSideTestType.GREATER_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideTest testC = new ServerSideTest.Builder("Test #3", ServerSideTestType.GREATER_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.240 CPU").build();
 
         List<String[]> serverSideTestData = new ArrayList<>();
         serverSideTestData.add(TestData.CPU_ENTRY_10000);
