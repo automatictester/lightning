@@ -32,7 +32,7 @@ public class RespTimeMedianTestUnitTest {
 
     @Test
     public void testExecutePass() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 145);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 145).withDescription("Verify median").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
@@ -54,7 +54,7 @@ public class RespTimeMedianTestUnitTest {
     public void testExecutePassOnNonDefaultLocale() {
         Locale.setDefault(Locale.FRENCH);
 
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 145);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 145).withDescription("Verify median").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
@@ -74,7 +74,7 @@ public class RespTimeMedianTestUnitTest {
 
     @Test
     public void testExecuteAllTransactionsPass() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", null, 145);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 145).withDescription("Verify median").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LOGIN_121_SUCCESS);
         testData.add(LOGIN_125_SUCCESS);
@@ -94,7 +94,7 @@ public class RespTimeMedianTestUnitTest {
 
     @Test
     public void testExecuteFail() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 144);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 144).withDescription("Verify median").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
@@ -114,7 +114,7 @@ public class RespTimeMedianTestUnitTest {
 
     @Test
     public void testExecuteAllTransactionsFail() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", null, 144);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 144).withDescription("Verify median").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LOGIN_121_SUCCESS);
         testData.add(LOGIN_125_SUCCESS);
@@ -134,7 +134,7 @@ public class RespTimeMedianTestUnitTest {
 
     @Test
     public void verifyExecuteError() {
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "nonexistent", 800);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 800).withDescription("Verify median").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);

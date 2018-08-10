@@ -88,7 +88,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_MEDIAN);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        RespTimeMedianTest test = new RespTimeMedianTest("Test #4", "medianRespTimeTest", "Verify median response time", "Search", 11244);
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #4", 11244).withDescription("Verify median response time").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

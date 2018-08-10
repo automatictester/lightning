@@ -18,8 +18,8 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
 
     private final double maxRespTime;
 
-    public RespTimeMedianTest(String name, String type, String description, String transactionName, long maxRespTime) {
-        super(name, type, description, transactionName);
+    private RespTimeMedianTest(String testName, long maxRespTime) {
+        super("medianRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
@@ -63,6 +63,42 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
             result = TestResult.FAIL;
         } else {
             result = TestResult.PASS;
+        }
+    }
+
+    public static class Builder {
+        private String testName;
+        private long maxRespTime;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, long maxRespTime) {
+            this.testName = testName;
+            this.maxRespTime = maxRespTime;
+        }
+
+        public RespTimeMedianTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public RespTimeMedianTest.Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public RespTimeMedianTest.Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public RespTimeMedianTest build() {
+            RespTimeMedianTest test = new RespTimeMedianTest(testName, maxRespTime);
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
         }
     }
 }
