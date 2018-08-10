@@ -184,15 +184,20 @@ public class LightningConfig {
             Element element = (Element) respTimeNthPercTestNodes.item(i);
 
             String name = getTestName(element);
-            String description = getTestDescription(element);
-            String transactionName = null;
-            if (hasTransactionName(element)) {
-                transactionName = getTransactionName(element);
-            }
-            int percentile = getPercentile(element, "percentile");
             int maxRespTime = getIntegerValueFromElement(element, "maxRespTime");
+            int percentile = getPercentile(element, "percentile");
+            String description = getTestDescription(element);
 
-            RespTimeNthPercentileTest nthPercRespTimeTest = new RespTimeNthPercentileTest(name, testType, description, transactionName, percentile, maxRespTime);
+            RespTimeNthPercentileTest.Builder builder = new RespTimeNthPercentileTest.Builder(name, maxRespTime, percentile).withDescription(description);
+            if (hasTransactionName(element)) {
+                String transactionName = getTransactionName(element);
+                builder.withTransactionName(transactionName);
+            }
+            if (hasRegexp(element)) {
+                builder.withRegexp();
+            }
+
+            RespTimeNthPercentileTest nthPercRespTimeTest = builder.build();
             nthPercRespTimeTest.setRegexp(isSubElementPresent(element, "regexp"));
 
             clientSideTests.add(nthPercRespTimeTest);

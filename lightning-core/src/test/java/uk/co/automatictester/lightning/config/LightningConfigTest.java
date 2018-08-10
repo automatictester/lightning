@@ -22,7 +22,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_PERCENTILE);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #4", "nthPercRespTimeTest", "Verify nth percentile", "Search", 80, 11245);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #4", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

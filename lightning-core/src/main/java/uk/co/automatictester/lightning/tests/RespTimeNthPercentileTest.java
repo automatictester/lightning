@@ -21,11 +21,10 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     private final long maxRespTime;
     private final int percentile;
 
-    public RespTimeNthPercentileTest(String name, String type, String description, String transactionName, int percentile, long maxRespTime) {
-        super(name, type, description, transactionName);
+    private RespTimeNthPercentileTest(String testName, long maxRespTime, int percentile) {
+        super("nthPercRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
         this.percentile = percentile;
-        expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
     }
 
     @Override
@@ -68,6 +67,45 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
             result = TestResult.FAIL;
         } else {
             result = TestResult.PASS;
+        }
+    }
+
+    public static class Builder {
+        private String testName;
+        private long maxRespTime;
+        private int percentile;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, long maxRespTime, int percentile) {
+            this.testName = testName;
+            this.maxRespTime = maxRespTime;
+            this.percentile = percentile;
+        }
+
+        public RespTimeNthPercentileTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public RespTimeNthPercentileTest.Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public RespTimeNthPercentileTest.Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public RespTimeNthPercentileTest build() {
+            RespTimeNthPercentileTest test = new RespTimeNthPercentileTest(testName, maxRespTime, percentile);
+            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
         }
     }
 }

@@ -85,7 +85,7 @@ public class TestData {
     // Tests
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_A = new PassedTransactionsTest("Failed transactions (%)", "passedTransactionsTest", "Verify number of passed tests", "Login", new Percent(0));
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_3_0_0_B = new PassedTransactionsTest("Failed transactions", "passedTransactionsTest", "Verify number of passed tests", null, 0);
-    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_3_0_0_C = new RespTimeNthPercentileTest("80th percentile", "nthPercRespTimeTest", "Verify nth percentile", "Search", 80, 11245);
+    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_3_0_0_C = new RespTimeNthPercentileTest.Builder("80th percentile", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_A = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 1);
     public static final PassedTransactionsTest PASSED_TRANSACTIONS_TEST_B = new PassedTransactionsTest("Test #1", "passedTransactionsTest", "Verify number of passed tests", "Login", 0);
@@ -97,8 +97,8 @@ public class TestData {
     public static final RespTimeMaxTest MAX_RESP_TIME_TEST_B = new RespTimeMaxTest.Builder("Test #1", 100).withDescription("Verify max response times").withTransactionName("Search").build();
     public static final RespTimeStdDevTest RESP_TIME_STD_DEV_TEST_A = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviation", "Login", 1);
     public static final RespTimeStdDevTest RESP_TIME_STD_DEV_TEST_B = new RespTimeStdDevTest("Test #1", "respTimeStdDevTest", "Verify standard deviation", "Login", 0);
-    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_A = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90 percentile", "Search", 9, 9);
-    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_B = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90 percentile", "Search", 9, 8);
+    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_A = new RespTimeNthPercentileTest.Builder("Test #1", 9, 9).withDescription("Verify 90 percentile").withTransactionName("Search").build();
+    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_B = new RespTimeNthPercentileTest.Builder("Test #1", 9, 8).withDescription("Verify 90 percentile").withTransactionName("Search").build();
     public static final RespTimeMedianTest RESP_TIME_MEDIAN_TEST_A = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 9);
     public static final RespTimeMedianTest RESP_TIME_MEDIAN_TEST_B = new RespTimeMedianTest("Test #1", "medianRespTimeTest", "Verify median", "Search", 8);
 

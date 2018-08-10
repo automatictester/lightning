@@ -32,7 +32,7 @@ public class RespTimeNthPercentileTestUnitTest {
 
     @Test
     public void testExecutePass() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 246);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 246, 90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
@@ -54,7 +54,7 @@ public class RespTimeNthPercentileTestUnitTest {
     public void testExecutePassOnNonDefaultLocale() {
         Locale.setDefault(Locale.FRENCH);
 
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 246);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 246, 90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
@@ -74,7 +74,7 @@ public class RespTimeNthPercentileTestUnitTest {
 
     @Test
     public void testExecuteAllTransactionsPass() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 246);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 246, 90).withDescription("Verify 90th percentile").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LOGIN_121_SUCCESS);
         testData.add(LOGIN_125_SUCCESS);
@@ -94,7 +94,7 @@ public class RespTimeNthPercentileTestUnitTest {
 
     @Test
     public void testExecuteFail() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", 90, 220);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 220, 90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
@@ -114,7 +114,7 @@ public class RespTimeNthPercentileTestUnitTest {
 
     @Test
     public void testExecuteAllTransactionsFail() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", null, 90, 220);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 220, 90).withDescription("Verify 90th percentile").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LOGIN_121_SUCCESS);
         testData.add(LOGIN_125_SUCCESS);
@@ -134,7 +134,7 @@ public class RespTimeNthPercentileTestUnitTest {
 
     @Test
     public void testExecuteError() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest("Test #1", "nthPercRespTimeTest", "Verify 90th percentile", "Search", -90, 9);
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 9, -90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_143_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
