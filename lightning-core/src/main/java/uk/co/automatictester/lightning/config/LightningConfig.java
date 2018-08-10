@@ -237,14 +237,16 @@ public class LightningConfig {
 
             String name = getTestName(element);
             String description = getTestDescription(element);
-            String transactionName = null;
-            if (hasTransactionName(element)) {
-                transactionName = getTransactionName(element);
-            }
             double minThroughput = getDoubleValueFromElement(element, "minThroughput");
-
-            ThroughputTest throughputTest = new ThroughputTest(name, testType, description, transactionName, minThroughput);
-            throughputTest.setRegexp(isSubElementPresent(element, "regexp"));
+            ThroughputTest.Builder builder = new ThroughputTest.Builder(name, minThroughput).withDescription(description);
+            if (hasTransactionName(element)) {
+                String transactionName = getTransactionName(element);
+                builder.withTransactionName(transactionName);
+            }
+            if (hasRegexp(element)) {
+                builder.withRegexp();
+            }
+            ThroughputTest throughputTest = builder.build();
 
             clientSideTests.add(throughputTest);
         }

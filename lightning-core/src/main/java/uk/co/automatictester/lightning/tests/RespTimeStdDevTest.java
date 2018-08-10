@@ -93,7 +93,6 @@ public class RespTimeStdDevTest extends ClientSideTest {
 
         public RespTimeStdDevTest build() {
             RespTimeStdDevTest test = new RespTimeStdDevTest(testName, maxRespTimeStdDev);
-            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
             test.description = this.description;
             test.transactionName = this.transactionName;
             test.regexp = this.regexp;

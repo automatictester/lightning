@@ -20,6 +20,7 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     private RespTimeAvgTest(String testName, long maxAvgRespTime) {
         super("avgRespTimeTest", testName);
         this.maxAvgRespTime = maxAvgRespTime;
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxAvgRespTime);
     }
 
     @Override
@@ -93,7 +94,6 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
 
         public RespTimeAvgTest build() {
             RespTimeAvgTest test = new RespTimeAvgTest(testName, maxAvgRespTime);
-            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxAvgRespTime);
             test.description = this.description;
             test.transactionName = this.transactionName;
             test.regexp = this.regexp;

@@ -20,6 +20,7 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
     private RespTimeMaxTest(String testName, long maxRespTime) {
         super("maxRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
 
     @Override
@@ -93,7 +94,6 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
 
         public RespTimeMaxTest build() {
             RespTimeMaxTest test = new RespTimeMaxTest(testName, maxRespTime);
-            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
             test.description = this.description;
             test.transactionName = this.transactionName;
             test.regexp = this.regexp;

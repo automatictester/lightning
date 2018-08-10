@@ -15,9 +15,9 @@ import static org.hamcrest.core.Is.is;
 
 public class ThroughputTestUnitTest {
 
-    private static final ThroughputTest THROUGHPUT_TEST_A = new ThroughputTest("Test #1", "throughputTest", "", "Login", 2);
-    private static final ThroughputTest THROUGHPUT_TEST_B = new ThroughputTest("Test #1", "throughputTest", "", "Login", 3);
-    private static final ThroughputTest THROUGHPUT_TEST_NO_TRANS_NAME = new ThroughputTest("Test #1", "throughputTest", "", null, 2);
+    private static final ThroughputTest THROUGHPUT_TEST_A = new ThroughputTest.Builder("Test #1", 2).withTransactionName("Login").build();
+    private static final ThroughputTest THROUGHPUT_TEST_B = new ThroughputTest.Builder("Test #1", 3).withTransactionName("Login").build();
+    private static final ThroughputTest THROUGHPUT_TEST_NO_TRANS_NAME = new ThroughputTest.Builder("Test #1", 2).build();
 
     private static final String[] TRANSACTION_0 = new String[] {"Login", "1000", "true", "1434291252000"};
     private static final String[] TRANSACTION_1 = new String[] {"Login", "1000", "true", "1434291253000"};
@@ -26,7 +26,7 @@ public class ThroughputTestUnitTest {
 
     @Test
     public void testExecuteMethodPass() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 1);
+        ThroughputTest test = new ThroughputTest.Builder("Test #1", 1).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_2);
@@ -38,7 +38,7 @@ public class ThroughputTestUnitTest {
 
     @Test
     public void testExecuteMethodPassNonInteger() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.6);
+        ThroughputTest test = new ThroughputTest.Builder("Test #1", 0.6).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_3);
@@ -50,7 +50,7 @@ public class ThroughputTestUnitTest {
 
     @Test
     public void testExecuteMethodFailNonInteger() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "Login", 0.7);
+        ThroughputTest test = new ThroughputTest.Builder("Test #1", 0.7).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_3);
@@ -62,7 +62,7 @@ public class ThroughputTestUnitTest {
 
     @Test
     public void testExecuteMethodAllTransactionsFail() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", null, 3);
+        ThroughputTest test = new ThroughputTest.Builder("Test #1", 3).build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_1);
@@ -73,7 +73,7 @@ public class ThroughputTestUnitTest {
 
     @Test
     public void testExecuteMethodError() {
-        ThroughputTest test = new ThroughputTest("Test #1", "throughputTest", "", "nonexistent", 2);
+        ThroughputTest test = new ThroughputTest.Builder("Test #1", 2).withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);

@@ -25,6 +25,7 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
         super("nthPercRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
         this.percentile = percentile;
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
     }
 
     @Override
@@ -101,7 +102,6 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
         public RespTimeNthPercentileTest build() {
             RespTimeNthPercentileTest test = new RespTimeNthPercentileTest(testName, maxRespTime, percentile);
-            test.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
             test.description = this.description;
             test.transactionName = this.transactionName;
             test.regexp = this.regexp;

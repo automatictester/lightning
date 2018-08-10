@@ -15,8 +15,44 @@ public class ThroughputTest extends ClientSideTest {
     private final double minThroughput;
     private double actualResult;
 
-    public ThroughputTest(String name, String type, String description, String transactionName, double minThroughput) {
-        super(name, type, description, transactionName);
+    public static class Builder {
+        private String testName;
+        private double minThroughput;
+        private String description;
+        private String transactionName;
+        private boolean regexp = false;
+
+        public Builder(String testName, double minThroughput) {
+            this.testName = testName;
+            this.minThroughput = minThroughput;
+        }
+
+        public ThroughputTest.Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ThroughputTest.Builder withTransactionName(String transactionName) {
+            this.transactionName = transactionName;
+            return this;
+        }
+
+        public ThroughputTest.Builder withRegexp() {
+            this.regexp = true;
+            return this;
+        }
+
+        public ThroughputTest build() {
+            ThroughputTest test = new ThroughputTest(testName, minThroughput);
+            test.description = this.description;
+            test.transactionName = this.transactionName;
+            test.regexp = this.regexp;
+            return test;
+        }
+    }
+
+    private ThroughputTest(String testName, double minThroughput) {
+        super("throughputTest", testName);
         this.minThroughput = minThroughput;
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, minThroughput);
     }

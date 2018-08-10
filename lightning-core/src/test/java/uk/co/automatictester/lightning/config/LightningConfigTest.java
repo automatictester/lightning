@@ -99,7 +99,7 @@ public class LightningConfigTest {
         LightningConfig xmlFileReader = new LightningConfig();
         xmlFileReader.readTests(TEST_SET_THROUGHPUT);
         List<ClientSideTest> tests = xmlFileReader.getClientSideTests();
-        ThroughputTest test = new ThroughputTest("Test #2", "throughputTest", "Verify throughput", null, 2);
+        ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
