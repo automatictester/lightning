@@ -23,18 +23,21 @@ public class RespTimeStdDevTest extends ClientSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
     }
 
-    @Override
     public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {
             JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
-            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
+            calculateActualResultDescription();
             calculateTestResult();
         } catch (Exception e) {
             result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
+    }
+
+    public void calculateActualResultDescription() {
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class RespTimeStdDevTest extends ClientSideTest {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    private void calculateActualResult(JMeterTransactions jmeterTransactions) {
+    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         for (String[] transaction : jmeterTransactions) {
             String elapsed = transaction[TRANSACTION_DURATION_INDEX];
@@ -56,7 +59,7 @@ public class RespTimeStdDevTest extends ClientSideTest {
         actualResult = (int) ds.getStandardDeviation();
     }
 
-    private void calculateTestResult() {
+    protected void calculateTestResult() {
         if (actualResult > maxRespTimeStdDev) {
             result = TestResult.FAIL;
         } else {

@@ -8,9 +8,9 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public abstract class LightningTest {
 
+    protected final String type;
     protected final String name;
     protected String description;
-    protected final String type;
     protected String expectedResultDescription;
     protected String actualResultDescription;
     protected TestResult result;

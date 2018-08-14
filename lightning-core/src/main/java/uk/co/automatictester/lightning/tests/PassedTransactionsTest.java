@@ -34,6 +34,12 @@ public class PassedTransactionsTest extends ClientSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, this.type.toString(), allowedPercentOfFailedTransactions.getValue());
     }
 
+    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {} // TODO
+
+    protected void calculateActualResultDescription() {} // TODO
+
+    protected void calculateTestResult() {} // TODO
+
     @Override
     public void execute(ArrayList<String[]> originalJMeterTransactions) {
         try {

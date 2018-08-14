@@ -72,6 +72,7 @@ public class RespTimeMaxTestUnitTest {
 
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
+        assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
     }
 
     @Test

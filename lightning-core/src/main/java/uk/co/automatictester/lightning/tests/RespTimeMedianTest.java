@@ -6,8 +6,6 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 
-import java.util.ArrayList;
-
 import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeMedianTest extends RespTimeBasedTest {
@@ -24,19 +22,8 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
 
-    @Override
-    public void execute(ArrayList<String[]> originalJMeterTransactions) {
-        try {
-            JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
-            transactionCount = transactions.size();
-            calculateActualResult(transactions);
-            longestTransactions = transactions.getLongestTransactions();
-            actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
-            calculateTestResult();
-        } catch (Exception e) {
-            result = TestResult.ERROR;
-            actualResultDescription = e.getMessage();
-        }
+    public void calculateActualResultDescription() {
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
     @Override
@@ -49,7 +36,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    private void calculateActualResult(JMeterTransactions jmeterTransactions) {
+    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         for (String[] transaction : jmeterTransactions) {
             String elapsed = transaction[TRANSACTION_DURATION_INDEX];
@@ -58,7 +45,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
         actualResult = (int) ds.getPercentile(50);
     }
 
-    private void calculateTestResult() {
+    protected void calculateTestResult() {
         if (actualResult > maxRespTime) {
             result = TestResult.FAIL;
         } else {

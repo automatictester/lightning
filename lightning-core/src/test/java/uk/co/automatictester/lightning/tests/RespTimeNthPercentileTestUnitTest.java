@@ -133,13 +133,24 @@ public class RespTimeNthPercentileTestUnitTest {
     }
 
     @Test
-    public void testExecuteError() {
+    public void testExecuteErrorPercentile() {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 9, -90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_143_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         test.execute(jmeterTransactions);
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
+    }
+
+    @Test
+    public void testExecuteErrorNonexistent() {
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 9, -90).withDescription("Verify 90th percentile").withTransactionName("nonexistent").build();
+        List<String[]> testData = new ArrayList<>();
+        testData.add(SEARCH_143_SUCCESS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        test.execute(jmeterTransactions);
+        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
+        assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
     }
 
     @Test

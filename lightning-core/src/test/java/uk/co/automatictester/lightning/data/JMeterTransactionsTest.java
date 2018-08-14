@@ -103,64 +103,6 @@ public class JMeterTransactionsTest {
     }
 
     @Test
-    public void testGetThroughputForOrderedTransactions() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "123", "true", "1434291243000"});
-        testData.add(new String[]{"Login", "213", "true", "1434291244000"});
-        testData.add(new String[]{"Login", "222", "true", "1434291245000"});
-        testData.add(new String[]{"Login", "333", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-
-        assertThat(jmeterTransactions.getThroughput(), is(closeTo(1.33, 0.01)));
-    }
-
-    @Test
-    public void testGetThroughputForUnorderedTransactions() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "560", "true", "1434291246000"});
-        testData.add(new String[]{"Login", "650", "true", "1434291244000"});
-        testData.add(new String[]{"Login", "700", "true", "1434291245000"});
-        testData.add(new String[]{"Login", "400", "true", "1434291243000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-
-        assertThat(jmeterTransactions.getThroughput(), is(closeTo(1.33, 0.01)));
-    }
-
-    @Test
-    public void testGetThroughputForOneTransactionPerMillisecond() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "111", "true", "1434291240001"});
-        testData.add(new String[]{"Login", "157", "true", "1434291240002"});
-        testData.add(new String[]{"Login", "243", "true", "1434291240004"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-
-        assertThat(jmeterTransactions.getThroughput(), is(closeTo(1000, 0.01)));
-    }
-
-    @Test
-    public void testGetThroughputForMoreThanOneTransactionPerMillisecond() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "123", "true", "1434291240001"});
-        testData.add(new String[]{"Login", "142", "true", "1434291240002"});
-        testData.add(new String[]{"Login", "165", "true", "1434291240003"});
-        testData.add(new String[]{"Login", "109", "true", "1434291240004"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-
-        assertThat(jmeterTransactions.getThroughput(), is(closeTo(1333.33, 0.01)));
-    }
-
-    @Test
-    public void testGetThroughputForLessThanOneTransactionPerSecond() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "100", "true", "1434291240000"});
-        testData.add(new String[]{"Login", "124", "true", "1434291245000"});
-        testData.add(new String[]{"Login", "250", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-
-        assertThat(jmeterTransactions.getThroughput(), is(closeTo(0.5, 0.01)));
-    }
-
-    @Test
     public void testGetLongestTransactions_moreThanFive() {
         List<String[]> testData = new ArrayList<>();
         testData.add(new String[]{"Login", "421", "true", "1434291240000"});

@@ -4,7 +4,9 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.enums.TestResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ClientSideTest extends LightningTest {
@@ -43,6 +45,18 @@ public abstract class ClientSideTest extends LightningTest {
         return regexp;
     }
 
+    public void execute(ArrayList<String[]> originalJMeterTransactions) {
+        try {
+            JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
+            transactionCount = transactions.size();
+            calculateActualResult(transactions);
+            calculateActualResultDescription();
+            calculateTestResult();
+        } catch (Exception e) {
+            result = TestResult.ERROR;
+            actualResultDescription = e.getMessage();
+        }
+    }
 
     @Override
     public String getTestExecutionReport() {
@@ -77,4 +91,10 @@ public abstract class ClientSideTest extends LightningTest {
     public List<Integer> getLongestTransactions() {
         throw new NotImplementedException("Method not implemented for LightningTest which is not RespTimeBasedTest");
     }
+
+    protected abstract void calculateActualResult(JMeterTransactions jmeterTransactions);
+
+    protected abstract void calculateActualResultDescription();
+
+    protected abstract void calculateTestResult();
 }

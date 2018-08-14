@@ -104,9 +104,26 @@ public class JMeterTransactions extends CsvEntries {
         return failCount;
     }
 
-    public double getThroughput() {
-        double transactionTimespanInMilliseconds = getLastTransactionTimestamp() - getFirstTransactionTimestamp();
-        return size() / (transactionTimespanInMilliseconds / 1000);
+    public long getFirstTransactionTimestamp() {
+        long minTimestamp = 0;
+        for (String[] transaction : this) {
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
+            if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
+                minTimestamp = currentTransactionTimestamp;
+            }
+        }
+        return minTimestamp;
+    }
+
+    public long getLastTransactionTimestamp() {
+        long maxTimestamp = 0;
+        for (String[] transaction : this) {
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
+            if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
+                maxTimestamp = currentTransactionTimestamp;
+            }
+        }
+        return maxTimestamp;
     }
 
     private List<Integer> getTransactionDurationsDesc() {
@@ -123,28 +140,6 @@ public class JMeterTransactions extends CsvEntries {
     private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
         int transactionDurationsCount = (transactionDurations.size() >= MAX_NUMBER_OF_LONGEST_TRANSACTIONS) ? MAX_NUMBER_OF_LONGEST_TRANSACTIONS : transactionDurations.size();
         return transactionDurations.subList(0, transactionDurationsCount);
-    }
-
-    private long getFirstTransactionTimestamp() {
-        long minTimestamp = 0;
-        for (String[] transaction : this) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
-            if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
-                minTimestamp = currentTransactionTimestamp;
-            }
-        }
-        return minTimestamp;
-    }
-
-    private long getLastTransactionTimestamp() {
-        long maxTimestamp = 0;
-        for (String[] transaction : this) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
-            if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
-                maxTimestamp = currentTransactionTimestamp;
-            }
-        }
-        return maxTimestamp;
     }
 
     protected CsvParserSettings getCsvParserSettings() {
