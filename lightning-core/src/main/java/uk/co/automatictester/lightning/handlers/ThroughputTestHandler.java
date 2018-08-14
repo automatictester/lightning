@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.config.LightningTests;
+import uk.co.automatictester.lightning.structures.LightningTests;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.ThroughputTest;
 
@@ -28,6 +28,6 @@ public class ThroughputTestHandler extends ElementHandler {
             }
         }
         ClientSideTest throughputTest = builder.build();
-        LightningTests.addClientSideTest(throughputTest);
+        LightningTests.add(throughputTest);
     }
 }

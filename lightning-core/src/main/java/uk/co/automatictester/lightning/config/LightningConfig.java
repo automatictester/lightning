@@ -8,8 +8,8 @@ import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.exceptions.XMLFileNoTestsException;
 import uk.co.automatictester.lightning.handlers.*;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.ServerSideTest;
+import uk.co.automatictester.lightning.structures.LightningTests;
+import uk.co.automatictester.lightning.tests.LightningTest;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,12 +27,8 @@ public class LightningConfig {
         throwExceptionIfNoTests();
     }
 
-    public List<ClientSideTest> getClientSideTests() {
-        return LightningTests.getClientSideTests();
-    }
-
-    public List<ServerSideTest> getServerSideTests() {
-        return LightningTests.getServerSideTests();
+    public List<LightningTest> getTests() {
+        return LightningTests.getTests();
     }
 
     private NodeList readXmlFile(File xmlFile) {
@@ -77,7 +73,7 @@ public class LightningConfig {
     }
 
     protected void throwExceptionIfNoTests() {
-        if (LightningTests.getTestCount() == 0) {
+        if (LightningTests.size() == 0) {
             throw new XMLFileNoTestsException("No tests of expected type found in XML file");
         }
     }

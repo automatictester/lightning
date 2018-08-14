@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.structures.TestData;
 
 import java.util.ArrayList;
 
@@ -21,19 +22,6 @@ public class RespTimeStdDevTest extends ClientSideTest {
         super("respTimeStdDevTest", testName);
         this.maxRespTimeStdDev = maxRespTimeStdDev;
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
-    }
-
-    public void execute(ArrayList<String[]> originalJMeterTransactions) {
-        try {
-            JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
-            transactionCount = transactions.size();
-            calculateActualResult(transactions);
-            calculateActualResultDescription();
-            calculateTestResult();
-        } catch (Exception e) {
-            result = TestResult.ERROR;
-            actualResultDescription = e.getMessage();
-        }
     }
 
     public void calculateActualResultDescription() {

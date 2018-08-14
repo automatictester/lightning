@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
-import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
@@ -10,10 +9,7 @@ import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.ServerSideTest;
-
-import java.util.List;
+import uk.co.automatictester.lightning.structures.TestData;
 
 public class VerifyTask extends LightningTask {
 
@@ -33,12 +29,11 @@ public class VerifyTask extends LightningTask {
 
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(extension.getTestSetXml());
-        populateTestSet(lightningConfig);
 
         jmeterTransactions = JMeterTransactions.fromFile(extension.getJmeterCsv());
-
-        executeServerSideTestsIfPerfMonDataProvided();
-        testSet.executeClientSideTests(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        loadPerfMonDataIfProvided();
+        testSet.executeTests();
         log(testSet.getTestExecutionReport());
 
         log(TestSetReporter.getTestSetExecutionSummaryReport(testSet));
@@ -62,20 +57,10 @@ public class VerifyTask extends LightningTask {
         JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
     }
 
-    private void populateTestSet(LightningConfig lightningConfig) {
-        List<ClientSideTest> clientSideTests = lightningConfig.getClientSideTests();
-        List<ServerSideTest> serverSideTests = lightningConfig.getServerSideTests();
-        if (serverSideTests.size() == 0) {
-            testSet = TestSet.fromClientSideTest(clientSideTests);
-        } else {
-            testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
-        }
-    }
-
-    private void executeServerSideTestsIfPerfMonDataProvided() {
+    private void loadPerfMonDataIfProvided() {
         if (extension.getPerfmonCsv() != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(extension.getPerfmonCsv());
-            testSet.executeServerSideTests(perfMonDataEntries);
+            PerfMonEntries perfMonEntries = PerfMonEntries.fromFile(extension.getPerfmonCsv());
+            TestData.addServerSideTestData(perfMonEntries);
         }
     }
 }

@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.enums.TestResult;
-
-import java.util.ArrayList;
+import uk.co.automatictester.lightning.structures.TestData;
 
 import static uk.co.automatictester.lightning.constants.PerfMonColumns.VALUE_INDEX;
 
@@ -42,9 +41,10 @@ public class ServerSideTest extends LightningTest {
     }
 
     @Override
-    public void execute(ArrayList<String[]> originalDataEntries) {
+    public void execute() {
         try {
-            PerfMonEntries dataEntries = filterDataEntries((PerfMonEntries) originalDataEntries);
+            PerfMonEntries originalDataEntries = TestData.getServerSideTestData();
+            PerfMonEntries dataEntries = filterDataEntries(originalDataEntries);
             dataEntriesCount = dataEntries.size();
             calculateActualResult(dataEntries);
             actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);

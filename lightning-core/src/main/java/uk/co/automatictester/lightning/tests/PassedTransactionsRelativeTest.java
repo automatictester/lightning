@@ -37,18 +37,6 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
         }
     }
 
-    private void calculateResultForRelativeTreshold(int failureCount) {
-        int percentOfFailedTransactions = (int) (((float) failureCount / transactionCount) * 100);
-        if (percentOfFailedTransactions > (float) allowedPercentOfFailedTransactions.getValue()) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
-        actualResult = percentOfFailedTransactions;
-        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, percentOfFailedTransactions);
-    }
-
-
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);

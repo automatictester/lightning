@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.config.LightningTests;
+import uk.co.automatictester.lightning.structures.LightningTests;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
 
@@ -26,6 +26,6 @@ public class AvgRespTimeTestHandler extends ElementHandler {
             }
         }
         ClientSideTest test = builder.build();
-        LightningTests.addClientSideTest(test);
+        LightningTests.add(test);
     }
 }

@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.exceptions.CSVFileNonexistentHostAndMetricException;
-import uk.co.automatictester.lightning.shared.TestData;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +17,19 @@ public class PerfMonEntriesTest {
 
     @Test
     public void verifyReadMethod() {
-        PerfMonEntries perfMonEntries = PerfMonEntries.fromFile(TestData.CSV_2_ENTRIES);
-        assertThat(perfMonEntries, CoreMatchers.hasItem(TestData.CPU_ENTRY_9128));
-        assertThat(perfMonEntries, CoreMatchers.hasItem(TestData.CPU_ENTRY_21250));
+        PerfMonEntries perfMonEntries = PerfMonEntries.fromFile(LegacyTestData.CSV_2_ENTRIES);
+        assertThat(perfMonEntries, CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_9128));
+        assertThat(perfMonEntries, CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_21250));
     }
 
     @Test(expectedExceptions = CSVFileIOException.class)
     public void verifyReadMethodIOException() {
-        PerfMonEntries.fromFile(TestData.CSV_NONEXISTENT);
+        PerfMonEntries.fromFile(LegacyTestData.CSV_NONEXISTENT);
     }
 
     @Test(expectedExceptions = CSVFileNoTransactionsException.class)
     public void verifyReadMethodNoTransactionsException() {
-        PerfMonEntries.fromFile(TestData.CSV_0_ENTRIES);
+        PerfMonEntries.fromFile(LegacyTestData.CSV_0_ENTRIES);
     }
 
     @Test

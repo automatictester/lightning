@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.structures.TestData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_RESULT_INDEX;
@@ -47,9 +47,10 @@ public abstract class ClientSideTest extends LightningTest {
         return regexp;
     }
 
-    public void execute(ArrayList<String[]> originalJMeterTransactions) {
+    public void execute() {
         try {
-            JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
+            JMeterTransactions originalJMeterTransactions = TestData.getClientSideTestData();
+            JMeterTransactions transactions = filterTransactions(originalJMeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
             calculateActualResultDescription();

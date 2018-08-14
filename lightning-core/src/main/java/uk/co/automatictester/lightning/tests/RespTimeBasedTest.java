@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.structures.TestData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RespTimeBasedTest extends ClientSideTest {
@@ -18,9 +18,10 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
         super(testType, testName);
     }
 
-    public void execute(ArrayList<String[]> originalJMeterTransactions) {
+    public void execute() {
         try {
-            JMeterTransactions transactions = filterTransactions((JMeterTransactions) originalJMeterTransactions);
+            JMeterTransactions originalJMeterTransactions = TestData.getClientSideTestData();
+            JMeterTransactions transactions = filterTransactions(originalJMeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
             longestTransactions = transactions.getLongestTransactions();

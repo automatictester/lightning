@@ -29,7 +29,7 @@ public abstract class LightningTest {
 
     public abstract String getTestExecutionReport();
 
-    public abstract void execute(ArrayList<String[]> dataEntries);
+    public abstract void execute();
 
     protected String getDescriptionForReport() {
         String message = String.format("Test description:     %s%n", getDescription());

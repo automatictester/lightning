@@ -1,3 +1,12 @@
+Test name:            Failed transactions
+Test type:            passedTransactionsTest
+Test description:     Verify number of passed tests
+Transaction name:     Login
+Expected result:      Percent of failed transactions <= 0
+Actual result:        Percent of failed transactions = 0
+Transaction count:    5
+Test result:          Pass
+
 Test name:            CPU range
 Test type:            serverSideTest
 Test subtype:         Between
@@ -16,15 +25,6 @@ Host and metric:      192.168.0.12 CPU
 Expected result:      Average value < 60000
 Actual result:        Average value = 15189
 Entries count:        2
-Test result:          Pass
-
-Test name:            Failed transactions
-Test type:            passedTransactionsTest
-Test description:     Verify number of passed tests
-Transaction name:     Login
-Expected result:      Percent of failed transactions <= 0
-Actual result:        Percent of failed transactions = 0
-Transaction count:    5
 Test result:          Pass
 
 ============= EXECUTION SUMMARY =============

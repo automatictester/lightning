@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.config.LightningTests;
+import uk.co.automatictester.lightning.structures.LightningTests;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.tests.PassedTransactionsRelativeTest;
@@ -43,6 +43,6 @@ public class PassedTransactionsTestHandler extends ElementHandler {
             }
             test = builder.build();
         }
-        LightningTests.addClientSideTest(test);
+        LightningTests.add(test);
     }
 }

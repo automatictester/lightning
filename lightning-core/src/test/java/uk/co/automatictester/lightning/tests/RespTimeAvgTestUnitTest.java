@@ -4,7 +4,8 @@ import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
-import uk.co.automatictester.lightning.shared.TestData;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
+import uk.co.automatictester.lightning.structures.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,11 @@ public class RespTimeAvgTestUnitTest {
     public void verifyExecutePass() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -33,11 +35,12 @@ public class RespTimeAvgTestUnitTest {
 
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 6010).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_800_SUCCESS);
-        testData.add(TestData.SEARCH_11221_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -45,11 +48,12 @@ public class RespTimeAvgTestUnitTest {
     public void verifyExecuteAllTransactionsPass() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 900).withDescription("Verify response times").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_800_SUCCESS);
-        testData.add(TestData.LOGIN_1000_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -57,10 +61,11 @@ public class RespTimeAvgTestUnitTest {
     public void verifyExecuteFail() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 11220).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_11221_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
 
@@ -68,11 +73,12 @@ public class RespTimeAvgTestUnitTest {
     public void verifyExecuteAllTransactionsFail() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 899).withDescription("Verify response times").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_800_SUCCESS);
-        testData.add(TestData.LOGIN_1000_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
 
@@ -80,34 +86,35 @@ public class RespTimeAvgTestUnitTest {
     public void verifyExecuteError() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_11221_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
         assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
     }
 
     @Test
     public void verifyIsEqual() {
-        MatcherAssert.assertThat(TestData.AVG_RESP_TIME_TEST_A, is(equalTo(TestData.AVG_RESP_TIME_TEST_A)));
+        MatcherAssert.assertThat(LegacyTestData.AVG_RESP_TIME_TEST_A, is(equalTo(LegacyTestData.AVG_RESP_TIME_TEST_A)));
     }
 
     @Test
     public void verifyIsNotEqualOtherTestType() {
-        assertThat(TestData.AVG_RESP_TIME_TEST_A, is(not(equalTo((ClientSideTest) TestData.RESP_TIME_PERC_TEST_A))));
+        assertThat(LegacyTestData.AVG_RESP_TIME_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.RESP_TIME_PERC_TEST_A))));
     }
 
     @Test
     public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(TestData.AVG_RESP_TIME_TEST_A, is(not(equalTo(TestData.AVG_RESP_TIME_TEST_B))));
+        MatcherAssert.assertThat(LegacyTestData.AVG_RESP_TIME_TEST_A, is(not(equalTo(LegacyTestData.AVG_RESP_TIME_TEST_B))));
     }
 
     @Test
     public void testPrintTestExecutionReport() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("my name", 800).withDescription("my description").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         String expectedOutput = String.format("Test name:            my name%n" +
@@ -120,7 +127,8 @@ public class RespTimeAvgTestUnitTest {
                 "Longest transactions: [800]%n" +
                 "Test result:          Pass");
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
     }

@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.config.LightningTests;
+import uk.co.automatictester.lightning.structures.LightningTests;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
@@ -31,6 +31,6 @@ public class ServerSideTestHandler extends ElementHandler {
         String description = getTestDescription(element);
         builder.withDescription(description);
         ServerSideTest serverSideTest = builder.build();
-        LightningTests.addServerSideTest(serverSideTest);
+        LightningTests.add(serverSideTest);
     }
 }

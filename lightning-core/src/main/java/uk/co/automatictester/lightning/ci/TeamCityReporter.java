@@ -50,7 +50,7 @@ public class TeamCityReporter extends CIReporter {
 
     public String getTeamCityVerifyStatistics() {
         StringBuilder output = new StringBuilder();
-        for (LightningTest test : testSet.getAllTests()) {
+        for (LightningTest test : testSet.getTests()) {
             String teamCityConsoleOutputEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
             output.append(teamCityConsoleOutputEntry);
         }

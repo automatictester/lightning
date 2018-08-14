@@ -14,10 +14,7 @@ import uk.co.automatictester.lightning.lambda.readers.LightningLambdaConfig;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.s3.S3Client;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.ServerSideTest;
-
-import java.util.List;
+import uk.co.automatictester.lightning.structures.TestData;
 
 public class LightningHandler implements RequestHandler<LightningRequest, LightningResponse> {
 
@@ -25,7 +22,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     private static S3Client s3Client;
 
     private JMeterTransactions jmeterTransactions;
-    private TestSet testSet;
+    private TestSet testSet = new TestSet();
 
     private String bucket;
     private String region;
@@ -100,11 +97,11 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
         LightningLambdaConfig lightningLambdaConfig = new LightningLambdaConfig(region, bucket);
         lightningLambdaConfig.readTests(xml);
-        populateTestSet(lightningLambdaConfig);
 
         jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
-        executeServerSideTestsIfPerfMonDataProvided();
-        testSet.executeClientSideTests(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        loadPerfMonDataIfProvided();
+        testSet.executeTests();
 
         String testExecutionReport = testSet.getTestExecutionReport();
         String testSetExecutionSummaryReport = TestSetReporter.getTestSetExecutionSummaryReport(testSet);
@@ -126,19 +123,10 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         }
     }
 
-    private void populateTestSet(LightningLambdaConfig lightningLambdaConfig) {
-        List<ClientSideTest> clientSideTests = lightningLambdaConfig.getClientSideTests();
-        List<ServerSideTest> serverSideTests = lightningLambdaConfig.getServerSideTests();
-        if (serverSideTests.size() == 0) {
-            testSet = TestSet.fromClientSideTest(clientSideTests);
-        } else {
-            testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
-        }
-    }
-    private void executeServerSideTestsIfPerfMonDataProvided() {
+    private void loadPerfMonDataIfProvided() {
         if (perfmonCsv != null) {
             PerfMonEntries perfMonEntries = PerfMonEntries.fromS3Object(region, bucket, perfmonCsv);
-            testSet.executeServerSideTests(perfMonEntries);
+            TestData.addServerSideTestData(perfMonEntries);
         }
     }
 

@@ -4,7 +4,8 @@ import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
-import uk.co.automatictester.lightning.shared.TestData;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
+import uk.co.automatictester.lightning.structures.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,10 @@ public class ThroughputTestUnitTest {
     private static final ThroughputTest THROUGHPUT_TEST_B = new ThroughputTest.Builder("Test #1", 3).withTransactionName("Login").build();
     private static final ThroughputTest THROUGHPUT_TEST_NO_TRANS_NAME = new ThroughputTest.Builder("Test #1", 2).build();
 
-    private static final String[] TRANSACTION_0 = new String[] {"Login", "1000", "true", "1434291252000"};
-    private static final String[] TRANSACTION_1 = new String[] {"Login", "1000", "true", "1434291253000"};
-    private static final String[] TRANSACTION_2 = new String[] {"Login", "1000", "true", "1434291254000"};
-    private static final String[] TRANSACTION_3 = new String[] {"Login", "1000", "true", "1434291255000"};
+    private static final String[] TRANSACTION_0 = new String[]{"Login", "1000", "true", "1434291252000"};
+    private static final String[] TRANSACTION_1 = new String[]{"Login", "1000", "true", "1434291253000"};
+    private static final String[] TRANSACTION_2 = new String[]{"Login", "1000", "true", "1434291254000"};
+    private static final String[] TRANSACTION_3 = new String[]{"Login", "1000", "true", "1434291255000"};
 
     @Test
     public void testExecuteMethodPass() {
@@ -34,7 +35,8 @@ public class ThroughputTestUnitTest {
         testData.add(TRANSACTION_2);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -46,7 +48,8 @@ public class ThroughputTestUnitTest {
         testData.add(TRANSACTION_3);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -58,7 +61,8 @@ public class ThroughputTestUnitTest {
         testData.add(TRANSACTION_3);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
 
@@ -69,7 +73,8 @@ public class ThroughputTestUnitTest {
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_1);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
 
@@ -80,7 +85,8 @@ public class ThroughputTestUnitTest {
         testData.add(TRANSACTION_0);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
         assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
     }
@@ -94,7 +100,8 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "333", "true", "1434291246000"});
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
 
         assertThat(test.getThroughput(), Matchers.is(closeTo(1.33, 0.01)));
     }
@@ -108,7 +115,8 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "400", "true", "1434291243000"});
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
 
         assertThat(test.getThroughput(), Matchers.is(closeTo(1.33, 0.01)));
     }
@@ -121,7 +129,8 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "243", "true", "1434291240004"});
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 2).build();
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
 
         assertThat(test.getThroughput(), Matchers.is(closeTo(1000, 0.01)));
     }
@@ -135,7 +144,8 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "109", "true", "1434291240004"});
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
 
         assertThat(test.getThroughput(), Matchers.is(closeTo(1333.33, 0.01)));
     }
@@ -148,7 +158,8 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "250", "true", "1434291246000"});
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
 
         assertThat(test.getThroughput(), Matchers.is(closeTo(0.5, 0.01)));
     }
@@ -170,7 +181,7 @@ public class ThroughputTestUnitTest {
 
     @Test
     public void testIsNotEqualOtherTestType() {
-        assertThat(THROUGHPUT_TEST_A, is(not(equalTo((ClientSideTest) TestData.RESP_TIME_PERC_TEST_A))));
+        assertThat(THROUGHPUT_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.RESP_TIME_PERC_TEST_A))));
     }
 
     @Test

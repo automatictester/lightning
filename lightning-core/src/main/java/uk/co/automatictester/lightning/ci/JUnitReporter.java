@@ -79,7 +79,7 @@ public class JUnitReporter {
     protected void generateJUnitReportContent(TestSet testSet) {
         Element testsuite = getTestsuite(testSet);
         Node rootElement = doc.appendChild(testsuite);
-        for (LightningTest test : testSet.getAllTests()) {
+        for (LightningTest test : testSet.getTests()) {
             Element testcase = getTestcase(test);
             rootElement.appendChild(testcase);
         }

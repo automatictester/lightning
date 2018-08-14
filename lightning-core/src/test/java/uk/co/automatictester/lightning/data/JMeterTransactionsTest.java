@@ -12,8 +12,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.number.IsCloseTo.closeTo;
-import static uk.co.automatictester.lightning.shared.TestData.*;
+import static uk.co.automatictester.lightning.shared.LegacyTestData.*;
 
 public class JMeterTransactionsTest {
 

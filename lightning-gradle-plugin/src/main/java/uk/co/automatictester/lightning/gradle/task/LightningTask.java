@@ -19,7 +19,7 @@ import java.util.List;
 abstract class LightningTask extends DefaultTask {
 
     protected int exitCode = 0;
-    protected TestSet testSet;
+    protected TestSet testSet = new TestSet();
     protected JMeterTransactions jmeterTransactions;
     protected LightningExtension extension;
 

@@ -12,17 +12,13 @@ import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.ServerSideTest;
-
-import java.util.Arrays;
-import java.util.List;
+import uk.co.automatictester.lightning.structures.TestData;
 
 @Mojo(name = "lightning", defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST)
 public class LightningMojo extends ConfigurationMojo {
 
     private int exitCode = 0;
-    private TestSet testSet;
+    private TestSet testSet = new TestSet();
     private JMeterTransactions jmeterTransactions;
 
     @Override
@@ -50,11 +46,11 @@ public class LightningMojo extends ConfigurationMojo {
 
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(testSetXml);
-        populateTestSet(lightningConfig);
 
         jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
-        executeServerSideTestsIfPerfMonDataProvided();
-        testSet.executeClientSideTests(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        loadPerfMonDataIfProvided();
+        testSet.executeTests();
         log(testSet.getTestExecutionReport());
 
         log(TestSetReporter.getTestSetExecutionSummaryReport(testSet));
@@ -68,20 +64,10 @@ public class LightningMojo extends ConfigurationMojo {
         }
     }
 
-    private void populateTestSet(LightningConfig lightningConfig) {
-        List<ClientSideTest> clientSideTests = lightningConfig.getClientSideTests();
-        List<ServerSideTest> serverSideTests = lightningConfig.getServerSideTests();
-        if (serverSideTests.size() == 0) {
-            testSet = TestSet.fromClientSideTest(clientSideTests);
-        } else {
-            testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
-        }
-    }
-
-    private void executeServerSideTestsIfPerfMonDataProvided() {
+    private void loadPerfMonDataIfProvided() {
         if (perfmonCsv != null) {
             PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(perfmonCsv);
-            testSet.executeServerSideTests(perfMonDataEntries);
+            TestData.addServerSideTestData(perfMonDataEntries);
         }
     }
 

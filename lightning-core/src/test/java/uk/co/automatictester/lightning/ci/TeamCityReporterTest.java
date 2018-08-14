@@ -14,8 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TeamCityReporterTest
-{
+public class TeamCityReporterTest {
 
     @Test
     public void testPrintTeamCityReportStatistics() {
@@ -39,7 +38,10 @@ public class TeamCityReporterTest
         when(serverTest.getActualResult()).thenReturn(45);
 
         TestSet testSet = mock(TestSet.class);
-        when(testSet.getAllTests()).thenReturn(new ArrayList<LightningTest>() {{ add(clientTest); add(serverTest); }});
+        when(testSet.getTests()).thenReturn(new ArrayList<LightningTest>() {{
+            add(clientTest);
+            add(serverTest);
+        }});
 
         String output = TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics();
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));

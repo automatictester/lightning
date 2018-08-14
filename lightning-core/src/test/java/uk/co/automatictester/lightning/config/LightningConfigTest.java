@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.exceptions.*;
 import uk.co.automatictester.lightning.tests.*;
-import uk.co.automatictester.lightning.utils.Percent;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -14,7 +13,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static uk.co.automatictester.lightning.shared.TestData.*;
+import static uk.co.automatictester.lightning.shared.LegacyTestData.*;
 
 public class LightningConfigTest {
 
@@ -22,7 +21,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodPercentileTest() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_PERCENTILE);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #4", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
@@ -33,7 +32,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodStdDevTest() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_STD_DEV);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
@@ -44,7 +43,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodPassedTest() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_PASSED);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #3", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -55,7 +54,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodPassedPercentTest() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_PASSED_PERCENT);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #3", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -66,7 +65,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodAvgRespTime() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_AVG_RESP_TIME);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -77,7 +76,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodMaxRespTime() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_MAX_RESP_TIME);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -88,7 +87,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodMedianRespTime() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_MEDIAN);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #4", 11244).withDescription("Verify median response time").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
@@ -99,7 +98,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodThroughput() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_THROUGHPUT);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").build();
 
         assertThat(tests, hasSize(1));
@@ -110,7 +109,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethod_Server_Less() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_SERVER_LESS);
-        List<ServerSideTest> tests = lightningConfig.getServerSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.LESS_THAN, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
@@ -121,7 +120,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethod_Server_Between() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_SERVER_BETWEEN);
-        List<ServerSideTest> tests = lightningConfig.getServerSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.BETWEEN, 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
@@ -132,7 +131,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethod_Server_Greater() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_SERVER_GREATER);
-        List<ServerSideTest> tests = lightningConfig.getServerSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
         ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.GREATER_THAN, 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
@@ -143,7 +142,7 @@ public class LightningConfigTest {
     public void verifyGetTestsMethodThreeTestsOfTwoKinds() {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_3_0_0);
-        List<ClientSideTest> tests = lightningConfig.getClientSideTests();
+        List<LightningTest> tests = lightningConfig.getTests();
 
         assertThat(tests, hasSize(3));
         assertThat(tests.contains(PASSED_TRANSACTIONS_TEST_3_0_0_A), is(true));

@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.tests;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.shared.TestData;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ public class LightningTestUnitTest {
     @Test
     public void testFilterTransactionsSome() {
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.LOGIN_1000_SUCCESS);
-        testData.add(TestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         ClientSideTest test = Mockito.mock(ClientSideTest.class, Mockito.CALLS_REAL_METHODS);
@@ -32,8 +32,8 @@ public class LightningTestUnitTest {
     @Test
     public void testFilterTransactionsAll() {
         List<String[]> testData = new ArrayList<>();
-        testData.add(TestData.LOGIN_1000_SUCCESS);
-        testData.add(TestData.SEARCH_800_SUCCESS);
+        testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         ClientSideTest test = Mockito.mock(ClientSideTest.class, Mockito.CALLS_REAL_METHODS);

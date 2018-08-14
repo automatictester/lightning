@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.config.LightningTests;
+import uk.co.automatictester.lightning.structures.LightningTests;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.RespTimeNthPercentileTest;
 
@@ -27,6 +27,6 @@ public class NthPercRespTimeTestHandler extends ElementHandler {
             }
         }
         ClientSideTest nthPercRespTimeTest = builder.build();
-        LightningTests.addClientSideTest(nthPercRespTimeTest);
+        LightningTests.add(nthPercRespTimeTest);
     }
 }

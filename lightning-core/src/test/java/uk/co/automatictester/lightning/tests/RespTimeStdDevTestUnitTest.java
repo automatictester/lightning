@@ -4,7 +4,8 @@ import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
-import uk.co.automatictester.lightning.shared.TestData;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
+import uk.co.automatictester.lightning.structures.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,11 @@ import static org.hamcrest.core.Is.is;
 
 public class RespTimeStdDevTestUnitTest {
 
-    private static final String[] LOGIN_198_SUCCESS = new String[] {"Search", "198", "true"};
-    private static final String[] LOGIN_221_SUCCESS = new String[] {"Search", "221", "true"};
-    private static final String[] SEARCH_198_SUCCESS = new String[] {"Search", "198", "true"};
-    private static final String[] SEARCH_221_SUCCESS = new String[] {"Search", "221", "true"};
-    private static final String[] SEARCH_249_SUCCESS = new String[] {"Search", "249", "true"};
+    private static final String[] LOGIN_198_SUCCESS = new String[]{"Search", "198", "true"};
+    private static final String[] LOGIN_221_SUCCESS = new String[]{"Search", "221", "true"};
+    private static final String[] SEARCH_198_SUCCESS = new String[]{"Search", "198", "true"};
+    private static final String[] SEARCH_221_SUCCESS = new String[]{"Search", "221", "true"};
+    private static final String[] SEARCH_249_SUCCESS = new String[]{"Search", "249", "true"};
 
     @Test
     public void verifyExecutePass() {
@@ -32,7 +33,8 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -47,7 +49,8 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -60,7 +63,8 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
 
@@ -73,7 +77,8 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
 
@@ -86,7 +91,8 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
 
@@ -97,23 +103,24 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(LOGIN_198_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        test.execute(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
         assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
     }
 
     @Test
     public void verifyIsEqual() {
-        MatcherAssert.assertThat(TestData.RESP_TIME_STD_DEV_TEST_A, is(equalTo(TestData.RESP_TIME_STD_DEV_TEST_A)));
+        MatcherAssert.assertThat(LegacyTestData.RESP_TIME_STD_DEV_TEST_A, is(equalTo(LegacyTestData.RESP_TIME_STD_DEV_TEST_A)));
     }
 
     @Test
     public void verifyIsNotEqualOtherTestType() {
-        assertThat(TestData.RESP_TIME_STD_DEV_TEST_A, is(not(equalTo((ClientSideTest) TestData.AVG_RESP_TIME_TEST_A))));
+        assertThat(LegacyTestData.RESP_TIME_STD_DEV_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.AVG_RESP_TIME_TEST_A))));
     }
 
     @Test
     public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(TestData.RESP_TIME_STD_DEV_TEST_A, is(not(equalTo(TestData.RESP_TIME_STD_DEV_TEST_B))));
+        MatcherAssert.assertThat(LegacyTestData.RESP_TIME_STD_DEV_TEST_A, is(not(equalTo(LegacyTestData.RESP_TIME_STD_DEV_TEST_B))));
     }
 }

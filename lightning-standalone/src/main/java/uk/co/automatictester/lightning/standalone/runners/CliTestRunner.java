@@ -14,11 +14,9 @@ import uk.co.automatictester.lightning.enums.Mode;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.ServerSideTest;
+import uk.co.automatictester.lightning.structures.TestData;
 
 import java.io.File;
-import java.util.List;
 
 import static uk.co.automatictester.lightning.enums.Mode.valueOf;
 
@@ -26,7 +24,7 @@ public class CliTestRunner {
 
     private static int exitCode = 0;
     private static CommandLineInterface params;
-    private static TestSet testSet;
+    private static TestSet testSet = new TestSet();
     private static JMeterTransactions jmeterTransactions;
     private static PerfMonEntries perfMonEntries;
     private static Mode mode;
@@ -78,11 +76,11 @@ public class CliTestRunner {
 
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(xmlFile);
-        populateTestSet(lightningConfig);
 
         jmeterTransactions = JMeterTransactions.fromFile(jmeterCsvFile);
-        executeServerSideTestsIfPerfMonDataProvided();
-        testSet.executeClientSideTests(jmeterTransactions);
+        TestData.addClientSideTestData(jmeterTransactions);
+        loadPerfMonDataIfProvided();
+        testSet.executeTests();
         testSet.printTestExecutionReport();
 
         TestSetReporter.printTestSetExecutionSummaryReport(testSet);
@@ -96,21 +94,11 @@ public class CliTestRunner {
         }
     }
 
-    private static void populateTestSet(LightningConfig lightningConfig) {
-        List<ClientSideTest> clientSideTests = lightningConfig.getClientSideTests();
-        List<ServerSideTest> serverSideTests = lightningConfig.getServerSideTests();
-        if (serverSideTests.size() == 0) {
-            testSet = TestSet.fromClientSideTest(clientSideTests);
-        } else {
-            testSet = TestSet.fromClientAndServerSideTest(clientSideTests, serverSideTests);
-        }
-    }
-
-    private static void executeServerSideTestsIfPerfMonDataProvided() {
+    private static void loadPerfMonDataIfProvided() {
         if (params.verify.isPerfmonCsvFileProvided()) {
             File perfmonCsvFile = params.verify.getPerfmonCsvFile();
             perfMonEntries = PerfMonEntries.fromFile(perfmonCsvFile);
-            testSet.executeServerSideTests(perfMonEntries);
+            TestData.addServerSideTestData(perfMonEntries);
         }
     }
 
