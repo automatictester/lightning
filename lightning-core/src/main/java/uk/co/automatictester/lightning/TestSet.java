@@ -41,7 +41,7 @@ public class TestSet {
 
     public void executeClientSideTests(JMeterTransactions jmeterTransactions) {
         StringBuilder output = new StringBuilder();
-        for (ClientSideTest test : getClientSideTests()) {
+        for (ClientSideTest test : clientSideTests) {
             test.execute(jmeterTransactions);
             setCounts(test);
             String testExecutionReport = test.getTestExecutionReport();
@@ -52,7 +52,7 @@ public class TestSet {
 
     public void executeServerSideTests(PerfMonEntries perfMonEntries) {
         StringBuilder output = new StringBuilder();
-        for (ServerSideTest test : getServerSideTests()) {
+        for (ServerSideTest test : serverSideTests) {
             test.execute(perfMonEntries);
             setCounts(test);
             String testExecutionReport = test.getTestExecutionReport();

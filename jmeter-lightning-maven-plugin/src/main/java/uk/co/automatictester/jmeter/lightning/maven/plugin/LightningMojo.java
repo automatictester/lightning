@@ -53,7 +53,6 @@ public class LightningMojo extends ConfigurationMojo {
         populateTestSet(lightningConfig);
 
         jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
-
         executeServerSideTestsIfPerfMonDataProvided();
         testSet.executeClientSideTests(jmeterTransactions);
         log(testSet.getTestExecutionReport());

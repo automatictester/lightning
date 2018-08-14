@@ -7,18 +7,16 @@ import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.ci.JUnitReporter;
 import uk.co.automatictester.lightning.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.Mode;
-import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.util.List;
 

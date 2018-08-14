@@ -54,16 +54,16 @@ public class JMeterTransactions extends CsvEntries {
         super(jmeterTransactions);
     }
 
-    public static JMeterTransactions fromList(List<String[]> jmeterTransactions) {
-        return new JMeterTransactions(jmeterTransactions);
-    }
-
     public static JMeterTransactions fromFile(File csvFile) {
         return new JMeterTransactions(csvFile);
     }
 
     public static JMeterTransactions fromS3Object(String region, String bucket, String csvObject) {
         return new JMeterTransactions(region, bucket, csvObject);
+    }
+
+    public static JMeterTransactions fromList(List<String[]> jmeterTransactions) {
+        return new JMeterTransactions(jmeterTransactions);
     }
 
     public JMeterTransactions getTransactionsWith(String label) {

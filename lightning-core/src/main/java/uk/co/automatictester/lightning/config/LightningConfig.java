@@ -101,7 +101,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            PassedTransactionsTest passedTransactionsTest = builder.build();
+            ClientSideTest passedTransactionsTest = builder.build();
 
             clientSideTests.add(passedTransactionsTest);
         }
@@ -125,7 +125,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            RespTimeStdDevTest respTimeStdDevTest = builder.build();
+            ClientSideTest respTimeStdDevTest = builder.build();
 
             clientSideTests.add(respTimeStdDevTest);
         }
@@ -149,7 +149,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            RespTimeAvgTest avgRespTimeTest = builder.build();
+            ClientSideTest avgRespTimeTest = builder.build();
 
             clientSideTests.add(avgRespTimeTest);
         }
@@ -173,7 +173,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            RespTimeMaxTest maxRespTimeTest = builder.build();
+            ClientSideTest maxRespTimeTest = builder.build();
 
             clientSideTests.add(maxRespTimeTest);
         }
@@ -198,7 +198,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            RespTimeNthPercentileTest nthPercRespTimeTest = builder.build();
+            ClientSideTest nthPercRespTimeTest = builder.build();
 
             clientSideTests.add(nthPercRespTimeTest);
         }
@@ -221,7 +221,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            RespTimeMedianTest respTimeMedianTest = builder.build();
+            ClientSideTest respTimeMedianTest = builder.build();
 
             clientSideTests.add(respTimeMedianTest);
         }
@@ -244,7 +244,7 @@ public class LightningConfig {
                     builder.withRegexp();
                 }
             }
-            ThroughputTest throughputTest = builder.build();
+            ClientSideTest throughputTest = builder.build();
 
             clientSideTests.add(throughputTest);
         }

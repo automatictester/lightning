@@ -103,9 +103,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         populateTestSet(lightningLambdaConfig);
 
         jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
-
         executeServerSideTestsIfPerfMonDataProvided();
-
         testSet.executeClientSideTests(jmeterTransactions);
 
         String testExecutionReport = testSet.getTestExecutionReport();
