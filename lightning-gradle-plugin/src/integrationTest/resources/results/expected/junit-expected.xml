@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><testsuite errors="1" failures="1" name="Lightning" tests="3" time="0">
+    <testcase name="No failed transactions" time="0"/>
     <testcase name="Average response time" time="0">
         <error message="No transactions with label equal to 'Sear' found in CSV file" type="avgRespTimeTest">Test name:            Average response time
 Test type:            avgRespTimeTest
@@ -10,7 +11,6 @@ Longest transactions: null
 Test result:          ERROR
 </error>
     </testcase>
-    <testcase name="No failed transactions" time="0"/>
     <testcase name="CPU utilisation" time="0">
         <failure message="Average value = 10000" type="serverSideTest">Test name:            CPU utilisation
 Test type:            serverSideTest

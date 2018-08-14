@@ -2,279 +2,83 @@ package uk.co.automatictester.lightning.config;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.exceptions.XMLFileNoTestsException;
-import uk.co.automatictester.lightning.tests.*;
-import uk.co.automatictester.lightning.utils.Percent;
+import uk.co.automatictester.lightning.handlers.*;
+import uk.co.automatictester.lightning.tests.ClientSideTest;
+import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static uk.co.automatictester.lightning.utils.LightningConfigProcessingHelper.*;
 
 public class LightningConfig {
 
-    private List<ClientSideTest> clientSideTests = new ArrayList<>();
-    private List<ServerSideTest> serverSideTests = new ArrayList<>();
-
     public void readTests(File xmlFile) {
-        Document doc = readXmlFile(xmlFile);
-        loadAllTests(doc);
+        LightningTests.flush();
+        NodeList nodes = readXmlFile(xmlFile);
+        loadAllTests(nodes);
         throwExceptionIfNoTests();
     }
 
     public List<ClientSideTest> getClientSideTests() {
-        return clientSideTests;
+        return LightningTests.getClientSideTests();
     }
 
     public List<ServerSideTest> getServerSideTests() {
-        return serverSideTests;
+        return LightningTests.getServerSideTests();
     }
 
-    protected void loadAllTests(Document doc) {
-        addRespTimeAvgTests(doc);
-        addRespTimeStdDevTests(doc);
-        addPassedTransactionsTests(doc);
-        addRespTimeNthPercTests(doc);
-        addThroughputTests(doc);
-        addRespTimeMaxTests(doc);
-        addRespTimeMedianTests(doc);
-        addServerSideTests(doc);
-    }
-
-    protected void throwExceptionIfNoTests() {
-        if (getTestCount() == 0) {
-            throw new XMLFileNoTestsException("No tests of expected type found in XML file");
-        }
-    }
-
-    private Document readXmlFile(File xmlFile) {
+    private NodeList readXmlFile(File xmlFile) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(xmlFile);
-            doc.getDocumentElement().normalize();
-            return doc;
+            Node node = doc.getDocumentElement();
+            return node.getChildNodes();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new XMLFileException(e);
         }
     }
 
-    private int getTestCount() {
-        List<LightningTest> alltests = new ArrayList<>();
-        alltests.addAll(clientSideTests);
-        alltests.addAll(serverSideTests);
-        return alltests.size();
-    }
+    protected void loadAllTests(NodeList nodes) {
+        for (int i = 0; i < nodes.getLength(); i++) {
+            if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nodes.item(i);
 
-    private void addPassedTransactionsTests(Document xmlDoc) {
-        String testType = "passedTransactionsTest";
-        NodeList passedTransactionsTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < passedTransactionsTestNodes.getLength(); i++) {
-            Element element = (Element) passedTransactionsTestNodes.item(i);
+                AvgRespTimeTestHandler avgRespTimeTestHandler = new AvgRespTimeTestHandler();
+                RespTimeStdDevTestHandler respTimeStdDevTestHandler = new RespTimeStdDevTestHandler();
+                PassedTransactionsTestHandler passedTransactionsTestHandler = new PassedTransactionsTestHandler();
+                NthPercRespTimeTestHandler nthPercRespTimeTestHandler = new NthPercRespTimeTestHandler();
+                ThroughputTestHandler throughputTestHandler = new ThroughputTestHandler();
+                MaxRespTimeTestHandler maxRespTimeTestHandler = new MaxRespTimeTestHandler();
+                MedianRespTimeTestHandler medianRespTimeTestHandler = new MedianRespTimeTestHandler();
+                ServerSideTestHandler serverSideTestHandler = new ServerSideTestHandler();
+                DefaultHandler defaultHandler = new DefaultHandler();
 
-            String name = getTestName(element);
-            String description = getTestDescription(element);
+                avgRespTimeTestHandler.setNextHandler(respTimeStdDevTestHandler);
+                respTimeStdDevTestHandler.setNextHandler(passedTransactionsTestHandler);
+                passedTransactionsTestHandler.setNextHandler(nthPercRespTimeTestHandler);
+                nthPercRespTimeTestHandler.setNextHandler(throughputTestHandler);
+                throughputTestHandler.setNextHandler(maxRespTimeTestHandler);
+                maxRespTimeTestHandler.setNextHandler(medianRespTimeTestHandler);
+                medianRespTimeTestHandler.setNextHandler(serverSideTestHandler);
+                serverSideTestHandler.setNextHandler(defaultHandler);
 
-            PassedTransactionsTest.Builder builder;
-            if (isSubElementPresent(element, "allowedNumberOfFailedTransactions")) {
-                int allowedNumberOfFailedTransactions = getIntegerValueFromElement(element, "allowedNumberOfFailedTransactions");
-                builder = new PassedTransactionsTest.Builder(name, allowedNumberOfFailedTransactions);
-            } else {
-                int allowedPercentOfFailedTransactions = getPercentAsInt(element, "allowedPercentOfFailedTransactions");
-                Percent percent = new Percent(allowedPercentOfFailedTransactions);
-                builder = new PassedTransactionsTest.Builder(name, percent);
+                avgRespTimeTestHandler.processHandler(element);
             }
-            builder.withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest passedTransactionsTest = builder.build();
-
-            clientSideTests.add(passedTransactionsTest);
-        }
-
-    }
-
-    private void addRespTimeStdDevTests(Document xmlDoc) {
-        String testType = "respTimeStdDevTest";
-        NodeList respTimeStdDevTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < respTimeStdDevTestNodes.getLength(); i++) {
-            Element element = (Element) respTimeStdDevTestNodes.item(i);
-
-            String name = getTestName(element);
-            String description = getTestDescription(element);
-            int maxRespTimeStdDevTime = getIntegerValueFromElement(element, "maxRespTimeStdDev");
-            RespTimeStdDevTest.Builder builder = new RespTimeStdDevTest.Builder(name, maxRespTimeStdDevTime).withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest respTimeStdDevTest = builder.build();
-
-            clientSideTests.add(respTimeStdDevTest);
         }
     }
 
-    private void addRespTimeAvgTests(Document xmlDoc) {
-        String testType = "avgRespTimeTest";
-        NodeList avgRespTimeTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < avgRespTimeTestNodes.getLength(); i++) {
-            Element element = (Element) avgRespTimeTestNodes.item(i);
-
-            String name = getTestName(element);
-            String description = getTestDescription(element);
-            int maxAvgRespTime = getIntegerValueFromElement(element, "maxAvgRespTime");
-
-            RespTimeAvgTest.Builder builder = new RespTimeAvgTest.Builder(name, maxAvgRespTime).withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest avgRespTimeTest = builder.build();
-
-            clientSideTests.add(avgRespTimeTest);
-        }
-    }
-
-    private void addRespTimeMaxTests(Document xmlDoc) {
-        String testType = "maxRespTimeTest";
-        NodeList avgRespTimeTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < avgRespTimeTestNodes.getLength(); i++) {
-            Element element = (Element) avgRespTimeTestNodes.item(i);
-
-            String name = getTestName(element);
-            String description = getTestDescription(element);
-            int maxRespTime = getIntegerValueFromElement(element, "maxAllowedRespTime");
-
-            RespTimeMaxTest.Builder builder = new RespTimeMaxTest.Builder(name, maxRespTime).withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest maxRespTimeTest = builder.build();
-
-            clientSideTests.add(maxRespTimeTest);
-        }
-    }
-
-    private void addRespTimeNthPercTests(Document xmlDoc) {
-        String testType = "nthPercRespTimeTest";
-        NodeList respTimeNthPercTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < respTimeNthPercTestNodes.getLength(); i++) {
-            Element element = (Element) respTimeNthPercTestNodes.item(i);
-
-            String name = getTestName(element);
-            int maxRespTime = getIntegerValueFromElement(element, "maxRespTime");
-            int percentile = getPercentile(element, "percentile");
-            String description = getTestDescription(element);
-
-            RespTimeNthPercentileTest.Builder builder = new RespTimeNthPercentileTest.Builder(name, maxRespTime, percentile).withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest nthPercRespTimeTest = builder.build();
-
-            clientSideTests.add(nthPercRespTimeTest);
-        }
-    }
-
-    private void addRespTimeMedianTests(Document xmlDoc) {
-        String testType = "medianRespTimeTest";
-        NodeList respTimeMedianTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < respTimeMedianTestNodes.getLength(); i++) {
-            Element element = (Element) respTimeMedianTestNodes.item(i);
-
-            String name = getTestName(element);
-            String description = getTestDescription(element);
-            int maxRespTime = getIntegerValueFromElement(element, "maxRespTime");
-            RespTimeMedianTest.Builder builder = new RespTimeMedianTest.Builder(name, maxRespTime).withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest respTimeMedianTest = builder.build();
-
-            clientSideTests.add(respTimeMedianTest);
-        }
-    }
-
-    private void addThroughputTests(Document xmlDoc) {
-        String testType = "throughputTest";
-        NodeList respTimeNthPercTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < respTimeNthPercTestNodes.getLength(); i++) {
-            Element element = (Element) respTimeNthPercTestNodes.item(i);
-
-            String name = getTestName(element);
-            String description = getTestDescription(element);
-            double minThroughput = getDoubleValueFromElement(element, "minThroughput");
-            ThroughputTest.Builder builder = new ThroughputTest.Builder(name, minThroughput).withDescription(description);
-            if (hasTransactionName(element)) {
-                String transactionName = getTransactionName(element);
-                builder.withTransactionName(transactionName);
-                if (hasRegexp(element)) {
-                    builder.withRegexp();
-                }
-            }
-            ClientSideTest throughputTest = builder.build();
-
-            clientSideTests.add(throughputTest);
-        }
-    }
-
-    private void addServerSideTests(Document xmlDoc) {
-        String testType = "serverSideTest";
-        NodeList serverSideTestNodes = xmlDoc.getElementsByTagName(testType);
-        for (int i = 0; i < serverSideTestNodes.getLength(); i++) {
-            Element element = (Element) serverSideTestNodes.item(i);
-
-            String name = getTestName(element);
-            ServerSideTestType subType = getSubType(element);
-            int metricValueA = getIntegerValueFromElement(element, "metricValueA");
-            ServerSideTest.Builder builder;
-            if (subType.name().equals(ServerSideTestType.BETWEEN.name())) {
-                int avgRespTimeB = getIntegerValueFromElement(element, "metricValueB");
-                builder = new ServerSideTest.Builder(name, subType, metricValueA, avgRespTimeB);
-            } else {
-                builder = new ServerSideTest.Builder(name, subType, metricValueA);
-            }
-            if (hasHostAndMetric(element)) {
-                String hostAndMetric = getHostAndMetric(element);
-                builder.withHostAndMetric(hostAndMetric);
-            }
-            String description = getTestDescription(element);
-            builder.withDescription(description);
-            ServerSideTest serverSideTest = builder.build();
-
-            serverSideTests.add(serverSideTest);
+    protected void throwExceptionIfNoTests() {
+        if (LightningTests.getTestCount() == 0) {
+            throw new XMLFileNoTestsException("No tests of expected type found in XML file");
         }
     }
 }
