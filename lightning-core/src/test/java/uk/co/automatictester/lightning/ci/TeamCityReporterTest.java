@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.tests.LightningTest;
-import uk.co.automatictester.lightning.tests.PassedTransactionsTest;
+import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class TeamCityReporterTest
 
     @Test
     public void testPrintTeamCityVerifyStatistics() {
-        final PassedTransactionsTest clientTest = mock(PassedTransactionsTest.class);
+        final PassedTransactionsAbsoluteTest clientTest = mock(PassedTransactionsAbsoluteTest.class);
         when(clientTest.getName()).thenReturn("Failed transactions");
         when(clientTest.getActualResult()).thenReturn(1);
 

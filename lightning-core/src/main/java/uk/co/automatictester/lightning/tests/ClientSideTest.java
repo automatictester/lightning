@@ -9,6 +9,8 @@ import uk.co.automatictester.lightning.enums.TestResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_RESULT_INDEX;
+
 public abstract class ClientSideTest extends LightningTest {
 
     protected String transactionName;
@@ -90,6 +92,17 @@ public abstract class ClientSideTest extends LightningTest {
 
     public List<Integer> getLongestTransactions() {
         throw new NotImplementedException("Method not implemented for LightningTest which is not RespTimeBasedTest");
+    }
+
+    protected int getFailureCount(JMeterTransactions jmeterTransactions) {
+        int failureCount = 0;
+        for (String[] transaction : jmeterTransactions) {
+            String success = transaction[TRANSACTION_RESULT_INDEX];
+            if (!Boolean.parseBoolean(success)) {
+                failureCount++;
+            }
+        }
+        return failureCount;
     }
 
     protected abstract void calculateActualResult(JMeterTransactions jmeterTransactions);

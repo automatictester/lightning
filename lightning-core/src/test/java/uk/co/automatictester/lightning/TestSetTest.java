@@ -6,7 +6,7 @@ import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.shared.TestData;
 import uk.co.automatictester.lightning.tests.ClientSideTest;
-import uk.co.automatictester.lightning.tests.PassedTransactionsTest;
+import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
 import uk.co.automatictester.lightning.tests.ServerSideTest;
 
@@ -20,9 +20,9 @@ public class TestSetTest extends ConsoleOutputTest {
 
     @Test
     public void verifyExecuteServerMethod_1_1_1() {
-        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestA = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<ClientSideTest> clientSideTests = new ArrayList<>();
-        clientSideTests.add(passedTransactionsTestA);
+        clientSideTests.add(passedTransactionsAbsoluteTestA);
 
         List<String[]> clientSideTestData = new ArrayList<>();
         clientSideTestData.add(TestData.LOGIN_3514_SUCCESS);
@@ -57,8 +57,8 @@ public class TestSetTest extends ConsoleOutputTest {
 
     @Test
     public void verifyExecuteClientMethod_2_0_0() {
-        PassedTransactionsTest passedTransactionsTestA = new PassedTransactionsTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
-        PassedTransactionsTest passedTransactionsTestB = new PassedTransactionsTest.Builder("Test #2", 0).withDescription("Verify number of passed tests").build();
+        PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestA = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestB = new PassedTransactionsAbsoluteTest.Builder("Test #2", 0).withDescription("Verify number of passed tests").build();
 
         List<String[]> testData = new ArrayList<>();
         testData.add(TestData.LOGIN_3514_SUCCESS);
@@ -66,8 +66,8 @@ public class TestSetTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         List<ClientSideTest> tests = new ArrayList<>();
-        tests.add(passedTransactionsTestA);
-        tests.add(passedTransactionsTestB);
+        tests.add(passedTransactionsAbsoluteTestA);
+        tests.add(passedTransactionsAbsoluteTestB);
 
         TestSet testSet = TestSet.fromClientSideTest(tests);
         configureStream();
