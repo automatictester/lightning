@@ -5,7 +5,7 @@
     <groupId>uk.co.automatictester</groupId>
     <artifactId>lightning-core</artifactId>
     <packaging>jar</packaging>
-    <version>5.10.1</version>
+    <version>5.10.2-SNAPSHOT</version>
     <name>lightning-core</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>http://automatictester.github.io/lightning</url>
