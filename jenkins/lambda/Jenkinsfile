@@ -71,7 +71,8 @@ timestamps {
             }
             stage('Deploy to AWS') {
                 dir('lightning-aws-lambda') {
-                    sh 'aws s3 cp target/lightning-aws-lambda-*.jar s3://automatictester.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
+                    sh 'mv target/lightning-aws-lambda-*.jar target/lightning-aws-lambda.jar'
+                    sh 'aws s3 cp target/lightning-aws-lambda.jar s3://automatictester.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
                 }
                 dir('lightning-aws-lambda/tf') {
                     sh 'terraform init -no-color'

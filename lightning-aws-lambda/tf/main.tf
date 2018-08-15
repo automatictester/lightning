@@ -17,6 +17,7 @@ resource "aws_lambda_function" "lightning_ci" {
     runtime = "java8"
     s3_bucket = "automatictester.co.uk-lightning-aws-lambda-jar"
     s3_key = "lightning-aws-lambda.jar"
+    source_code_hash = "${base64sha256(file("${path.module}/../target/lightning-aws-lambda.jar"))}"
     role = "arn:aws:iam::574377821355:role/LightningLambdaRole"
     memory_size = "${var.memory}"
     timeout = "${var.timeout}"
