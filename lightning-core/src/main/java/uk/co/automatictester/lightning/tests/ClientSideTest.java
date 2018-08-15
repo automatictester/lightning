@@ -97,7 +97,7 @@ public abstract class ClientSideTest extends LightningTest {
 
     protected int getFailureCount(JMeterTransactions jmeterTransactions) {
         int failureCount = 0;
-        for (String[] transaction : jmeterTransactions) {
+        for (String[] transaction : jmeterTransactions.getEntries()) {
             String success = transaction[TRANSACTION_RESULT_INDEX];
             if (!Boolean.parseBoolean(success)) {
                 failureCount++;

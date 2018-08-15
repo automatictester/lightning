@@ -121,7 +121,7 @@ public class ServerSideTest extends LightningTest {
 
     private void calculateActualResult(PerfMonEntries perfMonEntries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        for (String[] transaction : perfMonEntries) {
+        for (String[] transaction : perfMonEntries.getEntries()) {
             String elapsed = transaction[VALUE_INDEX];
             ds.addValue(Double.parseDouble(elapsed));
         }

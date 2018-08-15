@@ -10,15 +10,29 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CsvEntries extends ArrayList<String[]> {
+public abstract class CsvEntries {
 
     protected static S3Client s3Client;
+
+    protected List<String[]> entries = new ArrayList<>();
 
     protected CsvEntries() {
     }
 
+    public void add(String[] entry) {
+        entries.add(entry);
+    }
+
+    public List<String[]> getEntries() {
+        return entries;
+    }
+
+    public int size() {
+        return entries.size();
+    }
+
     protected CsvEntries(List<String[]> entries) {
-        this.addAll(entries);
+        this.entries.addAll(entries);
     }
 
     protected abstract CsvParserSettings getCsvParserSettings();
@@ -28,7 +42,7 @@ public abstract class CsvEntries extends ArrayList<String[]> {
             CsvParserSettings csvParserSettings = getCsvParserSettings();
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(fr);
-            this.addAll(items);
+            entries.addAll(items);
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
@@ -40,14 +54,14 @@ public abstract class CsvEntries extends ArrayList<String[]> {
             CsvParserSettings csvParserSettings = getCsvParserSettings();
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(isr);
-            this.addAll(items);
+            entries.addAll(items);
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
     }
 
     protected void throwExceptionIfEmpty() {
-        if (this.isEmpty()) {
+        if (entries.isEmpty()) {
             throw new CSVFileNoTransactionsException();
         }
     }

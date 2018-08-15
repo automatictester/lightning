@@ -38,7 +38,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
 
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        for (String[] transaction : jmeterTransactions) {
+        for (String[] transaction : jmeterTransactions.getEntries()) {
             String elapsed = transaction[TRANSACTION_DURATION_INDEX];
             ds.addValue(Double.parseDouble(elapsed));
         }

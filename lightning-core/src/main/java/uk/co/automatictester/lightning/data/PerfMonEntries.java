@@ -45,7 +45,7 @@ public class PerfMonEntries extends CsvEntries {
 
     public PerfMonEntries getEntriesWith(String hostAndMetric) {
         PerfMonEntries filteredDataEntries = new PerfMonEntries();
-        for (String[] dataEntry : this) {
+        for (String[] dataEntry : entries) {
             if (dataEntry[HOST_AND_METRIC_INDEX].equals(hostAndMetric)) {
                 filteredDataEntries.add(dataEntry);
             }

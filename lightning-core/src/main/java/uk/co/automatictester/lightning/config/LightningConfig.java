@@ -9,14 +9,12 @@ import uk.co.automatictester.lightning.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.exceptions.XMLFileNoTestsException;
 import uk.co.automatictester.lightning.handlers.*;
 import uk.co.automatictester.lightning.structures.LightningTests;
-import uk.co.automatictester.lightning.tests.LightningTest;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class LightningConfig {
 
@@ -25,10 +23,6 @@ public class LightningConfig {
         NodeList nodes = readXmlFile(xmlFile);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
-    }
-
-    public List<LightningTest> getTests() {
-        return LightningTests.getTests();
     }
 
     private NodeList readXmlFile(File xmlFile) {

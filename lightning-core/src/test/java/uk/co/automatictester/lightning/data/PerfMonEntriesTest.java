@@ -18,8 +18,8 @@ public class PerfMonEntriesTest {
     @Test
     public void verifyReadMethod() {
         PerfMonEntries perfMonEntries = PerfMonEntries.fromFile(LegacyTestData.CSV_2_ENTRIES);
-        assertThat(perfMonEntries, CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_9128));
-        assertThat(perfMonEntries, CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_21250));
+        assertThat(perfMonEntries.getEntries(), CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_9128));
+        assertThat(perfMonEntries.getEntries(), CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_21250));
     }
 
     @Test(expectedExceptions = CSVFileIOException.class)

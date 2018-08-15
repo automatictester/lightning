@@ -31,7 +31,7 @@ public class JMeterTransactions extends CsvEntries {
 
         long finish = System.currentTimeMillis();
         long millisecondsBetween = finish - start;
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", this.size(), millisecondsBetween);
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), millisecondsBetween);
     }
 
     private JMeterTransactions(String region, String bucket, String csvObject) {
@@ -44,11 +44,11 @@ public class JMeterTransactions extends CsvEntries {
 
         long finish = System.currentTimeMillis();
         long millisecondsBetween = finish - start;
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", this.size(), millisecondsBetween);
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), millisecondsBetween);
     }
 
-    private JMeterTransactions(List<String[]> jmeterTransactions) {
-        super(jmeterTransactions);
+    private JMeterTransactions(List<String[]> entries) {
+        super(entries);
     }
 
     public static JMeterTransactions fromFile(File csvFile) {
@@ -59,13 +59,13 @@ public class JMeterTransactions extends CsvEntries {
         return new JMeterTransactions(region, bucket, csvObject);
     }
 
-    public static JMeterTransactions fromList(List<String[]> jmeterTransactions) {
-        return new JMeterTransactions(jmeterTransactions);
+    public static JMeterTransactions fromList(List<String[]> entries) {
+        return new JMeterTransactions(entries);
     }
 
     public JMeterTransactions getTransactionsWith(String label) {
         JMeterTransactions transactions = new JMeterTransactions();
-        for (String[] transaction : this) {
+        for (String[] transaction : entries) {
             if (transaction[TRANSACTION_LABEL_INDEX].equals(label)) {
                 transactions.add(transaction);
             }
@@ -78,7 +78,7 @@ public class JMeterTransactions extends CsvEntries {
 
     public JMeterTransactions getTransactionsMatching(String labelPattern) {
         JMeterTransactions transactions = new JMeterTransactions();
-        for (String[] transaction : this) {
+        for (String[] transaction : entries) {
             if (transaction[TRANSACTION_LABEL_INDEX].matches(labelPattern)) {
                 transactions.add(transaction);
             }
@@ -96,7 +96,7 @@ public class JMeterTransactions extends CsvEntries {
 
     public int getFailCount() {
         int failCount = 0;
-        for (String[] transaction : this) {
+        for (String[] transaction : entries) {
             if ("false".equals(transaction[TRANSACTION_RESULT_INDEX])) {
                 failCount++;
             }
@@ -106,7 +106,7 @@ public class JMeterTransactions extends CsvEntries {
 
     public long getFirstTransactionTimestamp() {
         long minTimestamp = 0;
-        for (String[] transaction : this) {
+        for (String[] transaction : entries) {
             long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
             if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
                 minTimestamp = currentTransactionTimestamp;
@@ -117,7 +117,7 @@ public class JMeterTransactions extends CsvEntries {
 
     public long getLastTransactionTimestamp() {
         long maxTimestamp = 0;
-        for (String[] transaction : this) {
+        for (String[] transaction : entries) {
             long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
             if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
                 maxTimestamp = currentTransactionTimestamp;
@@ -128,7 +128,7 @@ public class JMeterTransactions extends CsvEntries {
 
     private List<Integer> getTransactionDurationsDesc() {
         List<Integer> transactionDurations = new ArrayList<>();
-        for (String[] transaction : this) {
+        for (String[] transaction : entries) {
             int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX]);
             transactionDurations.add(elapsed);
         }

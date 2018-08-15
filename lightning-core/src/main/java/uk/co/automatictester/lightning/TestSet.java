@@ -54,7 +54,7 @@ public class TestSet {
     }
 
     public int getTestCount() {
-        return LightningTests.getTests().size();
+        return passCount + failCount + ignoreCount;
     }
 
     public int getPassCount() {
