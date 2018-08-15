@@ -17,6 +17,7 @@ public class TestSet {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void executeTests() {
+        resetTestCounts();
         StringBuilder output = new StringBuilder();
         for (LightningTest test : getTests()) {
             test.execute();
@@ -24,7 +25,7 @@ public class TestSet {
             String testExecutionReport = test.getTestExecutionReport();
             output.append(testExecutionReport).append(System.lineSeparator());
         }
-        testExecutionReport += output;
+        testExecutionReport = output.toString();
     }
 
     private void setCounts(LightningTest test) {
@@ -71,5 +72,11 @@ public class TestSet {
 
     public List<LightningTest> getTests() {
         return LightningTests.getTests();
+    }
+
+    private void resetTestCounts() {
+        passCount = 0;
+        failCount = 0;
+        ignoreCount = 0;
     }
 }
