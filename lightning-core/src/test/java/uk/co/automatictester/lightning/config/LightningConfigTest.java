@@ -2,9 +2,9 @@ package uk.co.automatictester.lightning.config;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.TestSet;
-import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.exceptions.*;
 import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.tests.base.LightningTest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -111,7 +111,7 @@ public class LightningConfigTest {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_SERVER_LESS);
         List<LightningTest> tests = new TestSet().getTests();
-        ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.LESS_THAN, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #2", 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -122,7 +122,7 @@ public class LightningConfigTest {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_SERVER_BETWEEN);
         List<LightningTest> tests = new TestSet().getTests();
-        ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.BETWEEN, 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #2", 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -133,7 +133,7 @@ public class LightningConfigTest {
         LightningConfig lightningConfig = new LightningConfig();
         lightningConfig.readTests(TEST_SET_SERVER_GREATER);
         List<LightningTest> tests = new TestSet().getTests();
-        ServerSideTest test = new ServerSideTest.Builder("Test #2", ServerSideTestType.GREATER_THAN, 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideGreaterThanTest test = new ServerSideGreaterThanTest.Builder("Test #2", 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

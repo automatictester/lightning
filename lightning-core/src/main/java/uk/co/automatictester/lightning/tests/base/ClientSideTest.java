@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.tests;
+package uk.co.automatictester.lightning.tests.base;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;

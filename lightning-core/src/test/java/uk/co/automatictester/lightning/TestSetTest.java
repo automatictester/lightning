@@ -3,11 +3,14 @@ package uk.co.automatictester.lightning;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.data.PerfMonEntries;
-import uk.co.automatictester.lightning.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 import uk.co.automatictester.lightning.structures.LightningTests;
 import uk.co.automatictester.lightning.structures.TestData;
-import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
+import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
+import uk.co.automatictester.lightning.tests.ServerSideGreaterThanTest;
+import uk.co.automatictester.lightning.tests.ServerSideLessThanTest;
+import uk.co.automatictester.lightning.tests.base.LightningTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +32,9 @@ public class TestSetTest extends ConsoleOutputTest {
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(clientSideTestData);
         TestData.addClientSideTestData(jmeterTransactions);
 
-        ServerSideTest testA = new ServerSideTest.Builder("Test #1", ServerSideTestType.LESS_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        ServerSideTest testB = new ServerSideTest.Builder("Test #2", ServerSideTestType.GREATER_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        ServerSideTest testC = new ServerSideTest.Builder("Test #3", ServerSideTestType.GREATER_THAN, 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.240 CPU").build();
+        ServerSideLessThanTest testA = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideGreaterThanTest testB = new ServerSideGreaterThanTest.Builder("Test #2", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
+        ServerSideGreaterThanTest testC = new ServerSideGreaterThanTest.Builder("Test #3", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.240 CPU").build();
 
         List<String[]> serverSideTestData = new ArrayList<>();
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10000);

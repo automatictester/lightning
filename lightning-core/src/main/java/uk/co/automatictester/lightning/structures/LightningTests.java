@@ -1,6 +1,6 @@
 package uk.co.automatictester.lightning.structures;
 
-import uk.co.automatictester.lightning.tests.LightningTest;
+import uk.co.automatictester.lightning.tests.base.LightningTest;
 
 import java.util.ArrayList;
 import java.util.List;

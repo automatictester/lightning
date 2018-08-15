@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.structures.LightningTests;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
+import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
 
 import static uk.co.automatictester.lightning.utils.LightningConfigProcessingHelper.*;

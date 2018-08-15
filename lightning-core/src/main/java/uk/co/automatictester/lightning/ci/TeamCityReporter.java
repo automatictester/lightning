@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.tests.LightningTest;
+import uk.co.automatictester.lightning.tests.base.LightningTest;
 
 import java.util.Arrays;
 

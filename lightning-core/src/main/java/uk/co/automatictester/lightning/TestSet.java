@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.structures.LightningTests;
-import uk.co.automatictester.lightning.tests.LightningTest;
+import uk.co.automatictester.lightning.tests.base.LightningTest;
 
 import java.util.List;
 

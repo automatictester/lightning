@@ -1,6 +1,5 @@
 Test name:            CPU range
 Test type:            serverSideTest
-Test subtype:         Between
 Test description:     Verify server-side resource utilisation
 Host and metric:      192.168.0.12 CPU
 Expected result:      Average value between 10000 and 40000
@@ -10,7 +9,6 @@ Test result:          Pass
 
 Test name:            CPU upper limit
 Test type:            serverSideTest
-Test subtype:         Less than
 Test description:     Verify server-side resource utilisation
 Host and metric:      192.168.0.12 CPU
 Expected result:      Average value < 60000

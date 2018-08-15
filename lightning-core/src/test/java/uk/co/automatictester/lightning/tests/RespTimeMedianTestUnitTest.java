@@ -6,6 +6,7 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 import uk.co.automatictester.lightning.structures.TestData;
+import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 
 import java.util.ArrayList;
 import java.util.List;

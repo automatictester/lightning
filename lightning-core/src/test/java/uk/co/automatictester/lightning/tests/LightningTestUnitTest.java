@@ -4,6 +4,7 @@ import org.mockito.Mockito;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
+import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 
 import java.util.ArrayList;
 import java.util.List;

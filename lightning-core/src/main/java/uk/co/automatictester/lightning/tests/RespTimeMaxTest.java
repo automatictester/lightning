@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
+import uk.co.automatictester.lightning.tests.base.RespTimeBasedTest;
 
 import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
@@ -25,16 +26,6 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         for (String[] transaction : jmeterTransactions.getEntries()) {
@@ -50,6 +41,14 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
         } else {
             result = TestResult.PASS;
         }
+    }
+
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     public static class Builder {

@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.tests;
+package uk.co.automatictester.lightning.tests.base;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

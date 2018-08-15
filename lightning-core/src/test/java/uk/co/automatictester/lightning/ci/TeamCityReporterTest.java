@@ -3,9 +3,9 @@ package uk.co.automatictester.lightning.ci;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.TestSet;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.tests.LightningTest;
+import uk.co.automatictester.lightning.tests.base.LightningTest;
 import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
-import uk.co.automatictester.lightning.tests.ServerSideTest;
+import uk.co.automatictester.lightning.tests.base.ServerSideTest;
 
 import java.util.ArrayList;
 

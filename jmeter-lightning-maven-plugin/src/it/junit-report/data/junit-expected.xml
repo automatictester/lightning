@@ -2,7 +2,6 @@
     <testcase name="CPU utilisation" time="0">
         <failure message="Average value = 10000" type="serverSideTest">Test name:            CPU utilisation
 Test type:            serverSideTest
-Test subtype:         Less than
 Host and metric:      192.168.0.12 CPU
 Expected result:      Average value &lt; 10000
 Actual result:        Average value = 10000

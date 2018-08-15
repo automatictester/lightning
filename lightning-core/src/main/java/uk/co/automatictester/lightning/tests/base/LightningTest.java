@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.tests;
+package uk.co.automatictester.lightning.tests.base;
 
 import uk.co.automatictester.lightning.enums.TestResult;
 

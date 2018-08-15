@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.handlers;
 
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.structures.LightningTests;
-import uk.co.automatictester.lightning.tests.ClientSideTest;
+import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.tests.PassedTransactionsRelativeTest;
 
@@ -18,7 +18,9 @@ public class PassedTransactionsTestHandler extends ElementHandler {
         String testName = getTestName(element);
         String description = getTestDescription(element);
         ClientSideTest test;
-        if (isSubElementPresent(element, "allowedNumberOfFailedTransactions")) {
+        boolean isAbsolute = isSubElementPresent(element, "allowedNumberOfFailedTransactions");
+
+        if (isAbsolute) {
             int allowedNumberOfFailedTransactions = getIntegerValueFromElement(element, "allowedNumberOfFailedTransactions");
             PassedTransactionsAbsoluteTest.Builder builder = new PassedTransactionsAbsoluteTest.Builder(testName, allowedNumberOfFailedTransactions);
             builder.withDescription(description);
@@ -43,6 +45,7 @@ public class PassedTransactionsTestHandler extends ElementHandler {
             }
             test = builder.build();
         }
+
         LightningTests.add(test);
     }
 }
