@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.config.LightningConfig;
 import uk.co.automatictester.lightning.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.s3.S3Client;
+import uk.co.automatictester.lightning.structures.LightningTests;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,6 +25,7 @@ public class LightningLambdaConfig extends LightningConfig {
     }
 
     public void readTests(String xmlObject) {
+        LightningTests.flush();
         String xmlObjectContent = s3Client.getS3ObjectContent(xmlObject);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);
