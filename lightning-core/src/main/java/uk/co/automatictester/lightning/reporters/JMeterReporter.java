@@ -6,11 +6,11 @@ import uk.co.automatictester.lightning.data.JMeterTransactions;
 
 public class JMeterReporter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JMeterReporter.class);
+    private static final Logger log = LoggerFactory.getLogger(JMeterReporter.class);
 
     public static void printJMeterReport(JMeterTransactions jmeterTransactions) {
         String report = getJMeterReport(jmeterTransactions);
-        logger.info(report);
+        log.info(report);
     }
 
     public static String getJMeterReport(JMeterTransactions jmeterTransactions) {

@@ -14,7 +14,7 @@ import java.util.Properties;
 @Parameters(separators = "=")
 public class CommandLineInterface {
 
-    private static final Logger logger = LoggerFactory.getLogger(CommandLineInterface.class);
+    private static final Logger log = LoggerFactory.getLogger(CommandLineInterface.class);
 
     @Parameter(names = {"-h", "--help"}, help = true, hidden = true)
     private boolean help;
@@ -72,7 +72,7 @@ public class CommandLineInterface {
     }
 
     private void logErrorAndExit(String errorMessage) {
-        logger.error(errorMessage);
+        log.error(errorMessage);
         System.exit(1);
     }
 }

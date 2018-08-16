@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.base.ServerSideTest;
 
@@ -30,7 +29,7 @@ public class ServerSideGreaterThanTest extends ServerSideTest {
     }
 
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return TEST_TYPE.hashCode() + name.hashCode() + (int) threshold;
     }
 
     public static class Builder {

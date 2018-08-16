@@ -12,7 +12,7 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
 
     protected List<Integer> longestTransactions;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected RespTimeBasedTest(String testType, String testName) {
         super(testType, testName);
@@ -62,6 +62,6 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
 
     @Override
     public void printTestExecutionReport() {
-        logger.info(getTestExecutionReport());
+        log.info(getTestExecutionReport());
     }
 }

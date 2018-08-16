@@ -4,7 +4,7 @@ public enum Mode {
     verify("verify"),
     report("report");
 
-    private final String value;
+    private String value;
 
     private Mode(String value) {
         this.value = value;
@@ -12,6 +12,6 @@ public enum Mode {
 
     @Override
     public String toString() {
-        return this.value;
+        return value;
     }
 }

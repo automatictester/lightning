@@ -14,6 +14,7 @@ public class PercentTest {
     private Integer[][] positiveTestData() {
         return new Integer[][]{
                 {0},
+                {50},
                 {100}
         };
     }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static uk.co.automatictester.lightning.constants.JMeterColumns.*;
+import static uk.co.automatictester.lightning.enums.JMeterColumns.*;
 
 public class JMeterTransactions extends CsvEntries {
 
@@ -66,7 +66,7 @@ public class JMeterTransactions extends CsvEntries {
     public JMeterTransactions getTransactionsWith(String label) {
         JMeterTransactions transactions = new JMeterTransactions();
         for (String[] transaction : entries) {
-            if (transaction[TRANSACTION_LABEL_INDEX].equals(label)) {
+            if (transaction[TRANSACTION_LABEL_INDEX.getValue()].equals(label)) {
                 transactions.add(transaction);
             }
         }
@@ -79,7 +79,7 @@ public class JMeterTransactions extends CsvEntries {
     public JMeterTransactions getTransactionsMatching(String labelPattern) {
         JMeterTransactions transactions = new JMeterTransactions();
         for (String[] transaction : entries) {
-            if (transaction[TRANSACTION_LABEL_INDEX].matches(labelPattern)) {
+            if (transaction[TRANSACTION_LABEL_INDEX.getValue()].matches(labelPattern)) {
                 transactions.add(transaction);
             }
         }
@@ -97,7 +97,7 @@ public class JMeterTransactions extends CsvEntries {
     public int getFailCount() {
         int failCount = 0;
         for (String[] transaction : entries) {
-            if ("false".equals(transaction[TRANSACTION_RESULT_INDEX])) {
+            if ("false".equals(transaction[TRANSACTION_RESULT_INDEX.getValue()])) {
                 failCount++;
             }
         }
@@ -107,7 +107,7 @@ public class JMeterTransactions extends CsvEntries {
     public long getFirstTransactionTimestamp() {
         long minTimestamp = 0;
         for (String[] transaction : entries) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
             if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
                 minTimestamp = currentTransactionTimestamp;
             }
@@ -118,7 +118,7 @@ public class JMeterTransactions extends CsvEntries {
     public long getLastTransactionTimestamp() {
         long maxTimestamp = 0;
         for (String[] transaction : entries) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP]);
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
             if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
                 maxTimestamp = currentTransactionTimestamp;
             }
@@ -129,7 +129,7 @@ public class JMeterTransactions extends CsvEntries {
     private List<Integer> getTransactionDurationsDesc() {
         List<Integer> transactionDurations = new ArrayList<>();
         for (String[] transaction : entries) {
-            int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX]);
+            int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX.getValue()]);
             transactionDurations.add(elapsed);
         }
         Collections.sort(transactionDurations);
@@ -138,7 +138,7 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
-        int transactionDurationsCount = (transactionDurations.size() >= MAX_NUMBER_OF_LONGEST_TRANSACTIONS) ? MAX_NUMBER_OF_LONGEST_TRANSACTIONS : transactionDurations.size();
+        int transactionDurationsCount = (transactionDurations.size() >= MAX_NUMBER_OF_LONGEST_TRANSACTIONS.getValue()) ? MAX_NUMBER_OF_LONGEST_TRANSACTIONS.getValue() : transactionDurations.size();
         return transactionDurations.subList(0, transactionDurationsCount);
     }
 

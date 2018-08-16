@@ -9,14 +9,14 @@ import uk.co.automatictester.lightning.structures.TestData;
 
 import java.util.List;
 
-import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_RESULT_INDEX;
+import static uk.co.automatictester.lightning.enums.JMeterColumns.TRANSACTION_RESULT_INDEX;
 
 public abstract class ClientSideTest extends LightningTest {
 
     protected String transactionName;
     protected int transactionCount;
     protected boolean regexp = false;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected ClientSideTest(String testType, String testName) {
         super(testType, testName);
@@ -83,7 +83,7 @@ public abstract class ClientSideTest extends LightningTest {
 
     @Override
     public void printTestExecutionReport() {
-        logger.info(getTestExecutionReport());
+        log.info(getTestExecutionReport());
     }
 
     protected String getTransactionNameForReport() {
@@ -98,7 +98,7 @@ public abstract class ClientSideTest extends LightningTest {
     protected int getFailureCount(JMeterTransactions jmeterTransactions) {
         int failureCount = 0;
         for (String[] transaction : jmeterTransactions.getEntries()) {
-            String success = transaction[TRANSACTION_RESULT_INDEX];
+            String success = transaction[TRANSACTION_RESULT_INDEX.getValue()];
             if (!Boolean.parseBoolean(success)) {
                 failureCount++;
             }

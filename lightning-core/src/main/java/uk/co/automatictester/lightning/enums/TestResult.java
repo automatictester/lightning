@@ -5,7 +5,7 @@ public enum TestResult {
     FAIL("FAIL"),
     ERROR("ERROR");
 
-    private final String value;
+    private String value;
 
     private TestResult(String value) {
         this.value = value;
@@ -13,6 +13,6 @@ public enum TestResult {
 
     @Override
     public String toString() {
-        return this.value;
+        return value;
     }
 }

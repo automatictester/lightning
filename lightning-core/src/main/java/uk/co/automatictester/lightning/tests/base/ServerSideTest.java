@@ -7,20 +7,20 @@ import uk.co.automatictester.lightning.data.PerfMonEntries;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.structures.TestData;
 
-import static uk.co.automatictester.lightning.constants.PerfMonColumns.VALUE_INDEX;
+import static uk.co.automatictester.lightning.enums.PerfMonColumns.VALUE_INDEX;
 
 public abstract class ServerSideTest extends LightningTest {
 
+    protected static final String TEST_TYPE = "serverSideTest";
     protected static final String ACTUAL_RESULT_MESSAGE = "Average value = %s";
 
     protected String hostAndMetric;
     protected int dataEntriesCount;
-    protected String expectedResultMessage;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected ServerSideTest(String testName) {
-        super("serverSideTest", testName);
+        super(TEST_TYPE, testName);
     }
 
     public void execute() {
@@ -65,7 +65,7 @@ public abstract class ServerSideTest extends LightningTest {
     }
 
     public void printTestExecutionReport() {
-        logger.info(getTestExecutionReport());
+        log.info(getTestExecutionReport());
     }
 
     public String getHostAndMetric() {
@@ -79,7 +79,7 @@ public abstract class ServerSideTest extends LightningTest {
     protected void calculateActualResult(PerfMonEntries entries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         for (String[] transaction : entries.getEntries()) {
-            String elapsed = transaction[VALUE_INDEX];
+            String elapsed = transaction[VALUE_INDEX.getValue()];
             ds.addValue(Double.parseDouble(elapsed));
         }
         actualResult = (int) ds.getMean();

@@ -21,6 +21,10 @@ public class Percent {
         return value;
     }
 
+    private boolean isPercent(int percent) {
+        return (percent >= 0) && (percent <= 100);
+    }
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
@@ -30,9 +34,4 @@ public class Percent {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
-    private boolean isPercent(int percent) {
-        return (percent >= 0) && (percent <= 100);
-    }
-
 }

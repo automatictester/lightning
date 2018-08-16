@@ -29,7 +29,7 @@ public class CliTestRunner {
     private static PerfMonEntries perfMonEntries;
     private static Mode mode;
 
-    private static final Logger logger = LoggerFactory.getLogger(CliTestRunner.class);
+    private static final Logger log = LoggerFactory.getLogger(CliTestRunner.class);
 
     public static void main(String[] args) {
         parseParams(args);
@@ -63,7 +63,7 @@ public class CliTestRunner {
         try {
             params = new CommandLineInterface(args);
         } catch (MissingCommandException e) {
-            logger.error("Invalid command, should be one of these: report, verify");
+            log.error("Invalid command, should be one of these: report, verify");
             setExitCode(1);
         }
     }
@@ -87,7 +87,7 @@ public class CliTestRunner {
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        logger.info("Total execution time:    {}ms", testExecTime);
+        log.info("Total execution time:    {}ms", testExecTime);
 
         if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
             exitCode = 1;

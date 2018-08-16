@@ -1,32 +1,22 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 
 public class ThroughputTest extends ClientSideTest {
 
+    private static final String TEST_TYPE = "throughputTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Throughput >= %.2f / second";
     private static final String ACTUAL_RESULT_MESSAGE = "Throughput = %.2f / second";
     private final double minThroughput;
     private double actualResult;
 
     private ThroughputTest(String testName, double minThroughput) {
-        super("throughputTest", testName);
+        super(TEST_TYPE, testName);
         this.minThroughput = minThroughput;
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, minThroughput);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     public void calculateActualResultDescription() {
@@ -50,6 +40,16 @@ public class ThroughputTest extends ClientSideTest {
         } else {
             result = TestResult.PASS;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return TEST_TYPE.hashCode() + name.hashCode() + (int) minThroughput;
     }
 
     public static class Builder {

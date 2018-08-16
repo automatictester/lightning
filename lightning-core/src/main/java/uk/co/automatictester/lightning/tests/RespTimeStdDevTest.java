@@ -1,23 +1,23 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 
-import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_DURATION_INDEX;
+import static uk.co.automatictester.lightning.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeStdDevTest extends ClientSideTest {
 
+    private static final String TEST_TYPE = "respTimeStdDevTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Average standard deviance time <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Average standard deviance time = %s";
 
     private final long maxRespTimeStdDev;
 
     private RespTimeStdDevTest(String testName, long maxRespTimeStdDev) {
-        super("respTimeStdDevTest", testName);
+        super(TEST_TYPE, testName);
         this.maxRespTimeStdDev = maxRespTimeStdDev;
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
     }
@@ -33,13 +33,13 @@ public class RespTimeStdDevTest extends ClientSideTest {
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTimeStdDev;
     }
 
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         for (String[] transaction : jmeterTransactions.getEntries()) {
-            String elapsed = transaction[TRANSACTION_DURATION_INDEX];
+            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
             ds.addValue(Double.parseDouble(elapsed));
         }
         actualResult = (int) ds.getStandardDeviation();

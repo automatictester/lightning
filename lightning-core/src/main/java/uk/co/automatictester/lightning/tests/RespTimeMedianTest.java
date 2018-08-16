@@ -1,16 +1,16 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.base.RespTimeBasedTest;
 
-import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_DURATION_INDEX;
+import static uk.co.automatictester.lightning.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeMedianTest extends RespTimeBasedTest {
 
+    private static final String TEST_TYPE = "medianRespTimeTest";
     private static final String MESSAGE = "median response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
     private static final String ACTUAL_RESULT_MESSAGE = MESSAGE + "= %s";
@@ -18,7 +18,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     private final double maxRespTime;
 
     private RespTimeMedianTest(String testName, long maxRespTime) {
-        super("medianRespTimeTest", testName);
+        super(TEST_TYPE, testName);
         this.maxRespTime = maxRespTime;
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
@@ -34,13 +34,13 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
     }
 
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         for (String[] transaction : jmeterTransactions.getEntries()) {
-            String elapsed = transaction[TRANSACTION_DURATION_INDEX];
+            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
             ds.addValue(Double.parseDouble(elapsed));
         }
         actualResult = (int) ds.getPercentile(50);

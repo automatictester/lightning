@@ -14,7 +14,7 @@ public class TeamCityReporter extends CIReporter {
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private TeamCityReporter(TestSet testSet) {
         super(testSet);
@@ -73,7 +73,7 @@ public class TeamCityReporter extends CIReporter {
 
     private void log(String output) {
         for (String line : Arrays.asList(output.split(System.lineSeparator()))) {
-            logger.info(line);
+            log.info(line);
         }
     }
 }

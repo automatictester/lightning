@@ -5,7 +5,7 @@ public enum ServerSideTestType {
     BETWEEN("Between"),
     GREATER_THAN("Greater than");
 
-    private final String value;
+    private String value;
 
     private ServerSideTestType(String value) {
         this.value = value;
@@ -13,6 +13,6 @@ public enum ServerSideTestType {
 
     @Override
     public String toString() {
-        return this.value;
+        return value;
     }
 }

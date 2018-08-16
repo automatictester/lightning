@@ -14,7 +14,7 @@ public class TestSet {
     private int failCount = 0;
     private int ignoreCount = 0;
     private String testExecutionReport = "";
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public void executeTests() {
         resetTestCounts();
@@ -46,7 +46,7 @@ public class TestSet {
     public void printTestExecutionReport() {
         String[] testExecutionReport = getTestExecutionReport().split(System.lineSeparator());
         for (String line : testExecutionReport) {
-            logger.info(line);
+            log.info(line);
         }
     }
 

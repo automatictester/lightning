@@ -2,8 +2,6 @@ package uk.co.automatictester.lightning.tests.base;
 
 import uk.co.automatictester.lightning.enums.TestResult;
 
-import java.util.ArrayList;
-
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public abstract class LightningTest {

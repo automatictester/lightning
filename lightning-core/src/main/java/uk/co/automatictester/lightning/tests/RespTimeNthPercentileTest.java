@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
@@ -9,10 +8,11 @@ import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.base.RespTimeBasedTest;
 import uk.co.automatictester.lightning.utils.IntToOrdConverter;
 
-import static uk.co.automatictester.lightning.constants.JMeterColumns.TRANSACTION_DURATION_INDEX;
+import static uk.co.automatictester.lightning.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
+    private static final String TEST_TYPE = "nthPercRespTimeTest";
     private static final String MESSAGE = "%s percentile of transactions have response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
     private static final String ACTUAL_RESULT_MESSAGE = MESSAGE + "= %s";
@@ -38,14 +38,14 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
     }
 
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
         for (String[] transaction : jmeterTransactions.getEntries()) {
-            String elapsed = transaction[TRANSACTION_DURATION_INDEX];
+            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
             ds.addValue(Double.parseDouble(elapsed));
         }
         actualResult = (int) ds.getPercentile((double) percentile);

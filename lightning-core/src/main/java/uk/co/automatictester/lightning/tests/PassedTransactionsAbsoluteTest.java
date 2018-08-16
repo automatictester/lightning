@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.data.JMeterTransactions;
 import uk.co.automatictester.lightning.enums.TestResult;
 import uk.co.automatictester.lightning.tests.base.ClientSideTest;
 
 public class PassedTransactionsAbsoluteTest extends ClientSideTest {
 
+    private static final String TEST_TYPE = "passedTransactionsTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Number of failed transactions <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Number of failed transactions = %s";
 
@@ -15,7 +15,7 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
     private int failureCount;
 
     private PassedTransactionsAbsoluteTest(String testName, long allowedNumberOfFailedTransactions) {
-        super("passedTransactionsTest", testName);
+        super(TEST_TYPE, testName);
         this.allowedNumberOfFailedTransactions = allowedNumberOfFailedTransactions;
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, allowedNumberOfFailedTransactions);
     }
@@ -44,7 +44,7 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return TEST_TYPE.hashCode() + name.hashCode() + (int) allowedNumberOfFailedTransactions;
     }
 
     public static class Builder {

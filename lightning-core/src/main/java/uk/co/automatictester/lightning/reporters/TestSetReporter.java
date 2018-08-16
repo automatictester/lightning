@@ -6,12 +6,12 @@ import uk.co.automatictester.lightning.TestSet;
 
 public class TestSetReporter {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestSetReporter.class);
+    private static final Logger log = LoggerFactory.getLogger(TestSetReporter.class);
 
     public static void printTestSetExecutionSummaryReport(TestSet testSet) {
         String[] testSetExecutionSummaryReport = getTestSetExecutionSummaryReport(testSet).split(System.lineSeparator());
         for (String line : testSetExecutionSummaryReport) {
-            logger.info(line);
+            log.info(line);
         }
     }
 
