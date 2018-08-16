@@ -121,6 +121,7 @@ public class CliTestRunner {
                         .printTeamCityBuildReportSummary()
                         .printTeamCityReportStatistics();
                 JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
+                break;
         }
     }
 
