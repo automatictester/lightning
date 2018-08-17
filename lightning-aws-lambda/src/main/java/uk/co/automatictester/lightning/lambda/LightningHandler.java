@@ -38,6 +38,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     private void parseRequestParams(LightningRequest request) {
         LightningRequestValidator.validate(request);
+        log.info(response.getExitCode()); // TODO
 
         mode = request.getMode();
         bucket = request.getBucket();
@@ -67,6 +68,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
             String teamCityBuildStatusText = core.getTeamCityBuildReportSummary();
             String teamCityReportStatistics = core.getTeamCityReportStatistics();
             String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
+            log.info(response.getExitCode()); // TODO
             log.info(combinedTeamCityReport);
             String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
             response.setTeamCityReport(combinedTeamCityReportS3Path);
@@ -104,6 +106,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     private void runReport() {
         String report = core.runReport();
+        log.info(response.getExitCode()); // TODO
         log.info(report);
 
         String jmeterReportS3Path = core.putS3Object("output/report.log", report);
