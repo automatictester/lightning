@@ -24,7 +24,7 @@ def buildAndUnitTest() {
         }
     } finally {
         junit 'lightning-aws-lambda/target/surefire-reports/junitreports/*.xml'
-        jacoco execPattern: '**/lightning-aws-lambda/target/jacoco.exec'
+        jacoco execPattern: '**/lightning-aws-lambda/target/jacoco.exec', classPattern: '**/lightning-aws-lambda/target/classes', sourcePattern: '**/lightning-aws-lambda/src/main/java'
     }
 }
 
