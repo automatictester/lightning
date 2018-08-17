@@ -1,0 +1,4 @@
+Transactions executed: 10, failed: 0
+##teamcity[buildStatus text='Transactions executed: 10, failed: 0']
+##teamcity[buildStatisticValue key='Failed transactions' value='0']
+##teamcity[buildStatisticValue key='Total transactions' value='10']

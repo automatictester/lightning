@@ -1,0 +1,36 @@
+Test name:            Failed transactions
+Test type:            passedTransactionsTest
+Test description:     Verify number of passed tests
+Transaction name:     Login
+Expected result:      Percent of failed transactions <= 0
+Actual result:        Percent of failed transactions = 0
+Transaction count:    5
+Test result:          Pass
+
+Test name:            CPU range
+Test type:            serverSideTest
+Test description:     Verify server-side resource utilisation
+Host and metric:      192.168.0.12 CPU
+Expected result:      Average value between 10000 and 40000
+Actual result:        Average value = 15189
+Entries count:        2
+Test result:          Pass
+
+Test name:            CPU upper limit
+Test type:            serverSideTest
+Test description:     Verify server-side resource utilisation
+Host and metric:      192.168.0.12 CPU
+Expected result:      Average value < 60000
+Actual result:        Average value = 15189
+Entries count:        2
+Test result:          Pass
+
+============= EXECUTION SUMMARY =============
+Tests executed:    3
+Tests passed:      3
+Tests failed:      0
+Tests errors:      0
+Test set status:   Pass
+##teamcity[buildStatisticValue key='Failed transactions' value='0']
+##teamcity[buildStatisticValue key='CPU range' value='15189']
+##teamcity[buildStatisticValue key='CPU upper limit' value='15189']
