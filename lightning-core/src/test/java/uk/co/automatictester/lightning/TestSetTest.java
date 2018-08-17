@@ -1,16 +1,17 @@
 package uk.co.automatictester.lightning;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonEntries;
+import uk.co.automatictester.lightning.core.state.TestSet;
+import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
-import uk.co.automatictester.lightning.structures.LightningTests;
-import uk.co.automatictester.lightning.structures.TestData;
-import uk.co.automatictester.lightning.tests.PassedTransactionsAbsoluteTest;
-import uk.co.automatictester.lightning.tests.RespTimeAvgTest;
-import uk.co.automatictester.lightning.tests.ServerSideGreaterThanTest;
-import uk.co.automatictester.lightning.tests.ServerSideLessThanTest;
-import uk.co.automatictester.lightning.tests.base.LightningTest;
+import uk.co.automatictester.lightning.core.structures.LightningTests;
+import uk.co.automatictester.lightning.core.structures.TestData;
+import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
+import uk.co.automatictester.lightning.core.tests.RespTimeAvgTest;
+import uk.co.automatictester.lightning.core.tests.ServerSideGreaterThanTest;
+import uk.co.automatictester.lightning.core.tests.ServerSideLessThanTest;
+import uk.co.automatictester.lightning.core.tests.base.LightningTest;
 
 import java.util.ArrayList;
 import java.util.List;

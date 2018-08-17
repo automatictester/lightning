@@ -1,6 +1,6 @@
 package uk.co.automatictester.lightning.shared;
 
-import uk.co.automatictester.lightning.tests.*;
+import uk.co.automatictester.lightning.core.tests.*;
 
 import java.io.File;
 

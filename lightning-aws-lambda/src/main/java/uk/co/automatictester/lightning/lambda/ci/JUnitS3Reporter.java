@@ -1,9 +1,9 @@
 package uk.co.automatictester.lightning.lambda.ci;
 
-import uk.co.automatictester.lightning.TestSet;
-import uk.co.automatictester.lightning.ci.JUnitReporter;
-import uk.co.automatictester.lightning.exceptions.JunitReportGenerationException;
-import uk.co.automatictester.lightning.s3.S3Client;
+import uk.co.automatictester.lightning.core.state.TestSet;
+import uk.co.automatictester.lightning.core.ci.JUnitReporter;
+import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
+import uk.co.automatictester.lightning.core.s3.S3Client;
 
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;

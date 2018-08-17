@@ -4,17 +4,17 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.co.automatictester.lightning.TestSet;
-import uk.co.automatictester.lightning.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonEntries;
+import uk.co.automatictester.lightning.core.state.TestSet;
+import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.lambda.ci.JUnitS3Reporter;
 import uk.co.automatictester.lightning.lambda.ci.JenkinsS3Reporter;
 import uk.co.automatictester.lightning.lambda.readers.LightningLambdaConfig;
-import uk.co.automatictester.lightning.reporters.JMeterReporter;
-import uk.co.automatictester.lightning.reporters.TestSetReporter;
-import uk.co.automatictester.lightning.s3.S3Client;
-import uk.co.automatictester.lightning.structures.TestData;
+import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
+import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
+import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.structures.TestData;
 
 public class LightningHandler implements RequestHandler<LightningRequest, LightningResponse> {
 

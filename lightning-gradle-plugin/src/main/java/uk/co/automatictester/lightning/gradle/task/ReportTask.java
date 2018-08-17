@@ -2,10 +2,10 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
-import uk.co.automatictester.lightning.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.reporters.JMeterReporter;
+import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
+import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
 
 public class ReportTask extends LightningTask {
 

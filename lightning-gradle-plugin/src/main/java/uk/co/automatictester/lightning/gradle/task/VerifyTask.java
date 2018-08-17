@@ -2,14 +2,14 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
-import uk.co.automatictester.lightning.ci.JUnitReporter;
-import uk.co.automatictester.lightning.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.config.LightningConfig;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonEntries;
-import uk.co.automatictester.lightning.reporters.TestSetReporter;
-import uk.co.automatictester.lightning.structures.TestData;
+import uk.co.automatictester.lightning.core.ci.JUnitReporter;
+import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
+import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.core.config.LightningConfig;
+import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.PerfMonEntries;
+import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
+import uk.co.automatictester.lightning.core.structures.TestData;
 
 public class VerifyTask extends LightningTask {
 

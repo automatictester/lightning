@@ -2,8 +2,8 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import uk.co.automatictester.lightning.TestSet;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.gradle.extension.LightningExtension;
 
 import java.util.Arrays;

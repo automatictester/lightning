@@ -2,7 +2,7 @@ package uk.co.automatictester.jmeter.lightning.maven.plugin;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import uk.co.automatictester.lightning.enums.Mode;
+import uk.co.automatictester.lightning.core.enums.Mode;
 
 import java.io.File;
 

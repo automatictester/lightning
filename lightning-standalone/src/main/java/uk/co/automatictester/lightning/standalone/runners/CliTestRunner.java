@@ -3,22 +3,22 @@ package uk.co.automatictester.lightning.standalone.runners;
 import com.beust.jcommander.MissingCommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.automatictester.lightning.TestSet;
-import uk.co.automatictester.lightning.ci.JUnitReporter;
-import uk.co.automatictester.lightning.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.config.LightningConfig;
-import uk.co.automatictester.lightning.data.JMeterTransactions;
-import uk.co.automatictester.lightning.data.PerfMonEntries;
-import uk.co.automatictester.lightning.enums.Mode;
-import uk.co.automatictester.lightning.reporters.JMeterReporter;
-import uk.co.automatictester.lightning.reporters.TestSetReporter;
+import uk.co.automatictester.lightning.core.state.TestSet;
+import uk.co.automatictester.lightning.core.ci.JUnitReporter;
+import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
+import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
+import uk.co.automatictester.lightning.core.config.LightningConfig;
+import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.PerfMonEntries;
+import uk.co.automatictester.lightning.core.enums.Mode;
+import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
+import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
-import uk.co.automatictester.lightning.structures.TestData;
+import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.io.File;
 
-import static uk.co.automatictester.lightning.enums.Mode.valueOf;
+import static uk.co.automatictester.lightning.core.enums.Mode.valueOf;
 
 public class CliTestRunner {
 
