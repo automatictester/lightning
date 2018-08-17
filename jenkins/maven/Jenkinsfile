@@ -19,7 +19,7 @@ def runIntegrationTests() {
             sh "mvn -pl jmeter-lightning-maven-plugin clean verify"
         }
     } finally {
-        jacoco execPattern: '**/jacoco.exec'
+        jacoco execPattern: '**/jmeter-lightning-maven-plugin/target/jacoco.exec'
     }
 }
 

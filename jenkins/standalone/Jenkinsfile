@@ -24,7 +24,7 @@ def buildAndTest() {
         }
     } finally {
         junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
-        jacoco execPattern: '**/jacoco.exec'
+        jacoco execPattern: '**/lightning-standalone/target/jacoco.exec'
     }
 }
 
