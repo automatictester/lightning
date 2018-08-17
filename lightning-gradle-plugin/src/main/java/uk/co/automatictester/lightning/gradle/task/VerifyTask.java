@@ -2,14 +2,8 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
-import uk.co.automatictester.lightning.core.ci.JUnitReporter;
-import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.core.config.LightningConfig;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.data.PerfMonEntries;
-import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
-import uk.co.automatictester.lightning.core.structures.TestData;
+
+import java.io.File;
 
 public class VerifyTask extends LightningTask {
 
@@ -18,6 +12,11 @@ public class VerifyTask extends LightningTask {
         if (!extension.hasAllVerifyInput()) {
             throw new GradleException("Not all mandatory input specified for this task or specified files not readable");
         }
+
+        core.setJmeterCsv(extension.getJmeterCsv());
+        core.setPerfMonCsv(extension.getPerfmonCsv());
+        core.loadTestData();
+
         runTests();
         saveJunitReport();
         notifyCIServer();
@@ -27,40 +26,33 @@ public class VerifyTask extends LightningTask {
     private void runTests() {
         long testSetExecStart = System.currentTimeMillis();
 
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(extension.getTestSetXml());
+        File testSetXml = extension.getTestSetXml();
+        core.setLightningXml(testSetXml);
+        core.loadConfig();
 
-        jmeterTransactions = JMeterTransactions.fromFile(extension.getJmeterCsv());
-        TestData.addClientSideTestData(jmeterTransactions);
-        loadPerfMonDataIfProvided();
-        testSet.executeTests();
-        log(testSet.getTestExecutionReport());
+        String testExecutionReport = core.executeTests();
+        log(testExecutionReport);
 
-        log(TestSetReporter.getTestSetExecutionSummaryReport(testSet));
+        String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
+        log(testSetExecutionSummaryReport);
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        log(String.format("Execution time:    %dms", testExecTime));
+        String message = String.format("Execution time:    %dms", testExecTime);
+        log(message);
 
-        if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
+        if (core.hasExecutionFailed()) {
             exitCode = 1;
         }
     }
 
     private void saveJunitReport() {
-        JUnitReporter junitreporter = new JUnitReporter();
-        junitreporter.generateJUnitReport(testSet);
+        core.saveJunitReport();
     }
 
     private void notifyCIServer() {
-        log(TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics());
-        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
-    }
-
-    private void loadPerfMonDataIfProvided() {
-        if (extension.getPerfmonCsv() != null) {
-            PerfMonEntries perfMonEntries = PerfMonEntries.fromFile(extension.getPerfmonCsv());
-            TestData.addServerSideTestData(perfMonEntries);
-        }
+        String teamCityVerifyStatistics = core.getTeamCityVerifyStatistics();
+        log(teamCityVerifyStatistics);
+        core.setJenkinsBuildNameForVerify();
     }
 }

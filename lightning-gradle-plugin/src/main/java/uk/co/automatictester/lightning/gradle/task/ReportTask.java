@@ -2,10 +2,8 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.TaskAction;
-import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
+
+import java.io.File;
 
 public class ReportTask extends LightningTask {
 
@@ -14,23 +12,30 @@ public class ReportTask extends LightningTask {
         if (!extension.hasAllReportInput()) {
             throw new GradleException("Not all mandatory input specified for this task or specified files not readable");
         }
+
+        core.setJmeterCsv(extension.getJmeterCsv());
+        core.loadTestData();
+
         runReport();
         notifyCIServer();
         setExitCode();
     }
 
     private void runReport() {
-        jmeterTransactions = JMeterTransactions.fromFile(extension.getJmeterCsv());
-        log(JMeterReporter.getJMeterReport(jmeterTransactions));
-        if (jmeterTransactions.getFailCount() != 0) {
+        File jmeterCsv = extension.getJmeterCsv();
+        core.setJmeterCsv(jmeterCsv);
+        String report = core.runReport();
+        log(report);
+        if (core.hasFailedTransactions()) {
             exitCode = 1;
         }
     }
 
     private void notifyCIServer() {
-        TeamCityReporter teamCityReporter = TeamCityReporter.fromJMeterTransactions(jmeterTransactions);
-        log(teamCityReporter.getTeamCityBuildReportSummary());
-        log(teamCityReporter.getTeamCityReportStatistics());
-        JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
+        String teamCityBuildReportSummary = core.getTeamCityBuildReportSummary();
+        log(teamCityBuildReportSummary);
+        String teamCityReportStatistics = core.getTeamCityReportStatistics();
+        log(teamCityReportStatistics);
+        core.setJenkinsBuildNameForReport();
     }
 }

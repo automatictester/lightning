@@ -1,19 +1,8 @@
 package uk.co.automatictester.lightning.core.reporters;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
 public class TestSetReporter {
-
-    private static final Logger log = LoggerFactory.getLogger(TestSetReporter.class);
-
-    public static void printTestSetExecutionSummaryReport(TestSet testSet) {
-        String[] testSetExecutionSummaryReport = getTestSetExecutionSummaryReport(testSet).split(System.lineSeparator());
-        for (String line : testSetExecutionSummaryReport) {
-            log.info(line);
-        }
-    }
 
     public static String getTestSetExecutionSummaryReport(TestSet testSet) {
         int testCount = testSet.getTestCount();

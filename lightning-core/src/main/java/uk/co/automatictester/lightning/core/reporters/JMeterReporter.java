@@ -1,17 +1,8 @@
 package uk.co.automatictester.lightning.core.reporters;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 
 public class JMeterReporter {
-
-    private static final Logger log = LoggerFactory.getLogger(JMeterReporter.class);
-
-    public static void printJMeterReport(JMeterTransactions jmeterTransactions) {
-        String report = getJMeterReport(jmeterTransactions);
-        log.info(report);
-    }
 
     public static String getJMeterReport(JMeterTransactions jmeterTransactions) {
         int transactionCount = jmeterTransactions.size();

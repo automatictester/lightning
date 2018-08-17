@@ -1,8 +1,6 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
@@ -16,8 +14,6 @@ public abstract class ServerSideTest extends LightningTest {
 
     protected String hostAndMetric;
     protected int dataEntriesCount;
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected ServerSideTest(String testName) {
         super(TEST_TYPE, testName);
@@ -62,10 +58,6 @@ public abstract class ServerSideTest extends LightningTest {
                 getActualResultDescription(),
                 getDataEntriesCount(),
                 getResultForReport());
-    }
-
-    public void printTestExecutionReport() {
-        log.info(getTestExecutionReport());
     }
 
     public String getHostAndMetric() {

@@ -1,8 +1,6 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
@@ -16,7 +14,6 @@ public abstract class ClientSideTest extends LightningTest {
     protected String transactionName;
     protected int transactionCount;
     protected boolean regexp = false;
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected ClientSideTest(String testType, String testName) {
         super(testType, testName);
@@ -79,11 +76,6 @@ public abstract class ClientSideTest extends LightningTest {
                 getActualResultDescription(),
                 getTransactionCount(),
                 getResultForReport());
-    }
-
-    @Override
-    public void printTestExecutionReport() {
-        log.info(getTestExecutionReport());
     }
 
     protected String getTransactionNameForReport() {

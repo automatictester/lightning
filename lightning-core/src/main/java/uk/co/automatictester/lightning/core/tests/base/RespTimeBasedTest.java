@@ -1,7 +1,5 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
@@ -11,8 +9,6 @@ import java.util.List;
 public abstract class RespTimeBasedTest extends ClientSideTest {
 
     protected List<Integer> longestTransactions;
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected RespTimeBasedTest(String testType, String testName) {
         super(testType, testName);
@@ -58,10 +54,5 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
                 getTransactionCount(),
                 getLongestTransactions(),
                 getResultForReport());
-    }
-
-    @Override
-    public void printTestExecutionReport() {
-        log.info(getTestExecutionReport());
     }
 }

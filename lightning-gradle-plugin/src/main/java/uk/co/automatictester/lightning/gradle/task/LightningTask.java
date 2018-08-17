@@ -2,18 +2,16 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.state.TestSet;
+import uk.co.automatictester.lightning.core.facade.LightningCoreFacade;
 import uk.co.automatictester.lightning.gradle.extension.LightningExtension;
 
 import java.util.Arrays;
 
 abstract class LightningTask extends DefaultTask {
 
-    protected int exitCode = 0;
-    protected TestSet testSet = new TestSet();
-    protected JMeterTransactions jmeterTransactions;
+    protected LightningCoreFacade core = new LightningCoreFacade();
     protected LightningExtension extension;
+    protected int exitCode = 0;
 
     LightningTask() {
         extension = getProject().getExtensions().findByType(LightningExtension.class);

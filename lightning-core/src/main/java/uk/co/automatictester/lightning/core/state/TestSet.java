@@ -1,7 +1,5 @@
 package uk.co.automatictester.lightning.core.state;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.LightningTests;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
@@ -14,7 +12,6 @@ public class TestSet {
     private int failCount = 0;
     private int ignoreCount = 0;
     private String testExecutionReport = "";
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public void executeTests() {
         resetTestCounts();
@@ -40,13 +37,6 @@ public class TestSet {
             case ERROR:
                 ignoreCount++;
                 break;
-        }
-    }
-
-    public void printTestExecutionReport() {
-        String[] testExecutionReport = getTestExecutionReport().split(System.lineSeparator());
-        for (String line : testExecutionReport) {
-            log.info(line);
         }
     }
 

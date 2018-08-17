@@ -13,7 +13,7 @@ java \
     --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
     &> $ACTUAL_RESULT
 
-cat $ACTUAL_RESULT | grep -v "Total execution time:" | \
+cat $ACTUAL_RESULT | grep -v "Execution time:" | \
     sed -e "s/\[main\] INFO //g" &> $PROCESSED_ACTUAL_RESULT
 
 DIFF_OUTPUT=`diff -B $EXPECTED_RESULT $PROCESSED_ACTUAL_RESULT`

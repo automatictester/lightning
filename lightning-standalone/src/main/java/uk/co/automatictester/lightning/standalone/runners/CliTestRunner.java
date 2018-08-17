@@ -3,18 +3,9 @@ package uk.co.automatictester.lightning.standalone.runners;
 import com.beust.jcommander.MissingCommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.automatictester.lightning.core.state.TestSet;
-import uk.co.automatictester.lightning.core.ci.JUnitReporter;
-import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.core.config.LightningConfig;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.enums.Mode;
-import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
-import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
+import uk.co.automatictester.lightning.core.facade.LightningCoreFacade;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
-import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.io.File;
 
@@ -22,11 +13,9 @@ import static uk.co.automatictester.lightning.core.enums.Mode.valueOf;
 
 public class CliTestRunner {
 
+    private static LightningCoreFacade core = new LightningCoreFacade();
     private static int exitCode = 0;
     private static CommandLineInterface params;
-    private static TestSet testSet = new TestSet();
-    private static JMeterTransactions jmeterTransactions;
-    private static PerfMonEntries perfMonEntries;
     private static Mode mode;
 
     private static final Logger log = LoggerFactory.getLogger(CliTestRunner.class);
@@ -40,10 +29,26 @@ public class CliTestRunner {
         }
 
         mode = valueOf(params.getParsedCommand().toLowerCase());
+        File jmeterCsv = null;
+        switch (mode) {
+            case verify:
+                jmeterCsv = params.verify.getJmeterCsvFile();
+                if (params.verify.isPerfmonCsvFileProvided()) {
+                    File perfmonCsv = params.verify.getPerfmonCsvFile();
+                    core.setPerfMonCsv(perfmonCsv);
+                }
+                break;
+            case report:
+                jmeterCsv = params.report.getJmeterCsvFile();
+                break;
+        }
+        core.setJmeterCsv(jmeterCsv);
+        core.loadTestData();
+
         switch (mode) {
             case verify:
                 runTests();
-                saveJunitReport();
+                core.saveJunitReport();
                 break;
             case report:
                 runReport();
@@ -52,11 +57,6 @@ public class CliTestRunner {
 
         notifyCIServer();
         setExitCode();
-    }
-
-    private static void saveJunitReport() {
-        JUnitReporter junitreporter = new JUnitReporter();
-        junitreporter.generateJUnitReport(testSet);
     }
 
     private static void parseParams(String[] args) {
@@ -71,41 +71,30 @@ public class CliTestRunner {
     private static void runTests() {
         long testSetExecStart = System.currentTimeMillis();
 
-        File xmlFile = params.verify.getXmlFile();
-        File jmeterCsvFile = params.verify.getJmeterCsvFile();
+        File testSetXml = params.verify.getXmlFile();
+        core.setLightningXml(testSetXml);
+        core.loadConfig();
 
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(xmlFile);
+        String testExecutionReport = core.executeTests();
+        log(testExecutionReport);
 
-        jmeterTransactions = JMeterTransactions.fromFile(jmeterCsvFile);
-        TestData.addClientSideTestData(jmeterTransactions);
-        loadPerfMonDataIfProvided();
-        testSet.executeTests();
-        testSet.printTestExecutionReport();
-
-        TestSetReporter.printTestSetExecutionSummaryReport(testSet);
+        String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
+        log(testSetExecutionSummaryReport);
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        log.info("Total execution time:    {}ms", testExecTime);
+        String message = String.format("Execution time:    %dms", testExecTime);
+        log(message);
 
-        if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
+        if (core.hasExecutionFailed()) {
             exitCode = 1;
         }
     }
 
-    private static void loadPerfMonDataIfProvided() {
-        if (params.verify.isPerfmonCsvFileProvided()) {
-            File perfmonCsvFile = params.verify.getPerfmonCsvFile();
-            perfMonEntries = PerfMonEntries.fromFile(perfmonCsvFile);
-            TestData.addServerSideTestData(perfMonEntries);
-        }
-    }
-
     private static void runReport() {
-        jmeterTransactions = JMeterTransactions.fromFile(params.report.getJmeterCsvFile());
-        JMeterReporter.printJMeterReport(jmeterTransactions);
-        if (jmeterTransactions.getFailCount() != 0) {
+        String report = core.runReport();
+        log(report);
+        if (core.hasFailedTransactions()) {
             exitCode = 1;
         }
     }
@@ -113,14 +102,16 @@ public class CliTestRunner {
     private static void notifyCIServer() {
         switch (mode) {
             case verify:
-                TeamCityReporter.fromTestSet(testSet).printTeamCityVerifyStatistics();
-                JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
+                String teamCityVerifyStatistics = core.getTeamCityVerifyStatistics();
+                log(teamCityVerifyStatistics);
+                core.setJenkinsBuildNameForVerify();
                 break;
             case report:
-                TeamCityReporter.fromJMeterTransactions(jmeterTransactions)
-                        .printTeamCityBuildReportSummary()
-                        .printTeamCityReportStatistics();
-                JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
+                String teamCityBuildReportSummary = core.getTeamCityBuildReportSummary();
+                log(teamCityBuildReportSummary);
+                String teamCityReportStatistics = core.getTeamCityReportStatistics();
+                log(teamCityReportStatistics);
+                core.setJenkinsBuildNameForReport();
                 break;
         }
     }
@@ -131,5 +122,11 @@ public class CliTestRunner {
 
     private static void setExitCode(int code) {
         System.exit(code);
+    }
+
+    private static void log(String text) {
+        for (String line : text.split(System.lineSeparator())) {
+            log.info(line);
+        }
     }
 }

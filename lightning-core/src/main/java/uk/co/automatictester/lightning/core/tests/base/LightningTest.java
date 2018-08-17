@@ -23,8 +23,6 @@ public abstract class LightningTest {
         this.actualResult = 0;
     }
 
-    public abstract void printTestExecutionReport();
-
     public abstract String getTestExecutionReport();
 
     public abstract void execute();
