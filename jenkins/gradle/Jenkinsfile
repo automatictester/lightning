@@ -5,6 +5,7 @@ properties([
         parameters([
                 string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
                 string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
+                string(name: 'BUILD_CORE', defaultValue: 'false', description: ''),
                 string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
                 string(name: 'DRY_RUN', defaultValue: 'true', description: '')
         ])
@@ -31,7 +32,7 @@ def commitGradlePluginSnapshotVersion() {
 def testGradlePlugin() {
     try {
         dir('lightning-gradle-plugin') {
-            sh "./gradlew clean check"
+            sh './gradlew clean check'
         }
     } finally {
         junit 'lightning-gradle-plugin/build/test-results/integrationTest/*.xml'
@@ -61,6 +62,11 @@ timestamps {
                 sharedLib.cleanupWorkspaceAndCloneRepo()
                 sh "git checkout ${env.BRANCH_NAME}"
                 sharedLib.purge()
+            }
+            stage('Build lightning-core') {
+                if ("${params.BUILD_CORE}" == "true") {
+                    sharedLib.buildCore()
+                }
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {

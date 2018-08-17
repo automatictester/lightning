@@ -1,4 +1,3 @@
-
 def cleanupWorkspaceAndCloneRepo() {
     cleanWs()
     git credentialsId: 'github-creds', url: 'git@github.com:automatictester/lightning.git'
@@ -6,6 +5,12 @@ def cleanupWorkspaceAndCloneRepo() {
 
 def purge() {
     sh 'rm -rf ~/.m2/repository/uk/co/automatictester/*lightning*/'
+}
+
+def buildCore() {
+    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
+        sh 'mvn -pl lightning-core clean install'
+    }
 }
 
 def push() {

@@ -15,7 +15,7 @@ def sharedLib = new SharedLib()
 def testAndInstallCore() {
     try {
         withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-            sh 'mvn -pl lightning-core clean test install'
+            sh 'mvn -pl lightning-core clean install'
         }
     } finally {
         junit 'lightning-core/target/surefire-reports/junitreports/*.xml'

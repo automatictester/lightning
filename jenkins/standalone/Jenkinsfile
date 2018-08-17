@@ -5,6 +5,7 @@ properties([
         parameters([
                 string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
                 string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
+                string(name: 'BUILD_CORE', defaultValue: 'false', description: ''),
                 string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
                 string(name: 'DRY_RUN', defaultValue: 'true', description: '')
         ])
@@ -58,6 +59,11 @@ timestamps {
                 sharedLib.cleanupWorkspaceAndCloneRepo()
                 sh "git checkout ${env.BRANCH_NAME}"
                 sharedLib.purge()
+            }
+            stage('Build lightning-core') {
+                if ("${params.BUILD_CORE}" == "true") {
+                    sharedLib.buildCore()
+                }
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {
