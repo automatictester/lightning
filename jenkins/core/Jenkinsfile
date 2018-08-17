@@ -68,7 +68,7 @@ timestamps {
                     commitCoreReleaseVersion()
                 }
             }
-            stage('Test and install') {
+            stage('Verify and install') {
                 testAndInstallCore()
             }
             stage('Tag release') {
