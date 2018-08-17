@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.lambda;
 
 public class LightningResponse {
 
-    private int exitCode;
+    private int exitCode = 0;
     private String junitReport;
     private String jenkinsReport;
     private String teamCityReport;

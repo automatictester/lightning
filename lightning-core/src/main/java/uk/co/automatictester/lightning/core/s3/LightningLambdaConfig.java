@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.lambda.readers;
+package uk.co.automatictester.lightning.core.s3;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -6,7 +6,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.core.config.LightningConfig;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
-import uk.co.automatictester.lightning.core.s3.S3Client;
 import uk.co.automatictester.lightning.core.structures.LightningTests;
 
 import javax.xml.parsers.DocumentBuilder;

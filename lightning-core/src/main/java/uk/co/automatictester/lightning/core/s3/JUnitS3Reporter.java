@@ -1,11 +1,11 @@
-package uk.co.automatictester.lightning.lambda.ci;
+package uk.co.automatictester.lightning.core.s3;
 
-import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.ci.JUnitReporter;
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.state.TestSet;
 
-import javax.xml.transform.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;

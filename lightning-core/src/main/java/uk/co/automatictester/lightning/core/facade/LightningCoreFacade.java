@@ -6,7 +6,6 @@ import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.core.config.LightningConfig;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.data.PerfMonEntries;
-import uk.co.automatictester.lightning.core.enums.Mode;
 import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
 import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.core.state.TestSet;
@@ -14,21 +13,15 @@ import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.io.File;
 
-/*
- * This is the only class runners should use directly from lightning-core.
- * If you are using directly anything else (except Mode), you might be doing something wrong, or at least unusual.
- * I will decouple uk.co.automatictester.lightning.core.enums.Mode the other day.
- */
-public class LightningCoreFacade {
+public class LightningCoreFacade { // TODO: extract some of it to parent and rename this to LightningCoreFileSystemFacade
 
-    public static Mode mode;
+    protected TestSet testSet = new TestSet();
+    protected TeamCityReporter teamCityReporter;
+    protected JMeterTransactions jmeterTransactions;
 
-    private TestSet testSet = new TestSet();
     private File perfMonCsv;
     private File jmeterCsv;
     private File lightningXml;
-    private TeamCityReporter teamCityReporter;
-    private JMeterTransactions jmeterTransactions;
 
     public void setPerfMonCsv(File file) {
         perfMonCsv = file;

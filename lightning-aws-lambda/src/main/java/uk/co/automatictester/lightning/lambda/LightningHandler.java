@@ -4,25 +4,12 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.co.automatictester.lightning.core.state.TestSet;
-import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.data.PerfMonEntries;
-import uk.co.automatictester.lightning.lambda.ci.JUnitS3Reporter;
-import uk.co.automatictester.lightning.lambda.ci.JenkinsS3Reporter;
-import uk.co.automatictester.lightning.lambda.readers.LightningLambdaConfig;
-import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
-import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
-import uk.co.automatictester.lightning.core.s3.S3Client;
-import uk.co.automatictester.lightning.core.structures.TestData;
+import uk.co.automatictester.lightning.core.facade.LightningCoreS3Facade;
 
 public class LightningHandler implements RequestHandler<LightningRequest, LightningResponse> {
 
     private static final Logger log = LogManager.getLogger(LightningHandler.class);
-    private static S3Client s3Client;
-
-    private JMeterTransactions jmeterTransactions;
-    private TestSet testSet = new TestSet();
+    private LightningCoreS3Facade core = new LightningCoreS3Facade();
 
     private String bucket;
     private String region;
@@ -35,12 +22,11 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     public LightningResponse handleRequest(LightningRequest lightningRequest, Context context) {
         parseRequestParams(lightningRequest);
-        s3Client = new S3Client(region, bucket);
+        core.loadTestDataFromS3();
 
         if (mode.equals("verify")) {
             runTests();
-
-            String junitReportS3Path = saveJunitReportToS3();
+            String junitReportS3Path = core.saveJunitReportToS3();
             response.setJunitReport(junitReportS3Path);
         } else if (mode.equals("report")) {
             runReport();
@@ -53,95 +39,75 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     private void parseRequestParams(LightningRequest request) {
         LightningRequestValidator.validate(request);
 
+        mode = request.getMode();
         bucket = request.getBucket();
         region = request.getRegion();
-        mode = request.getMode();
         xml = request.getXml();
         jmeterCsv = request.getJmeterCsv();
         perfmonCsv = request.getPerfmonCsv();
+
+        core.setRegionAndBucket(region, bucket);
+        core.setLightningXml(xml);
+        core.setJmeterCsv(jmeterCsv);
+        core.setPerfMonCsv(perfmonCsv);
     }
 
     private void notifyCIServer() {
         if (mode.equals("verify")) {
-            String teamCityReport = TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics();
-            String teamCityReportS3Path = s3Client.putS3Object("output/teamcity.log", teamCityReport);
-
+            String teamCityReport = core.getTeamCityVerifyStatistics();
             log.info(teamCityReport);
+            String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
             response.setTeamCityReport(teamCityReportS3Path);
 
-            String jenkinsReportS3Path = JenkinsS3Reporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
+            String jenkinsReportS3Path = core.storeJenkinsBuildNameForVerifyInS3();
             response.setJenkinsReport(jenkinsReportS3Path);
 
         } else if (mode.equals("report")) {
-            TeamCityReporter teamCityReporter = TeamCityReporter.fromJMeterTransactions(jmeterTransactions);
-            String teamCityBuildStatusText = teamCityReporter.getTeamCityBuildReportSummary();
-            String teamCityReportStatistics = teamCityReporter.getTeamCityReportStatistics();
+            String teamCityBuildStatusText = core.getTeamCityBuildReportSummary();
+            String teamCityReportStatistics = core.getTeamCityReportStatistics();
             String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
-            String combinedTeamCityReportS3Path = s3Client.putS3Object("output/teamcity.log", combinedTeamCityReport);
-
             log.info(combinedTeamCityReport);
+            String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
             response.setTeamCityReport(combinedTeamCityReportS3Path);
 
-            String jenkinsReportS3Path = JenkinsS3Reporter.fromJMeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
+            String jenkinsReportS3Path = core.storeJenkinsBuildNameForReportInS3();
             response.setJenkinsReport(jenkinsReportS3Path);
         }
-    }
-
-    private String saveJunitReportToS3() {
-        JUnitS3Reporter junitS3Reporter = new JUnitS3Reporter(region, bucket);
-        return junitS3Reporter.generateJUnitReportToS3(testSet);
     }
 
     private void runTests() {
         long testSetExecStart = System.currentTimeMillis();
 
-        LightningLambdaConfig lightningLambdaConfig = new LightningLambdaConfig(region, bucket);
-        lightningLambdaConfig.readTests(xml);
+        core.setLightningXml(xml);
+        core.loadConfigFromS3();
 
-        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
-        TestData.addClientSideTestData(jmeterTransactions);
-        loadPerfMonDataIfProvided();
-        testSet.executeTests();
-
-        String testExecutionReport = testSet.getTestExecutionReport();
-        String testSetExecutionSummaryReport = TestSetReporter.getTestSetExecutionSummaryReport(testSet);
+        String testExecutionReport = core.executeTests();
+        String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
 
         String combinedTestReport = String.format("\n%s%s\n", testExecutionReport, testSetExecutionSummaryReport);
-        String combinedTestReportS3Path = s3Client.putS3Object("output/verify.log", combinedTestReport);
-
-        response.setCombinedTestReport(combinedTestReportS3Path);
         log.info(combinedTestReport);
+        String combinedTestReportS3Path = core.putS3Object("output/verify.log", combinedTestReport);
+        response.setCombinedTestReport(combinedTestReportS3Path);
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        log.info("Total verify stage execution time:    {}ms", testExecTime);
+        String message = String.format("Execution time:    %dms", testExecTime);
+        log.info(message);
 
-        if (testSet.getFailCount() + testSet.getErrorCount() != 0) {
+        if (core.hasExecutionFailed()) {
             response.setExitCode(1);
-        } else {
-            response.setExitCode(0);
-        }
-    }
-
-    private void loadPerfMonDataIfProvided() {
-        if (perfmonCsv != null) {
-            PerfMonEntries perfMonEntries = PerfMonEntries.fromS3Object(region, bucket, perfmonCsv);
-            TestData.addServerSideTestData(perfMonEntries);
         }
     }
 
     private void runReport() {
-        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
-        String jmeterReport = JMeterReporter.getJMeterReport(jmeterTransactions);
-        String jmeterReportS3Path = s3Client.putS3Object("output/report.log", jmeterReport);
+        String report = core.runReport();
+        log.info(report);
 
+        String jmeterReportS3Path = core.putS3Object("output/report.log", report);
         response.setJmeterReport(jmeterReportS3Path);
-        log.info(jmeterReport);
 
-        if (jmeterTransactions.getFailCount() != 0) {
+        if (core.hasFailedTransactions()) {
             response.setExitCode(1);
-        } else {
-            response.setExitCode(0);
         }
     }
 }

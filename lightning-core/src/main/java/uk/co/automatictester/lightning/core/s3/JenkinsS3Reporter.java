@@ -1,9 +1,8 @@
-package uk.co.automatictester.lightning.lambda.ci;
+package uk.co.automatictester.lightning.core.s3;
 
-import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.ci.CIReporter;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.state.TestSet;
 
 public class JenkinsS3Reporter extends CIReporter {
 
