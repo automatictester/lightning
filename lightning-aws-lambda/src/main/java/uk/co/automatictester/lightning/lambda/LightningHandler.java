@@ -9,7 +9,7 @@ import uk.co.automatictester.lightning.core.facade.LightningCoreS3Facade;
 public class LightningHandler implements RequestHandler<LightningRequest, LightningResponse> {
 
     private static final Logger log = LogManager.getLogger(LightningHandler.class);
-    private LightningCoreS3Facade core = new LightningCoreS3Facade();
+    private LightningCoreS3Facade core;
 
     private String bucket;
     private String region;
@@ -18,10 +18,13 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     private String jmeterCsv;
     private String perfmonCsv;
 
-    private LightningResponse response = new LightningResponse();
+    private LightningResponse response;
 
     public LightningResponse handleRequest(LightningRequest lightningRequest, Context context) {
+        core = new LightningCoreS3Facade();
+        response = new LightningResponse();
         parseRequestParams(lightningRequest);
+        
         core.loadTestDataFromS3();
 
         if (mode.equals("verify")) {
