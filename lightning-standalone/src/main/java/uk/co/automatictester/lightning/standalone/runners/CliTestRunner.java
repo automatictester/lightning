@@ -4,7 +4,7 @@ import com.beust.jcommander.MissingCommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.enums.Mode;
-import uk.co.automatictester.lightning.core.facade.LightningCoreFacade;
+import uk.co.automatictester.lightning.core.facade.LightningCoreLocalFacade;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import static uk.co.automatictester.lightning.core.enums.Mode.valueOf;
 
 public class CliTestRunner {
 
-    private static LightningCoreFacade core = new LightningCoreFacade();
+    private static LightningCoreLocalFacade core = new LightningCoreLocalFacade();
     private static int exitCode = 0;
     private static CommandLineInterface params;
     private static Mode mode;

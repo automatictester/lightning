@@ -36,15 +36,15 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
         lightningXml = object;
     }
 
+    public void loadConfigFromS3() {
+        LightningLambdaConfig lightningLambdaConfig = new LightningLambdaConfig(region, bucket);
+        lightningLambdaConfig.readTests(lightningXml);
+    }
+
     public void loadTestDataFromS3() {
         jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
         TestData.addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
-    }
-
-    public void loadConfigFromS3() {
-        LightningLambdaConfig lightningLambdaConfig = new LightningLambdaConfig(region, bucket);
-        lightningLambdaConfig.readTests(lightningXml);
     }
 
     public String storeJenkinsBuildNameForVerifyInS3() {

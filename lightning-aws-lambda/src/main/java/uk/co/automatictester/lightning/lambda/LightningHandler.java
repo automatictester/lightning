@@ -24,7 +24,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         core = new LightningCoreS3Facade();
         response = new LightningResponse();
         parseRequestParams(lightningRequest);
-        
+
         core.loadTestDataFromS3();
 
         if (mode.equals("verify")) {
@@ -41,7 +41,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     private void parseRequestParams(LightningRequest request) {
         LightningRequestValidator.validate(request);
-        log.info(response.getExitCode()); // TODO
 
         mode = request.getMode();
         bucket = request.getBucket();
@@ -59,7 +58,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     private void notifyCIServer() {
         if (mode.equals("verify")) {
             String teamCityReport = core.getTeamCityVerifyStatistics();
-            log.info(response.getExitCode()); // TODO
             log.info(teamCityReport);
             String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
             response.setTeamCityReport(teamCityReportS3Path);
@@ -71,7 +69,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
             String teamCityBuildStatusText = core.getTeamCityBuildReportSummary();
             String teamCityReportStatistics = core.getTeamCityReportStatistics();
             String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
-            log.info(response.getExitCode()); // TODO
             log.info(combinedTeamCityReport);
             String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
             response.setTeamCityReport(combinedTeamCityReportS3Path);
@@ -91,7 +88,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
 
         String combinedTestReport = String.format("\n%s%s\n", testExecutionReport, testSetExecutionSummaryReport);
-        log.info(response.getExitCode()); // TODO
         log.info(combinedTestReport);
         String combinedTestReportS3Path = core.putS3Object("output/verify.log", combinedTestReport);
         response.setCombinedTestReport(combinedTestReportS3Path);
@@ -99,7 +95,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
         String message = String.format("Execution time:    %dms", testExecTime);
-        log.info(response.getExitCode()); // TODO
         log.info(message);
 
         if (core.hasExecutionFailed()) {
@@ -109,7 +104,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     private void runReport() {
         String report = core.runReport();
-        log.info(response.getExitCode()); // TODO
         log.info(report);
 
         String jmeterReportS3Path = core.putS3Object("output/report.log", report);

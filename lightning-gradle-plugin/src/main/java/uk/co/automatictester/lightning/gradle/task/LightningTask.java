@@ -2,14 +2,14 @@ package uk.co.automatictester.lightning.gradle.task;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import uk.co.automatictester.lightning.core.facade.LightningCoreFacade;
+import uk.co.automatictester.lightning.core.facade.LightningCoreLocalFacade;
 import uk.co.automatictester.lightning.gradle.extension.LightningExtension;
 
 import java.util.Arrays;
 
 abstract class LightningTask extends DefaultTask {
 
-    protected LightningCoreFacade core = new LightningCoreFacade();
+    protected LightningCoreLocalFacade core = new LightningCoreLocalFacade();
     protected LightningExtension extension;
     protected int exitCode = 0;
 
