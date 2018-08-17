@@ -1,20 +1,14 @@
 package uk.co.automatictester.lightning.core.ci;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
-
-import java.util.Arrays;
 
 public class TeamCityReporter extends CIReporter {
 
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private TeamCityReporter(TestSet testSet) {
         super(testSet);
@@ -32,20 +26,10 @@ public class TeamCityReporter extends CIReporter {
         return new TeamCityReporter(jmeterTransactions);
     }
 
-    public TeamCityReporter printTeamCityBuildReportSummary() {
-        log(getTeamCityBuildReportSummary());
-        return this;
-    }
-
     public String getTeamCityBuildReportSummary() {
         String outputTemplate = jmeterTransactions.getFailCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
         String reportSummary = getReportSummary();
         return String.format(outputTemplate, reportSummary);
-    }
-
-    public TeamCityReporter printTeamCityVerifyStatistics() {
-        log(getTeamCityVerifyStatistics());
-        return this;
     }
 
     public String getTeamCityVerifyStatistics() {
@@ -57,11 +41,6 @@ public class TeamCityReporter extends CIReporter {
         return output.toString();
     }
 
-    public TeamCityReporter printTeamCityReportStatistics() {
-        log(getTeamCityReportStatistics());
-        return this;
-    }
-
     public String getTeamCityReportStatistics() {
         String output = "";
         String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", jmeterTransactions.getFailCount());
@@ -69,11 +48,5 @@ public class TeamCityReporter extends CIReporter {
         String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", jmeterTransactions.size());
         output += totalTransactionsStats;
         return output;
-    }
-
-    private void log(String output) {
-        for (String line : Arrays.asList(output.split(System.lineSeparator()))) {
-            log.info(line);
-        }
     }
 }
