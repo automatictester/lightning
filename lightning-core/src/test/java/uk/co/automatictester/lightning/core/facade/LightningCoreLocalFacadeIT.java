@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.core.facade;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -10,14 +9,13 @@ import uk.co.automatictester.lightning.core.enums.Mode;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
-
-    private static final Logger log = LoggerFactory.getLogger(LightningCoreLocalFacadeIT.class);
 
     private LightningCoreLocalFacade core = new LightningCoreLocalFacade();
     private Mode mode;
@@ -53,7 +51,7 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
     }
 
     @Test(dataProvider = "testData")
-    public void nothingIT(Mode mode, File lightningXml, File jmeterCsv, File perfMonCsv, int expectedExitCode, String expectedJunitReport, String expectedConsoleOutput) throws IOException {
+    public void localFacadeIT(Mode mode, File lightningXml, File jmeterCsv, File perfMonCsv, int expectedExitCode, String expectedJunitReport, String expectedConsoleOutput) throws IOException {
         this.exitCode = 0;
         this.mode = mode;
         this.lightningXml = lightningXml;
@@ -145,7 +143,7 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
 
     private void assertConsoleOutput() {
         if (expectedConsoleOutput != null) {
-            assertThat(taskOutputContainsFileContent(expectedConsoleOutput), is(true));
+            assertThat(consoleOutputContainsFileContent(expectedConsoleOutput), is(true));
         }
     }
 
@@ -153,5 +151,16 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
         if (expectedJunitReport != null) {
             assertThat(fileContentIsEqual(expectedJunitReport, "junit.xml"), is(true));
         }
+    }
+
+    private boolean fileContentIsEqual(String resourceFilePath, String filePath) throws IOException {
+        File resourceFile = new File(this.getClass().getResource(resourceFilePath).getFile());
+        return FileUtils.contentEquals(resourceFile, new File(filePath));
+    }
+
+    private boolean consoleOutputContainsFileContent(String resourceFilePath) {
+        String resourceFileContent = new Scanner(this.getClass().getResourceAsStream(resourceFilePath)).useDelimiter("\\A").next();
+        String filteredBuildOutput = out.toString().replaceAll("Execution time:\\s*\\d*[ms]*\\s", "");
+        return filteredBuildOutput.contains(resourceFileContent);
     }
 }

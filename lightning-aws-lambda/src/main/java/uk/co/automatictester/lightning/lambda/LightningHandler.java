@@ -9,15 +9,14 @@ import uk.co.automatictester.lightning.core.facade.LightningCoreS3Facade;
 public class LightningHandler implements RequestHandler<LightningRequest, LightningResponse> {
 
     private static final Logger log = LogManager.getLogger(LightningHandler.class);
-    private LightningCoreS3Facade core;
 
+    private LightningCoreS3Facade core;
     private String bucket;
     private String region;
     private String mode;
     private String xml;
     private String jmeterCsv;
     private String perfmonCsv;
-
     private LightningResponse response;
 
     public LightningResponse handleRequest(LightningRequest lightningRequest, Context context) {
