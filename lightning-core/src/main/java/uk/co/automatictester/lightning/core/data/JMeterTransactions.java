@@ -65,11 +65,11 @@ public class JMeterTransactions extends CsvEntries {
 
     public JMeterTransactions getTransactionsWith(String label) {
         JMeterTransactions transactions = new JMeterTransactions();
-        for (String[] transaction : entries) {
+        entries.forEach( transaction -> {
             if (transaction[TRANSACTION_LABEL_INDEX.getValue()].equals(label)) {
                 transactions.add(transaction);
             }
-        }
+        });
         if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(label);
         }
@@ -78,11 +78,11 @@ public class JMeterTransactions extends CsvEntries {
 
     public JMeterTransactions getTransactionsMatching(String labelPattern) {
         JMeterTransactions transactions = new JMeterTransactions();
-        for (String[] transaction : entries) {
+        entries.forEach( transaction -> {
             if (transaction[TRANSACTION_LABEL_INDEX.getValue()].matches(labelPattern)) {
                 transactions.add(transaction);
             }
-        }
+        });
         if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(labelPattern);
         }
@@ -128,10 +128,12 @@ public class JMeterTransactions extends CsvEntries {
 
     private List<Integer> getTransactionDurationsDesc() {
         List<Integer> transactionDurations = new ArrayList<>();
-        for (String[] transaction : entries) {
+
+        entries.forEach(transaction -> { // TODO: parallelStream() for all transaction-related forEach loops ?
             int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX.getValue()]);
             transactionDurations.add(elapsed);
-        }
+        });
+
         Collections.sort(transactionDurations);
         Collections.reverse(transactionDurations);
         return transactionDurations;

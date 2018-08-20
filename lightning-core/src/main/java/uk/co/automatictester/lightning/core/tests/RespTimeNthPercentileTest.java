@@ -44,10 +44,10 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
-        for (String[] transaction : jmeterTransactions.getEntries()) {
+        jmeterTransactions.getEntries().forEach(transaction -> {
             String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
             ds.addValue(Double.parseDouble(elapsed));
-        }
+        });
         actualResult = (int) ds.getPercentile((double) percentile);
     }
 

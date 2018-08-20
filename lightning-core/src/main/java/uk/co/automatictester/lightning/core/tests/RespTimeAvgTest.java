@@ -38,10 +38,10 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
 
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        for (String[] transaction : jmeterTransactions.getEntries()) {
+        jmeterTransactions.getEntries().forEach(transaction -> {
             String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
             ds.addValue(Double.parseDouble(elapsed));
-        }
+        });
         actualResult = (int) ds.getMean();
     }
 

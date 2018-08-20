@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.ci;
 
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.state.TestSet;
-import uk.co.automatictester.lightning.core.tests.base.LightningTest;
 
 public class TeamCityReporter extends CIReporter {
 
@@ -34,10 +33,10 @@ public class TeamCityReporter extends CIReporter {
 
     public String getTeamCityVerifyStatistics() {
         StringBuilder output = new StringBuilder();
-        for (LightningTest test : testSet.getTests()) {
+        testSet.getTests().forEach(test -> {
             String teamCityConsoleOutputEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
             output.append(teamCityConsoleOutputEntry);
-        }
+        });
         return output.toString();
     }
 

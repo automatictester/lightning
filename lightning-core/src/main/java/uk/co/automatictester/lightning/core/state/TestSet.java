@@ -16,12 +16,12 @@ public class TestSet {
     public void executeTests() {
         resetTestCounts();
         StringBuilder output = new StringBuilder();
-        for (LightningTest test : getTests()) {
+        getTests().forEach(test -> {
             test.execute();
             setCounts(test);
             String testExecutionReport = test.getTestExecutionReport();
             output.append(testExecutionReport).append(System.lineSeparator());
-        }
+        });
         testExecutionReport = output.toString();
     }
 
