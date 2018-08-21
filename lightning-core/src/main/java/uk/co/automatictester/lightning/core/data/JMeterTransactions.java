@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 import static uk.co.automatictester.lightning.core.enums.JMeterColumns.*;
 
@@ -63,30 +64,14 @@ public class JMeterTransactions extends CsvEntries {
         return new JMeterTransactions(entries);
     }
 
-    public JMeterTransactions getTransactionsWith(String label) {
-        JMeterTransactions transactions = new JMeterTransactions();
-        entries.forEach( transaction -> {
-            if (transaction[TRANSACTION_LABEL_INDEX.getValue()].equals(label)) {
-                transactions.add(transaction);
-            }
-        });
-        if (transactions.size() == 0) {
-            throw new CSVFileNonexistentLabelException(label);
-        }
-        return transactions;
+    public JMeterTransactions getTransactionsWith(String expectedTransactionName) {
+        BiPredicate<String, String> equals = String::equals;
+        return getTransactions(expectedTransactionName, equals);
     }
 
-    public JMeterTransactions getTransactionsMatching(String labelPattern) {
-        JMeterTransactions transactions = new JMeterTransactions();
-        entries.forEach( transaction -> {
-            if (transaction[TRANSACTION_LABEL_INDEX.getValue()].matches(labelPattern)) {
-                transactions.add(transaction);
-            }
-        });
-        if (transactions.size() == 0) {
-            throw new CSVFileNonexistentLabelException(labelPattern);
-        }
-        return transactions;
+    public JMeterTransactions getTransactionsMatching(String expectedTransactionName) {
+        BiPredicate<String, String> matches = String::matches;
+        return getTransactions(expectedTransactionName, matches);
     }
 
     public List<Integer> getLongestTransactions() {
@@ -105,31 +90,54 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     public long getFirstTransactionTimestamp() {
-        long minTimestamp = 0;
-        for (String[] transaction : entries) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
-            if (minTimestamp == 0 || currentTransactionTimestamp < minTimestamp) {
-                minTimestamp = currentTransactionTimestamp;
-            }
-        }
-        return minTimestamp;
+        BiPredicate<Long, Long> isBefore = (edgeTimestamp, currentTimestamp) -> edgeTimestamp == 0 || currentTimestamp < edgeTimestamp;
+        return getEdgeTransactionTimestamp(isBefore);
     }
 
     public long getLastTransactionTimestamp() {
-        long maxTimestamp = 0;
+        BiPredicate<Long, Long> isAfter = (edgeTimestamp, currentTimestamp) -> edgeTimestamp == 0 || currentTimestamp > edgeTimestamp;
+        return getEdgeTransactionTimestamp(isAfter);
+    }
+
+    private JMeterTransactions getTransactions(String expectedTransactionName, BiPredicate<String, String> trait) {
+        JMeterTransactions transactions = new JMeterTransactions();
+        entries.forEach(transaction -> {
+            String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
+            boolean isInScope = isInScope(transactionName, expectedTransactionName, trait);
+            if (isInScope) {
+                transactions.add(transaction);
+            }
+        });
+        if (transactions.size() == 0) {
+            throw new CSVFileNonexistentLabelException(expectedTransactionName);
+        }
+        return transactions;
+    }
+
+    private boolean isInScope(String input, String expected, BiPredicate<String, String> trait) {
+        return trait.test(input, expected);
+    }
+
+    private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> trait) {
+        long edgeTimestamp = 0;
         for (String[] transaction : entries) {
             long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
-            if (maxTimestamp == 0 || currentTransactionTimestamp > maxTimestamp) {
-                maxTimestamp = currentTransactionTimestamp;
+            boolean isEdgeTimestamp = isEdgeTimestamp(edgeTimestamp, currentTransactionTimestamp, trait);
+            if (isEdgeTimestamp) {
+                edgeTimestamp = currentTransactionTimestamp;
             }
         }
-        return maxTimestamp;
+        return edgeTimestamp;
+    }
+
+    private boolean isEdgeTimestamp(long l1, long l2, BiPredicate<Long, Long> trait) {
+        return trait.test(l1, l2);
     }
 
     private List<Integer> getTransactionDurationsDesc() {
         List<Integer> transactionDurations = new ArrayList<>();
 
-        entries.forEach(transaction -> { // TODO: parallelStream() for all transaction-related forEach loops ?
+        entries.forEach(transaction -> {
             int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX.getValue()]);
             transactionDurations.add(elapsed);
         });
