@@ -1,10 +1,13 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.util.List;
+
+import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public abstract class RespTimeBasedTest extends ClientSideTest {
 
@@ -27,6 +30,15 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
             result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
+    }
+
+    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
+        DescriptiveStatistics ds = new DescriptiveStatistics();
+        jmeterTransactions.getEntries().forEach(transaction -> {
+            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
+            ds.addValue(Double.parseDouble(elapsed));
+        });
+        actualResult = getResult(ds);
     }
 
     @Override
@@ -55,4 +67,6 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
                 getLongestTransactions(),
                 getResultForReport());
     }
+
+    protected abstract int getResult(DescriptiveStatistics ds);
 }

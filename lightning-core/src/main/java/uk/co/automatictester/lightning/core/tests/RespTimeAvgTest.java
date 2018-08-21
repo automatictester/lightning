@@ -2,11 +2,8 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
-
-import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeAvgTest extends RespTimeBasedTest {
 
@@ -36,13 +33,8 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) maxAvgRespTime;
     }
 
-    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
-        DescriptiveStatistics ds = new DescriptiveStatistics();
-        jmeterTransactions.getEntries().forEach(transaction -> {
-            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
-            ds.addValue(Double.parseDouble(elapsed));
-        });
-        actualResult = (int) ds.getMean();
+    protected int getResult(DescriptiveStatistics ds) {
+        return (int) ds.getMean();
     }
 
     protected void calculateTestResult() {
