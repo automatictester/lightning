@@ -9,7 +9,6 @@ import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelEx
 import uk.co.automatictester.lightning.core.s3.S3Client;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
@@ -126,12 +125,8 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private List<Integer> getTransactionDurationsDesc() {
-        List<Integer> transactionDurations = new ArrayList<>();
-        entries.forEach(transaction -> {
-            int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX.getValue()]);
-            transactionDurations.add(elapsed);
-        });
-        return transactionDurations.stream()
+        return entries.stream()
+                .map(e -> Integer.parseInt(e[TRANSACTION_DURATION_INDEX.getValue()]))
                 .sorted((i1, i2) -> i2 - i1)
                 .collect(Collectors.toList());
     }
