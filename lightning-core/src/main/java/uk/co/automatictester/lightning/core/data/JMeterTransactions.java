@@ -14,9 +14,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.BiPredicate;
 
+import static java.lang.Math.min;
 import static uk.co.automatictester.lightning.core.enums.JMeterColumns.*;
 
 public class JMeterTransactions extends CsvEntries {
+
+    private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -103,7 +106,7 @@ public class JMeterTransactions extends CsvEntries {
         JMeterTransactions transactions = new JMeterTransactions();
         entries.forEach(transaction -> {
             String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
-            boolean isInScope = isInScope(transactionName, expectedTransactionName, trait);
+            boolean isInScope = trait.test(transactionName, expectedTransactionName);
             if (isInScope) {
                 transactions.add(transaction);
             }
@@ -114,15 +117,11 @@ public class JMeterTransactions extends CsvEntries {
         return transactions;
     }
 
-    private boolean isInScope(String input, String expected, BiPredicate<String, String> trait) {
-        return trait.test(input, expected);
-    }
-
     private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> trait) {
         long edgeTimestamp = 0;
         for (String[] transaction : entries) {
             long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
-            boolean isEdgeTimestamp = isEdgeTimestamp(edgeTimestamp, currentTransactionTimestamp, trait);
+            boolean isEdgeTimestamp = trait.test(edgeTimestamp, currentTransactionTimestamp);
             if (isEdgeTimestamp) {
                 edgeTimestamp = currentTransactionTimestamp;
             }
@@ -130,25 +129,19 @@ public class JMeterTransactions extends CsvEntries {
         return edgeTimestamp;
     }
 
-    private boolean isEdgeTimestamp(long l1, long l2, BiPredicate<Long, Long> trait) {
-        return trait.test(l1, l2);
-    }
-
     private List<Integer> getTransactionDurationsDesc() {
         List<Integer> transactionDurations = new ArrayList<>();
-
         entries.forEach(transaction -> {
             int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX.getValue()]);
             transactionDurations.add(elapsed);
         });
-
         Collections.sort(transactionDurations);
         Collections.reverse(transactionDurations);
         return transactionDurations;
     }
 
     private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
-        int transactionDurationsCount = (transactionDurations.size() >= MAX_NUMBER_OF_LONGEST_TRANSACTIONS.getValue()) ? MAX_NUMBER_OF_LONGEST_TRANSACTIONS.getValue() : transactionDurations.size();
+        int transactionDurationsCount = min(transactionDurations.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
         return transactionDurations.subList(0, transactionDurationsCount);
     }
 
