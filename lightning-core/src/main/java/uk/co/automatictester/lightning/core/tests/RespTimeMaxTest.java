@@ -28,11 +28,7 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
     }
 
     protected void calculateTestResult() {
-        if ((long) actualResult > this.maxRespTime) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
+        result = ((long) actualResult > this.maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     public boolean equals(Object obj) {

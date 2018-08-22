@@ -38,11 +38,7 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     }
 
     protected void calculateTestResult() {
-        if (actualResult > maxAvgRespTime) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
+        result = (actualResult > maxAvgRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     public static class Builder {

@@ -87,15 +87,10 @@ public abstract class ClientSideTest extends LightningTest {
         throw new NotImplementedException("Method not implemented for LightningTest which is not RespTimeBasedTest");
     }
 
-    protected int getFailureCount(JMeterTransactions jmeterTransactions) {
-        int failureCount = 0;
-        for (String[] transaction : jmeterTransactions.getEntries()) {
-            String success = transaction[TRANSACTION_RESULT_INDEX.getValue()];
-            if (!Boolean.parseBoolean(success)) {
-                failureCount++;
-            }
-        }
-        return failureCount;
+    protected int getFailureCount(JMeterTransactions transactions) {
+        return (int) transactions.getEntries().stream()
+                .filter(t -> !Boolean.parseBoolean(t[TRANSACTION_RESULT_INDEX.getValue()]))
+                .count();
     }
 
     protected abstract void calculateActualResult(JMeterTransactions jmeterTransactions);

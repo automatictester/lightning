@@ -39,11 +39,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     }
 
     protected void calculateTestResult() {
-        if (actualResult > maxRespTime) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
+        result =  (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     public static class Builder {

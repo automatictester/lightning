@@ -10,9 +10,9 @@ import uk.co.automatictester.lightning.core.s3.S3Client;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.min;
 import static uk.co.automatictester.lightning.core.enums.JMeterColumns.*;
@@ -83,13 +83,9 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     public int getFailCount() {
-        int failCount = 0;
-        for (String[] transaction : entries) {
-            if ("false".equals(transaction[TRANSACTION_RESULT_INDEX.getValue()])) {
-                failCount++;
-            }
-        }
-        return failCount;
+        return (int) entries.stream()
+                .filter(t -> "false".equals(t[TRANSACTION_RESULT_INDEX.getValue()]))
+                .count();
     }
 
     public long getFirstTransactionTimestamp() {
@@ -135,14 +131,16 @@ public class JMeterTransactions extends CsvEntries {
             int elapsed = Integer.parseInt(transaction[TRANSACTION_DURATION_INDEX.getValue()]);
             transactionDurations.add(elapsed);
         });
-        Collections.sort(transactionDurations);
-        Collections.reverse(transactionDurations);
-        return transactionDurations;
+        return transactionDurations.stream()
+                .sorted((i1, i2) -> i2 - i1)
+                .collect(Collectors.toList());
     }
 
     private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
         int transactionDurationsCount = min(transactionDurations.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
-        return transactionDurations.subList(0, transactionDurationsCount);
+        return transactionDurations.stream()
+                .limit(transactionDurationsCount)
+                .collect(Collectors.toList());
     }
 
     protected CsvParserSettings getCsvParserSettings() {

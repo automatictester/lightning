@@ -45,11 +45,9 @@ public class PerfMonEntries extends CsvEntries {
 
     public PerfMonEntries getEntriesWith(String hostAndMetric) {
         PerfMonEntries filteredDataEntries = new PerfMonEntries();
-        entries.forEach(dataEntry -> {
-            if (dataEntry[HOST_AND_METRIC_INDEX.getValue()].equals(hostAndMetric)) {
-                filteredDataEntries.add(dataEntry);
-            }
-        });
+        entries.stream()
+                .filter(e -> e[HOST_AND_METRIC_INDEX.getValue()].equals(hostAndMetric))
+                .forEach(filteredDataEntries::add);
         if (filteredDataEntries.size() == 0) {
             throw new CSVFileNonexistentHostAndMetricException(hostAndMetric);
         }
