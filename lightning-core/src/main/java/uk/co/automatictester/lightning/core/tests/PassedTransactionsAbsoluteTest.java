@@ -30,11 +30,7 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
     }
 
     protected void calculateTestResult() {
-        if (failureCount > allowedNumberOfFailedTransactions) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
+        result = (failureCount > allowedNumberOfFailedTransactions) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override

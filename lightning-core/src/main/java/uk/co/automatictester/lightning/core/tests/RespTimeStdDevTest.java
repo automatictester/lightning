@@ -6,6 +6,8 @@ import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 
+import java.util.stream.Collectors;
+
 import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeStdDevTest extends ClientSideTest {
@@ -38,10 +40,9 @@ public class RespTimeStdDevTest extends ClientSideTest {
 
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        jmeterTransactions.getEntries().forEach(transaction -> {
-            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
-            ds.addValue(Double.parseDouble(elapsed));
-        });
+        jmeterTransactions.getEntries().stream()
+                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
+                .forEach(ds::addValue);
         actualResult = (int) ds.getStandardDeviation();
     }
 

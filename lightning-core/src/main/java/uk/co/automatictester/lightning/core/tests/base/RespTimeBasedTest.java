@@ -32,12 +32,11 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
         }
     }
 
-    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
+    protected void calculateActualResult(JMeterTransactions transactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        jmeterTransactions.getEntries().forEach(transaction -> {
-            String elapsed = transaction[TRANSACTION_DURATION_INDEX.getValue()];
-            ds.addValue(Double.parseDouble(elapsed));
-        });
+        transactions.getEntries().stream()
+                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
+                .forEach(ds::addValue);
         actualResult = getResult(ds);
     }
 

@@ -19,11 +19,7 @@ public class ServerSideBetweenTest extends ServerSideTest {
     }
 
     protected void calculateTestResult() {
-        if ((actualResult > lowerThreshold) && (actualResult < upperThreshold)) {
-            result = TestResult.PASS;
-        } else {
-            result = TestResult.FAIL;
-        }
+        result = ((actualResult > lowerThreshold) && (actualResult < upperThreshold)) ? TestResult.PASS : TestResult.FAIL;
     }
 
     public boolean equals(Object obj) {

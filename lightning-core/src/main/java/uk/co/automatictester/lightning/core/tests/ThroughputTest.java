@@ -35,11 +35,7 @@ public class ThroughputTest extends ClientSideTest {
     }
 
     protected void calculateTestResult() {
-        if (actualResult < minThroughput) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
+        result = (actualResult < minThroughput) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override

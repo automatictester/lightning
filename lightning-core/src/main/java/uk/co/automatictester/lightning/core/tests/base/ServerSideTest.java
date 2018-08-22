@@ -70,10 +70,9 @@ public abstract class ServerSideTest extends LightningTest {
 
     protected void calculateActualResult(PerfMonEntries entries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        entries.getEntries().forEach(transaction -> {
-            String elapsed = transaction[VALUE_INDEX.getValue()];
-            ds.addValue(Double.parseDouble(elapsed));
-        });
+        entries.getEntries().stream()
+                .map(e -> Double.parseDouble(e[VALUE_INDEX.getValue()]))
+                .forEach(ds::addValue);
         actualResult = (int) ds.getMean();
     }
 

@@ -31,11 +31,7 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
     }
 
     protected void calculateTestResult() {
-        if (actualResult > (float) allowedPercentOfFailedTransactions.getValue()) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
+        result = (actualResult > (float) allowedPercentOfFailedTransactions.getValue()) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override

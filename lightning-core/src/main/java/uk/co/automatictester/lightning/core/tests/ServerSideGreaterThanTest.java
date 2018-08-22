@@ -17,11 +17,7 @@ public class ServerSideGreaterThanTest extends ServerSideTest {
     }
 
     protected void calculateTestResult() {
-        if (actualResult > threshold) {
-            result = TestResult.PASS;
-        } else {
-            result = TestResult.FAIL;
-        }
+        result = (actualResult > threshold) ? TestResult.PASS : TestResult.FAIL;
     }
 
     public boolean equals(Object obj) {
