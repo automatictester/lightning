@@ -1,5 +1,8 @@
 #!groovy
 
+@Library("sharedLib@${env.BRANCH_NAME}")
+import SharedLib
+
 properties([
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
         parameters([
@@ -10,8 +13,6 @@ properties([
                 string(name: 'DRY_RUN', defaultValue: 'true', description: '')
         ])
 ])
-
-def sharedLib = new SharedLib()
 
 def tagLambdaRelease() {
     sh "git tag lambda-${params.RELEASE_VERSION}"
