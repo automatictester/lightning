@@ -10,7 +10,7 @@ import uk.co.automatictester.lightning.core.structures.TestData;
 
 public class LightningCoreS3Facade extends LightningCoreFacade {
 
-    private static S3Client s3Client;
+    private static S3Client client;
 
     private String region;
     private String bucket;
@@ -21,7 +21,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     public void setRegionAndBucket(String region, String bucket) {
         this.region = region;
         this.bucket = bucket;
-        s3Client = new S3Client(region, bucket);
+        client = new S3Client(region, bucket);
     }
 
     public void setPerfMonCsv(String object) {
@@ -61,7 +61,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public String putS3Object(String key, String content) {
-        return s3Client.putS3Object(key, content);
+        return client.putS3Object(key, content);
     }
 
     private void loadPerfMonDataIfProvided() {

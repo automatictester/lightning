@@ -9,7 +9,7 @@ def purge() {
 
 def buildCore() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        sh 'mvn -pl lightning-core clean install'
+        sh 'mvn -pl lightning-core clean install -DmockS3'
     }
 }
 

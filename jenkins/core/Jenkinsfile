@@ -15,7 +15,7 @@ def sharedLib = new SharedLib()
 def testAndInstallCore() {
     try {
         withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-            sh 'mvn -pl lightning-core clean install'
+            sh 'mvn -pl lightning-core clean install -DmockS3'
         }
     } finally {
         junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
@@ -44,7 +44,7 @@ def commitCoreSnapshotVersion() {
 def releaseCore() {
     withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
         withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-            sh "mvn -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPGPP}"
+            sh "mvn -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
         }
     }
 }

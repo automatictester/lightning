@@ -1,10 +1,8 @@
 package uk.co.automatictester.lightning.core.facade;
 
+import io.findify.s3mock.S3Mock;
 import org.apache.commons.io.FileUtils;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +33,17 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     private String responseJenkinsReportKey;
     private String responseJunitReportKey;
 
-    private TestS3Client s3Client = new TestS3Client(region, bucket);
+    private S3Mock api;
+    private TestS3Client client;
+
+    @BeforeClass
+    public void setupS3Mock() {
+        if (System.getProperty("mockS3") != null) {
+            api = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
+            api.start();
+        }
+        client = new TestS3Client(region, bucket);
+    }
 
     @BeforeMethod
     public void setup() {
@@ -45,6 +53,13 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     @AfterMethod
     public void teardown() {
         revertStream();
+    }
+
+    @AfterClass
+    public void teardownS3Mock() {
+        if (System.getProperty("mockS3") != null) {
+            api.stop();
+        }
     }
 
     @DataProvider(name = "testData")
@@ -81,13 +96,13 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
 
     private void saveTestDataToS3() throws IOException {
         if (lightningXml != null) {
-            s3Client.putS3Object(lightningXml);
+            client.putS3Object(lightningXml);
         }
         if (jmeterCsv != null) {
-            s3Client.putS3Object(jmeterCsv);
+            client.putS3Object(jmeterCsv);
         }
         if (perfMonCsv != null) {
-            s3Client.putS3Object(perfMonCsv);
+            client.putS3Object(perfMonCsv);
         }
     }
 
@@ -177,11 +192,11 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         if (expectedLogEntries != null) {
             String combinedS3Objects = "";
             if (mode.equals("report")) {
-                combinedS3Objects += s3Client.getS3ObjectContent(responseReportLogKey);
+                combinedS3Objects += client.getS3ObjectContent(responseReportLogKey);
             } else {
-                combinedS3Objects += s3Client.getS3ObjectContent(responseVerifyLogKey);
+                combinedS3Objects += client.getS3ObjectContent(responseVerifyLogKey);
             }
-            combinedS3Objects += s3Client.getS3ObjectContent(responseTeamCityLogKey);
+            combinedS3Objects += client.getS3ObjectContent(responseTeamCityLogKey);
 
             assertThat(combinedS3Objects, is(equalToIgnoringWhiteSpace(readFileToString(expectedLogEntries))));
         }
@@ -203,6 +218,6 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     }
 
     private String readS3ObjectToString(String key) {
-        return s3Client.getS3ObjectContent(key);
+        return client.getS3ObjectContent(key);
     }
 }
