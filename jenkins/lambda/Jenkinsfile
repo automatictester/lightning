@@ -1,6 +1,6 @@
 #!groovy
 
-library "sharedLib@${env.BRANCH_NAME}"
+library "SharedLib@${env.BRANCH_NAME}"
 
 properties([
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
@@ -58,13 +58,13 @@ timestamps {
     lock('lightning-pipeline') {
         node('linux') {
             stage('Prepare') {
-                sharedLib.cleanupWorkspaceAndCloneRepo()
+                SharedLib.cleanupWorkspaceAndCloneRepo()
                 sh "git checkout ${env.BRANCH_NAME}"
-                sharedLib.purge()
+                SharedLib.purge()
             }
             stage('Build lightning-core') {
                 if ("${params.BUILD_CORE}" == "true") {
-                    sharedLib.buildCore()
+                    SharedLib.buildCore()
                 }
             }
             stage('Set release version number') {
@@ -130,7 +130,7 @@ timestamps {
             }
             stage('Push release to origin/master') {
                 if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    sharedLib.push()
+                    SharedLib.push()
                 }
             }
         }
