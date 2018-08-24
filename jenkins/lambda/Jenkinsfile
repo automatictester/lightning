@@ -1,6 +1,6 @@
 #!groovy
 
-library "SharedLib@${env.BRANCH_NAME}"
+library "cleanupWorkspaceAndCloneRepo@${env.BRANCH_NAME}"
 
 properties([
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
