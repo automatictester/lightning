@@ -1,5 +1,7 @@
 #!groovy
 
+library "SharedLib@${env.BRANCH_NAME}"
+
 properties([
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
         parameters([
@@ -9,8 +11,6 @@ properties([
                 string(name: 'DRY_RUN', defaultValue: 'true', description: '')
         ])
 ])
-
-def sharedLib = new SharedLib()
 
 def testAndInstallCore() {
     try {
@@ -59,9 +59,9 @@ timestamps {
     lock('lightning-pipeline') {
         node('linux') {
             stage('Prepare') {
-                sharedLib.cleanupWorkspaceAndCloneRepo()
+                cleanupWorkspaceAndCloneRepo()
                 sh "git checkout ${env.BRANCH_NAME}"
-                sharedLib.purge()
+                purge()
             }
             stage('Set release version number') {
                 if ("${params.TEST_ONLY}" == "false") {
@@ -88,7 +88,7 @@ timestamps {
             }
             stage('Push release to origin/master') {
                 if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    sharedLib.push()
+                    push()
                 }
             }
         }
