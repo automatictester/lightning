@@ -7,7 +7,7 @@ public enum TestResult {
 
     private String value;
 
-    private TestResult(String value) {
+    TestResult(String value) {
         this.value = value;
     }
 

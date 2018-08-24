@@ -8,7 +8,7 @@ public enum JMeterColumns {
 
     private int value;
 
-    private JMeterColumns(int value) {
+    JMeterColumns(int value) {
         this.value = value;
     }
 

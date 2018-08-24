@@ -8,6 +8,7 @@ import uk.co.automatictester.lightning.core.s3.S3Client;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.*;
 
@@ -44,10 +45,10 @@ public class PerfMonEntries extends CsvEntries {
     }
 
     public PerfMonEntries getEntriesWith(String hostAndMetric) {
-        PerfMonEntries filteredDataEntries = new PerfMonEntries();
-        entries.stream()
+        List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC_INDEX.getValue()].equals(hostAndMetric))
-                .forEach(filteredDataEntries::add);
+                .collect(Collectors.toList());
+        PerfMonEntries filteredDataEntries = PerfMonEntries.fromList(list);
         if (filteredDataEntries.size() == 0) {
             throw new CSVFileNonexistentHostAndMetricException(hostAndMetric);
         }

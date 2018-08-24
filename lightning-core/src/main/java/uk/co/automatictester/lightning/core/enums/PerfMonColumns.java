@@ -7,7 +7,7 @@ public enum PerfMonColumns {
 
     private int value;
 
-    private PerfMonColumns(int value) {
+    PerfMonColumns(int value) {
         this.value = value;
     }
 

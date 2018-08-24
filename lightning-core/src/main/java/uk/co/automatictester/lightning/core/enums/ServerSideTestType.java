@@ -7,7 +7,7 @@ public enum ServerSideTestType {
 
     private String value;
 
-    private ServerSideTestType(String value) {
+    ServerSideTestType(String value) {
         this.value = value;
     }
 
