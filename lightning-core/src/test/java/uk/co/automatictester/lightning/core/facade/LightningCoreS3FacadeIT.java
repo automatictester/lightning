@@ -3,6 +3,7 @@ package uk.co.automatictester.lightning.core.facade;
 import io.findify.s3mock.S3Mock;
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.*;
+import uk.co.automatictester.lightning.core.s3.S3Client;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     private String responseJunitReportKey;
 
     private S3Mock api;
-    private TestS3Client client;
+    private S3Client client;
 
     @BeforeClass
     public void setupS3Mock() {
@@ -42,7 +43,8 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
             api = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
             api.start();
         }
-        client = new TestS3Client(region, bucket);
+        client = S3Client.getInstance(region, bucket);
+        client.createBucketIfDoesNotExist(bucket);
     }
 
     @BeforeMethod

@@ -20,7 +20,7 @@ public class LightningLambdaConfig extends LightningConfig {
     private static S3Client s3Client;
 
     public LightningLambdaConfig(String region, String bucket) {
-        s3Client = new S3Client(region, bucket);
+        s3Client = S3Client.getInstance(region, bucket);
     }
 
     public void readTests(String xmlObject) {

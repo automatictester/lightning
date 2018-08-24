@@ -27,7 +27,7 @@ public class PerfMonEntries extends CsvEntries {
     }
 
     private PerfMonEntries(String region, String bucket, String csvObject) {
-        s3Client = new S3Client(region, bucket);
+        s3Client = S3Client.getInstance(region, bucket);
         loadFromS3Object(csvObject);
         throwExceptionIfEmpty();
     }

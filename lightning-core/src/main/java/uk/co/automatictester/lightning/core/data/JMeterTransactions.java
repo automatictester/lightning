@@ -38,7 +38,7 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private JMeterTransactions(String region, String bucket, String csvObject) {
-        s3Client = new S3Client(region, bucket);
+        s3Client = S3Client.getInstance(region, bucket);
         long start = System.currentTimeMillis();
         log.debug("Reading CSV file - start");
 
