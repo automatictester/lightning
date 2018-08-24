@@ -25,7 +25,7 @@ public class LightningLambdaConfig extends LightningConfig {
 
     public void readTests(String xmlObject) {
         LightningTests.flush();
-        String xmlObjectContent = s3Client.getS3ObjectContent(xmlObject);
+        String xmlObjectContent = s3Client.getObjectAsString(xmlObject);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);
         throwExceptionIfNoTests();

@@ -45,6 +45,6 @@ public class JenkinsS3Reporter extends CIReporter {
         String escapedSummary = summary.replace(":", "\\:");
         String jenkinsReportTemplate = "#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}\nresult.string=%s\n";
         String jenkinsReport = String.format(jenkinsReportTemplate, escapedSummary);
-        return s3Client.putS3Object("output/lightning-jenkins.properties", jenkinsReport);
+        return s3Client.putObject("output/lightning-jenkins.properties", jenkinsReport);
     }
 }

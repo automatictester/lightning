@@ -49,7 +49,7 @@ public abstract class CsvEntries {
     }
 
     protected void loadFromS3Object(String csvObject) {
-        String csvObjectContent = s3Client.getS3ObjectContent(csvObject);
+        String csvObjectContent = s3Client.getObjectAsString(csvObject);
         try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
             CsvParserSettings csvParserSettings = getCsvParserSettings();
             CsvParser csvParser = new CsvParser(csvParserSettings);

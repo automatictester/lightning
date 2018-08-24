@@ -17,44 +17,60 @@ public class S3Client {
     private static AmazonS3 client;
     private static S3Client instance;
     private static String s3Bucket;
+    private static String awsRegion;
 
     private S3Client() {
     }
 
-    public static synchronized S3Client getInstance(String region, String bucket) {
+    public static synchronized S3Client getInstance(String region, String bucket, boolean... enforceMockedClient) {
         if (instance == null) {
+            awsRegion = region;
+            s3Bucket = bucket;
             instance = new S3Client();
-            if (System.getProperty("mockS3") == null) {
+            if (isEnforcingMockClient(enforceMockedClient)) {
+                setMockedClient(region);
+            } else if (System.getProperty("mockS3") == null) {
                 setRealClient(region);
             } else {
                 setMockedClient(region);
             }
             s3Bucket = bucket;
+        } else {
+            if (!region.equals(awsRegion) || !bucket.equals(s3Bucket)) {
+                String message = String.format("Always call getInstance method with same region and bucket. Previous region: %s, current region: %s. Previous bucket: %s, current bucket: %s", region, awsRegion, bucket, s3Bucket);
+                throw new RuntimeException(message);
+            }
         }
         return instance;
     }
 
-    public String getS3ObjectContent(String key) {
+    public String getObjectAsString(String key) {
         log.info("Getting S3 object: {}/{}", s3Bucket, key);
         return client.getObjectAsString(s3Bucket, key);
     }
 
-    public String putS3Object(String key, String content) {
+    public String putObject(String key, String content) {
         String s3key = key + "-" + getRandomString();
         log.info("Putting S3 object: {}/{}", s3Bucket, s3key);
         client.putObject(s3Bucket, s3key, content);
         return s3key;
     }
 
-    public void putS3Object(String file) throws IOException {
+    public void putObjectFromFile(String file) throws IOException {
         log.info("Putting S3 object from file: {}/{}", s3Bucket, file);
         client.putObject(s3Bucket, file, getFileContent(file));
     }
 
-    public void createBucketIfDoesNotExist(String bucket) {
+    public boolean createBucketIfDoesNotExist(String bucket) {
         if (!client.doesBucketExistV2(bucket)) {
             client.createBucket(bucket);
+            return true;
         }
+        return false;
+    }
+
+    private static boolean isEnforcingMockClient(boolean... enforceMockedClient) {
+        return enforceMockedClient != null && enforceMockedClient.length == 1 && enforceMockedClient[0];
     }
 
     private static void setRealClient(String region) {

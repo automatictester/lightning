@@ -61,7 +61,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public String putS3Object(String key, String content) {
-        return client.putS3Object(key, content);
+        return client.putObject(key, content);
     }
 
     private void loadPerfMonDataIfProvided() {

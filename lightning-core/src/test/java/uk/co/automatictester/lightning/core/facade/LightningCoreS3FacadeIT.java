@@ -34,14 +34,14 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     private String responseJenkinsReportKey;
     private String responseJunitReportKey;
 
-    private S3Mock api;
+    private S3Mock s3Mock;
     private S3Client client;
 
     @BeforeClass
     public void setupS3Mock() {
         if (System.getProperty("mockS3") != null) {
-            api = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
-            api.start();
+            s3Mock = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
+            s3Mock.start();
         }
         client = S3Client.getInstance(region, bucket);
         client.createBucketIfDoesNotExist(bucket);
@@ -60,7 +60,7 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     @AfterClass
     public void teardownS3Mock() {
         if (System.getProperty("mockS3") != null) {
-            api.stop();
+            s3Mock.stop();
         }
     }
 
@@ -98,13 +98,13 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
 
     private void saveTestDataToS3() throws IOException {
         if (lightningXml != null) {
-            client.putS3Object(lightningXml);
+            client.putObjectFromFile(lightningXml);
         }
         if (jmeterCsv != null) {
-            client.putS3Object(jmeterCsv);
+            client.putObjectFromFile(jmeterCsv);
         }
         if (perfMonCsv != null) {
-            client.putS3Object(perfMonCsv);
+            client.putObjectFromFile(perfMonCsv);
         }
     }
 
@@ -194,11 +194,11 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         if (expectedLogEntries != null) {
             String combinedS3Objects = "";
             if (mode.equals("report")) {
-                combinedS3Objects += client.getS3ObjectContent(responseReportLogKey);
+                combinedS3Objects += client.getObjectAsString(responseReportLogKey);
             } else {
-                combinedS3Objects += client.getS3ObjectContent(responseVerifyLogKey);
+                combinedS3Objects += client.getObjectAsString(responseVerifyLogKey);
             }
-            combinedS3Objects += client.getS3ObjectContent(responseTeamCityLogKey);
+            combinedS3Objects += client.getObjectAsString(responseTeamCityLogKey);
 
             assertThat(combinedS3Objects, is(equalToIgnoringWhiteSpace(readFileToString(expectedLogEntries))));
         }
@@ -220,6 +220,6 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     }
 
     private String readS3ObjectToString(String key) {
-        return client.getS3ObjectContent(key);
+        return client.getObjectAsString(key);
     }
 }

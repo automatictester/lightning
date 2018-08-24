@@ -34,6 +34,6 @@ public class JUnitS3Reporter extends JUnitReporter {
             throw new JunitReportGenerationException(e);
         }
         String junitReport = writer.toString();
-        return s3Client.putS3Object("output/junit.xml", junitReport);
+        return s3Client.putObject("output/junit.xml", junitReport);
     }
 }
