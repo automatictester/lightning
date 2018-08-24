@@ -58,13 +58,13 @@ timestamps {
     lock('lightning-pipeline') {
         node('linux') {
             stage('Prepare') {
-                SharedLib.cleanupWorkspaceAndCloneRepo()
+                cleanupWorkspaceAndCloneRepo()
                 sh "git checkout ${env.BRANCH_NAME}"
-                SharedLib.purge()
+                purge()
             }
             stage('Build lightning-core') {
                 if ("${params.BUILD_CORE}" == "true") {
-                    SharedLib.buildCore()
+                    buildCore()
                 }
             }
             stage('Set release version number') {
@@ -130,7 +130,7 @@ timestamps {
             }
             stage('Push release to origin/master') {
                 if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    SharedLib.push()
+                    push()
                 }
             }
         }
