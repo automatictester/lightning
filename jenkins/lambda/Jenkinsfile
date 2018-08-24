@@ -1,7 +1,6 @@
 #!groovy
 
-@Library("sharedLib@${env.BRANCH_NAME}")
-import SharedLib
+library "sharedLib@${env.BRANCH_NAME}"
 
 properties([
         [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
