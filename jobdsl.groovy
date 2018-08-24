@@ -29,7 +29,7 @@ folder('lightning')
                         }
                         allowVersionOverride true
                         defaultVersion 'master'
-                        implicit true
+                        implicit false
                     }
                 }
             }
