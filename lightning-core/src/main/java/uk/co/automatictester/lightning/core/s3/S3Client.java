@@ -17,7 +17,7 @@ public class S3Client {
     private static AmazonS3 client;
     private static S3Client instance;
     private static String s3Bucket;
-    private static String awsRegion;
+    private static String awsRegion; // TODO: exists only to check if same as previously - not needed if we move to map
 
     private S3Client() {
     }
