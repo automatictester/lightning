@@ -21,7 +21,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     public void setRegionAndBucket(String region, String bucket) {
         this.region = region;
         this.bucket = bucket;
-        client = S3Client.getInstance(region, bucket);
+        client = S3Client.getInstance(region).setS3Bucket(bucket);
     }
 
     public void setPerfMonCsv(String object) {

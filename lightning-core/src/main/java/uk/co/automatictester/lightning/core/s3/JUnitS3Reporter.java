@@ -15,7 +15,7 @@ public class JUnitS3Reporter extends JUnitReporter {
     private static S3Client s3Client;
 
     public JUnitS3Reporter(String region, String bucket) {
-        s3Client = S3Client.getInstance(region, bucket);
+        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
     }
 
     public String generateJUnitReportToS3(TestSet testSet) {

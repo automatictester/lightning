@@ -93,8 +93,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
         long testSetExecEnd = System.currentTimeMillis();
         long testExecTime = testSetExecEnd - testSetExecStart;
-        String message = String.format("Execution time:    %dms", testExecTime);
-        log.info(message);
+        log.info("Execution time:    {}ms", testExecTime);
 
         if (core.hasExecutionFailed()) {
             response.setExitCode(1);

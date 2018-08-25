@@ -40,7 +40,7 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private JMeterTransactions(String region, String bucket, String csvObject) {
-        s3Client = S3Client.getInstance(region, bucket);
+        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 

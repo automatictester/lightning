@@ -22,10 +22,9 @@ public class S3Client {
     private S3Client() {
     }
 
-    public static synchronized S3Client getInstance(String region, String bucket, boolean... enforceMockedClient) {
+    public static synchronized S3Client getInstance(String region, boolean... enforceMockedClient) {
         if (instance == null) {
             awsRegion = region;
-            s3Bucket = bucket;
             instance = new S3Client();
             if (isEnforcingMockClient(enforceMockedClient)) {
                 setMockedClient(region);
@@ -34,13 +33,17 @@ public class S3Client {
             } else {
                 setMockedClient(region);
             }
-            s3Bucket = bucket;
         } else {
-            if (!region.equals(awsRegion) || !bucket.equals(s3Bucket)) {
-                String message = String.format("Always call getInstance method with same region and bucket. Previous region: %s, current region: %s. Previous bucket: %s, current bucket: %s", region, awsRegion, bucket, s3Bucket);
+            if (!region.equals(awsRegion)) {
+                String message = String.format("Always call getInstance method with same region. Previous region: %s, current region: %s", region, awsRegion);
                 throw new RuntimeException(message);
             }
         }
+        return instance;
+    }
+
+    public S3Client setS3Bucket(String bucket) {
+        s3Bucket = bucket;
         return instance;
     }
 

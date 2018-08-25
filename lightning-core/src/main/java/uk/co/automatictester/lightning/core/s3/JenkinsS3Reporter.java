@@ -10,12 +10,12 @@ public class JenkinsS3Reporter extends CIReporter {
 
     private JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
         super(testSet);
-        s3Client = S3Client.getInstance(region, bucket);
+        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
     }
 
     private JenkinsS3Reporter(String region, String bucket, JMeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
-        s3Client = S3Client.getInstance(region, bucket);
+        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
     }
 
     public static JenkinsS3Reporter fromTestSet(String region, String bucket, TestSet testSet) {

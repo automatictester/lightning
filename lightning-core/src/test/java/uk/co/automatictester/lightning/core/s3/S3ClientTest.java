@@ -62,7 +62,7 @@ public class S3ClientTest {
     public void testGetObjectAsString() {
         amazonS3Client.putObject(defaultBucket, key, content);
 
-        lightning3Client = S3Client.getInstance(region, defaultBucket, true);
+        lightning3Client = S3Client.getInstance(region, true).setS3Bucket(defaultBucket);
         String retrievedContent = lightning3Client.getObjectAsString(key);
 
         assertThat(retrievedContent, is(equalTo(content)));
@@ -70,7 +70,7 @@ public class S3ClientTest {
 
     @Test
     public void testPutObject() {
-        lightning3Client = S3Client.getInstance(region, defaultBucket, true);
+        lightning3Client = S3Client.getInstance(region, true).setS3Bucket(defaultBucket);
         String generatedKey = lightning3Client.putObject(key, content);
 
         String retrievedContent = amazonS3Client.getObjectAsString(defaultBucket, generatedKey);
@@ -82,7 +82,7 @@ public class S3ClientTest {
     public void testPutObjectFromFile() throws IOException {
         String file = "csv/jmeter/10_transactions.csv";
 
-        lightning3Client = S3Client.getInstance(region, defaultBucket, true);
+        lightning3Client = S3Client.getInstance(region, true).setS3Bucket(defaultBucket);
         lightning3Client.putObjectFromFile(file);
 
         String fileContent = readFileToString("/" + file);
@@ -96,7 +96,7 @@ public class S3ClientTest {
         amazonS3Client.deleteBucket(defaultBucket);
 
         String bucket = RandomStringUtils.randomAlphabetic(50).toLowerCase();
-        lightning3Client = S3Client.getInstance(region, defaultBucket, true);
+        lightning3Client = S3Client.getInstance(region, true).setS3Bucket(defaultBucket);
         boolean bucketCreated = lightning3Client.createBucketIfDoesNotExist(bucket);
         assertThat(bucketCreated, is(true));
 
@@ -107,27 +107,17 @@ public class S3ClientTest {
     public void testDoNotCreateBucketIfExists() {
         assertThat(amazonS3Client.doesBucketExistV2(defaultBucket), is(true));
 
-        lightning3Client = S3Client.getInstance(region, defaultBucket, true);
+        lightning3Client = S3Client.getInstance(region, true).setS3Bucket(defaultBucket);
         boolean bucketCreated = lightning3Client.createBucketIfDoesNotExist(defaultBucket);
 
         assertThat(bucketCreated, is(false));
         assertThat(amazonS3Client.doesBucketExistV2(defaultBucket), is(true));
     }
 
-    @Test(dataProvider = "testData",
-            expectedExceptions = RuntimeException.class,
-            expectedExceptionsMessageRegExp = ".*Always call getInstance method with same region and bucket.*")
-    public void testGetInstanceWithDifferentParams(String suppliedRegion, String suppliedBucket) {
-        S3Client.getInstance(region, defaultBucket, true);
-        S3Client.getInstance(suppliedRegion, suppliedBucket, true);
-    }
-
-    @DataProvider(name = "testData")
-    private Object[][] testData() {
-        return new Object[][]{
-                {region, "wrong"},
-                {"wrong", defaultBucket}
-        };
+    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = ".*Always call getInstance method with same region.*")
+    public void testGetInstanceWithDifferentParam() {
+        S3Client.getInstance(region);
+        S3Client.getInstance("wrong");
     }
 
     private String readFileToString(String filePath) throws IOException {
