@@ -9,6 +9,8 @@ import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelEx
 import uk.co.automatictester.lightning.core.s3.S3Client;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
@@ -26,28 +28,28 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private JMeterTransactions(File csvFile) {
-        long start = System.currentTimeMillis();
+        Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
         loadFromFile(csvFile);
         throwExceptionIfEmpty();
 
-        long finish = System.currentTimeMillis();
-        long millisecondsBetween = finish - start;
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), millisecondsBetween);
+        Instant finish = Instant.now();
+        Duration duration = Duration.between(start, finish);
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
     }
 
     private JMeterTransactions(String region, String bucket, String csvObject) {
         s3Client = S3Client.getInstance(region, bucket);
-        long start = System.currentTimeMillis();
+        Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
         loadFromS3Object(csvObject);
         throwExceptionIfEmpty();
 
-        long finish = System.currentTimeMillis();
-        long millisecondsBetween = finish - start;
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), millisecondsBetween);
+        Instant finish = Instant.now();
+        Duration duration = Duration.between(start, finish);
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
     }
 
     private JMeterTransactions(List<String[]> entries) {
