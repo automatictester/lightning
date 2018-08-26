@@ -5,7 +5,8 @@ import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.s3.JUnitS3Reporter;
 import uk.co.automatictester.lightning.core.s3.JenkinsS3Reporter;
 import uk.co.automatictester.lightning.core.s3.LightningLambdaConfig;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
 public class LightningCoreS3Facade extends LightningCoreFacade {
@@ -21,7 +22,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     public void setRegionAndBucket(String region, String bucket) {
         this.region = region;
         this.bucket = bucket;
-        client = S3Client.getInstance(region).setS3Bucket(bucket);
+        client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
     public void setPerfMonCsv(String object) {

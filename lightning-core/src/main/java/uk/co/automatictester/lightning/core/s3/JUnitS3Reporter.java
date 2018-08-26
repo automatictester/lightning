@@ -2,6 +2,8 @@ package uk.co.automatictester.lightning.core.s3;
 
 import uk.co.automatictester.lightning.core.ci.JUnitReporter;
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
+import uk.co.automatictester.lightning.core.s3.client.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
 import javax.xml.transform.Transformer;
@@ -15,7 +17,7 @@ public class JUnitS3Reporter extends JUnitReporter {
     private static S3Client s3Client;
 
     public JUnitS3Reporter(String region, String bucket) {
-        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
     public String generateJUnitReportToS3(TestSet testSet) {

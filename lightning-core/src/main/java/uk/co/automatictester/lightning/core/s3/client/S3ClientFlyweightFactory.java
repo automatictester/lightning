@@ -1,0 +1,55 @@
+package uk.co.automatictester.lightning.core.s3.client;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+public class S3ClientFlyweightFactory {
+
+    private static final Map<String, S3Client> instances = new HashMap<>();
+
+    private S3ClientFlyweightFactory() {
+    }
+
+    public static synchronized S3Client getInstance(String region) {
+        if (isMockedInstanceExpected()) {
+            return getMockedS3ClientInstance(region);
+        } else {
+            return getRealS3ClientInstance(region);
+        }
+    }
+
+    private static boolean isMockedInstanceExpected() {
+        return System.getProperty("mockS3") != null;
+    }
+
+    private static S3Client getMockedS3ClientInstance(String region) {
+        Supplier<S3Client> supplier = () -> S3Client.getMockedInstance(region);
+        return getInstance(region, supplier);
+    }
+
+    private static S3Client getRealS3ClientInstance(String region) {
+        Supplier<S3Client> supplier = () -> S3Client.getInstance(region);
+        return getInstance(region, supplier);
+    }
+
+    private static S3Client getInstance(String region, Supplier<S3Client> supplier) {
+        if (!hasInstance(region)) {
+            S3Client instance = supplier.get();
+            putInstance(region, instance);
+        }
+        return getExistingInstance(region);
+    }
+
+    private static boolean hasInstance(String region) {
+        return instances.containsKey(region);
+    }
+
+    private static void putInstance(String region, S3Client instance) {
+        instances.put(region, instance);
+    }
+
+    private static S3Client getExistingInstance(String region) {
+        return instances.get(region);
+    }
+}

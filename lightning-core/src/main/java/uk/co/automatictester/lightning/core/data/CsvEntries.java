@@ -4,7 +4,7 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNoTransactionsException;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3Client;
 
 import java.io.*;
 import java.util.ArrayList;

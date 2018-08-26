@@ -4,9 +4,9 @@ import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.shared.LegacyTestData;
 import uk.co.automatictester.lightning.core.structures.TestData;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,7 +6,7 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 
 import java.io.File;
 import java.time.Duration;
@@ -40,7 +40,7 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private JMeterTransactions(String region, String bucket, String csvObject) {
-        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 

@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.s3;
+package uk.co.automatictester.lightning.core.s3.client;
 
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
@@ -20,7 +20,7 @@ public class S3ClientTest {
     private static final String REGION = "eu-west-2";
     private AmazonS3 amazonS3Client;
     private S3Mock s3Mock;
-    private S3Client lightning3Client = S3Client.getInstance(REGION, true);
+    private S3Client lightning3Client = S3Client.getMockedInstance(REGION);
     private String key;
     private String content;
     private String bucket;
@@ -99,10 +99,9 @@ public class S3ClientTest {
         assertThat(amazonS3Client.doesBucketExistV2(bucket), is(true));
     }
 
-    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = ".*Always call getInstance method with same region.*")
-    public void testGetInstanceWithDifferentParam() {
-        S3Client.getInstance(REGION);
-        S3Client.getInstance("wrong");
+    @Test
+    public void testGetRealInstance() {
+        S3Client realClient = S3Client.getInstance(REGION);
     }
 
     private String getRandomKey() {

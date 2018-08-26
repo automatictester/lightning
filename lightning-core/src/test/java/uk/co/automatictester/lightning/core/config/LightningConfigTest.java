@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.config;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.exceptions.*;
+import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.tests.*;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
 

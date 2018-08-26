@@ -2,6 +2,8 @@ package uk.co.automatictester.lightning.core.s3;
 
 import uk.co.automatictester.lightning.core.ci.CIReporter;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.s3.client.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
 public class JenkinsS3Reporter extends CIReporter {
@@ -10,12 +12,12 @@ public class JenkinsS3Reporter extends CIReporter {
 
     private JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
         super(testSet);
-        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
     private JenkinsS3Reporter(String region, String bucket, JMeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
-        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
     public static JenkinsS3Reporter fromTestSet(String region, String bucket, TestSet testSet) {

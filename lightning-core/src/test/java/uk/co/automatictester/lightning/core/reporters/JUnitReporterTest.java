@@ -2,9 +2,9 @@ package uk.co.automatictester.lightning.core.reporters;
 
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.ci.JUnitReporter;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;

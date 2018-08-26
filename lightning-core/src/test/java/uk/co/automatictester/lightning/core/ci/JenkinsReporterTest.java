@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.ci;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.state.TestSet;
 
 import java.io.File;
 import java.io.FileNotFoundException;

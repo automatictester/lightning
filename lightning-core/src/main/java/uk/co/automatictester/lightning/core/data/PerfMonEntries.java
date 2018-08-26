@@ -4,7 +4,7 @@ import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
 import com.univocity.parsers.common.processor.RowListProcessor;
 import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentHostAndMetricException;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 
 import java.io.File;
 import java.util.List;
@@ -27,7 +27,7 @@ public class PerfMonEntries extends CsvEntries {
     }
 
     private PerfMonEntries(String region, String bucket, String csvObject) {
-        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
         loadFromS3Object(csvObject);
         throwExceptionIfEmpty();
     }

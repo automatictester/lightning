@@ -3,7 +3,8 @@ package uk.co.automatictester.lightning.core.facade;
 import io.findify.s3mock.S3Mock;
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.*;
-import uk.co.automatictester.lightning.core.s3.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
             s3Mock = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
             s3Mock.start();
         }
-        client = S3Client.getInstance(region).setS3Bucket(bucket);
+        client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
         client.createBucketIfDoesNotExist(bucket);
     }
 

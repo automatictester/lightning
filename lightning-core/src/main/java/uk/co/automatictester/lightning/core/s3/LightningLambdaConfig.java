@@ -6,6 +6,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.core.config.LightningConfig;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
+import uk.co.automatictester.lightning.core.s3.client.S3Client;
+import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.structures.LightningTests;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,7 +22,7 @@ public class LightningLambdaConfig extends LightningConfig {
     private static S3Client s3Client;
 
     public LightningLambdaConfig(String region, String bucket) {
-        s3Client = S3Client.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
     public void readTests(String xmlObject) {
