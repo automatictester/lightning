@@ -40,6 +40,7 @@ public abstract class CsvEntries {
     protected void loadFromFile(File perfMonCsvFile) {
         try (FileReader fr = new FileReader(perfMonCsvFile)) {
             CsvParserSettings csvParserSettings = getCsvParserSettings();
+            csvParserSettings.setInputBufferSize(20_000_000);
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(fr);
             entries.addAll(items);
