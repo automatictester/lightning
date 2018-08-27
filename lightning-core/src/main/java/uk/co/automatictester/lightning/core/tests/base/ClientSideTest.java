@@ -89,7 +89,7 @@ public abstract class ClientSideTest extends LightningTest {
 
     protected int getFailureCount(JMeterTransactions transactions) {
         return (int) transactions.getEntries().stream()
-                .filter(t -> !Boolean.parseBoolean(t[TRANSACTION_RESULT_INDEX.getValue()]))
+                .filter(t -> "false".equals(t[2]))
                 .count();
     }
 
