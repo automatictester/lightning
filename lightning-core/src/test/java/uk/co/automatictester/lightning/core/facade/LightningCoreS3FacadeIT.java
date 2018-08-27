@@ -1,13 +1,15 @@
 package uk.co.automatictester.lightning.core.facade;
 
 import io.findify.s3mock.S3Mock;
-import org.apache.commons.io.FileUtils;
 import org.testng.annotations.*;
 import uk.co.automatictester.lightning.core.s3.client.S3Client;
 import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -201,13 +203,13 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
             }
             combinedS3Objects += client.getObjectAsString(responseTeamCityLogKey);
 
-            assertThat(combinedS3Objects, is(equalToIgnoringWhiteSpace(readFileToString(expectedLogEntries))));
+            assertThat(combinedS3Objects, is(equalToIgnoringWhiteSpace(readResourceFileToString(expectedLogEntries))));
         }
     }
 
     private void assertJunitReport() throws IOException {
         if (expectedJunitReport != null) {
-            assertThat(readFileToString(expectedJunitReport), is(equalTo(readS3ObjectToString(responseJunitReportKey))));
+            assertThat(readResourceFileToString(expectedJunitReport), is(equalToIgnoringWhiteSpace(readS3ObjectToString(responseJunitReportKey))));
         }
     }
 
@@ -215,9 +217,9 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         assertThat(responseJenkinsReportKey, notNullValue());
     }
 
-    private String readFileToString(String filePath) throws IOException {
-        File file = new File(this.getClass().getResource(filePath).getFile());
-        return FileUtils.readFileToString(file);
+    private String readResourceFileToString(String file) throws IOException {
+        Path path = Paths.get("src/test/resources/" + file);
+        return Files.lines(path).collect(Collectors.joining("\n"));
     }
 
     private String readS3ObjectToString(String key) {

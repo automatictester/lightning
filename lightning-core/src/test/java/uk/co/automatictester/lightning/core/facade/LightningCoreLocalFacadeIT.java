@@ -1,6 +1,5 @@
 package uk.co.automatictester.lightning.core.facade;
 
-import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -9,7 +8,10 @@ import uk.co.automatictester.lightning.core.enums.Mode;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -141,7 +143,7 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
         assertThat(exitCode, is(equalTo((expectedExitCode))));
     }
 
-    private void assertConsoleOutput() {
+    private void assertConsoleOutput() throws IOException {
         if (expectedConsoleOutput != null) {
             assertThat(consoleOutputContainsFileContent(expectedConsoleOutput), is(true));
         }
@@ -153,14 +155,24 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
         }
     }
 
-    private boolean fileContentIsEqual(String resourceFilePath, String filePath) throws IOException {
-        File resourceFile = new File(this.getClass().getResource(resourceFilePath).getFile());
-        return FileUtils.contentEquals(resourceFile, new File(filePath));
+    private boolean fileContentIsEqual(String resourceFilePath, String file) throws IOException {
+        String resourceFileContent = readResourceFileToString(resourceFilePath);
+        String outputFile = readFileToString(file);
+        return resourceFileContent.equals(outputFile);
     }
 
-    private boolean consoleOutputContainsFileContent(String resourceFilePath) {
-        String resourceFileContent = new Scanner(this.getClass().getResourceAsStream(resourceFilePath)).useDelimiter("\\A").next();
+    private boolean consoleOutputContainsFileContent(String resourceFilePath) throws IOException {
+        String resourceFileContent = readResourceFileToString(resourceFilePath);
         String filteredBuildOutput = out.toString().replaceAll("Execution time:\\s*\\d*[ms]*\\s", "");
         return filteredBuildOutput.contains(resourceFileContent);
+    }
+
+    private String readResourceFileToString(String file) throws IOException {
+        return readFileToString("src/test/resources/" + file);
+    }
+
+    private String readFileToString(String file) throws IOException {
+        Path path = Paths.get(file);
+        return Files.lines(path).collect(Collectors.joining("\n"));
     }
 }
