@@ -3,13 +3,15 @@ package uk.co.automatictester.lightning.core.s3.client;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 public class S3Client {
 
@@ -56,7 +58,7 @@ public class S3Client {
 
     public void putObjectFromFile(String file) throws IOException {
         log.info("Putting S3 object from file: {}/{}", s3Bucket, file);
-        client.putObject(s3Bucket, file, getFileContent(file));
+        client.putObject(s3Bucket, file, readFileToString(file));
     }
 
     public boolean createBucketIfDoesNotExist(String bucket) {
@@ -72,8 +74,8 @@ public class S3Client {
         return RandomStringUtils.randomAlphanumeric(stringLength).toUpperCase();
     }
 
-    private String getFileContent(String resourceFilePath) throws IOException {
-        File resourceFile = new File(this.getClass().getResource("/" + resourceFilePath).getFile());
-        return FileUtils.readFileToString(resourceFile);
+    private String readFileToString(String file) throws IOException {
+        Path path = Paths.get(file);
+        return Files.lines(path).collect(Collectors.joining("\n"));
     }
 }

@@ -4,15 +4,18 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import io.findify.s3mock.S3Mock;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.*;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.core.Is.is;
 
 public class S3ClientTest {
@@ -76,11 +79,11 @@ public class S3ClientTest {
 
     @Test
     public void testPutObjectFromFile() throws IOException {
-        String file = "csv/jmeter/10_transactions.csv";
+        String file = "src/test/resources/csv/jmeter/10_transactions.csv";
         lightning3Client.putObjectFromFile(file);
         String objectContent = amazonS3Client.getObjectAsString(bucket, file);
-        String fileContent = readFileToString("/" + file);
-        assertThat(objectContent, is(equalTo(fileContent)));
+        String fileContent = readResourceFileToString(file);
+        assertThat(objectContent, is(equalToIgnoringWhiteSpace(fileContent)));
     }
 
     @Test
@@ -116,8 +119,8 @@ public class S3ClientTest {
         return RandomStringUtils.randomAlphabetic(50).toLowerCase();
     }
 
-    private String readFileToString(String filePath) throws IOException {
-        File file = new File(this.getClass().getResource(filePath).getFile());
-        return FileUtils.readFileToString(file);
+    private String readResourceFileToString(String file) throws IOException {
+        Path path = Paths.get(file);
+        return Files.lines(path).collect(Collectors.joining("\n"));
     }
 }

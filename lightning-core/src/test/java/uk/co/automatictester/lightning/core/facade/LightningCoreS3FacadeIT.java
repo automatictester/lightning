@@ -70,13 +70,13 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     @DataProvider(name = "testData")
     private Object[][] testData() {
         return new Object[][]{
-                {"report", null, "csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/report.txt"},
-                {"report", null, "csv/jmeter/2_transactions.csv", null, 0, null, null},
-                {"report", null, "csv/jmeter/2_transactions_1_failed.csv", null, 1, null, null},
-                {"verify", "xml/1_1_1.xml", "csv/jmeter/10_transactions.csv", null, 1, null, "/results/expected/1_1_1.txt"},
-                {"verify", "xml/3_0_0.xml", "csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/3_0_0.txt"},
-                {"verify", "xml/1_client_2_server.xml", "csv/jmeter/10_transactions.csv", "csv/perfmon/2_entries.csv", 0, null, "/results/expected/1_client_2_server.txt"},
-                {"verify", "xml/junit_report.xml", "csv/jmeter/2_transactions.csv", "csv/perfmon/junit_report.csv", 1, "/results/expected/junit/junit_expected.xml", null}
+                {"report", null, "src/test/resources/csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/report.txt"},
+                {"report", null, "src/test/resources/csv/jmeter/2_transactions.csv", null, 0, null, null},
+                {"report", null, "src/test/resources/csv/jmeter/2_transactions_1_failed.csv", null, 1, null, null},
+                {"verify", "src/test/resources/xml/1_1_1.xml", "src/test/resources/csv/jmeter/10_transactions.csv", null, 1, null, "/results/expected/1_1_1.txt"},
+                {"verify", "src/test/resources/xml/3_0_0.xml", "src/test/resources/csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/3_0_0.txt"},
+                {"verify", "src/test/resources/xml/1_client_2_server.xml", "src/test/resources/csv/jmeter/10_transactions.csv", "src/test/resources/csv/perfmon/2_entries.csv", 0, null, "/results/expected/1_client_2_server.txt"},
+                {"verify", "src/test/resources/xml/junit_report.xml", "src/test/resources/csv/jmeter/2_transactions.csv", "src/test/resources/csv/perfmon/junit_report.csv", 1, "/results/expected/junit/junit_expected.xml", null}
         };
     }
 
