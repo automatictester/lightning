@@ -20,11 +20,11 @@ public class JenkinsS3Reporter extends CIReporter {
         s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
-    public static JenkinsS3Reporter fromTestSet(String region, String bucket, TestSet testSet) {
+    public static JenkinsS3Reporter from(String region, String bucket, TestSet testSet) {
         return new JenkinsS3Reporter(region, bucket, testSet);
     }
 
-    public static JenkinsS3Reporter fromJMeterTransactions(String region, String bucket, JMeterTransactions jmeterTransactions) {
+    public static JenkinsS3Reporter from(String region, String bucket, JMeterTransactions jmeterTransactions) {
         return new JenkinsS3Reporter(region, bucket, jmeterTransactions);
     }
 

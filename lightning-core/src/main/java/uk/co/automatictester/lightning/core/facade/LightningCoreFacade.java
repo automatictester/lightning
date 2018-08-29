@@ -34,7 +34,7 @@ public abstract class LightningCoreFacade {
     }
 
     public String getTeamCityVerifyStatistics() {
-        return TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics();
+        return TeamCityReporter.from(testSet).getTeamCityVerifyStatistics();
     }
 
     public String getTeamCityBuildReportSummary() {
@@ -49,7 +49,7 @@ public abstract class LightningCoreFacade {
 
     private void setTeamCityReporter() {
         if (teamCityReporter == null) {
-            teamCityReporter = TeamCityReporter.fromJMeterTransactions(jmeterTransactions);
+            teamCityReporter = TeamCityReporter.from(jmeterTransactions);
         }
     }
 }

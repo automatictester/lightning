@@ -26,29 +26,29 @@ public class PerfMonEntries extends CsvEntries {
         super(perfMonEntries);
     }
 
-    private PerfMonEntries(String region, String bucket, String csvObject) {
+    private PerfMonEntries(String region, String bucket, String key) {
         s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
-        loadFromS3Object(csvObject);
+        loadFromS3Object(key);
         throwExceptionIfEmpty();
     }
 
-    public static PerfMonEntries fromFile(File perfMonCvsFile) {
+    public static PerfMonEntries from(File perfMonCvsFile) {
         return new PerfMonEntries(perfMonCvsFile);
     }
 
-    public static PerfMonEntries fromList(List<String[]> perfMonEntries) {
+    public static PerfMonEntries from(List<String[]> perfMonEntries) {
         return new PerfMonEntries(perfMonEntries);
     }
 
-    public static PerfMonEntries fromS3Object(String region, String bucket, String csvObject) {
-        return new PerfMonEntries(region, bucket, csvObject);
+    public static PerfMonEntries from(String region, String bucket, String key) {
+        return new PerfMonEntries(region, bucket, key);
     }
 
     public PerfMonEntries getEntriesWith(String hostAndMetric) {
         List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC_INDEX.getValue()].equals(hostAndMetric))
                 .collect(Collectors.toList());
-        PerfMonEntries filteredDataEntries = PerfMonEntries.fromList(list);
+        PerfMonEntries filteredDataEntries = PerfMonEntries.from(list);
         if (filteredDataEntries.size() == 0) {
             throw new CSVFileNonexistentHostAndMetricException(hostAndMetric);
         }

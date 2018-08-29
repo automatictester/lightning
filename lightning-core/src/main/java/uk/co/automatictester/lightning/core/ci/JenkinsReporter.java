@@ -7,6 +7,7 @@ import uk.co.automatictester.lightning.core.exceptions.JenkinsReportGenerationEx
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class JenkinsReporter extends CIReporter {
@@ -19,11 +20,11 @@ public class JenkinsReporter extends CIReporter {
         super(jmeterTransactions);
     }
 
-    public static JenkinsReporter fromTestSet(TestSet testSet) {
+    public static JenkinsReporter from(TestSet testSet) {
         return new JenkinsReporter(testSet);
     }
 
-    public static JenkinsReporter fromJMeterTransactions(JMeterTransactions jmeterTransactions) {
+    public static JenkinsReporter from(JMeterTransactions jmeterTransactions) {
         return new JenkinsReporter(jmeterTransactions);
     }
 
@@ -47,7 +48,7 @@ public class JenkinsReporter extends CIReporter {
         try (FileOutputStream fos = new FileOutputStream("lightning-jenkins.properties")) {
             Properties props = new Properties();
             props.setProperty("result.string", summary);
-            OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
+            OutputStreamWriter out = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
             props.store(out, "In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}");
         } catch (IOException e) {
             throw new JenkinsReportGenerationException(e);

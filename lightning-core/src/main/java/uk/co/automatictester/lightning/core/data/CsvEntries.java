@@ -34,7 +34,7 @@ public abstract class CsvEntries {
         return entries.size();
     }
 
-    protected void loadFromS3Object(String csvObject) {
+    void loadFromS3Object(String csvObject) {
         String csvObjectContent = s3Client.getObjectAsString(csvObject);
         try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
             CsvParserSettings csvParserSettings = getCsvParserSettings();
@@ -46,7 +46,7 @@ public abstract class CsvEntries {
         }
     }
 
-    protected void throwExceptionIfEmpty() {
+    void throwExceptionIfEmpty() {
         if (entries.isEmpty()) {
             throw new CSVFileNoTransactionsException();
         }

@@ -22,7 +22,7 @@ public class TeamCityReporterTest {
         when(jmeterTransactions.size()).thenReturn(1204);
         when(jmeterTransactions.getFailCount()).thenReturn(25);
 
-        String output = TeamCityReporter.fromJMeterTransactions(jmeterTransactions).getTeamCityReportStatistics();
+        String output = TeamCityReporter.from(jmeterTransactions).getTeamCityReportStatistics();
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='25']"));
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Total transactions' value='1204']"));
     }
@@ -43,7 +43,7 @@ public class TeamCityReporterTest {
             add(serverTest);
         }});
 
-        String output = TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics();
+        String output = TeamCityReporter.from(testSet).getTeamCityVerifyStatistics();
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Memory utilization' value='45']"));
     }
@@ -56,7 +56,7 @@ public class TeamCityReporterTest {
         when(jmeterTransactions.size()).thenReturn(10);
         when(jmeterTransactions.getFailCount()).thenReturn(0);
 
-        String output = TeamCityReporter.fromJMeterTransactions(jmeterTransactions).getTeamCityBuildReportSummary();
+        String output = TeamCityReporter.from(jmeterTransactions).getTeamCityBuildReportSummary();
         assertThat(output, containsString(expectedOutput));
     }
 
@@ -68,7 +68,7 @@ public class TeamCityReporterTest {
         when(jmeterTransactions.size()).thenReturn(10);
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 
-        String output = TeamCityReporter.fromJMeterTransactions(jmeterTransactions).getTeamCityBuildReportSummary();
+        String output = TeamCityReporter.from(jmeterTransactions).getTeamCityBuildReportSummary();
         assertThat(output, containsString(expectedOutput));
     }
 }

@@ -33,17 +33,17 @@ public class LightningCoreLocalFacade extends LightningCoreFacade {
     }
 
     public void loadTestData() {
-        jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
+        jmeterTransactions = JMeterTransactions.from(jmeterCsv);
         TestData.addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
     }
 
     public void setJenkinsBuildNameForVerify() {
-        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
+        JenkinsReporter.from(testSet).setJenkinsBuildName();
     }
 
     public void setJenkinsBuildNameForReport() {
-        JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
+        JenkinsReporter.from(jmeterTransactions).setJenkinsBuildName();
     }
 
     public void saveJunitReport() {
@@ -53,7 +53,7 @@ public class LightningCoreLocalFacade extends LightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(perfMonCsv);
+            PerfMonEntries perfMonDataEntries = PerfMonEntries.from(perfMonCsv);
             TestData.addServerSideTestData(perfMonDataEntries);
         }
     }

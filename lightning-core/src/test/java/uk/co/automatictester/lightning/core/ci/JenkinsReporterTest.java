@@ -24,7 +24,7 @@ public class JenkinsReporterTest {
         when(testSet.getFailCount()).thenReturn(1);
         when(testSet.getErrorCount()).thenReturn(1);
 
-        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
+        JenkinsReporter.from(testSet).setJenkinsBuildName();
 
         String fileContent = readFileToStringAndDelete();
         assertThat(fileContent, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
@@ -37,7 +37,7 @@ public class JenkinsReporterTest {
         when(jmeterTransactions.size()).thenReturn(3);
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 
-        JenkinsReporter.fromJMeterTransactions(jmeterTransactions).setJenkinsBuildName();
+        JenkinsReporter.from(jmeterTransactions).setJenkinsBuildName();
 
         String fileContent = readFileToStringAndDelete();
         assertThat(fileContent, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));

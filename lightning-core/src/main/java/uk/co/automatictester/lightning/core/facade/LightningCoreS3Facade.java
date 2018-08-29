@@ -24,16 +24,16 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
         client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
     }
 
-    public void setPerfMonCsv(String object) {
-        perfMonCsv = object;
+    public void setPerfMonCsv(String s3Key) {
+        perfMonCsv = s3Key;
     }
 
-    public void setJmeterCsv(String object) {
-        jmeterCsv = object;
+    public void setJmeterCsv(String s3Key) {
+        jmeterCsv = s3Key;
     }
 
-    public void setLightningXml(String object) {
-        lightningXml = object;
+    public void setLightningXml(String s3Key) {
+        lightningXml = s3Key;
     }
 
     public void loadConfigFromS3() {
@@ -42,17 +42,17 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public void loadTestDataFromS3() {
-        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
+        jmeterTransactions = JMeterTransactions.from(region, bucket, jmeterCsv);
         TestData.addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
     }
 
     public String storeJenkinsBuildNameForVerifyInS3() {
-        return JenkinsS3Reporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
+        return JenkinsS3Reporter.from(region, bucket, testSet).storeJenkinsBuildNameInS3();
     }
 
     public String storeJenkinsBuildNameForReportInS3() {
-        return JenkinsS3Reporter.fromJMeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
+        return JenkinsS3Reporter.from(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
     }
 
     public String saveJunitReportToS3() {
@@ -66,7 +66,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromS3Object(region, bucket, perfMonCsv);
+            PerfMonEntries perfMonDataEntries = PerfMonEntries.from(region, bucket, perfMonCsv);
             TestData.addServerSideTestData(perfMonDataEntries);
         }
     }

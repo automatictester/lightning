@@ -38,12 +38,12 @@ public class JMeterTransactions extends CsvEntries {
         log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
     }
 
-    private JMeterTransactions(String region, String bucket, String csvObject) {
+    private JMeterTransactions(String region, String bucket, String key) {
         s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
-        loadFromS3Object(csvObject);
+        loadFromS3Object(key);
         throwExceptionIfEmpty();
 
         Instant finish = Instant.now();
@@ -55,15 +55,15 @@ public class JMeterTransactions extends CsvEntries {
         super(entries);
     }
 
-    public static JMeterTransactions fromFile(File csvFile) {
+    public static JMeterTransactions from(File csvFile) {
         return new JMeterTransactions(csvFile);
     }
 
-    public static JMeterTransactions fromS3Object(String region, String bucket, String csvObject) {
-        return new JMeterTransactions(region, bucket, csvObject);
+    public static JMeterTransactions from(String region, String bucket, String key) {
+        return new JMeterTransactions(region, bucket, key);
     }
 
-    public static JMeterTransactions fromList(List<String[]> entries) {
+    public static JMeterTransactions from(List<String[]> entries) {
         return new JMeterTransactions(entries);
     }
 
@@ -110,11 +110,11 @@ public class JMeterTransactions extends CsvEntries {
         return parserSettings;
     }
 
-    private JMeterTransactions getTransactions(String expectedTransactionName, BiPredicate<String, String> trait) {
+    private JMeterTransactions getTransactions(String expectedTransactionName, BiPredicate<String, String> biPredicate) {
         JMeterTransactions transactions = new JMeterTransactions();
         entries.forEach(transaction -> {
             String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
-            boolean isInScope = trait.test(transactionName, expectedTransactionName);
+            boolean isInScope = biPredicate.test(transactionName, expectedTransactionName);
             if (isInScope) {
                 transactions.add(transaction);
             }
@@ -125,11 +125,11 @@ public class JMeterTransactions extends CsvEntries {
         return transactions;
     }
 
-    private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> trait) {
+    private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> biPredicate) {
         long edgeTimestamp = 0;
         for (String[] transaction : entries) {
             long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
-            boolean isEdgeTimestamp = trait.test(edgeTimestamp, currentTransactionTimestamp);
+            boolean isEdgeTimestamp = biPredicate.test(edgeTimestamp, currentTransactionTimestamp);
             if (isEdgeTimestamp) {
                 edgeTimestamp = currentTransactionTimestamp;
             }

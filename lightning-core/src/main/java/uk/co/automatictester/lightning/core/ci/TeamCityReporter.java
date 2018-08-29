@@ -17,11 +17,11 @@ public class TeamCityReporter extends CIReporter {
         super(jmeterTransactions);
     }
 
-    public static TeamCityReporter fromTestSet(TestSet testSet) {
+    public static TeamCityReporter from(TestSet testSet) {
         return new TeamCityReporter(testSet);
     }
 
-    public static TeamCityReporter fromJMeterTransactions(JMeterTransactions jmeterTransactions) {
+    public static TeamCityReporter from(JMeterTransactions jmeterTransactions) {
         return new TeamCityReporter(jmeterTransactions);
     }
 
