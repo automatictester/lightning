@@ -29,6 +29,6 @@ public class NthPercRespTimeTestHandler extends ElementHandler {
             }
         }
         ClientSideTest nthPercRespTimeTest = builder.build();
-        LightningTests.add(nthPercRespTimeTest);
+        LightningTests.getInstance().add(nthPercRespTimeTest);
     }
 }

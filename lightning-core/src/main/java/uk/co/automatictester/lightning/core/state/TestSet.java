@@ -30,7 +30,7 @@ public class TestSet {
     }
 
     public List<LightningTest> getTests() {
-        return LightningTests.getTests();
+        return LightningTests.getInstance().getTests();
     }
 
     public int getTestCount() {

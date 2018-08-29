@@ -5,25 +5,39 @@ import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 
 public class TestData {
 
-    private static JMeterTransactions transactions;
-    private static PerfMonEntries entries;
+    private static TestData instance;
+    private JMeterTransactions transactions;
+    private PerfMonEntries entries;
 
     private TestData() {
     }
 
-    public static void addClientSideTestData(JMeterTransactions jmeterTransactions) {
+    public synchronized static TestData createInstance() {
+        instance = new TestData();
+        return instance;
+    }
+
+    public synchronized static TestData getInstance() {
+        if (instance == null) {
+            return createInstance();
+        } else {
+            return instance;
+        }
+    }
+
+    public void addClientSideTestData(JMeterTransactions jmeterTransactions) {
         transactions = JMeterTransactions.fromList(jmeterTransactions.getEntries());
     }
 
-    public static void addServerSideTestData(PerfMonEntries perfMonEntries) {
+    public void addServerSideTestData(PerfMonEntries perfMonEntries) {
         entries = PerfMonEntries.fromList(perfMonEntries.getEntries());
     }
 
-    public static JMeterTransactions getClientSideTestData() {
+    public JMeterTransactions getClientSideTestData() {
         return transactions;
     }
 
-    public static PerfMonEntries getServerSideTestData() {
+    public PerfMonEntries getServerSideTestData() {
         return entries;
     }
 }

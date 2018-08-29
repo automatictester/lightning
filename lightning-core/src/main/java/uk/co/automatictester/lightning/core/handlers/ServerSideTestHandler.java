@@ -58,6 +58,6 @@ public class ServerSideTestHandler extends ElementHandler {
                 break;
         }
 
-        LightningTests.add(test);
+        LightningTests.getInstance().add(test);
     }
 }

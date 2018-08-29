@@ -28,6 +28,6 @@ public class RespTimeStdDevTestHandler extends ElementHandler {
             }
         }
         ClientSideTest test = builder.build();
-        LightningTests.add(test);
+        LightningTests.getInstance().add(test);
     }
 }

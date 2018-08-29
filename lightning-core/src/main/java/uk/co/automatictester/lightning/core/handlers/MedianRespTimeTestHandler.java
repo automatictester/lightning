@@ -30,6 +30,6 @@ public class MedianRespTimeTestHandler extends ElementHandler {
             }
         }
         ClientSideTest respTimeMedianTest = builder.build();
-        LightningTests.add(respTimeMedianTest);
+        LightningTests.getInstance().add(respTimeMedianTest);
     }
 }

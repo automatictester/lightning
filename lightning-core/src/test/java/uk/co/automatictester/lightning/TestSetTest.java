@@ -31,7 +31,7 @@ public class TestSetTest extends ConsoleOutputTest {
         clientSideTestData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         clientSideTestData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(clientSideTestData);
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
         ServerSideLessThanTest testA = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         ServerSideGreaterThanTest testB = new ServerSideGreaterThanTest.Builder("Test #2", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
@@ -41,15 +41,15 @@ public class TestSetTest extends ConsoleOutputTest {
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10000);
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10001);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(serverSideTestData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
 
         tests.add(testA);
         tests.add(testB);
         tests.add(testC);
 
         TestSet testSet = new TestSet();
-        LightningTests.flush();
-        LightningTests.addAll(tests);
+        LightningTests lightningTests = LightningTests.createInstance();
+        lightningTests.addAll(tests);
         configureStream();
         testSet.executeTests();
         revertStream();
@@ -69,15 +69,15 @@ public class TestSetTest extends ConsoleOutputTest {
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(passedTransactionsAbsoluteTestA);
         tests.add(passedTransactionsAbsoluteTestB);
 
         TestSet testSet = new TestSet();
-        LightningTests.flush();
-        LightningTests.addAll(tests);
+        LightningTests lightningTests = LightningTests.createInstance();
+        lightningTests.addAll(tests);
         configureStream();
         testSet.executeTests();
         revertStream();
@@ -98,7 +98,7 @@ public class TestSetTest extends ConsoleOutputTest {
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
@@ -106,8 +106,8 @@ public class TestSetTest extends ConsoleOutputTest {
         tests.add(respTimeAvgTestC);
 
         TestSet testSet = new TestSet();
-        LightningTests.flush();
-        LightningTests.addAll(tests);
+        LightningTests lightningTests = LightningTests.createInstance();
+        lightningTests.addAll(tests);
         configureStream();
         testSet.executeTests();
         revertStream();

@@ -48,7 +48,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -71,7 +71,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -92,7 +92,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -113,7 +113,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -134,7 +134,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_249_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -145,7 +145,7 @@ public class RespTimeNthPercentileTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_143_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
@@ -156,7 +156,7 @@ public class RespTimeNthPercentileTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_143_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
         assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));

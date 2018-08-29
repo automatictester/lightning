@@ -23,7 +23,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -35,7 +35,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -47,7 +47,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -59,7 +59,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -71,7 +71,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -83,7 +83,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -94,7 +94,7 @@ public class ServerSideTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -107,7 +107,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -119,7 +119,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
     }
@@ -140,7 +140,7 @@ public class ServerSideTestUnitTest {
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));

@@ -21,7 +21,7 @@ public abstract class ServerSideTest extends LightningTest {
     @Override
     public void execute() {
         try {
-            PerfMonEntries originalDataEntries = TestData.getServerSideTestData();
+            PerfMonEntries originalDataEntries = TestData.getInstance().getServerSideTestData();
             PerfMonEntries dataEntries = filterDataEntries(originalDataEntries);
             dataEntriesCount = dataEntries.size();
             calculateActualResult(dataEntries);

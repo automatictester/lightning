@@ -43,7 +43,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
 
     public void loadTestDataFromS3() {
         jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.createInstance().addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
     }
 
@@ -67,7 +67,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
             PerfMonEntries perfMonDataEntries = PerfMonEntries.fromS3Object(region, bucket, perfMonCsv);
-            TestData.addServerSideTestData(perfMonDataEntries);
+            TestData.getInstance().addServerSideTestData(perfMonDataEntries);
         }
     }
 }

@@ -48,6 +48,6 @@ public class PassedTransactionsTestHandler extends ElementHandler {
             test = builder.build();
         }
 
-        LightningTests.add(test);
+        LightningTests.getInstance().add(test);
     }
 }

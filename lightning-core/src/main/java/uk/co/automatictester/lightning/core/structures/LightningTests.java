@@ -7,28 +7,38 @@ import java.util.List;
 
 public class LightningTests {
 
-    private static List<LightningTest> tests = new ArrayList<>();
+    private static LightningTests instance;
+    private List<LightningTest> tests = new ArrayList<>();
 
     private LightningTests() {
     }
 
-    public static void flush() {
-        tests.clear();
+    public synchronized static LightningTests createInstance() {
+        instance = new LightningTests();
+        return instance;
     }
 
-    public static void add(LightningTest test) {
+    public synchronized static LightningTests getInstance() {
+        if (instance == null) {
+            return createInstance();
+        } else {
+            return instance;
+        }
+    }
+
+    public void add(LightningTest test) {
         tests.add(test);
     }
 
-    public static void addAll(List<LightningTest> test) {
+    public void addAll(List<LightningTest> test) {
         tests.addAll(test);
     }
 
-    public static List<LightningTest> getTests() {
+    public List<LightningTest> getTests() {
         return tests;
     }
 
-    public static int size() {
+    public int size() {
         return tests.size();
     }
 }

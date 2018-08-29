@@ -19,7 +19,7 @@ import java.io.IOException;
 public class LightningConfig {
 
     public void readTests(File xmlFile) {
-        LightningTests.flush();
+        LightningTests.createInstance();
         NodeList nodes = readXmlFile(xmlFile);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
@@ -67,7 +67,7 @@ public class LightningConfig {
     }
 
     protected void throwExceptionIfNoTests() {
-        if (LightningTests.size() == 0) {
+        if (LightningTests.getInstance().size() == 0) {
             throw new XMLFileNoTestsException("No tests of expected type found in XML file");
         }
     }

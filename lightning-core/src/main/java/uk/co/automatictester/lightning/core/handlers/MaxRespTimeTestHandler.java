@@ -30,6 +30,6 @@ public class MaxRespTimeTestHandler extends ElementHandler {
             }
         }
         ClientSideTest maxRespTimeTest = builder.build();
-        LightningTests.add(maxRespTimeTest);
+        LightningTests.getInstance().add(maxRespTimeTest);
     }
 }

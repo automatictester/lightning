@@ -20,7 +20,7 @@ public abstract class ClientSideTest extends LightningTest {
     @Override
     public void execute() {
         try {
-            JMeterTransactions originalJMeterTransactions = TestData.getClientSideTestData();
+            JMeterTransactions originalJMeterTransactions = TestData.getInstance().getClientSideTestData();
             JMeterTransactions transactions = filterTransactions(originalJMeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);

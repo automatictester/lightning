@@ -29,7 +29,7 @@ public class ThroughputTestHandler extends ElementHandler {
                 builder.withRegexp();
             }
         }
-        ClientSideTest throughputTest = builder.build();
-        LightningTests.add(throughputTest);
+        ClientSideTest test = builder.build();
+        LightningTests.getInstance().add(test);
     }
 }

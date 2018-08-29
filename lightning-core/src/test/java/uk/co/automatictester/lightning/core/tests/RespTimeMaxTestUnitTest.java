@@ -25,7 +25,7 @@ public class RespTimeMaxTestUnitTest {
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -38,7 +38,7 @@ public class RespTimeMaxTestUnitTest {
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
     }
@@ -50,7 +50,7 @@ public class RespTimeMaxTestUnitTest {
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
         assertThat(test.getActualResult(), equalTo(11221));
@@ -64,7 +64,7 @@ public class RespTimeMaxTestUnitTest {
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
     }
@@ -76,7 +76,7 @@ public class RespTimeMaxTestUnitTest {
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
-        TestData.addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
         assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
