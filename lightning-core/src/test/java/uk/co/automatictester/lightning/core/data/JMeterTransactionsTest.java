@@ -18,19 +18,19 @@ public class JMeterTransactionsTest {
 
     @Test
     public void verifyReadMethod() {
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(CSV_2_TRANSACTIONS);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromFile(CSV_2_TRANSACTIONS);
         assertThat(jmeterTransactions.getEntries(), hasItem(LOGIN_3514_SUCCESS));
         assertThat(jmeterTransactions.getEntries(), hasItem(SEARCH_11221_SUCCESS));
     }
 
     @Test(expectedExceptions = CSVFileIOException.class)
     public void verifyReadMethodIOException() {
-        JMeterTransactions.from(CSV_NONEXISTENT);
+        JMeterTransactions.fromFile(CSV_NONEXISTENT);
     }
 
     @Test(expectedExceptions = CSVFileNoTransactionsException.class)
     public void verifyReadMethodNoTransactionsException() {
-        JMeterTransactions.from(CSV_0_TRANSACTIONS);
+        JMeterTransactions.fromFile(CSV_0_TRANSACTIONS);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Login", "1200", "true"});
         testData.add(new String[]{"Login", "1000", "true"});
         testData.add(new String[]{"Search", "800", "true"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         assertThat(jmeterTransactions.getTransactionsWith("Login").size(), is(2));
     }
@@ -48,7 +48,7 @@ public class JMeterTransactionsTest {
     public void testExcludeLabelsOtherThanMethodException() {
         List<String[]> testData = new ArrayList<>();
         testData.add(new String[]{"Login", "1200", "true"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         jmeterTransactions.getTransactionsWith("nonexistent");
     }
@@ -61,7 +61,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Logout", "800", "true"});
         testData.add(new String[]{"Logo", "800", "true"});
         testData.add(new String[]{"LogANY", "1100", "true"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         assertThat(jmeterTransactions.getTransactionsMatching("Log.{2,3}").size(), is(3));
     }
@@ -70,7 +70,7 @@ public class JMeterTransactionsTest {
     public void testExcludeLabelsNotMatchingMethodException() {
         List<String[]> testData = new ArrayList<>();
         testData.add(new String[]{"Login", "1200", "true"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         jmeterTransactions.getTransactionsMatching("nonexistent");
     }
@@ -83,7 +83,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Search", "800", "true"});
         testData.add(new String[]{"Login", "1200", "false"});
         testData.add(new String[]{"Search", "800", "false"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         assertThat(jmeterTransactions.getFailCount(), is(equalTo(2)));
     }
@@ -96,7 +96,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Search", "800", "true"});
         testData.add(new String[]{"Login", "1200", "false"});
         testData.add(new String[]{"Search", "800", "false"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         assertThat(jmeterTransactions.size(), is(equalTo(5)));
     }
@@ -111,7 +111,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Login", "334", "true", "1434291246000"});
         testData.add(new String[]{"Login", "650", "true", "1434291245000"});
         testData.add(new String[]{"Login", "721", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 500, 421, 345));
         assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
@@ -125,7 +125,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Login", "345", "true", "1434291246000"});
         testData.add(new String[]{"Login", "650", "true", "1434291245000"});
         testData.add(new String[]{"Login", "721", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 500, 421, 345));
         assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
@@ -137,7 +137,7 @@ public class JMeterTransactionsTest {
         testData.add(new String[]{"Login", "345", "true", "1434291246000"});
         testData.add(new String[]{"Login", "650", "true", "1434291245000"});
         testData.add(new String[]{"Login", "721", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 345));
         assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));

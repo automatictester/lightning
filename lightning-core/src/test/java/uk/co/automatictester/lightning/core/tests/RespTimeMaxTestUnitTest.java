@@ -23,7 +23,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -36,7 +36,7 @@ public class RespTimeMaxTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -48,7 +48,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 11220).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -62,7 +62,7 @@ public class RespTimeMaxTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -74,7 +74,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();

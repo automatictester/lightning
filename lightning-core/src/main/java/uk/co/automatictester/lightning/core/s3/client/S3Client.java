@@ -39,7 +39,7 @@ public class S3Client {
         return new S3Client(client);
     }
 
-    public S3Client setS3Bucket(String bucket) {
+    public S3Client setBucket(String bucket) {
         s3Bucket = bucket;
         return this;
     }

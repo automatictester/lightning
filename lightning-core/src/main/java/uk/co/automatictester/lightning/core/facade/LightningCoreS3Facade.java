@@ -21,19 +21,19 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     public void setRegionAndBucket(String region, String bucket) {
         this.region = region;
         this.bucket = bucket;
-        client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
+        client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
-    public void setPerfMonCsv(String s3Key) {
-        perfMonCsv = s3Key;
+    public void setPerfMonCsv(String key) {
+        perfMonCsv = key;
     }
 
-    public void setJmeterCsv(String s3Key) {
-        jmeterCsv = s3Key;
+    public void setJmeterCsv(String key) {
+        jmeterCsv = key;
     }
 
-    public void setLightningXml(String s3Key) {
-        lightningXml = s3Key;
+    public void setLightningXml(String key) {
+        lightningXml = key;
     }
 
     public void loadConfigFromS3() {
@@ -42,17 +42,17 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public void loadTestDataFromS3() {
-        jmeterTransactions = JMeterTransactions.from(region, bucket, jmeterCsv);
+        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
         TestData.addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
     }
 
     public String storeJenkinsBuildNameForVerifyInS3() {
-        return JenkinsS3Reporter.from(region, bucket, testSet).storeJenkinsBuildNameInS3();
+        return JenkinsS3Reporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
     }
 
     public String storeJenkinsBuildNameForReportInS3() {
-        return JenkinsS3Reporter.from(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
+        return JenkinsS3Reporter.fromJmeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
     }
 
     public String saveJunitReportToS3() {
@@ -66,7 +66,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.from(region, bucket, perfMonCsv);
+            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromS3Object(region, bucket, perfMonCsv);
             TestData.addServerSideTestData(perfMonDataEntries);
         }
     }

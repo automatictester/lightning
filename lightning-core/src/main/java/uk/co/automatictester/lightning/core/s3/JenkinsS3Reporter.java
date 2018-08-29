@@ -12,19 +12,19 @@ public class JenkinsS3Reporter extends CIReporter {
 
     private JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
         super(testSet);
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
     private JenkinsS3Reporter(String region, String bucket, JMeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
-    public static JenkinsS3Reporter from(String region, String bucket, TestSet testSet) {
+    public static JenkinsS3Reporter fromTestSet(String region, String bucket, TestSet testSet) {
         return new JenkinsS3Reporter(region, bucket, testSet);
     }
 
-    public static JenkinsS3Reporter from(String region, String bucket, JMeterTransactions jmeterTransactions) {
+    public static JenkinsS3Reporter fromJmeterTransactions(String region, String bucket, JMeterTransactions jmeterTransactions) {
         return new JenkinsS3Reporter(region, bucket, jmeterTransactions);
     }
 

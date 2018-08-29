@@ -55,7 +55,7 @@ public class S3ClientTest {
         content = getRandomContent();
         bucket = getRandomBucketName();
         amazonS3Client.createBucket(bucket);
-        lightning3Client.setS3Bucket(bucket);
+        lightning3Client.setBucket(bucket);
     }
 
     @AfterMethod

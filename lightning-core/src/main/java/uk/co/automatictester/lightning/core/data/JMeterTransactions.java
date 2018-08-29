@@ -39,7 +39,7 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     private JMeterTransactions(String region, String bucket, String key) {
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
@@ -55,15 +55,15 @@ public class JMeterTransactions extends CsvEntries {
         super(entries);
     }
 
-    public static JMeterTransactions from(File csvFile) {
+    public static JMeterTransactions fromFile(File csvFile) {
         return new JMeterTransactions(csvFile);
     }
 
-    public static JMeterTransactions from(String region, String bucket, String key) {
+    public static JMeterTransactions fromS3Object(String region, String bucket, String key) {
         return new JMeterTransactions(region, bucket, key);
     }
 
-    public static JMeterTransactions from(List<String[]> entries) {
+    public static JMeterTransactions fromList(List<String[]> entries) {
         return new JMeterTransactions(entries);
     }
 

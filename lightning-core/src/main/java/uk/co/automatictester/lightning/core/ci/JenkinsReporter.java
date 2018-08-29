@@ -20,11 +20,11 @@ public class JenkinsReporter extends CIReporter {
         super(jmeterTransactions);
     }
 
-    public static JenkinsReporter from(TestSet testSet) {
+    public static JenkinsReporter fromTestSet(TestSet testSet) {
         return new JenkinsReporter(testSet);
     }
 
-    public static JenkinsReporter from(JMeterTransactions jmeterTransactions) {
+    public static JenkinsReporter fromJmeterTransactions(JMeterTransactions jmeterTransactions) {
         return new JenkinsReporter(jmeterTransactions);
     }
 

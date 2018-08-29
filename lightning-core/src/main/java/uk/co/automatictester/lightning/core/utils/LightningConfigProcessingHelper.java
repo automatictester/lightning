@@ -97,7 +97,7 @@ public class LightningConfigProcessingHelper {
 
     public static int getPercentAsInt(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
-        return new Percent(elementValue).getValue();
+        return Percent.from(elementValue).getValue();
     }
 
     private static String getSubElementTextContent(Element element, String tagName) {

@@ -12,11 +12,11 @@ public class TestData {
     }
 
     public static void addClientSideTestData(JMeterTransactions jmeterTransactions) {
-        transactions = JMeterTransactions.from(jmeterTransactions.getEntries());
+        transactions = JMeterTransactions.fromList(jmeterTransactions.getEntries());
     }
 
     public static void addServerSideTestData(PerfMonEntries perfMonEntries) {
-        entries = PerfMonEntries.from(perfMonEntries.getEntries());
+        entries = PerfMonEntries.fromList(perfMonEntries.getEntries());
     }
 
     public static JMeterTransactions getClientSideTestData() {

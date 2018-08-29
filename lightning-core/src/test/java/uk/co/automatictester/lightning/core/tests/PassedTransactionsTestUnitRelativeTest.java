@@ -31,7 +31,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         testData.add(LegacyTestData.SEARCH_8_SUCCESS);
         testData.add(LegacyTestData.SEARCH_9_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_FAILURE);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -45,7 +45,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -59,7 +59,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_FAILURE);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -73,7 +73,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -99,7 +99,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         testData.add(LegacyTestData.SEARCH_8_SUCCESS);
         testData.add(LegacyTestData.SEARCH_9_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_FAILURE);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -113,7 +113,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_FAILURE);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -126,7 +126,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -172,7 +172,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -194,7 +194,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -216,7 +216,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("incorrect").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -237,7 +237,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -258,7 +258,7 @@ public class PassedTransactionsTestUnitRelativeTest {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.addClientSideTestData(jmeterTransactions);
         test.execute();

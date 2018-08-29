@@ -30,7 +30,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> clientSideTestData = new ArrayList<>();
         clientSideTestData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         clientSideTestData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(clientSideTestData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(clientSideTestData);
         TestData.addClientSideTestData(jmeterTransactions);
 
         ServerSideLessThanTest testA = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
@@ -40,7 +40,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> serverSideTestData = new ArrayList<>();
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10000);
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10001);
-        PerfMonEntries dataEntries = PerfMonEntries.from(serverSideTestData);
+        PerfMonEntries dataEntries = PerfMonEntries.fromList(serverSideTestData);
         TestData.addServerSideTestData(dataEntries);
 
         tests.add(testA);
@@ -68,7 +68,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         TestData.addClientSideTestData(jmeterTransactions);
 
         List<LightningTest> tests = new ArrayList<>();
@@ -97,7 +97,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
         TestData.addClientSideTestData(jmeterTransactions);
 
         List<LightningTest> tests = new ArrayList<>();

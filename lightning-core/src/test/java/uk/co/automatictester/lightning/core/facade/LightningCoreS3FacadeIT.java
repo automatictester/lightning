@@ -46,7 +46,7 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
             s3Mock = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
             s3Mock.start();
         }
-        client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
+        client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         client.createBucketIfDoesNotExist(bucket);
     }
 

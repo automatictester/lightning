@@ -27,20 +27,20 @@ public class PerfMonEntries extends CsvEntries {
     }
 
     private PerfMonEntries(String region, String bucket, String key) {
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setS3Bucket(bucket);
+        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         loadFromS3Object(key);
         throwExceptionIfEmpty();
     }
 
-    public static PerfMonEntries from(File perfMonCvsFile) {
+    public static PerfMonEntries fromFile(File perfMonCvsFile) {
         return new PerfMonEntries(perfMonCvsFile);
     }
 
-    public static PerfMonEntries from(List<String[]> perfMonEntries) {
+    public static PerfMonEntries fromList(List<String[]> perfMonEntries) {
         return new PerfMonEntries(perfMonEntries);
     }
 
-    public static PerfMonEntries from(String region, String bucket, String key) {
+    public static PerfMonEntries fromS3Object(String region, String bucket, String key) {
         return new PerfMonEntries(region, bucket, key);
     }
 
@@ -48,7 +48,7 @@ public class PerfMonEntries extends CsvEntries {
         List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC_INDEX.getValue()].equals(hostAndMetric))
                 .collect(Collectors.toList());
-        PerfMonEntries filteredDataEntries = PerfMonEntries.from(list);
+        PerfMonEntries filteredDataEntries = PerfMonEntries.fromList(list);
         if (filteredDataEntries.size() == 0) {
             throw new CSVFileNonexistentHostAndMetricException(hostAndMetric);
         }

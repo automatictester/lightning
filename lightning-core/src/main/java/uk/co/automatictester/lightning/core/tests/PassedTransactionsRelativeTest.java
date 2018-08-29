@@ -54,7 +54,7 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
 
         public Builder(String testName, int percent) {
             this.testName = testName;
-            this.allowedPercentOfFailedTransactions = new Percent(percent);
+            this.allowedPercentOfFailedTransactions = Percent.from(percent);
         }
 
         public PassedTransactionsRelativeTest.Builder withDescription(String description) {

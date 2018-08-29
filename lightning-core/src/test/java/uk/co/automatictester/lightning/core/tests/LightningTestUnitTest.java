@@ -21,7 +21,7 @@ public class LightningTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         ClientSideTest test = Mockito.mock(ClientSideTest.class, Mockito.CALLS_REAL_METHODS);
         when(test.getTransactionName()).thenReturn("Search");
@@ -35,7 +35,7 @@ public class LightningTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.from(testData);
+        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         ClientSideTest test = Mockito.mock(ClientSideTest.class, Mockito.CALLS_REAL_METHODS);
         when(test.getTransactionName()).thenReturn(null);
