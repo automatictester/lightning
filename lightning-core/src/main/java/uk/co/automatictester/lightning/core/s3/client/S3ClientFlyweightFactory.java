@@ -13,9 +13,9 @@ public class S3ClientFlyweightFactory {
 
     public static synchronized S3Client getInstance(String region) {
         if (isMockedInstanceExpected()) {
-            return getMockedS3ClientInstance(region);
+            return getMockedInstance(region);
         } else {
-            return getRealS3ClientInstance(region);
+            return getRealInstance(region);
         }
     }
 
@@ -23,12 +23,12 @@ public class S3ClientFlyweightFactory {
         return System.getProperty("mockS3") != null;
     }
 
-    private static S3Client getMockedS3ClientInstance(String region) {
+    private static S3Client getMockedInstance(String region) {
         Supplier<S3Client> supplier = () -> S3Client.createMockedInstance(region);
         return getInstance(region, supplier);
     }
 
-    private static S3Client getRealS3ClientInstance(String region) {
+    private static S3Client getRealInstance(String region) {
         Supplier<S3Client> supplier = () -> S3Client.createInstance(region);
         return getInstance(region, supplier);
     }
