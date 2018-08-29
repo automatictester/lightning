@@ -10,6 +10,9 @@ public class LightningConfigProcessingHelper {
 
     private static final String EXCEPTION_MESSAGE = "Incorrect %s value for %s: %s";
 
+    private LightningConfigProcessingHelper() {
+    }
+
     public static String getTestName(Element element) {
         return getSubElementValueByTagName(element, "testName");
     }

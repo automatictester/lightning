@@ -20,12 +20,12 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
         super("nthPercRespTimeTest", testName);
         this.maxRespTime = maxRespTime;
         this.percentile = percentile;
-        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, IntToOrdConverter.convert(percentile), maxRespTime);
     }
 
     @Override
     public void calculateActualResultDescription() {
-        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), actualResult);
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, IntToOrdConverter.convert(percentile), actualResult);
     }
 
     @Override

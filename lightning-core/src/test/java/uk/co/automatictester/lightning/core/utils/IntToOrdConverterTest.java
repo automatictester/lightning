@@ -28,6 +28,6 @@ public class IntToOrdConverterTest {
 
     @Test(dataProvider = "testData")
     public void testConvert(String integer, String ordinal) {
-        assertThat(new IntToOrdConverter().convert(Integer.parseInt(integer)), equalTo(ordinal));
+        assertThat(IntToOrdConverter.convert(Integer.parseInt(integer)), equalTo(ordinal));
     }
 }
