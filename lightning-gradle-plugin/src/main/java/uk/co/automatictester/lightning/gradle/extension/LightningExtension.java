@@ -8,6 +8,14 @@ public class LightningExtension {
     private File jmeterCsv;
     private File perfmonCsv;
 
+    public boolean hasAllVerifyInput() {
+        return isNotNullAndReadable(jmeterCsv) && isNotNullAndReadable(testSetXml);
+    }
+
+    public boolean hasAllReportInput() {
+        return isNotNullAndReadable(jmeterCsv);
+    }
+
     public File getPerfmonCsv() {
         return perfmonCsv;
     }
@@ -30,14 +38,6 @@ public class LightningExtension {
 
     public void setJmeterCsv(File jmeterCsv) {
         this.jmeterCsv = jmeterCsv;
-    }
-
-    public boolean hasAllVerifyInput() {
-        return isNotNullAndReadable(jmeterCsv) && isNotNullAndReadable(testSetXml);
-    }
-
-    public boolean hasAllReportInput() {
-        return isNotNullAndReadable(jmeterCsv);
     }
 
     private boolean isNotNullAndReadable(File file) {

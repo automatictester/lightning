@@ -23,19 +23,6 @@ public abstract class LightningTest {
         this.actualResult = 0;
     }
 
-    public abstract String getTestExecutionReport();
-
-    public abstract void execute();
-
-    protected String getDescriptionForReport() {
-        String message = String.format("Test description:     %s%n", getDescription());
-        return isBlank(getDescription()) ? "" : message;
-    }
-
-    protected String getResultForReport() {
-        return result.toString();
-    }
-
     public String getName() {
         return name;
     }
@@ -63,4 +50,17 @@ public abstract class LightningTest {
     public int getActualResult() {
         return actualResult;
     }
+
+    String getDescriptionForReport() {
+        String message = String.format("Test description:     %s%n", getDescription());
+        return isBlank(getDescription()) ? "" : message;
+    }
+
+    String getResultForReport() {
+        return result.toString();
+    }
+
+    public abstract String getTestExecutionReport();
+
+    public abstract void execute();
 }

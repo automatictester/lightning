@@ -25,23 +25,12 @@ public class TestSet {
         testExecutionReport = output.toString();
     }
 
-    private void setCounts(LightningTest test) {
-        TestResult testResult = test.getResult();
-        switch (testResult) {
-            case PASS:
-                passCount++;
-                break;
-            case FAIL:
-                failCount++;
-                break;
-            case ERROR:
-                ignoreCount++;
-                break;
-        }
-    }
-
     public String getTestExecutionReport() {
         return testExecutionReport;
+    }
+
+    public List<LightningTest> getTests() {
+        return LightningTests.getTests();
     }
 
     public int getTestCount() {
@@ -60,13 +49,24 @@ public class TestSet {
         return ignoreCount;
     }
 
-    public List<LightningTest> getTests() {
-        return LightningTests.getTests();
-    }
-
     private void resetTestCounts() {
         passCount = 0;
         failCount = 0;
         ignoreCount = 0;
+    }
+
+    private void setCounts(LightningTest test) {
+        TestResult testResult = test.getResult();
+        switch (testResult) {
+            case PASS:
+                passCount++;
+                break;
+            case FAIL:
+                failCount++;
+                break;
+            case ERROR:
+                ignoreCount++;
+                break;
+        }
     }
 }

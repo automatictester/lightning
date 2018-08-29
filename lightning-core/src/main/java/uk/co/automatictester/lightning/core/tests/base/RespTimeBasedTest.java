@@ -11,12 +11,13 @@ import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTI
 
 public abstract class RespTimeBasedTest extends ClientSideTest {
 
-    protected List<Integer> longestTransactions;
+    private List<Integer> longestTransactions;
 
     protected RespTimeBasedTest(String testType, String testName) {
         super(testType, testName);
     }
 
+    @Override
     public void execute() {
         try {
             JMeterTransactions originalJMeterTransactions = TestData.getClientSideTestData();
@@ -30,14 +31,6 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
             result = TestResult.ERROR;
             actualResultDescription = e.getMessage();
         }
-    }
-
-    protected void calculateActualResult(JMeterTransactions transactions) {
-        DescriptiveStatistics ds = new DescriptiveStatistics();
-        transactions.getEntries().stream()
-                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
-                .forEach(ds::addValue);
-        actualResult = getResult(ds);
     }
 
     @Override
@@ -65,6 +58,15 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
                 getTransactionCount(),
                 getLongestTransactions(),
                 getResultForReport());
+    }
+
+    @Override
+    protected void calculateActualResult(JMeterTransactions transactions) {
+        DescriptiveStatistics ds = new DescriptiveStatistics();
+        transactions.getEntries().stream()
+                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
+                .forEach(ds::addValue);
+        actualResult = getResult(ds);
     }
 
     protected abstract int getResult(DescriptiveStatistics ds);

@@ -24,8 +24,27 @@ public class RespTimeStdDevTest extends ClientSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTimeStdDev);
     }
 
+    @Override
     public void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
+    }
+
+    @Override
+    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
+        DescriptiveStatistics ds = new DescriptiveStatistics();
+        jmeterTransactions.getEntries().stream()
+                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
+                .forEach(ds::addValue);
+        actualResult = (int) ds.getStandardDeviation();
+    }
+
+    @Override
+    protected void calculateTestResult() {
+        if (actualResult > maxRespTimeStdDev) {
+            result = TestResult.FAIL;
+        } else {
+            result = TestResult.PASS;
+        }
     }
 
     @Override
@@ -36,22 +55,6 @@ public class RespTimeStdDevTest extends ClientSideTest {
     @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTimeStdDev;
-    }
-
-    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
-        DescriptiveStatistics ds = new DescriptiveStatistics();
-        jmeterTransactions.getEntries().stream()
-                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
-                .forEach(ds::addValue);
-        actualResult = (int) ds.getStandardDeviation();
-    }
-
-    protected void calculateTestResult() {
-        if (actualResult > maxRespTimeStdDev) {
-            result = TestResult.FAIL;
-        } else {
-            result = TestResult.PASS;
-        }
     }
 
     public static class Builder {

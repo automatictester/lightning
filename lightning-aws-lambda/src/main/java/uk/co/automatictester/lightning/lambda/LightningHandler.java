@@ -19,6 +19,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
     private String perfmonCsv;
     private LightningResponse response;
 
+    @Override
     public LightningResponse handleRequest(LightningRequest lightningRequest, Context context) {
         core = new LightningCoreS3Facade();
         response = new LightningResponse();
@@ -54,29 +55,6 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         core.setPerfMonCsv(perfmonCsv);
     }
 
-    private void notifyCIServer() {
-        if (mode.equals("verify")) {
-            String teamCityReport = core.getTeamCityVerifyStatistics();
-            log.info(teamCityReport);
-            String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
-            response.setTeamCityReport(teamCityReportS3Path);
-
-            String jenkinsReportS3Path = core.storeJenkinsBuildNameForVerifyInS3();
-            response.setJenkinsReport(jenkinsReportS3Path);
-
-        } else if (mode.equals("report")) {
-            String teamCityBuildStatusText = core.getTeamCityBuildReportSummary();
-            String teamCityReportStatistics = core.getTeamCityReportStatistics();
-            String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
-            log.info(combinedTeamCityReport);
-            String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
-            response.setTeamCityReport(combinedTeamCityReportS3Path);
-
-            String jenkinsReportS3Path = core.storeJenkinsBuildNameForReportInS3();
-            response.setJenkinsReport(jenkinsReportS3Path);
-        }
-    }
-
     private void runTests() {
         long testSetExecStart = System.currentTimeMillis();
 
@@ -109,6 +87,29 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
         if (core.hasFailedTransactions()) {
             response.setExitCode(1);
+        }
+    }
+
+    private void notifyCIServer() {
+        if (mode.equals("verify")) {
+            String teamCityReport = core.getTeamCityVerifyStatistics();
+            log.info(teamCityReport);
+            String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
+            response.setTeamCityReport(teamCityReportS3Path);
+
+            String jenkinsReportS3Path = core.storeJenkinsBuildNameForVerifyInS3();
+            response.setJenkinsReport(jenkinsReportS3Path);
+
+        } else if (mode.equals("report")) {
+            String teamCityBuildStatusText = core.getTeamCityBuildReportSummary();
+            String teamCityReportStatistics = core.getTeamCityReportStatistics();
+            String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
+            log.info(combinedTeamCityReport);
+            String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
+            response.setTeamCityReport(combinedTeamCityReportS3Path);
+
+            String jenkinsReportS3Path = core.storeJenkinsBuildNameForReportInS3();
+            response.setJenkinsReport(jenkinsReportS3Path);
         }
     }
 }

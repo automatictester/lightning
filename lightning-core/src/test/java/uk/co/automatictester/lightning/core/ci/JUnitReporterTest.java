@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.reporters;
+package uk.co.automatictester.lightning.core.ci;
 
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;

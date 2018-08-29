@@ -10,7 +10,6 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
     private static final String TEST_TYPE = "passedTransactionsTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Number of failed transactions <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Number of failed transactions = %s";
-
     private long allowedNumberOfFailedTransactions;
     private int failureCount;
 
@@ -20,15 +19,18 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, allowedNumberOfFailedTransactions);
     }
 
+    @Override
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
         failureCount = getFailureCount(jmeterTransactions);
         actualResult = failureCount;
     }
 
+    @Override
     protected void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, failureCount);
     }
 
+    @Override
     protected void calculateTestResult() {
         result = (failureCount > allowedNumberOfFailedTransactions) ? TestResult.FAIL : TestResult.PASS;
     }

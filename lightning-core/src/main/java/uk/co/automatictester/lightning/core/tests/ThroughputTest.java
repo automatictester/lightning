@@ -10,7 +10,7 @@ public class ThroughputTest extends ClientSideTest {
     private static final String TEST_TYPE = "throughputTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Throughput >= %.2f / second";
     private static final String ACTUAL_RESULT_MESSAGE = "Throughput = %.2f / second";
-    private final double minThroughput;
+    private double minThroughput;
     private double actualResult;
 
     private ThroughputTest(String testName, double minThroughput) {
@@ -19,10 +19,12 @@ public class ThroughputTest extends ClientSideTest {
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, minThroughput);
     }
 
+    @Override
     public void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
+    @Override
     protected void calculateActualResult(JMeterTransactions transactions) {
         long firstTransactionTimestamp = transactions.getFirstTransactionTimestamp();
         long lastTransactionTimestamp = transactions.getLastTransactionTimestamp();
@@ -30,12 +32,13 @@ public class ThroughputTest extends ClientSideTest {
         actualResult = transactionCount / (transactionTimespanInMilliseconds / 1000);
     }
 
-    public double getThroughput() {
-        return actualResult;
-    }
-
+    @Override
     protected void calculateTestResult() {
         result = (actualResult < minThroughput) ? TestResult.FAIL : TestResult.PASS;
+    }
+
+    double getThroughput() {
+        return actualResult;
     }
 
     @Override

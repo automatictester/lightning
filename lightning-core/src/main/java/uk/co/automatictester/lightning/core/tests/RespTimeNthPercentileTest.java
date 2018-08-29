@@ -13,9 +13,8 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     private static final String MESSAGE = "%s percentile of transactions have response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
     private static final String ACTUAL_RESULT_MESSAGE = MESSAGE + "= %s";
-
-    private final long maxRespTime;
-    private final int percentile;
+    private long maxRespTime;
+    private int percentile;
 
     private RespTimeNthPercentileTest(String testName, long maxRespTime, int percentile) {
         super("nthPercRespTimeTest", testName);
@@ -24,8 +23,20 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), maxRespTime);
     }
 
+    @Override
     public void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, new IntToOrdConverter().convert(percentile), actualResult);
+    }
+
+    @Override
+    protected int getResult(DescriptiveStatistics ds) {
+        ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
+        return actualResult = (int) ds.getPercentile((double) percentile);
+    }
+
+    @Override
+    protected void calculateTestResult() {
+        result = (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override
@@ -36,15 +47,6 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
-    }
-
-    protected int getResult(DescriptiveStatistics ds) {
-        ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
-        return actualResult = (int) ds.getPercentile((double) percentile);
-    }
-
-    protected void calculateTestResult() {
-        result = (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     public static class Builder {

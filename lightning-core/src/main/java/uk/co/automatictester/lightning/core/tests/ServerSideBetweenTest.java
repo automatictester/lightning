@@ -7,7 +7,6 @@ import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
 public class ServerSideBetweenTest extends ServerSideTest {
 
     private static final String EXPECTED_RESULT_MESSAGE = "Average value between %s and %s";
-
     private long lowerThreshold;
     private long upperThreshold;
 
@@ -18,14 +17,17 @@ public class ServerSideBetweenTest extends ServerSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, lowerThreshold, upperThreshold);
     }
 
+    @Override
     protected void calculateTestResult() {
         result = ((actualResult > lowerThreshold) && (actualResult < upperThreshold)) ? TestResult.PASS : TestResult.FAIL;
     }
 
+    @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) lowerThreshold + (int) upperThreshold;
     }

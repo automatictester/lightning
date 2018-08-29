@@ -7,7 +7,6 @@ import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
 public class ServerSideLessThanTest extends ServerSideTest {
 
     private static final String EXPECTED_RESULT_MESSAGE = "Average value < %s";
-
     private long threshold;
 
     private ServerSideLessThanTest(String testName, long threshold) {
@@ -16,14 +15,17 @@ public class ServerSideLessThanTest extends ServerSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, threshold);
     }
 
+    @Override
     protected void calculateTestResult() {
         result = (actualResult < threshold) ? TestResult.PASS : TestResult.FAIL;
     }
 
+    @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) threshold;
     }

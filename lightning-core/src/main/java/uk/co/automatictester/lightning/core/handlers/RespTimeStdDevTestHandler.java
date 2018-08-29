@@ -9,10 +9,12 @@ import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessi
 
 public class RespTimeStdDevTestHandler extends ElementHandler {
 
+    @Override
     protected String getExpectedElementName() {
         return "respTimeStdDevTest";
     }
 
+    @Override
     protected void handleHere(Element element) {
         String testName = getTestName(element);
         String description = getTestDescription(element);

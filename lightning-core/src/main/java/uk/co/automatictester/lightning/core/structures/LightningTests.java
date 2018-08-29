@@ -9,6 +9,9 @@ public class LightningTests {
 
     private static List<LightningTest> tests = new ArrayList<>();
 
+    private LightningTests() {
+    }
+
     public static void flush() {
         tests.clear();
     }

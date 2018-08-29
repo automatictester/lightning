@@ -10,8 +10,7 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     private static final String TEST_TYPE = "avgRespTimeTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Average response time <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Average response time = %s";
-
-    private final long maxAvgRespTime;
+    private long maxAvgRespTime;
 
     private RespTimeAvgTest(String testName, long maxAvgRespTime) {
         super(TEST_TYPE, testName);
@@ -19,8 +18,19 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxAvgRespTime);
     }
 
+    @Override
     public void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
+    }
+
+    @Override
+    protected int getResult(DescriptiveStatistics ds) {
+        return (int) ds.getMean();
+    }
+
+    @Override
+    protected void calculateTestResult() {
+        result = (actualResult > maxAvgRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override
@@ -31,14 +41,6 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) maxAvgRespTime;
-    }
-
-    protected int getResult(DescriptiveStatistics ds) {
-        return (int) ds.getMean();
-    }
-
-    protected void calculateTestResult() {
-        result = (actualResult > maxAvgRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     public static class Builder {

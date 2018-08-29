@@ -12,7 +12,6 @@ import uk.co.automatictester.lightning.core.structures.TestData;
 public class LightningCoreS3Facade extends LightningCoreFacade {
 
     private static S3Client client;
-
     private String region;
     private String bucket;
     private String perfMonCsv;

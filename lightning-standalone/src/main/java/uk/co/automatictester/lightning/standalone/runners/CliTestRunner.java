@@ -17,8 +17,7 @@ public class CliTestRunner {
     private static int exitCode = 0;
     private static CommandLineInterface params;
     private static Mode mode;
-
-    private static final Logger log = LoggerFactory.getLogger(CliTestRunner.class);
+    private static Logger log = LoggerFactory.getLogger(CliTestRunner.class);
 
     public static void main(String[] args) {
         parseParams(args);

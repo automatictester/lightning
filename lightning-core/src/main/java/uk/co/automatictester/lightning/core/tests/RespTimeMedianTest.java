@@ -11,8 +11,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     private static final String MESSAGE = "median response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
     private static final String ACTUAL_RESULT_MESSAGE = MESSAGE + "= %s";
-
-    private final double maxRespTime;
+    private double maxRespTime;
 
     private RespTimeMedianTest(String testName, long maxRespTime) {
         super(TEST_TYPE, testName);
@@ -20,8 +19,19 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
         expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
 
+    @Override
     public void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
+    }
+
+    @Override
+    protected int getResult(DescriptiveStatistics ds) {
+        return (int) ds.getPercentile(50);
+    }
+
+    @Override
+    protected void calculateTestResult() {
+        result =  (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override
@@ -32,14 +42,6 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
-    }
-
-    protected int getResult(DescriptiveStatistics ds) {
-        return (int) ds.getPercentile(50);
-    }
-
-    protected void calculateTestResult() {
-        result =  (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     public static class Builder {

@@ -12,11 +12,14 @@ import java.util.List;
 
 public abstract class CsvEntries {
 
-    protected static S3Client s3Client;
-
     protected List<String[]> entries = new ArrayList<>();
+    static S3Client s3Client;
 
-    protected CsvEntries() {
+    CsvEntries() {
+    }
+
+    CsvEntries(List<String[]> entries) {
+        this.entries.addAll(entries);
     }
 
     public void add(String[] entry) {
@@ -29,24 +32,6 @@ public abstract class CsvEntries {
 
     public int size() {
         return entries.size();
-    }
-
-    protected CsvEntries(List<String[]> entries) {
-        this.entries.addAll(entries);
-    }
-
-    protected abstract CsvParserSettings getCsvParserSettings();
-
-    protected void loadFromFile(File perfMonCsvFile) {
-        try (FileReader fr = new FileReader(perfMonCsvFile)) {
-            CsvParserSettings csvParserSettings = getCsvParserSettings();
-            csvParserSettings.setInputBufferSize(20_000_000);
-            CsvParser csvParser = new CsvParser(csvParserSettings);
-            List<String[]> items = csvParser.parseAll(fr);
-            entries.addAll(items);
-        } catch (IOException e) {
-            throw new CSVFileIOException(e);
-        }
     }
 
     protected void loadFromS3Object(String csvObject) {
@@ -66,4 +51,18 @@ public abstract class CsvEntries {
             throw new CSVFileNoTransactionsException();
         }
     }
+
+    void loadFromFile(File perfMonCsvFile) {
+        try (FileReader fr = new FileReader(perfMonCsvFile)) {
+            CsvParserSettings csvParserSettings = getCsvParserSettings();
+            csvParserSettings.setInputBufferSize(20_000_000);
+            CsvParser csvParser = new CsvParser(csvParserSettings);
+            List<String[]> items = csvParser.parseAll(fr);
+            entries.addAll(items);
+        } catch (IOException e) {
+            throw new CSVFileIOException(e);
+        }
+    }
+
+    protected abstract CsvParserSettings getCsvParserSettings();
 }

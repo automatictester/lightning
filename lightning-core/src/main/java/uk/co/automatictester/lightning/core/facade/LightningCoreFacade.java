@@ -9,8 +9,8 @@ import uk.co.automatictester.lightning.core.state.TestSet;
 public abstract class LightningCoreFacade {
 
     protected TestSet testSet = new TestSet();
-    protected TeamCityReporter teamCityReporter;
     protected JMeterTransactions jmeterTransactions;
+    private TeamCityReporter teamCityReporter;
 
     public String executeTests() {
         testSet.executeTests();

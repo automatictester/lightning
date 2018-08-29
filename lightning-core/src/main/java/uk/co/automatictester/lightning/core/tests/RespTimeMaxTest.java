@@ -10,8 +10,7 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
     private static final String TEST_TYPE = "maxRespTimeTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Max response time <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Max response time = %s";
-
-    private final long maxRespTime;
+    private long maxRespTime;
 
     private RespTimeMaxTest(String testName, long maxRespTime) {
         super(TEST_TYPE, testName);
@@ -19,22 +18,27 @@ public class RespTimeMaxTest extends RespTimeBasedTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, maxRespTime);
     }
 
+    @Override
     public void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
+    @Override
     protected int getResult(DescriptiveStatistics ds) {
         return (int) ds.getMax();
     }
 
+    @Override
     protected void calculateTestResult() {
         result = ((long) actualResult > this.maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
+    @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
+    @Override
     public int hashCode() {
         return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
     }

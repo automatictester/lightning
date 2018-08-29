@@ -55,6 +55,7 @@ public class PerfMonEntries extends CsvEntries {
         return filteredDataEntries;
     }
 
+    @Override
     protected CsvParserSettings getCsvParserSettings() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);

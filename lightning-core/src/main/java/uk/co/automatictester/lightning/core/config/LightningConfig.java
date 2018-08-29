@@ -25,18 +25,6 @@ public class LightningConfig {
         throwExceptionIfNoTests();
     }
 
-    private NodeList readXmlFile(File xmlFile) {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(xmlFile);
-            Node node = doc.getDocumentElement();
-            return node.getChildNodes();
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new XMLFileException(e);
-        }
-    }
-
     protected void loadAllTests(NodeList nodes) {
         for (int i = 0; i < nodes.getLength(); i++) {
             if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
@@ -69,6 +57,18 @@ public class LightningConfig {
     protected void throwExceptionIfNoTests() {
         if (LightningTests.size() == 0) {
             throw new XMLFileNoTestsException("No tests of expected type found in XML file");
+        }
+    }
+
+    private NodeList readXmlFile(File xmlFile) {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xmlFile);
+            Node node = doc.getDocumentElement();
+            return node.getChildNodes();
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new XMLFileException(e);
         }
     }
 }

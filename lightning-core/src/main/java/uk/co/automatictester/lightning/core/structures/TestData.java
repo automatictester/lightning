@@ -8,6 +8,9 @@ public class TestData {
     private static JMeterTransactions transactions;
     private static PerfMonEntries entries;
 
+    private TestData() {
+    }
+
     public static void addClientSideTestData(JMeterTransactions jmeterTransactions) {
         transactions = JMeterTransactions.fromList(jmeterTransactions.getEntries());
     }

@@ -21,8 +21,7 @@ import static uk.co.automatictester.lightning.core.enums.JMeterColumns.*;
 public class JMeterTransactions extends CsvEntries {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     protected JMeterTransactions() {
     }
@@ -99,6 +98,18 @@ public class JMeterTransactions extends CsvEntries {
         return getEdgeTransactionTimestamp(isAfter);
     }
 
+    @Override
+    protected CsvParserSettings getCsvParserSettings() {
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setLineSeparatorDetectionEnabled(true);
+        parserSettings.setHeaderExtractionEnabled(true);
+        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
+        RowListProcessor rowProcessor = new RowListProcessor();
+        ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
+        parserSettings.setProcessor(concurrentRowProcessor);
+        return parserSettings;
+    }
+
     private JMeterTransactions getTransactions(String expectedTransactionName, BiPredicate<String, String> trait) {
         JMeterTransactions transactions = new JMeterTransactions();
         entries.forEach(transaction -> {
@@ -138,16 +149,5 @@ public class JMeterTransactions extends CsvEntries {
         return transactionDurations.stream()
                 .limit(transactionDurationsCount)
                 .collect(Collectors.toList());
-    }
-
-    protected CsvParserSettings getCsvParserSettings() {
-        CsvParserSettings parserSettings = new CsvParserSettings();
-        parserSettings.setLineSeparatorDetectionEnabled(true);
-        parserSettings.setHeaderExtractionEnabled(true);
-        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
-        RowListProcessor rowProcessor = new RowListProcessor();
-        ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
-        parserSettings.setProcessor(concurrentRowProcessor);
-        return parserSettings;
     }
 }

@@ -11,9 +11,7 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
     private static final String TEST_TYPE = "passedTransactionsTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Percent of failed transactions <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Percent of failed transactions = %s";
-
     private Percent allowedPercentOfFailedTransactions;
-    private int failureCount;
 
     private PassedTransactionsRelativeTest(String testName, Percent percent) {
         super(TEST_TYPE, testName);
@@ -21,15 +19,18 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, allowedPercentOfFailedTransactions.getValue());
     }
 
+    @Override
     protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
-        failureCount = getFailureCount(jmeterTransactions);
+        int failureCount = getFailureCount(jmeterTransactions);
         actualResult = (int) (((float) failureCount / transactionCount) * 100);
     }
 
+    @Override
     protected void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
+    @Override
     protected void calculateTestResult() {
         result = (actualResult > (float) allowedPercentOfFailedTransactions.getValue()) ? TestResult.FAIL : TestResult.PASS;
     }

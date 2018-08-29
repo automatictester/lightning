@@ -10,15 +10,15 @@ import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.VALUE_IN
 public abstract class ServerSideTest extends LightningTest {
 
     protected static final String TEST_TYPE = "serverSideTest";
-    protected static final String ACTUAL_RESULT_MESSAGE = "Average value = %s";
-
+    private static final String ACTUAL_RESULT_MESSAGE = "Average value = %s";
     protected String hostAndMetric;
-    protected int dataEntriesCount;
+    private int dataEntriesCount;
 
     protected ServerSideTest(String testName) {
         super(TEST_TYPE, testName);
     }
 
+    @Override
     public void execute() {
         try {
             PerfMonEntries originalDataEntries = TestData.getServerSideTestData();
@@ -33,14 +33,7 @@ public abstract class ServerSideTest extends LightningTest {
         }
     }
 
-    protected void calculateActualResultDescription() {
-        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
-    }
-
-    public PerfMonEntries filterDataEntries(PerfMonEntries originalPerfMonEntries) {
-        return originalPerfMonEntries.getEntriesWith(getHostAndMetric());
-    }
-
+    @Override
     public String getTestExecutionReport() {
         return String.format("Test name:            %s%n" +
                         "Test type:            %s%n" +
@@ -60,15 +53,23 @@ public abstract class ServerSideTest extends LightningTest {
                 getResultForReport());
     }
 
+    protected void calculateActualResultDescription() {
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
+    }
+
     public String getHostAndMetric() {
         return hostAndMetric;
     }
 
-    public int getDataEntriesCount() {
+    private PerfMonEntries filterDataEntries(PerfMonEntries originalPerfMonEntries) {
+        return originalPerfMonEntries.getEntriesWith(getHostAndMetric());
+    }
+
+    private int getDataEntriesCount() {
         return dataEntriesCount;
     }
 
-    protected void calculateActualResult(PerfMonEntries entries) {
+    private void calculateActualResult(PerfMonEntries entries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         entries.getEntries().stream()
                 .map(e -> Double.parseDouble(e[VALUE_INDEX.getValue()]))

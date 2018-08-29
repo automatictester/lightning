@@ -11,10 +11,12 @@ import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessi
 
 public class MaxRespTimeTestHandler extends ElementHandler {
 
+    @Override
     protected String getExpectedElementName() {
         return "maxRespTimeTest";
     }
 
+    @Override
     protected void handleHere(Element element) {
         String testName = getTestName(element);
         String description = getTestDescription(element);

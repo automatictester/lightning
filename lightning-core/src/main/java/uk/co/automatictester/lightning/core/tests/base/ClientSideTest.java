@@ -7,8 +7,6 @@ import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.util.List;
 
-import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTION_RESULT_INDEX;
-
 public abstract class ClientSideTest extends LightningTest {
 
     protected String transactionName;
@@ -19,31 +17,7 @@ public abstract class ClientSideTest extends LightningTest {
         super(testType, testName);
     }
 
-    public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
-        String transactionName = getTransactionName();
-        if (transactionName == null) {
-            return originalJMeterTransactions;
-        } else {
-            if (isRegexp()) {
-                return originalJMeterTransactions.getTransactionsMatching(transactionName);
-            } else {
-                return originalJMeterTransactions.getTransactionsWith(transactionName);
-            }
-        }
-    }
-
-    public int getTransactionCount() {
-        return transactionCount;
-    }
-
-    public String getTransactionName() {
-        return transactionName;
-    }
-
-    public boolean isRegexp() {
-        return regexp;
-    }
-
+    @Override
     public void execute() {
         try {
             JMeterTransactions originalJMeterTransactions = TestData.getClientSideTestData();
@@ -78,9 +52,25 @@ public abstract class ClientSideTest extends LightningTest {
                 getResultForReport());
     }
 
-    protected String getTransactionNameForReport() {
-        String message = String.format("Transaction name:     %s%n", getTransactionName());
-        return getTransactionName() != null ? message : "";
+    public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
+        String transactionName = getTransactionName();
+        if (transactionName == null) {
+            return originalJMeterTransactions;
+        } else {
+            if (isRegexp()) {
+                return originalJMeterTransactions.getTransactionsMatching(transactionName);
+            } else {
+                return originalJMeterTransactions.getTransactionsWith(transactionName);
+            }
+        }
+    }
+
+    public String getTransactionName() {
+        return transactionName;
+    }
+
+    public boolean isRegexp() {
+        return regexp;
     }
 
     public List<Integer> getLongestTransactions() {
@@ -91,6 +81,15 @@ public abstract class ClientSideTest extends LightningTest {
         return (int) transactions.getEntries().stream()
                 .filter(t -> "false".equals(t[2]))
                 .count();
+    }
+
+    String getTransactionNameForReport() {
+        String message = String.format("Transaction name:     %s%n", getTransactionName());
+        return getTransactionName() != null ? message : "";
+    }
+
+    int getTransactionCount() {
+        return transactionCount;
     }
 
     protected abstract void calculateActualResult(JMeterTransactions jmeterTransactions);
