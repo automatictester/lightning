@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class S3ClientFlyweightFactory {
 
-    private static final Map<String, S3Client> instances = new HashMap<>();
+    private static final Map<String, S3Client> INSTANCES = new HashMap<>();
 
     private S3ClientFlyweightFactory() {
     }
@@ -42,14 +42,14 @@ public class S3ClientFlyweightFactory {
     }
 
     private static boolean hasInstance(String region) {
-        return instances.containsKey(region);
+        return INSTANCES.containsKey(region);
     }
 
     private static void putInstance(String region, S3Client instance) {
-        instances.put(region, instance);
+        INSTANCES.put(region, instance);
     }
 
     private static S3Client getExistingInstance(String region) {
-        return instances.get(region);
+        return INSTANCES.get(region);
     }
 }
