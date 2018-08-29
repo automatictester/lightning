@@ -23,13 +23,13 @@ public class S3Client {
         this.client = client;
     }
 
-    static S3Client getInstance(String region) {
+    static S3Client createInstance(String region) {
         AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder.standard().withRegion(region);
         AmazonS3 client = amazonS3ClientBuilder.build();
         return new S3Client(client);
     }
 
-    static S3Client getMockedInstance(String region) {
+    static S3Client createMockedInstance(String region) {
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration("http://localhost:8001", region);
         AmazonS3 client = AmazonS3ClientBuilder
                 .standard()
