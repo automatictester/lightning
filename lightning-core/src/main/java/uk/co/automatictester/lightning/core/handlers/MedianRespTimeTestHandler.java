@@ -29,7 +29,7 @@ public class MedianRespTimeTestHandler extends ElementHandler {
                 builder.withRegexp();
             }
         }
-        ClientSideTest respTimeMedianTest = builder.build();
-        LightningTests.getInstance().add(respTimeMedianTest);
+        ClientSideTest test = builder.build();
+        LightningTests.getInstance().add(test);
     }
 }

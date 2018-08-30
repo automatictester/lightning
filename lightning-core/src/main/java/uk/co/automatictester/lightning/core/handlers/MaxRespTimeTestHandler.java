@@ -29,7 +29,7 @@ public class MaxRespTimeTestHandler extends ElementHandler {
                 builder.withRegexp();
             }
         }
-        ClientSideTest maxRespTimeTest = builder.build();
-        LightningTests.getInstance().add(maxRespTimeTest);
+        ClientSideTest test = builder.build();
+        LightningTests.getInstance().add(test);
     }
 }
