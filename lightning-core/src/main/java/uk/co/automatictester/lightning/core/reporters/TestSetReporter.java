@@ -4,6 +4,9 @@ import uk.co.automatictester.lightning.core.state.TestSet;
 
 public class TestSetReporter {
 
+    private TestSetReporter() {
+    }
+
     public static String getTestSetExecutionSummaryReport(TestSet testSet) {
         int testCount = testSet.getTestCount();
         int passedTestCount = testSet.getPassCount();
