@@ -29,15 +29,16 @@ public class JenkinsS3Reporter extends CIReporter {
     }
 
     public String storeJenkinsBuildNameInS3() {
+        String jenkinsReportContent;
         if (testSet != null) {
-            String jenkinsReportContent = getVerifySummary(testSet);
-            return storeJenkinsReportToS3(jenkinsReportContent);
+            jenkinsReportContent = getVerifySummary();
         } else {
-            return storeJenkinsReportToS3(getReportSummary());
+            jenkinsReportContent = getReportSummary();
         }
+        return storeJenkinsReportToS3(jenkinsReportContent);
     }
 
-    private static String getVerifySummary(TestSet testSet) {
+    private String getVerifySummary() {
         int executed = testSet.getTestCount();
         int failed = testSet.getFailCount() + testSet.getErrorCount();
         return String.format("Tests executed: %s, failed: %s", executed, failed);
