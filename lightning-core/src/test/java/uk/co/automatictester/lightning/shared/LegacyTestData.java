@@ -4,6 +4,7 @@ import uk.co.automatictester.lightning.core.tests.*;
 
 import java.io.File;
 
+@Deprecated
 public class LegacyTestData {
 
     // Resources

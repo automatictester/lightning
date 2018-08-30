@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.min;
@@ -68,13 +69,34 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     public JMeterTransactions getTransactionsWith(String expectedTransactionName) {
-        BiPredicate<String, String> equals = String::equals;
-        return getTransactions(expectedTransactionName, equals);
+        JMeterTransactions transactions = new JMeterTransactions();
+        entries.forEach(transaction -> {
+            String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
+            boolean isInScope = transactionName.equals(expectedTransactionName);
+            if (isInScope) {
+                transactions.add(transaction);
+            }
+        });
+        if (transactions.size() == 0) {
+            throw new CSVFileNonexistentLabelException(expectedTransactionName);
+        }
+        return transactions;
     }
 
     public JMeterTransactions getTransactionsMatching(String expectedTransactionName) {
-        BiPredicate<String, String> matches = String::matches;
-        return getTransactions(expectedTransactionName, matches);
+        Pattern pattern = Pattern.compile(expectedTransactionName);
+        JMeterTransactions transactions = new JMeterTransactions();
+        entries.forEach(transaction -> {
+            String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
+            boolean isInScope = pattern.matcher(transactionName).matches();
+            if (isInScope) {
+                transactions.add(transaction);
+            }
+        });
+        if (transactions.size() == 0) {
+            throw new CSVFileNonexistentLabelException(expectedTransactionName);
+        }
+        return transactions;
     }
 
     public List<Integer> getLongestTransactions() {
@@ -108,21 +130,6 @@ public class JMeterTransactions extends CsvEntries {
         ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
         parserSettings.setProcessor(concurrentRowProcessor);
         return parserSettings;
-    }
-
-    private JMeterTransactions getTransactions(String expectedTransactionName, BiPredicate<String, String> biPredicate) {
-        JMeterTransactions transactions = new JMeterTransactions();
-        entries.forEach(transaction -> {
-            String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
-            boolean isInScope = biPredicate.test(transactionName, expectedTransactionName);
-            if (isInScope) {
-                transactions.add(transaction);
-            }
-        });
-        if (transactions.size() == 0) {
-            throw new CSVFileNonexistentLabelException(expectedTransactionName);
-        }
-        return transactions;
     }
 
     private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> biPredicate) {
