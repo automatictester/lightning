@@ -32,7 +32,7 @@ public class LightningTests {
         tests.addAll(test);
     }
 
-    public List<LightningTest> getTests() {
+    public List<LightningTest> get() {
         return tests;
     }
 

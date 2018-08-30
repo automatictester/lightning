@@ -16,7 +16,8 @@ public class TestSet {
     public void executeTests() {
         resetTestCounts();
         StringBuilder output = new StringBuilder();
-        getTests().forEach(test -> {
+        LightningTests tests = LightningTests.getInstance();
+        tests.get().forEach(test -> {
             test.execute();
             setCounts(test);
             String testExecutionReport = test.getTestExecutionReport();
@@ -30,7 +31,7 @@ public class TestSet {
     }
 
     public List<LightningTest> getTests() {
-        return LightningTests.getInstance().getTests();
+        return LightningTests.getInstance().get();
     }
 
     public int getTestCount() {

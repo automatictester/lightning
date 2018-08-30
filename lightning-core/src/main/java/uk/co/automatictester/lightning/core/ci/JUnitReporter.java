@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
 import uk.co.automatictester.lightning.core.state.TestSet;
+import uk.co.automatictester.lightning.core.structures.LightningTests;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -40,7 +41,8 @@ public class JUnitReporter {
     protected void generateJUnitReportContent(TestSet testSet) {
         Element testsuite = getTestsuite(testSet);
         Node rootElement = doc.appendChild(testsuite);
-        testSet.getTests().forEach(test -> {
+        LightningTests tests = LightningTests.getInstance();
+        tests.get().forEach(test -> {
             Element testcase = getTestcase(test);
             rootElement.appendChild(testcase);
         });
