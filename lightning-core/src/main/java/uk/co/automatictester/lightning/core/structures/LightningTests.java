@@ -13,17 +13,15 @@ public class LightningTests {
     private LightningTests() {
     }
 
-    public synchronized static LightningTests createInstance() {
-        instance = new LightningTests();
+    public synchronized static LightningTests getInstance() {
+        if (instance == null) {
+            instance = new LightningTests();
+        }
         return instance;
     }
 
-    public synchronized static LightningTests getInstance() {
-        if (instance == null) {
-            return createInstance();
-        } else {
-            return instance;
-        }
+    public void flush() {
+        tests.clear();
     }
 
     public void add(LightningTest test) {

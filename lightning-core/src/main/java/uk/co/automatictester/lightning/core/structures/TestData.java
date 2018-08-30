@@ -12,16 +12,19 @@ public class TestData {
     private TestData() {
     }
 
-    public synchronized static TestData createInstance() {
-        instance = new TestData();
+    public synchronized static TestData getInstance() {
+        if (instance == null) {
+            instance = new TestData();
+        }
         return instance;
     }
 
-    public synchronized static TestData getInstance() {
-        if (instance == null) {
-            return createInstance();
-        } else {
-            return instance;
+    public void flush() {
+        if (transactions != null) {
+            transactions.getEntries().clear();
+        }
+        if (entries != null) {
+            entries.getEntries().clear();
         }
     }
 

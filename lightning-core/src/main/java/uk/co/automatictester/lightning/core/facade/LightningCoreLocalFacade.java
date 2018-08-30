@@ -34,7 +34,9 @@ public class LightningCoreLocalFacade extends LightningCoreFacade {
 
     public void loadTestData() {
         jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
-        TestData.createInstance().addClientSideTestData(jmeterTransactions);
+        TestData testData = TestData.getInstance();
+        testData.flush();
+        testData.addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
     }
 

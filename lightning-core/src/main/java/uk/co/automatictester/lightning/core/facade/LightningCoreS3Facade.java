@@ -43,7 +43,9 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
 
     public void loadTestDataFromS3() {
         jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
-        TestData.createInstance().addClientSideTestData(jmeterTransactions);
+        TestData testData = TestData.getInstance();
+        testData.flush();
+        testData.addClientSideTestData(jmeterTransactions);
         loadPerfMonDataIfProvided();
     }
 

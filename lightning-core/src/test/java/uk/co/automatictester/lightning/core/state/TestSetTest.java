@@ -48,7 +48,8 @@ public class TestSetTest extends ConsoleOutputTest {
         tests.add(testC);
 
         TestSet testSet = new TestSet();
-        LightningTests lightningTests = LightningTests.createInstance();
+        LightningTests lightningTests = LightningTests.getInstance();
+        lightningTests.flush();
         lightningTests.addAll(tests);
         configureStream();
         testSet.executeTests();
@@ -76,7 +77,8 @@ public class TestSetTest extends ConsoleOutputTest {
         tests.add(passedTransactionsAbsoluteTestB);
 
         TestSet testSet = new TestSet();
-        LightningTests lightningTests = LightningTests.createInstance();
+        LightningTests lightningTests = LightningTests.getInstance();
+        lightningTests.flush();
         lightningTests.addAll(tests);
         configureStream();
         testSet.executeTests();
@@ -106,7 +108,8 @@ public class TestSetTest extends ConsoleOutputTest {
         tests.add(respTimeAvgTestC);
 
         TestSet testSet = new TestSet();
-        LightningTests lightningTests = LightningTests.createInstance();
+        LightningTests lightningTests = LightningTests.getInstance();
+        lightningTests.flush();
         lightningTests.addAll(tests);
         configureStream();
         testSet.executeTests();

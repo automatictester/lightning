@@ -19,7 +19,7 @@ import java.io.IOException;
 public class LightningConfig {
 
     public void readTests(File xmlFile) {
-        LightningTests.createInstance();
+        LightningTests.getInstance().flush();
         NodeList nodes = readXmlFile(xmlFile);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
