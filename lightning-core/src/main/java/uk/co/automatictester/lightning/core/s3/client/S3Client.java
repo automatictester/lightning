@@ -23,7 +23,7 @@ public class S3Client {
         this.client = client;
     }
 
-    static S3Client createInstance(String region) {
+    static S3Client createRealInstance(String region) {
         AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder.standard().withRegion(region);
         AmazonS3 client = amazonS3ClientBuilder.build();
         return new S3Client(client);

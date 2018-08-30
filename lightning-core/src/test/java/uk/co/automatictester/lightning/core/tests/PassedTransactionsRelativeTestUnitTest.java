@@ -15,24 +15,33 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 
-public class PassedTransactionsTestUnitAbsoluteTest {
+public class PassedTransactionsRelativeTestUnitTest {
 
     @Test
     public void verifyExecuteMethodPass() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 10).withDescription("Verify percent of passed tests").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_1_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_2_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_3_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_4_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_5_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_6_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_7_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_8_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_9_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10"));
     }
 
     @Test
     public void verifyExecuteMethodRegexpPass() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Log[a-z]{2,3}").withRegexp().build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Log[a-z]{2,3}").withRegexp().build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
@@ -41,12 +50,12 @@ public class PassedTransactionsTestUnitAbsoluteTest {
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 0"));
     }
 
     @Test
     public void verifyExecuteMethodRegexpFail() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Log[a-z]ut").withRegexp().build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Log[a-z]ut").withRegexp().build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_FAILURE);
@@ -55,12 +64,12 @@ public class PassedTransactionsTestUnitAbsoluteTest {
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 50"));
     }
 
     @Test
     public void verifyExecuteMethodAllTransactionsPass() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
@@ -69,25 +78,38 @@ public class PassedTransactionsTestUnitAbsoluteTest {
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 0"));
+    }
+
+    @Test
+    public void verifyExecuteMethodPercentPass() {
     }
 
     @Test
     public void verifyExecuteMethodFail() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 9).withDescription("Verify percent of passed tests").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
-        testData.add(LegacyTestData.LOGIN_1200_FAILURE);
+        testData.add(LegacyTestData.SEARCH_1_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_2_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_3_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_4_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_5_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_6_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_7_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_8_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_9_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_800_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10"));
     }
 
     @Test
     public void verifyExecuteMethodAllTransactionsFail() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_FAILURE);
@@ -96,12 +118,12 @@ public class PassedTransactionsTestUnitAbsoluteTest {
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 50"));
     }
 
     @Test
     public void verifyExecuteMethodError() {
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("nonexistent").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -140,14 +162,14 @@ public class PassedTransactionsTestUnitAbsoluteTest {
     public void testPrintTestExecutionReportPass() {
         String expectedOutput = String.format("Test name:            Test #1%n" +
                 "Test type:            passedTransactionsTest%n" +
-                "Test description:     Verify number of passed tests%n" +
+                "Test description:     Verify percent of passed tests%n" +
                 "Transaction name:     Login%n" +
-                "Expected result:      Number of failed transactions <= 0%n" +
-                "Actual result:        Number of failed transactions = 0%n" +
+                "Expected result:      Percent of failed transactions <= 0%n" +
+                "Actual result:        Percent of failed transactions = 0%n" +
                 "Transaction count:    1%n" +
                 "Test result:          Pass");
 
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -162,14 +184,14 @@ public class PassedTransactionsTestUnitAbsoluteTest {
     public void testPrintTestExecutionReportFail() {
         String expectedOutput = String.format("Test name:            Test #1%n" +
                 "Test type:            passedTransactionsTest%n" +
-                "Test description:     Verify number of passed tests%n" +
+                "Test description:     Verify percent of passed tests%n" +
                 "Transaction name:     Login%n" +
-                "Expected result:      Number of failed transactions <= 0%n" +
-                "Actual result:        Number of failed transactions = 1%n" +
+                "Expected result:      Percent of failed transactions <= 0%n" +
+                "Actual result:        Percent of failed transactions = 100%n" +
                 "Transaction count:    1%n" +
                 "Test result:          FAIL");
 
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -184,14 +206,14 @@ public class PassedTransactionsTestUnitAbsoluteTest {
     public void testPrintTestExecutionReportIgnored() {
         String expectedOutput = String.format("Test name:            Test #1%n" +
                 "Test type:            passedTransactionsTest%n" +
-                "Test description:     Verify number of passed tests%n" +
+                "Test description:     Verify percent of passed tests%n" +
                 "Transaction name:     incorrect%n" +
-                "Expected result:      Number of failed transactions <= 0%n" +
+                "Expected result:      Percent of failed transactions <= 0%n" +
                 "Actual result:        No transactions with label equal to 'incorrect' found in CSV file%n" +
                 "Transaction count:    0%n" +
                 "Test result:          ERROR");
 
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("incorrect").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("incorrect").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -207,12 +229,12 @@ public class PassedTransactionsTestUnitAbsoluteTest {
         String expectedOutput = String.format("Test name:            Test #1%n" +
                 "Test type:            passedTransactionsTest%n" +
                 "Transaction name:     Login%n" +
-                "Expected result:      Number of failed transactions <= 0%n" +
-                "Actual result:        Number of failed transactions = 0%n" +
+                "Expected result:      Percent of failed transactions <= 0%n" +
+                "Actual result:        Percent of failed transactions = 0%n" +
                 "Transaction count:    1%n" +
                 "Test result:          Pass");
 
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withTransactionName("Login").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
@@ -227,13 +249,13 @@ public class PassedTransactionsTestUnitAbsoluteTest {
     public void testPrintTestExecutionReportPassNoTransactionName() {
         String expectedOutput = String.format("Test name:            Test #1%n" +
                 "Test type:            passedTransactionsTest%n" +
-                "Test description:     Verify number of passed tests%n" +
-                "Expected result:      Number of failed transactions <= 0%n" +
-                "Actual result:        Number of failed transactions = 0%n" +
+                "Test description:     Verify percent of passed tests%n" +
+                "Expected result:      Percent of failed transactions <= 0%n" +
+                "Actual result:        Percent of failed transactions = 0%n" +
                 "Transaction count:    1%n" +
                 "Test result:          Pass");
 
-        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);

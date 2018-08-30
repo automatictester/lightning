@@ -29,7 +29,7 @@ public class S3ClientFlyweightFactory {
     }
 
     private static S3Client getRealInstance(String region) {
-        Supplier<S3Client> supplier = () -> S3Client.createInstance(region);
+        Supplier<S3Client> supplier = () -> S3Client.createRealInstance(region);
         return getInstance(region, supplier);
     }
 

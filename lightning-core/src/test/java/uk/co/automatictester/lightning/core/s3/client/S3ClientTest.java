@@ -104,7 +104,7 @@ public class S3ClientTest {
 
     @Test
     public void testGetRealInstance() {
-        S3Client realClient = S3Client.createInstance(REGION);
+        S3Client realClient = S3Client.createRealInstance(REGION);
     }
 
     private String getRandomKey() {
