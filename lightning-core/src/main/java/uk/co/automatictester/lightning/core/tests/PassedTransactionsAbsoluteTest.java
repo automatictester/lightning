@@ -10,7 +10,7 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
     private static final String TEST_TYPE = "passedTransactionsTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Number of failed transactions <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Number of failed transactions = %s";
-    private long allowedNumberOfFailedTransactions;
+    private final long allowedNumberOfFailedTransactions;
     private int failureCount;
 
     private PassedTransactionsAbsoluteTest(String testName, long allowedNumberOfFailedTransactions) {

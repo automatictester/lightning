@@ -21,7 +21,7 @@ import static uk.co.automatictester.lightning.core.enums.JMeterColumns.*;
 public class JMeterTransactions extends CsvEntries {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private static final Logger log = LoggerFactory.getLogger(JMeterTransactions.class);
 
     protected JMeterTransactions() {
     }

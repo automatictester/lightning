@@ -11,7 +11,7 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
     private static final String TEST_TYPE = "passedTransactionsTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Percent of failed transactions <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Percent of failed transactions = %s";
-    private Percent allowedPercentOfFailedTransactions;
+    private final Percent allowedPercentOfFailedTransactions;
 
     private PassedTransactionsRelativeTest(String testName, Percent percent) {
         super(TEST_TYPE, testName);

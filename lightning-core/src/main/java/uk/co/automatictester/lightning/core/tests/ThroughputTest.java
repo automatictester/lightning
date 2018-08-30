@@ -10,7 +10,7 @@ public class ThroughputTest extends ClientSideTest {
     private static final String TEST_TYPE = "throughputTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Throughput >= %.2f / second";
     private static final String ACTUAL_RESULT_MESSAGE = "Throughput = %.2f / second";
-    private double minThroughput;
+    private final double minThroughput;
     private double actualResult;
 
     private ThroughputTest(String testName, double minThroughput) {

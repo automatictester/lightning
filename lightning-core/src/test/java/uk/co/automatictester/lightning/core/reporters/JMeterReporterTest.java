@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 public class JMeterReporterTest {
 
     @DataProvider(name = "counts")
-    private Integer[][] counts() {
+    private Object[][] counts() {
         return new Integer[][]{
                 {10, 0},
                 {10, 3}

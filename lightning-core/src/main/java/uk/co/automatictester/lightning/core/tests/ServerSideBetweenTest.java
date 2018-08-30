@@ -7,8 +7,8 @@ import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
 public class ServerSideBetweenTest extends ServerSideTest {
 
     private static final String EXPECTED_RESULT_MESSAGE = "Average value between %s and %s";
-    private long lowerThreshold;
-    private long upperThreshold;
+    private final long lowerThreshold;
+    private final long upperThreshold;
 
     private ServerSideBetweenTest(String testName, long lowerThreshold, long upperThreshold) {
         super(testName);

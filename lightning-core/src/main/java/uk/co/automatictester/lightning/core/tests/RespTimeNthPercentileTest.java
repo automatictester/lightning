@@ -13,8 +13,8 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     private static final String MESSAGE = "%s percentile of transactions have response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
     private static final String ACTUAL_RESULT_MESSAGE = MESSAGE + "= %s";
-    private long maxRespTime;
-    private int percentile;
+    private final long maxRespTime;
+    private final int percentile;
 
     private RespTimeNthPercentileTest(String testName, long maxRespTime, int percentile) {
         super("nthPercRespTimeTest", testName);

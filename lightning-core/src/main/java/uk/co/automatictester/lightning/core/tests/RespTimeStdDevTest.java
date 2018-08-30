@@ -15,7 +15,6 @@ public class RespTimeStdDevTest extends ClientSideTest {
     private static final String TEST_TYPE = "respTimeStdDevTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Average standard deviance time <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Average standard deviance time = %s";
-
     private final long maxRespTimeStdDev;
 
     private RespTimeStdDevTest(String testName, long maxRespTimeStdDev) {

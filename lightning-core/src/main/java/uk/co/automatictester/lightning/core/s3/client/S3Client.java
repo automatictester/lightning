@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class S3Client {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private static final Logger log = LoggerFactory.getLogger(S3Client.class);
     private AmazonS3 client;
     private String s3Bucket;
 

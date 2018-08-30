@@ -7,7 +7,7 @@ import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
 public class ServerSideGreaterThanTest extends ServerSideTest {
 
     private static final String EXPECTED_RESULT_MESSAGE = "Average value > %s";
-    private long threshold;
+    private final long threshold;
 
     private ServerSideGreaterThanTest(String testName, long threshold) {
         super(testName);

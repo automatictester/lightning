@@ -10,7 +10,7 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
     private static final String TEST_TYPE = "avgRespTimeTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Average response time <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Average response time = %s";
-    private long maxAvgRespTime;
+    private final long maxAvgRespTime;
 
     private RespTimeAvgTest(String testName, long maxAvgRespTime) {
         super(TEST_TYPE, testName);

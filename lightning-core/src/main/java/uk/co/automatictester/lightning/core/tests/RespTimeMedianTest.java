@@ -11,7 +11,7 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     private static final String MESSAGE = "median response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
     private static final String ACTUAL_RESULT_MESSAGE = MESSAGE + "= %s";
-    private double maxRespTime;
+    private final double maxRespTime;
 
     private RespTimeMedianTest(String testName, long maxRespTime) {
         super(TEST_TYPE, testName);

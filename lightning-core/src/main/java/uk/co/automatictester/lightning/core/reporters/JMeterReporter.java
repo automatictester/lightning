@@ -4,6 +4,9 @@ import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 
 public class JMeterReporter {
 
+    private JMeterReporter() {
+    }
+
     public static String getJMeterReport(JMeterTransactions jmeterTransactions) {
         int transactionCount = jmeterTransactions.size();
         int failCount = jmeterTransactions.getFailCount();
