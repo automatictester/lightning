@@ -21,5 +21,4 @@ public abstract class CIReporter {
         int failed = jmeterTransactions.getFailCount();
         return String.format("Transactions executed: %s, failed: %s", executed, failed);
     }
-
 }

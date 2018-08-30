@@ -31,5 +31,4 @@ public class TestSetReporter {
     private static boolean hasFailed(TestSet testSet) {
         return testSet.getFailCount() != 0 || testSet.getErrorCount() != 0;
     }
-
 }
