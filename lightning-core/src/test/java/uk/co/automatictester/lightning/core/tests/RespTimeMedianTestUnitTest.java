@@ -1,11 +1,9 @@
 package uk.co.automatictester.lightning.core.tests;
 
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 public class RespTimeMedianTestUnitTest {
@@ -153,17 +150,18 @@ public class RespTimeMedianTestUnitTest {
     }
 
     @Test
-    public void verifyIsEqual() {
-        MatcherAssert.assertThat(LegacyTestData.RESP_TIME_MEDIAN_TEST_A, is(equalTo(LegacyTestData.RESP_TIME_MEDIAN_TEST_A)));
-    }
+    public void verifyEquals() {
+        RespTimeMedianTest instanceA = new RespTimeMedianTest.Builder("n", 9).build();
+        RespTimeMedianTest instanceB = new RespTimeMedianTest.Builder("n", 9).build();
+        RespTimeMedianTest instanceC = new RespTimeMedianTest.Builder("n", 9).build();
+        RespTimeMedianTest instanceD = new RespTimeMedianTest.Builder("x", 9).build();
+        RespTimeMaxTest instanceX = new RespTimeMaxTest.Builder("n", 9).build();
+        instanceB.execute();
 
-    @Test
-    public void verifyIsNotEqualOtherTestType() {
-        assertThat(LegacyTestData.RESP_TIME_MEDIAN_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.AVG_RESP_TIME_TEST_A))));
-    }
-
-    @Test
-    public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(LegacyTestData.RESP_TIME_MEDIAN_TEST_A, is(not(equalTo(LegacyTestData.RESP_TIME_MEDIAN_TEST_B))));
+        EqualsTester<RespTimeMedianTest, RespTimeMaxTest> tester = new EqualsTester<>();
+        tester.addEqualObjects(instanceA, instanceB, instanceC);
+        tester.addNonEqualObject(instanceD);
+        tester.addNotInstanceof(instanceX);
+        assertThat(tester.test(), is(true));
     }
 }

@@ -1,12 +1,9 @@
 package uk.co.automatictester.lightning.core.tests;
 
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
-import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +11,6 @@ import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 public class RespTimeNthPercentileTestUnitTest {
@@ -163,17 +159,18 @@ public class RespTimeNthPercentileTestUnitTest {
     }
 
     @Test
-    public void verifyIsEqual() {
-        MatcherAssert.assertThat(LegacyTestData.RESP_TIME_PERC_TEST_A, is(equalTo(LegacyTestData.RESP_TIME_PERC_TEST_A)));
-    }
+    public void verifyEquals() {
+        RespTimeNthPercentileTest instanceA = new RespTimeNthPercentileTest.Builder("n", 100, 95).withDescription("d").withTransactionName("t").build();
+        RespTimeNthPercentileTest instanceB = new RespTimeNthPercentileTest.Builder("n", 100, 95).withDescription("d").withTransactionName("t").build();
+        RespTimeNthPercentileTest instanceC = new RespTimeNthPercentileTest.Builder("n", 100, 95).withDescription("d").withTransactionName("t").build();
+        RespTimeNthPercentileTest instanceD = new RespTimeNthPercentileTest.Builder("n", 100, 95).withDescription("d").build();
+        RespTimeMaxTest instanceX = new RespTimeMaxTest.Builder("n", 9).build();
+        instanceB.execute();
 
-    @Test
-    public void verifyIsNotEqualOtherTestType() {
-        assertThat(LegacyTestData.RESP_TIME_PERC_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.AVG_RESP_TIME_TEST_A))));
-    }
-
-    @Test
-    public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(LegacyTestData.RESP_TIME_PERC_TEST_A, is(not(equalTo(LegacyTestData.RESP_TIME_PERC_TEST_B))));
+        EqualsTester<RespTimeNthPercentileTest, RespTimeMaxTest> tester = new EqualsTester<>();
+        tester.addEqualObjects(instanceA, instanceB, instanceC);
+        tester.addNonEqualObject(instanceD);
+        tester.addNotInstanceof(instanceX);
+        assertThat(tester.test(), is(true));
     }
 }

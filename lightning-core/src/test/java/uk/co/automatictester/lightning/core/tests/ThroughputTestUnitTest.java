@@ -19,10 +19,6 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 
 public class ThroughputTestUnitTest {
 
-    private static final ThroughputTest THROUGHPUT_TEST_A = new ThroughputTest.Builder("Test #1", 2).withTransactionName("Login").build();
-    private static final ThroughputTest THROUGHPUT_TEST_B = new ThroughputTest.Builder("Test #1", 3).withTransactionName("Login").build();
-    private static final ThroughputTest THROUGHPUT_TEST_NO_TRANS_NAME = new ThroughputTest.Builder("Test #1", 2).build();
-
     private static final String[] TRANSACTION_0 = new String[]{"Login", "1000", "true", "1434291252000"};
     private static final String[] TRANSACTION_1 = new String[]{"Login", "1000", "true", "1434291253000"};
     private static final String[] TRANSACTION_2 = new String[]{"Login", "1000", "true", "1434291254000"};
@@ -166,27 +162,18 @@ public class ThroughputTestUnitTest {
     }
 
     @Test
-    public void testIsEqual() {
-        assertThat(THROUGHPUT_TEST_A, is(equalTo(THROUGHPUT_TEST_A)));
-    }
+    public void verifyEquals() {
+        ThroughputTest instanceA = new ThroughputTest.Builder("n", 100).withTransactionName("t").build();
+        ThroughputTest instanceB = new ThroughputTest.Builder("n", 100).withTransactionName("t").build();
+        ThroughputTest instanceC = new ThroughputTest.Builder("n", 100).withTransactionName("t").build();
+        ThroughputTest instanceD = new ThroughputTest.Builder("n", 100).build();
+        RespTimeMaxTest instanceX = new RespTimeMaxTest.Builder("n", 9).build();
+        instanceB.execute();
 
-    @Test
-    public void testIsEqualNoTransactionName() {
-        assertThat(THROUGHPUT_TEST_NO_TRANS_NAME, is(equalTo(THROUGHPUT_TEST_NO_TRANS_NAME)));
-    }
-
-    @Test
-    public void testIsNotEqual() {
-        assertThat(THROUGHPUT_TEST_A, is(not(equalTo(THROUGHPUT_TEST_B))));
-    }
-
-    @Test
-    public void testIsNotEqualOtherTestType() {
-        assertThat(THROUGHPUT_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.RESP_TIME_PERC_TEST_A))));
-    }
-
-    @Test
-    public void testIsNotEqualNoTransactionName() {
-        assertThat(THROUGHPUT_TEST_B, is(not(equalTo(THROUGHPUT_TEST_NO_TRANS_NAME))));
+        EqualsTester<ThroughputTest, RespTimeMaxTest> tester = new EqualsTester<>();
+        tester.addEqualObjects(instanceA, instanceB, instanceC);
+        tester.addNonEqualObject(instanceD);
+        tester.addNotInstanceof(instanceX);
+        assertThat(tester.test(), is(true));
     }
 }

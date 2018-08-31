@@ -7,6 +7,9 @@ import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
 import uk.co.automatictester.lightning.core.utils.IntToOrdConverter;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
     private static final String TEST_TYPE = "nthPercRespTimeTest";
@@ -41,7 +44,8 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        List<String> fieldsToExclude = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
+        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
     }
 
     @Override

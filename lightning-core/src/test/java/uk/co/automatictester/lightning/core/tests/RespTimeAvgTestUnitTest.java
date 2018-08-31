@@ -1,11 +1,9 @@
 package uk.co.automatictester.lightning.core.tests;
 
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
@@ -13,7 +11,8 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
 public class RespTimeAvgTestUnitTest {
@@ -97,18 +96,19 @@ public class RespTimeAvgTestUnitTest {
     }
 
     @Test
-    public void verifyIsEqual() {
-        MatcherAssert.assertThat(LegacyTestData.AVG_RESP_TIME_TEST_A, is(equalTo(LegacyTestData.AVG_RESP_TIME_TEST_A)));
-    }
+    public void verifyEquals() {
+        RespTimeAvgTest instanceA = new RespTimeAvgTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        RespTimeAvgTest instanceB = new RespTimeAvgTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        RespTimeAvgTest instanceC = new RespTimeAvgTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        RespTimeAvgTest instanceD = new RespTimeAvgTest.Builder("n", 200).withDescription("d").withTransactionName("t").build();
+        PassedTransactionsAbsoluteTest instanceX = new PassedTransactionsAbsoluteTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        instanceB.execute();
 
-    @Test
-    public void verifyIsNotEqualOtherTestType() {
-        assertThat(LegacyTestData.AVG_RESP_TIME_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.RESP_TIME_PERC_TEST_A))));
-    }
-
-    @Test
-    public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(LegacyTestData.AVG_RESP_TIME_TEST_A, is(not(equalTo(LegacyTestData.AVG_RESP_TIME_TEST_B))));
+        EqualsTester<RespTimeAvgTest, PassedTransactionsAbsoluteTest> tester = new EqualsTester<>();
+        tester.addEqualObjects(instanceA, instanceB, instanceC);
+        tester.addNonEqualObject(instanceD);
+        tester.addNotInstanceof(instanceX);
+        assertThat(tester.test(), is(true));
     }
 
     @Test

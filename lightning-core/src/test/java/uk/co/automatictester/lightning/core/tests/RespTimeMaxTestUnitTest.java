@@ -83,17 +83,18 @@ public class RespTimeMaxTestUnitTest {
     }
 
     @Test
-    public void verifyIsEqual() {
-        MatcherAssert.assertThat(LegacyTestData.MAX_RESP_TIME_TEST_A, is(equalTo(LegacyTestData.MAX_RESP_TIME_TEST_A)));
-    }
+    public void verifyEquals() {
+        RespTimeMaxTest instanceA = new RespTimeMaxTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        RespTimeMaxTest instanceB = new RespTimeMaxTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        RespTimeMaxTest instanceC = new RespTimeMaxTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        RespTimeMaxTest instanceD = new RespTimeMaxTest.Builder("n", 1000).withDescription("d").withTransactionName("login").build();
+        RespTimeAvgTest instanceX = new RespTimeAvgTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
+        instanceB.execute();
 
-    @Test
-    public void verifyIsNotEqualOtherTestType() {
-        assertThat(LegacyTestData.MAX_RESP_TIME_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.RESP_TIME_PERC_TEST_A))));
-    }
-
-    @Test
-    public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(LegacyTestData.MAX_RESP_TIME_TEST_A, is(not(equalTo(LegacyTestData.MAX_RESP_TIME_TEST_B))));
+        EqualsTester<RespTimeMaxTest, RespTimeAvgTest> tester = new EqualsTester<>();
+        tester.addEqualObjects(instanceA, instanceB, instanceC);
+        tester.addNonEqualObject(instanceD);
+        tester.addNotInstanceof(instanceX);
+        assertThat(tester.test(), is(true));
     }
 }

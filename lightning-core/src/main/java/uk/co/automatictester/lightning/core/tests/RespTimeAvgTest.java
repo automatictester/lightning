@@ -5,6 +5,9 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class RespTimeAvgTest extends RespTimeBasedTest {
 
     private static final String TEST_TYPE = "avgRespTimeTest";
@@ -35,7 +38,8 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        List<String> fieldsToExclude = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
+        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
     }
 
     @Override

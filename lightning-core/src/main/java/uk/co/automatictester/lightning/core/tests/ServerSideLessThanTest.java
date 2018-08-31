@@ -4,6 +4,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ServerSideLessThanTest extends ServerSideTest {
 
     private static final String EXPECTED_RESULT_MESSAGE = "Average value < %s";
@@ -22,7 +25,8 @@ public class ServerSideLessThanTest extends ServerSideTest {
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        List<String> fieldsToExclude = Arrays.asList("dataEntriesCount", "actualResultDescription", "result", "actualResult");
+        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
     }
 
     @Override

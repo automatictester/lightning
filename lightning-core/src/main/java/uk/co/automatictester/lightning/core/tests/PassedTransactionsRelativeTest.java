@@ -6,6 +6,9 @@ import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.core.utils.Percent;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class PassedTransactionsRelativeTest extends ClientSideTest {
 
     private static final String TEST_TYPE = "passedTransactionsTest";
@@ -37,7 +40,8 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        List<String> fieldsToExclude = Arrays.asList("transactionCount", "actualResultDescription", "result", "actualResult");
+        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
     }
 
     @Override

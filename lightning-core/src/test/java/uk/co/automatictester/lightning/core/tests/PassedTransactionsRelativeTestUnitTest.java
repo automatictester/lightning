@@ -1,18 +1,17 @@
 package uk.co.automatictester.lightning.core.tests;
 
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
 public class PassedTransactionsRelativeTestUnitTest {
@@ -134,28 +133,19 @@ public class PassedTransactionsRelativeTestUnitTest {
     }
 
     @Test
-    public void verifyIsEqual() {
-        MatcherAssert.assertThat(LegacyTestData.PASSED_TRANSACTIONS_TEST_A, is(equalTo(LegacyTestData.PASSED_TRANSACTIONS_TEST_A)));
-    }
+    public void verifyEquals() {
+        PassedTransactionsRelativeTest instanceA = new PassedTransactionsRelativeTest.Builder("n", 2).withDescription("d").withTransactionName("t").build();
+        PassedTransactionsRelativeTest instanceB = new PassedTransactionsRelativeTest.Builder("n", 2).withDescription("d").withTransactionName("t").build();
+        PassedTransactionsRelativeTest instanceC = new PassedTransactionsRelativeTest.Builder("n", 2).withDescription("d").withTransactionName("t").build();
+        PassedTransactionsRelativeTest instanceD = new PassedTransactionsRelativeTest.Builder("n", 5).withDescription("d").withTransactionName("t").build();
+        PassedTransactionsAbsoluteTest instanceX = new PassedTransactionsAbsoluteTest.Builder("n", 2).withDescription("d").withTransactionName("t").build();
+        instanceB.execute();
 
-    @Test
-    public void verifyIsEqualNoTransactionName() {
-        MatcherAssert.assertThat(LegacyTestData.PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME, is(equalTo(LegacyTestData.PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME)));
-    }
-
-    @Test
-    public void verifyIsNotEqual() {
-        MatcherAssert.assertThat(LegacyTestData.PASSED_TRANSACTIONS_TEST_A, is(not(equalTo(LegacyTestData.PASSED_TRANSACTIONS_TEST_B))));
-    }
-
-    @Test
-    public void verifyIsNotEqualOtherTestType() {
-        assertThat(LegacyTestData.PASSED_TRANSACTIONS_TEST_A, is(not(equalTo((ClientSideTest) LegacyTestData.RESP_TIME_PERC_TEST_A))));
-    }
-
-    @Test
-    public void verifyIsNotEqualNoTransactionName() {
-        MatcherAssert.assertThat(LegacyTestData.PASSED_TRANSACTIONS_TEST_B, is(not(equalTo(LegacyTestData.PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME))));
+        EqualsTester<PassedTransactionsRelativeTest, PassedTransactionsAbsoluteTest> tester = new EqualsTester<>();
+        tester.addEqualObjects(instanceA, instanceB, instanceC);
+        tester.addNonEqualObject(instanceD);
+        tester.addNotInstanceof(instanceX);
+        assertThat(tester.test(), is(true));
     }
 
     @Test
