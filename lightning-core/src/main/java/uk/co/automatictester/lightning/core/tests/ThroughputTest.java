@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class ThroughputTest extends ClientSideTest {
 
+    private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "throughputTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Throughput >= %.2f / second";
     private static final String ACTUAL_RESULT_MESSAGE = "Throughput = %.2f / second";
@@ -46,13 +48,12 @@ public class ThroughputTest extends ClientSideTest {
 
     @Override
     public boolean equals(Object obj) {
-        List<String> fieldsToExclude = Arrays.asList("actualResultDescription", "result", "actualResult");
-        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
+        return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
     }
 
     @Override
     public int hashCode() {
-        return TEST_TYPE.hashCode() + name.hashCode() + (int) minThroughput;
+        return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
     public static class Builder {

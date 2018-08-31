@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import uk.co.automatictester.lightning.core.enums.TestResult;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
+    private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "nthPercRespTimeTest";
     private static final String MESSAGE = "%s percentile of transactions have response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
@@ -20,7 +22,7 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
     private final int percentile;
 
     private RespTimeNthPercentileTest(String testName, long maxRespTime, int percentile) {
-        super("nthPercRespTimeTest", testName);
+        super(TEST_TYPE, testName);
         this.maxRespTime = maxRespTime;
         this.percentile = percentile;
         this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, IntToOrdConverter.convert(percentile), maxRespTime);
@@ -44,13 +46,12 @@ public class RespTimeNthPercentileTest extends RespTimeBasedTest {
 
     @Override
     public boolean equals(Object obj) {
-        List<String> fieldsToExclude = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
-        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
+        return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
     }
 
     @Override
     public int hashCode() {
-        return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
+        return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
     public static class Builder {

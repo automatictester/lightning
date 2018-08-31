@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class RespTimeMedianTest extends RespTimeBasedTest {
 
+    private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "medianRespTimeTest";
     private static final String MESSAGE = "median response time ";
     private static final String EXPECTED_RESULT_MESSAGE = MESSAGE + "<= %s";
@@ -34,18 +36,17 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
 
     @Override
     protected void calculateTestResult() {
-        result =  (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
+        result = (actualResult > maxRespTime) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override
     public boolean equals(Object obj) {
-        List<String> fieldsToExclude = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
-        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
+        return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
     }
 
     @Override
     public int hashCode() {
-        return TEST_TYPE.hashCode() + name.hashCode() + (int) maxRespTime;
+        return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
     public static class Builder {

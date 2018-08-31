@@ -158,7 +158,7 @@ public class RespTimeMedianTestUnitTest {
         RespTimeMaxTest instanceX = new RespTimeMaxTest.Builder("n", 9).build();
         instanceB.execute();
 
-        EqualsTester<RespTimeMedianTest, RespTimeMaxTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<RespTimeMedianTest, RespTimeMaxTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

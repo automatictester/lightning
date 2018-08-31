@@ -1,6 +1,8 @@
 package uk.co.automatictester.lightning.shared;
 
-import uk.co.automatictester.lightning.core.tests.*;
+import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
+import uk.co.automatictester.lightning.core.tests.PassedTransactionsRelativeTest;
+import uk.co.automatictester.lightning.core.tests.RespTimeNthPercentileTest;
 
 import java.io.File;
 
@@ -15,8 +17,6 @@ public class LegacyTestData {
 
     // XML files
     public static final File TEST_SET_3_0_0 = new File(XML_RESOURCES + "3_0_0.xml");
-    public static final File TEST_SET_1_2 = new File(XML_RESOURCES + "1_client_2_server.xml");
-    public static final File TEST_SET_1_1_1 = new File(XML_RESOURCES + "1_1_1.xml");
     public static final File TEST_SET_0_0_0 = new File(XML_RESOURCES + "0_0_0.xml");
     public static final File TEST_SET_AVG_RESP_TIME = new File(XML_RESOURCES + "avgRespTimeTest.xml");
     public static final File TEST_SET_MAX_RESP_TIME = new File(XML_RESOURCES + "maxRespTimeTest.xml");
@@ -25,7 +25,6 @@ public class LegacyTestData {
     public static final File TEST_SET_PASSED_PERCENT = new File(XML_RESOURCES + "passedTransactionsPercentTest.xml");
     public static final File TEST_SET_STD_DEV = new File(XML_RESOURCES + "respTimeStdDevTest.xml");
     public static final File TEST_SET_THROUGHPUT = new File(XML_RESOURCES + "throughputTest.xml");
-    public static final File TEST_SET_THROUGHPUT_WITH_REGEXP = new File(XML_RESOURCES + "throughputTest_regexp.xml");
     public static final File TEST_SET_MEDIAN = new File(XML_RESOURCES + "medianRespTimeTest.xml");
     public static final File TEST_SET_NOT_WELL_FORMED = new File(XML_RESOURCES + "not_well_formed.xml");
     public static final File TEST_SET_SERVER_LESS = new File(XML_RESOURCES + "serverSideTest_lessThan.xml");
@@ -38,8 +37,6 @@ public class LegacyTestData {
     public static final File TEST_SET_XML_FILE_PERCENTILE_EXCEPTION = new File(XML_RESOURCES + "XMLFilePercentileException.xml");
 
     // JMeter CSV files
-    public static final File CSV_MISSING_LABEL_COLUMN = new File(JMETER_CSV_RESOURCES + "missing_label_column.csv");
-    public static final File CSV_NOT_ENOUGH_COLUMNS_IN_DATA_PART = new File(JMETER_CSV_RESOURCES + "not_enough_columns_in_data_part.csv");
     public static final File CSV_2_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "2_transactions.csv");
     public static final File CSV_0_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "0_transactions.csv");
     public static final File CSV_NONEXISTENT = new File(JMETER_CSV_RESOURCES + "nonexistent.csv");
@@ -83,20 +80,4 @@ public class LegacyTestData {
     public static final PassedTransactionsRelativeTest PASSED_TRANSACTIONS_TEST_3_0_0_A = new PassedTransactionsRelativeTest.Builder("Failed transactions (%)", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
     public static final PassedTransactionsAbsoluteTest PASSED_TRANSACTIONS_TEST_3_0_0_B = new PassedTransactionsAbsoluteTest.Builder("Failed transactions", 0).withDescription("Verify number of passed tests").build();
     public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_3_0_0_C = new RespTimeNthPercentileTest.Builder("80th percentile", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
-
-    public static final PassedTransactionsAbsoluteTest PASSED_TRANSACTIONS_TEST_A = new PassedTransactionsAbsoluteTest.Builder("Test #1", 1).withDescription("Verify number of passed tests").withTransactionName("Login").build();
-    public static final PassedTransactionsAbsoluteTest PASSED_TRANSACTIONS_TEST_B = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
-    public static final PassedTransactionsRelativeTest PASSED_TRANSACTIONS_TEST_PERC = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
-    public static final PassedTransactionsAbsoluteTest PASSED_TRANSACTIONS_TEST_NO_TRANS_NAME = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
-    public static final RespTimeAvgTest AVG_RESP_TIME_TEST_A = new RespTimeAvgTest.Builder("Test #1", 1000).withDescription("Verify average response times").withTransactionName("Search").build();
-    public static final RespTimeAvgTest AVG_RESP_TIME_TEST_B = new RespTimeAvgTest.Builder("Test #1", 100).withDescription("Verify average response times").withTransactionName("Search").build();
-    public static final RespTimeMaxTest MAX_RESP_TIME_TEST_A = new RespTimeMaxTest.Builder("Test #1", 1000).withDescription("Verify max response times").withTransactionName("Search").build();
-    public static final RespTimeMaxTest MAX_RESP_TIME_TEST_B = new RespTimeMaxTest.Builder("Test #1", 100).withDescription("Verify max response times").withTransactionName("Search").build();
-    public static final RespTimeStdDevTest RESP_TIME_STD_DEV_TEST_A = new RespTimeStdDevTest.Builder("Test #1", 1).withDescription("Verify standard deviation").withTransactionName("Login").build();
-    public static final RespTimeStdDevTest RESP_TIME_STD_DEV_TEST_B = new RespTimeStdDevTest.Builder("Test #1", 0).withDescription("Verify standard deviation").withTransactionName("Login").build();
-    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_A = new RespTimeNthPercentileTest.Builder("Test #1", 9, 9).withDescription("Verify 90 percentile").withTransactionName("Search").build();
-    public static final RespTimeNthPercentileTest RESP_TIME_PERC_TEST_B = new RespTimeNthPercentileTest.Builder("Test #1", 9, 8).withDescription("Verify 90 percentile").withTransactionName("Search").build();
-    public static final RespTimeMedianTest RESP_TIME_MEDIAN_TEST_A = new RespTimeMedianTest.Builder("Test #1", 9).withDescription("Verify median").withTransactionName("Search").build();
-    public static final RespTimeMedianTest RESP_TIME_MEDIAN_TEST_B = new RespTimeMedianTest.Builder("Test #1", 8).withDescription("Verify median").withTransactionName("Search").build();
-
 }

@@ -1,11 +1,9 @@
 package uk.co.automatictester.lightning.core.tests;
 
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
@@ -91,7 +89,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeAvgTest instanceX = new RespTimeAvgTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
         instanceB.execute();
 
-        EqualsTester<RespTimeMaxTest, RespTimeAvgTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<RespTimeMaxTest, RespTimeAvgTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

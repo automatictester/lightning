@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class PassedTransactionsRelativeTest extends ClientSideTest {
 
+    private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "passedTransactionsTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Percent of failed transactions <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Percent of failed transactions = %s";
@@ -40,13 +42,12 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
 
     @Override
     public boolean equals(Object obj) {
-        List<String> fieldsToExclude = Arrays.asList("transactionCount", "actualResultDescription", "result", "actualResult");
-        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
+        return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
     }
 
     @Override
     public int hashCode() {
-        return TEST_TYPE.hashCode() + name.hashCode() + allowedPercentOfFailedTransactions.getValue();
+        return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
     public static class Builder {

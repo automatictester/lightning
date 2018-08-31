@@ -2,10 +2,12 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
 
+import java.util.Objects;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class EqualsTesterTest {
+public class EqualsAndHashCodeTesterTest {
 
     class A {
         int a;
@@ -24,6 +26,11 @@ public class EqualsTesterTest {
                 return this.a == other.a;
             }
             return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(a);
         }
     }
 
@@ -45,6 +52,11 @@ public class EqualsTesterTest {
             }
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(b);
+        }
     }
 
     @Test
@@ -55,7 +67,7 @@ public class EqualsTesterTest {
         A instanceAX = new A(2);
         B instanceBX = new B(1);
 
-        EqualsTester<A, B> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<A, B> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA1, instanceA2, instanceA3);
         tester.addNonEqualObject(instanceAX);
         tester.addNotInstanceof(instanceBX);

@@ -104,7 +104,7 @@ public class RespTimeAvgTestUnitTest {
         PassedTransactionsAbsoluteTest instanceX = new PassedTransactionsAbsoluteTest.Builder("n", 1000).withDescription("d").withTransactionName("t").build();
         instanceB.execute();
 
-        EqualsTester<RespTimeAvgTest, PassedTransactionsAbsoluteTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<RespTimeAvgTest, PassedTransactionsAbsoluteTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

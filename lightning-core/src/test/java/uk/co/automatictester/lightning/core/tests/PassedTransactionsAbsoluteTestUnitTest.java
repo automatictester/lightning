@@ -119,7 +119,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         RespTimeNthPercentileTest instanceX = new RespTimeNthPercentileTest.Builder("n", 9, 9).withDescription("d").withTransactionName("t").build();
         instanceB.execute();
 
-        EqualsTester<PassedTransactionsAbsoluteTest, RespTimeNthPercentileTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<PassedTransactionsAbsoluteTest, RespTimeNthPercentileTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

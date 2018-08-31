@@ -141,7 +141,7 @@ public class PassedTransactionsRelativeTestUnitTest {
         PassedTransactionsAbsoluteTest instanceX = new PassedTransactionsAbsoluteTest.Builder("n", 2).withDescription("d").withTransactionName("t").build();
         instanceB.execute();
 
-        EqualsTester<PassedTransactionsRelativeTest, PassedTransactionsAbsoluteTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<PassedTransactionsRelativeTest, PassedTransactionsAbsoluteTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

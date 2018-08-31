@@ -5,8 +5,6 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
-import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +168,7 @@ public class ThroughputTestUnitTest {
         RespTimeMaxTest instanceX = new RespTimeMaxTest.Builder("n", 9).build();
         instanceB.execute();
 
-        EqualsTester<ThroughputTest, RespTimeMaxTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<ThroughputTest, RespTimeMaxTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

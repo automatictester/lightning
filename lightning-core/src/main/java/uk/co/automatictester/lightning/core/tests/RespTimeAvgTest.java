@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class RespTimeAvgTest extends RespTimeBasedTest {
 
+    private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "avgRespTimeTest";
     private static final String EXPECTED_RESULT_MESSAGE = "Average response time <= %s";
     private static final String ACTUAL_RESULT_MESSAGE = "Average response time = %s";
@@ -38,13 +40,12 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
 
     @Override
     public boolean equals(Object obj) {
-        List<String> fieldsToExclude = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
-        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
+        return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
     }
 
     @Override
     public int hashCode() {
-        return TEST_TYPE.hashCode() + name.hashCode() + (int) maxAvgRespTime;
+        return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
     public static class Builder {

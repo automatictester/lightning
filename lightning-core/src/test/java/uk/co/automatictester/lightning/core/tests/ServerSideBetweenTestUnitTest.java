@@ -48,7 +48,7 @@ public class ServerSideBetweenTestUnitTest {
         ServerSideGreaterThanTest instanceX = new ServerSideGreaterThanTest.Builder("n", 10000).withHostAndMetric("hm").build();
         instanceB.execute();
 
-        EqualsTester<ServerSideBetweenTest, ServerSideGreaterThanTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<ServerSideBetweenTest, ServerSideGreaterThanTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);

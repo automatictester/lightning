@@ -167,7 +167,7 @@ public class RespTimeNthPercentileTestUnitTest {
         RespTimeMaxTest instanceX = new RespTimeMaxTest.Builder("n", 9).build();
         instanceB.execute();
 
-        EqualsTester<RespTimeNthPercentileTest, RespTimeMaxTest> tester = new EqualsTester<>();
+        EqualsAndHashCodeTester<RespTimeNthPercentileTest, RespTimeMaxTest> tester = new EqualsAndHashCodeTester<>();
         tester.addEqualObjects(instanceA, instanceB, instanceC);
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);
