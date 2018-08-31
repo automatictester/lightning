@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class ServerSideLessThanTest extends ServerSideTest {
 
+    private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("dataEntriesCount", "actualResultDescription", "result", "actualResult");
     private static final String EXPECTED_RESULT_MESSAGE = "Average value < %s";
     private final long threshold;
 
@@ -25,13 +27,12 @@ public class ServerSideLessThanTest extends ServerSideTest {
 
     @Override
     public boolean equals(Object obj) {
-        List<String> fieldsToExclude = Arrays.asList("dataEntriesCount", "actualResultDescription", "result", "actualResult");
-        return EqualsBuilder.reflectionEquals(this, obj, fieldsToExclude);
+        return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
     }
 
     @Override
     public int hashCode() {
-        return TEST_TYPE.hashCode() + name.hashCode() + (int) threshold;
+        return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
     public static class Builder {
