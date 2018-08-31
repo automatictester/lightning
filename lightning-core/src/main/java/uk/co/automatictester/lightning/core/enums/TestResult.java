@@ -11,8 +11,7 @@ public enum TestResult {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
+    public String getValue() {
         return value;
     }
 }

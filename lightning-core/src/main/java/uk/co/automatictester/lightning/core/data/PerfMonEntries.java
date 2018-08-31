@@ -14,9 +14,6 @@ import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.*;
 
 public class PerfMonEntries extends CsvEntries {
 
-    private PerfMonEntries() {
-    }
-
     private PerfMonEntries(File perfMonCsvFile) {
         loadFromFile(perfMonCsvFile);
         throwExceptionIfEmpty();

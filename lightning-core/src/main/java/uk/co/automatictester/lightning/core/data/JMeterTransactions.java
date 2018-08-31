@@ -11,6 +11,7 @@ import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.regex.Pattern;
@@ -23,9 +24,6 @@ public class JMeterTransactions extends CsvEntries {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
     private static final Logger log = LoggerFactory.getLogger(JMeterTransactions.class);
-
-    protected JMeterTransactions() {
-    }
 
     private JMeterTransactions(File csvFile) {
         Instant start = Instant.now();
@@ -69,7 +67,7 @@ public class JMeterTransactions extends CsvEntries {
     }
 
     public JMeterTransactions getTransactionsWith(String expectedTransactionName) {
-        JMeterTransactions transactions = new JMeterTransactions();
+        List<String[]> transactions = new ArrayList<>();
         entries.forEach(transaction -> {
             String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
             boolean isInScope = transactionName.equals(expectedTransactionName);
@@ -80,12 +78,12 @@ public class JMeterTransactions extends CsvEntries {
         if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(expectedTransactionName);
         }
-        return transactions;
+        return JMeterTransactions.fromList(transactions);
     }
 
     public JMeterTransactions getTransactionsMatching(String expectedTransactionName) {
         Pattern pattern = Pattern.compile(expectedTransactionName);
-        JMeterTransactions transactions = new JMeterTransactions();
+        List<String[]> transactions = new ArrayList<>();
         entries.forEach(transaction -> {
             String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
             boolean isInScope = pattern.matcher(transactionName).matches();
@@ -96,7 +94,7 @@ public class JMeterTransactions extends CsvEntries {
         if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(expectedTransactionName);
         }
-        return transactions;
+        return JMeterTransactions.fromList(transactions);
     }
 
     public List<Integer> getLongestTransactions() {

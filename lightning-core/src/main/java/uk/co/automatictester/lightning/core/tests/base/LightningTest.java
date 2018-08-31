@@ -57,7 +57,7 @@ public abstract class LightningTest {
     }
 
     String getResultForReport() {
-        return result.toString();
+        return result.getValue();
     }
 
     public abstract String getTestExecutionReport();
