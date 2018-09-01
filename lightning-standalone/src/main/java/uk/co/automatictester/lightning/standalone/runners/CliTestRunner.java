@@ -4,7 +4,7 @@ import com.beust.jcommander.MissingCommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.enums.Mode;
-import uk.co.automatictester.lightning.core.facade.LightningCoreLocalFacade;
+import uk.co.automatictester.lightning.core.facades.LightningCoreLocalFacade;
 import uk.co.automatictester.lightning.standalone.cli.CommandLineInterface;
 
 import java.io.File;

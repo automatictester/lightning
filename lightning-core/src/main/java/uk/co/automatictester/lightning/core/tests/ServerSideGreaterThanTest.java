@@ -3,12 +3,12 @@ package uk.co.automatictester.lightning.core.tests;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractServerSideTest;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ServerSideGreaterThanTest extends ServerSideTest {
+public class ServerSideGreaterThanTest extends AbstractServerSideTest {
 
     private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("dataEntriesCount", "actualResultDescription", "result", "actualResult");
     private static final String EXPECTED_RESULT_MESSAGE = "Average value > %s";

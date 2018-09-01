@@ -2,13 +2,13 @@ package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.enums.ServerSideTestType;
-import uk.co.automatictester.lightning.core.structures.LightningTests;
+import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.ServerSideBetweenTest;
 import uk.co.automatictester.lightning.core.tests.ServerSideGreaterThanTest;
 import uk.co.automatictester.lightning.core.tests.ServerSideLessThanTest;
-import uk.co.automatictester.lightning.core.tests.base.ServerSideTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractServerSideTest;
 
-import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessingHelper.*;
+import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.*;
 
 public class ServerSideTestHandler extends ElementHandler {
 
@@ -21,7 +21,7 @@ public class ServerSideTestHandler extends ElementHandler {
     protected void handleHere(Element element) {
         String testName = getTestName(element);
         String description = getTestDescription(element);
-        ServerSideTest test = null;
+        AbstractServerSideTest test = null;
         ServerSideTestType subType = getSubType(element);
 
         switch (subType) {
@@ -58,6 +58,6 @@ public class ServerSideTestHandler extends ElementHandler {
                 break;
         }
 
-        LightningTests.getInstance().add(test);
+        LightningTestSet.getInstance().add(test);
     }
 }

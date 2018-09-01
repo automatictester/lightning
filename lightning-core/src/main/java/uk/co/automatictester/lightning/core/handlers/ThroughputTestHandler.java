@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.structures.LightningTests;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
+import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.ThroughputTest;
 
-import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessingHelper.*;
-import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessingHelper.getTransactionName;
-import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessingHelper.hasRegexp;
+import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.*;
+import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.getTransactionName;
+import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.hasRegexp;
 
 public class ThroughputTestHandler extends ElementHandler {
 
@@ -29,7 +29,7 @@ public class ThroughputTestHandler extends ElementHandler {
                 builder.withRegexp();
             }
         }
-        ClientSideTest test = builder.build();
-        LightningTests.getInstance().add(test);
+        AbstractClientSideTest test = builder.build();
+        LightningTestSet.getInstance().add(test);
     }
 }

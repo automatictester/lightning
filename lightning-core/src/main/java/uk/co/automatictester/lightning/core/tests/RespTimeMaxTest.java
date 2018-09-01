@@ -4,12 +4,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractRespTimeTest;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class RespTimeMaxTest extends RespTimeBasedTest {
+public class RespTimeMaxTest extends AbstractRespTimeTest {
 
     private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "maxRespTimeTest";

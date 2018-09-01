@@ -1,11 +1,11 @@
 package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.structures.LightningTests;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
+import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeNthPercentileTest;
 
-import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessingHelper.*;
+import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.*;
 
 public class NthPercRespTimeTestHandler extends ElementHandler {
 
@@ -28,7 +28,7 @@ public class NthPercRespTimeTestHandler extends ElementHandler {
                 builder.withRegexp();
             }
         }
-        ClientSideTest test = builder.build();
-        LightningTests.getInstance().add(test);
+        AbstractClientSideTest test = builder.build();
+        LightningTestSet.getInstance().add(test);
     }
 }

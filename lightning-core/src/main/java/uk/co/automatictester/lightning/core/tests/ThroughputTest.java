@@ -2,9 +2,9 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import uk.co.automatictester.lightning.core.data.JmeterTransactions;
+import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ThroughputTest extends ClientSideTest {
+public class ThroughputTest extends AbstractClientSideTest {
 
     private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "throughputTest";

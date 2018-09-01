@@ -1,9 +1,9 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.PerfMonEntries;
+import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.structures.TestData;
+import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;

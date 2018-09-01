@@ -1,12 +1,12 @@
 package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.structures.LightningTests;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
+import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsRelativeTest;
 
-import static uk.co.automatictester.lightning.core.utils.LightningConfigProcessingHelper.*;
+import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.*;
 
 public class PassedTransactionsTestHandler extends ElementHandler {
 
@@ -19,7 +19,7 @@ public class PassedTransactionsTestHandler extends ElementHandler {
     protected void handleHere(Element element) {
         String testName = getTestName(element);
         String description = getTestDescription(element);
-        ClientSideTest test;
+        AbstractClientSideTest test;
         boolean isAbsolute = isSubElementPresent(element, "allowedNumberOfFailedTransactions");
 
         if (isAbsolute) {
@@ -48,6 +48,6 @@ public class PassedTransactionsTestHandler extends ElementHandler {
             test = builder.build();
         }
 
-        LightningTests.getInstance().add(test);
+        LightningTestSet.getInstance().add(test);
     }
 }

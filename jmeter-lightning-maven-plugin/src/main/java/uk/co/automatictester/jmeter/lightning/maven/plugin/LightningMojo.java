@@ -3,7 +3,7 @@ package uk.co.automatictester.jmeter.lightning.maven.plugin;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import uk.co.automatictester.lightning.core.facade.LightningCoreLocalFacade;
+import uk.co.automatictester.lightning.core.facades.LightningCoreLocalFacade;
 
 @Mojo(name = "lightning", defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST)
 public class LightningMojo extends ConfigurationMojo {

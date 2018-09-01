@@ -5,13 +5,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractRespTimeTest;
 import uk.co.automatictester.lightning.core.utils.IntToOrdConverter;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class RespTimeNthPercentileTest extends RespTimeBasedTest {
+public class RespTimeNthPercentileTest extends AbstractRespTimeTest {
 
     private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("longestTransactions", "transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "nthPercRespTimeTest";

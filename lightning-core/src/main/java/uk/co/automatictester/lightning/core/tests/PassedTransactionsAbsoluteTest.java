@@ -2,14 +2,14 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import uk.co.automatictester.lightning.core.data.JmeterTransactions;
+import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class PassedTransactionsAbsoluteTest extends ClientSideTest {
+public class PassedTransactionsAbsoluteTest extends AbstractClientSideTest {
 
     private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("failureCount", "transactionCount", "actualResultDescription", "result", "actualResult");
     private static final String TEST_TYPE = "passedTransactionsTest";

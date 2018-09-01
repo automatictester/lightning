@@ -12,7 +12,7 @@ public class Percent {
         if (isPercent(value)) {
             this.value = value;
         } else {
-            String errorMessage = String.format("Incorrect value: %s. Should be integrer in range 0-100", value);
+            String errorMessage = String.format("Incorrect value: %s. Should be integer in range 0-100", value);
             throw new PercentException(errorMessage);
         }
     }
