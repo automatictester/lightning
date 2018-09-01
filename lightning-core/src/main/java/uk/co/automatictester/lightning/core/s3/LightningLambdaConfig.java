@@ -19,21 +19,19 @@ import java.io.InputStream;
 
 public class LightningLambdaConfig extends LightningConfig {
 
-    private static S3Client s3Client;
-
-    public LightningLambdaConfig(String region, String bucket) {
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
+    private LightningLambdaConfig() {
     }
 
-    public void readTests(String xmlObject) {
+    public static void readTests(String region, String bucket, String xmlObject) {
+        S3Client client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         LightningTests.getInstance().flush();
-        String xmlObjectContent = s3Client.getObjectAsString(xmlObject);
+        String xmlObjectContent = client.getObjectAsString(xmlObject);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
     }
 
-    private NodeList readXmlFile(String xmlObjectContent) {
+    private static NodeList readXmlFile(String xmlObjectContent) {
         try (InputStream is = new ByteArrayInputStream(xmlObjectContent.getBytes())) {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();

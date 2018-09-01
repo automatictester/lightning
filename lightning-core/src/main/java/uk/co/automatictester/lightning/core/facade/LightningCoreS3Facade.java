@@ -37,8 +37,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public void loadConfigFromS3() {
-        LightningLambdaConfig lightningLambdaConfig = new LightningLambdaConfig(region, bucket);
-        lightningLambdaConfig.readTests(lightningXml);
+        LightningLambdaConfig.readTests(region, bucket, lightningXml);
     }
 
     public void loadTestDataFromS3() {

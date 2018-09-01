@@ -1,8 +1,8 @@
-package uk.co.automatictester.lightning.core.ci;
+package uk.co.automatictester.lightning.core.ci.junit;
 
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.ci.JUnitReporter;
+import uk.co.automatictester.lightning.core.ci.junit.JUnitReporter;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;

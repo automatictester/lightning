@@ -1,6 +1,6 @@
 package uk.co.automatictester.lightning.core.facade;
 
-import uk.co.automatictester.lightning.core.ci.JUnitReporter;
+import uk.co.automatictester.lightning.core.ci.junit.JUnitReporter;
 import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.core.config.LightningConfig;
 import uk.co.automatictester.lightning.core.data.JMeterTransactions;
@@ -28,8 +28,7 @@ public class LightningCoreLocalFacade extends LightningCoreFacade {
     }
 
     public void loadConfig() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(lightningXml);
+        LightningConfig.readTests(lightningXml);
     }
 
     public void loadTestData() {

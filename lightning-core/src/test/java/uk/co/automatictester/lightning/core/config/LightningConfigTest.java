@@ -21,8 +21,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodPercentileTest() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_PERCENTILE);
+        LightningConfig.readTests(TEST_SET_PERCENTILE);
         List<LightningTest> tests = LightningTests.getInstance().get();
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #4", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
@@ -32,8 +31,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodStdDevTest() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_STD_DEV);
+        LightningConfig.readTests(TEST_SET_STD_DEV);
         List<LightningTest> tests = LightningTests.getInstance().get();
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Search").build();
 
@@ -43,8 +41,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodPassedTest() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_PASSED);
+        LightningConfig.readTests(TEST_SET_PASSED);
         List<LightningTest> tests = LightningTests.getInstance().get();
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #3", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
 
@@ -54,8 +51,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodPassedPercentTest() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_PASSED_PERCENT);
+        LightningConfig.readTests(TEST_SET_PASSED_PERCENT);
         List<LightningTest> tests = LightningTests.getInstance().get();
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #3", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
 
@@ -65,8 +61,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodAvgRespTime() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_AVG_RESP_TIME);
+        LightningConfig.readTests(TEST_SET_AVG_RESP_TIME);
         List<LightningTest> tests = LightningTests.getInstance().get();
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Login").build();
 
@@ -76,8 +71,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodMaxRespTime() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_MAX_RESP_TIME);
+        LightningConfig.readTests(TEST_SET_MAX_RESP_TIME);
         List<LightningTest> tests = LightningTests.getInstance().get();
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Login").build();
 
@@ -87,8 +81,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodMedianRespTime() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_MEDIAN);
+        LightningConfig.readTests(TEST_SET_MEDIAN);
         List<LightningTest> tests = LightningTests.getInstance().get();
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #4", 11244).withDescription("Verify median response time").withTransactionName("Search").build();
 
@@ -98,8 +91,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodThroughput() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_THROUGHPUT);
+        LightningConfig.readTests(TEST_SET_THROUGHPUT);
         List<LightningTest> tests = LightningTests.getInstance().get();
         ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").build();
 
@@ -109,8 +101,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethod_Server_Less() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_SERVER_LESS);
+        LightningConfig.readTests(TEST_SET_SERVER_LESS);
         List<LightningTest> tests = LightningTests.getInstance().get();
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #2", 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
@@ -120,8 +111,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethod_Server_Between() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_SERVER_BETWEEN);
+        LightningConfig.readTests(TEST_SET_SERVER_BETWEEN);
         List<LightningTest> tests = LightningTests.getInstance().get();
         ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #2", 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
@@ -131,8 +121,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethod_Server_Greater() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_SERVER_GREATER);
+        LightningConfig.readTests(TEST_SET_SERVER_GREATER);
         List<LightningTest> tests = LightningTests.getInstance().get();
         ServerSideGreaterThanTest test = new ServerSideGreaterThanTest.Builder("Test #2", 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
@@ -142,8 +131,7 @@ public class LightningConfigTest {
 
     @Test
     public void verifyGetTestsMethodThreeTestsOfTwoKinds() {
-        LightningConfig lightningConfig = new LightningConfig();
-        lightningConfig.readTests(TEST_SET_3_0_0);
+        LightningConfig.readTests(TEST_SET_3_0_0);
         List<LightningTest> tests = LightningTests.getInstance().get();
 
         assertThat(tests, hasSize(3));
@@ -158,44 +146,44 @@ public class LightningConfigTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setErr(new PrintStream(outContent));
 
-        new LightningConfig().readTests(TEST_SET_NOT_WELL_FORMED);
+        LightningConfig.readTests(TEST_SET_NOT_WELL_FORMED);
 
         System.setErr(null);
     }
 
     @Test(expectedExceptions = XMLFileNumberFormatException.class)
     public void verifyGetTestsMethodThrowsXMLFileNumberFormatException() {
-        new LightningConfig().readTests(TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION);
+        LightningConfig.readTests(TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION);
     }
 
     @Test(expectedExceptions = XMLFileNoValidSubTypeException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoValidSubTypeException() {
-        new LightningConfig().readTests(TEST_SET_XML_FILE_NO_VALID_SUB_TYPE_EXCEPTION);
+        LightningConfig.readTests(TEST_SET_XML_FILE_NO_VALID_SUB_TYPE_EXCEPTION);
     }
 
     @Test(expectedExceptions = XMLFileMissingElementValueException.class)
     public void verifyGetTestsMethodThrowsXMLFileMissingElementValueException() {
-        new LightningConfig().readTests(TEST_SET_XML_FILE_MISSING_ELEMENT_VALUE_EXCEPTION);
+        LightningConfig.readTests(TEST_SET_XML_FILE_MISSING_ELEMENT_VALUE_EXCEPTION);
     }
 
     @Test(expectedExceptions = XMLFileMissingElementException.class)
     public void verifyGetTestsMethodThrowsXMLFileMissingElementException() {
-        new LightningConfig().readTests(TEST_SET_XML_FILE_MISSING_ELEMENT_EXCEPTION);
+        LightningConfig.readTests(TEST_SET_XML_FILE_MISSING_ELEMENT_EXCEPTION);
     }
 
     @Test(expectedExceptions = XMLFilePercentileException.class)
     public void verifyGetTestsMethodThrowsXMLFilePercentileException() {
-        new LightningConfig().readTests(TEST_SET_XML_FILE_PERCENTILE_EXCEPTION);
+        LightningConfig.readTests(TEST_SET_XML_FILE_PERCENTILE_EXCEPTION);
     }
 
     @Test(expectedExceptions = XMLFileNoTestsException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsException() {
-        new LightningConfig().readTests(TEST_SET_0_0_0);
+        LightningConfig.readTests(TEST_SET_0_0_0);
     }
 
     @Test(expectedExceptions = XMLFileNoTestsException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsExceptionOnUnmatchedTestType() {
-        new LightningConfig().readTests(new File("src/test/resources/xml/unknownTestType.xml"));
+        LightningConfig.readTests(new File("src/test/resources/xml/unknownTestType.xml"));
     }
 
 }

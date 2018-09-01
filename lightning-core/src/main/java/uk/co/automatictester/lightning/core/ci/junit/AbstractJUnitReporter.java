@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.ci;
+package uk.co.automatictester.lightning.core.ci.junit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,16 +12,16 @@ import uk.co.automatictester.lightning.core.tests.base.LightningTest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
 
-public class JUnitReporter {
+public abstract class AbstractJUnitReporter {
 
     protected Document doc;
 
-    public JUnitReporter() {
+    protected AbstractJUnitReporter() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
         try {
@@ -31,11 +31,6 @@ public class JUnitReporter {
         }
         doc = db.newDocument();
         doc.setXmlStandalone(true);
-    }
-
-    public void generateJUnitReport(TestSet testSet) {
-        generateJUnitReportContent(testSet);
-        saveReportToDisk();
     }
 
     protected void generateJUnitReportContent(TestSet testSet) {
@@ -109,18 +104,5 @@ public class JUnitReporter {
         element.setAttribute("type", testType);
         element.setAttribute("message", actualResultDescription);
         element.setTextContent(testExecutionReport);
-    }
-
-    private void saveReportToDisk() {
-        Transformer transformer = getTransformer();
-        DOMSource source = new DOMSource(doc);
-
-        File junitReport = new File("junit.xml");
-        StreamResult file = new StreamResult(junitReport);
-        try {
-            transformer.transform(source, file);
-        } catch (TransformerException e) {
-            throw new JunitReportGenerationException(e);
-        }
     }
 }

@@ -18,14 +18,17 @@ import java.io.IOException;
 
 public class LightningConfig {
 
-    public void readTests(File xmlFile) {
+    protected LightningConfig() {
+    }
+
+    public static void readTests(File xmlFile) {
         LightningTests.getInstance().flush();
         NodeList nodes = readXmlFile(xmlFile);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
     }
 
-    private NodeList readXmlFile(File xmlFile) {
+    private static NodeList readXmlFile(File xmlFile) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -37,7 +40,7 @@ public class LightningConfig {
         }
     }
 
-    protected void loadAllTests(NodeList nodes) {
+    protected static void loadAllTests(NodeList nodes) {
         for (int i = 0; i < nodes.getLength(); i++) {
             if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodes.item(i);
@@ -66,7 +69,7 @@ public class LightningConfig {
         }
     }
 
-    protected void throwExceptionIfNoTests() {
+    protected static void throwExceptionIfNoTests() {
         if (LightningTests.getInstance().size() == 0) {
             throw new XMLFileNoTestsException("No tests of expected type found in XML file");
         }
