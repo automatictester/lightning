@@ -54,4 +54,10 @@ public class ServerSideBetweenTestUnitTest {
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
     }
+
+    @Test
+    public void testToString() {
+        ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #1", 40000, 80000).withHostAndMetric("192.168.0.2 CPU").withDescription("d").build();
+        assertThat(test.toString(), is(equalTo("Type: serverSideTest, name: Test #1, lower threshold: 40000, upper threshold: 80000, host and metric: 192.168.0.2 CPU, description: d")));
+    }
 }

@@ -8,6 +8,7 @@ import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -173,5 +174,11 @@ public class ThroughputTestUnitTest {
         tester.addNonEqualObject(instanceD);
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
+    }
+
+    @Test
+    public void testToString() {
+        ThroughputTest test = new ThroughputTest.Builder("Test #1", 10).withTransactionName("t").withDescription("d").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: throughputTest, name: Test #1, threshold: 10.00, transaction: t, description: d, regexp: true")));
     }
 }

@@ -173,4 +173,10 @@ public class RespTimeNthPercentileTestUnitTest {
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
     }
+
+    @Test
+    public void testToString() {
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 100, 95).withTransactionName("t").withDescription("d").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: nthPercRespTimeTest, name: Test #1, threshold: 100, percentile: 95, transaction: t, description: d, regexp: true")));
+    }
 }

@@ -50,6 +50,11 @@ public class PassedTransactionsAbsoluteTest extends ClientSideTest {
         return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
+    @Override
+    public String toString() {
+        return String.format("Type: %s, name: %s, threshold: %d, transaction: %s, description: %s, regexp: %s", TEST_TYPE, name, allowedNumberOfFailedTransactions, transactionName, description, regexp);
+    }
+
     public static class Builder {
         private String testName;
         private long allowedNumberOfFailedTransactions;

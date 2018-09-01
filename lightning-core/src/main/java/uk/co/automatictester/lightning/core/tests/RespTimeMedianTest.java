@@ -6,8 +6,11 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.RespTimeBasedTest;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class RespTimeMedianTest extends RespTimeBasedTest {
 
@@ -47,6 +50,13 @@ public class RespTimeMedianTest extends RespTimeBasedTest {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
+    }
+
+    @Override
+    public String toString() {
+        Locale.setDefault(Locale.ENGLISH);
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        return String.format("Type: %s, name: %s, threshold: %s, transaction: %s, description: %s, regexp: %s", TEST_TYPE, name, formatter.format(maxRespTime), transactionName, description, regexp);
     }
 
     public static class Builder {

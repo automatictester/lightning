@@ -48,6 +48,11 @@ public class RespTimeAvgTest extends RespTimeBasedTest {
         return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
+    @Override
+    public String toString() {
+        return String.format("Type: %s, name: %s, threshold: %d, transaction: %s, description: %s, regexp: %s", TEST_TYPE, name, maxAvgRespTime, transactionName, description, regexp);
+    }
+
     public static class Builder {
         private String testName;
         private long maxAvgRespTime;

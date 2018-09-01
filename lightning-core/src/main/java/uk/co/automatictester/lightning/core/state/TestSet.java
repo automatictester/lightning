@@ -70,4 +70,9 @@ public class TestSet {
                 break;
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("Tests: %d, passed: %d, failed: %d, ignored: %d", getTestCount(), passCount, failCount, ignoreCount);
+    }
 }

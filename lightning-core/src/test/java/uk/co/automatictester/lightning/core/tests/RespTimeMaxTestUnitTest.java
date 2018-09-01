@@ -95,4 +95,10 @@ public class RespTimeMaxTestUnitTest {
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
     }
+
+    @Test
+    public void testToString() {
+        RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 10).withTransactionName("t").withDescription("d").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: maxRespTimeTest, name: Test #1, threshold: 10, transaction: t, description: d, regexp: true")));
+    }
 }

@@ -255,4 +255,10 @@ public class PassedTransactionsRelativeTestUnitTest {
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
     }
+
+    @Test
+    public void testToString() {
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("d").withTransactionName("t").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: passedTransactionsTest, name: Test #1, threshold: 0, transaction: t, description: d, regexp: true")));
+    }
 }

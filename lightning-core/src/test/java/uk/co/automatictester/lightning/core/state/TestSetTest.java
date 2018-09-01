@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class TestSetTest extends ConsoleOutputTest {
@@ -88,6 +89,7 @@ public class TestSetTest extends ConsoleOutputTest {
         assertThat(testSet.getPassCount(), is(2));
         assertThat(testSet.getFailCount(), is(0));
         assertThat(testSet.getErrorCount(), is(0));
+        assertThat(testSet.toString(), is(equalTo("Tests: 2, passed: 2, failed: 0, ignored: 0")));
     }
 
     @Test
@@ -119,5 +121,6 @@ public class TestSetTest extends ConsoleOutputTest {
         assertThat(testSet.getPassCount(), is(1));
         assertThat(testSet.getFailCount(), is(1));
         assertThat(testSet.getErrorCount(), is(1));
+        assertThat(testSet.toString(), is(equalTo("Tests: 3, passed: 1, failed: 1, ignored: 1")));
     }
 }

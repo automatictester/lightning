@@ -133,4 +133,10 @@ public class RespTimeAvgTestUnitTest {
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
     }
+
+    @Test
+    public void testToString() {
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 0).withTransactionName("t").withDescription("d").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: avgRespTimeTest, name: Test #1, threshold: 0, transaction: t, description: d, regexp: true")));
+    }
 }

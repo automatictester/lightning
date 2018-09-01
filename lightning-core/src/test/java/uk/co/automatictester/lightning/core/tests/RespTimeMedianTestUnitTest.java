@@ -164,4 +164,10 @@ public class RespTimeMedianTestUnitTest {
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
     }
+
+    @Test
+    public void testToString() {
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 20).withTransactionName("t").withDescription("d").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: medianRespTimeTest, name: Test #1, threshold: 20.00, transaction: t, description: d, regexp: true")));
+    }
 }

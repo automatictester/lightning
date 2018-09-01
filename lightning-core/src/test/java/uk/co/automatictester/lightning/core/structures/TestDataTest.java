@@ -48,10 +48,12 @@ public class TestDataTest {
         
         assertThat(testData.getClientSideTestData().size(), is(equalTo(3)));
         assertThat(testData.getServerSideTestData().size(), is(equalTo(2)));
+        assertThat(testData.toString(), is(equalTo("JMeter: 3, PerfMon: 2")));
 
         testData.flush();
 
         assertThat(testData.getClientSideTestData().size(), is(equalTo(0)));
         assertThat(testData.getServerSideTestData().size(), is(equalTo(0)));
+        assertThat(testData.toString(), is(equalTo("JMeter: 0, PerfMon: 0")));
     }
 }

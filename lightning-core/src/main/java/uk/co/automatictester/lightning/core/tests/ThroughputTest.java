@@ -6,8 +6,11 @@ import uk.co.automatictester.lightning.core.data.JMeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ThroughputTest extends ClientSideTest {
 
@@ -42,10 +45,6 @@ public class ThroughputTest extends ClientSideTest {
         result = (actualResult < minThroughput) ? TestResult.FAIL : TestResult.PASS;
     }
 
-    double getThroughput() {
-        return actualResult;
-    }
-
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj, FIELDS_TO_EXCLUDE);
@@ -54,6 +53,17 @@ public class ThroughputTest extends ClientSideTest {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
+    }
+
+    @Override
+    public String toString() {
+        Locale.setDefault(Locale.ENGLISH);
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        return String.format("Type: %s, name: %s, threshold: %s, transaction: %s, description: %s, regexp: %s", TEST_TYPE, name, formatter.format(minThroughput), transactionName, description, regexp);
+    }
+
+    double getThroughput() {
+        return actualResult;
     }
 
     public static class Builder {

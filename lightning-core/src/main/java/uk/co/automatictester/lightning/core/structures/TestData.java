@@ -43,4 +43,9 @@ public class TestData {
     public PerfMonEntries getServerSideTestData() {
         return entries;
     }
+
+    @Override
+    public String toString() {
+        return String.format("JMeter: %d, PerfMon: %d", transactions.size(), entries.size());
+    }
 }

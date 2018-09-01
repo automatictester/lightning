@@ -54,4 +54,10 @@ public class ServerSideGreaterThanTestUnitTest {
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
     }
+
+    @Test
+    public void testToString() {
+        ServerSideGreaterThanTest test = new ServerSideGreaterThanTest.Builder("Test #1", 20000).withHostAndMetric("192.168.0.2 CPU").withDescription("d").build();
+        assertThat(test.toString(), is(equalTo("Type: serverSideTest, name: Test #1, threshold: 20000, host and metric: 192.168.0.2 CPU, description: d")));
+    }
 }

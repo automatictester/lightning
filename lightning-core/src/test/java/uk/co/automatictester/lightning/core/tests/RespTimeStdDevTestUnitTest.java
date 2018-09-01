@@ -121,4 +121,10 @@ public class RespTimeStdDevTestUnitTest {
         tester.addNotInstanceof(instanceX);
         assertThat(tester.test(), is(true));
     }
+
+    @Test
+    public void testToString() {
+        RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #1", 10).withTransactionName("t").withDescription("d").withRegexp().build();
+        assertThat(test.toString(), is(equalTo("Type: respTimeStdDevTest, name: Test #1, threshold: 10, transaction: t, description: d, regexp: true")));
+    }
 }

@@ -35,6 +35,11 @@ public class ServerSideLessThanTest extends ServerSideTest {
         return HashCodeBuilder.reflectionHashCode(this, FIELDS_TO_EXCLUDE);
     }
 
+    @Override
+    public String toString() {
+        return String.format("Type: %s, name: %s, threshold: %d, host and metric: %s, description: %s", TEST_TYPE, name, threshold, hostAndMetric, description);
+    }
+
     public static class Builder {
         private String hostAndMetric;
         private long threshold;
