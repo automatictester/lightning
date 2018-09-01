@@ -1,8 +1,6 @@
 package uk.co.automatictester.lightning.core.s3.client;
 
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,30 +11,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-public class S3Client {
+public abstract class S3Client {
 
     private static final Logger log = LoggerFactory.getLogger(S3Client.class);
-    private AmazonS3 client;
+    protected AmazonS3 client;
     private String s3Bucket;
 
-    private S3Client(AmazonS3 client) {
+    protected S3Client(AmazonS3 client) {
         this.client = client;
-    }
-
-    static S3Client createRealInstance(String region) {
-        AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder.standard().withRegion(region);
-        AmazonS3 client = amazonS3ClientBuilder.build();
-        return new S3Client(client);
-    }
-
-    static S3Client createMockedInstance(String region) {
-        AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration("http://localhost:8001", region);
-        AmazonS3 client = AmazonS3ClientBuilder
-                .standard()
-                .withPathStyleAccessEnabled(true)
-                .withEndpointConfiguration(endpointConfiguration)
-                .build();
-        return new S3Client(client);
     }
 
     public S3Client setBucket(String bucket) {

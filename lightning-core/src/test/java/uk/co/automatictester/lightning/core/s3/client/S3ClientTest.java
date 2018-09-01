@@ -23,7 +23,7 @@ public class S3ClientTest {
     private static final String REGION = "eu-west-2";
     private AmazonS3 amazonS3Client;
     private S3Mock s3Mock;
-    private S3Client lightning3Client = S3Client.createMockedInstance(REGION);
+    private S3Client lightning3Client = MockedS3Client.createInstance(REGION);
     private String key;
     private String content;
     private String bucket;
@@ -104,7 +104,7 @@ public class S3ClientTest {
 
     @Test
     public void testGetRealInstance() {
-        S3Client realClient = S3Client.createRealInstance(REGION);
+        S3Client realClient = RealS3Client.createInstance(REGION);
     }
 
     private String getRandomKey() {

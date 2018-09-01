@@ -24,12 +24,12 @@ public class S3ClientFlyweightFactory {
     }
 
     private static S3Client getMockedInstance(String region) {
-        Supplier<S3Client> supplier = () -> S3Client.createMockedInstance(region);
+        Supplier<S3Client> supplier = () -> MockedS3Client.createInstance(region);
         return getInstance(region, supplier);
     }
 
     private static S3Client getRealInstance(String region) {
-        Supplier<S3Client> supplier = () -> S3Client.createRealInstance(region);
+        Supplier<S3Client> supplier = () -> RealS3Client.createInstance(region);
         return getInstance(region, supplier);
     }
 
