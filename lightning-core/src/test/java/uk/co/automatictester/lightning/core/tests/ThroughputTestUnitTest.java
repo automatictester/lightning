@@ -2,13 +2,12 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -29,7 +28,7 @@ public class ThroughputTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_2);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -42,7 +41,7 @@ public class ThroughputTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_3);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -55,7 +54,7 @@ public class ThroughputTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_3);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -68,7 +67,7 @@ public class ThroughputTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
         testData.add(TRANSACTION_1);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
@@ -79,7 +78,7 @@ public class ThroughputTestUnitTest {
         ThroughputTest test = new ThroughputTest.Builder("Test #1", 2).withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(TRANSACTION_0);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -94,7 +93,7 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "213", "true", "1434291244000"});
         testData.add(new String[]{"Login", "222", "true", "1434291245000"});
         testData.add(new String[]{"Login", "333", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -109,7 +108,7 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "650", "true", "1434291244000"});
         testData.add(new String[]{"Login", "700", "true", "1434291245000"});
         testData.add(new String[]{"Login", "400", "true", "1434291243000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -123,7 +122,7 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "111", "true", "1434291240001"});
         testData.add(new String[]{"Login", "157", "true", "1434291240002"});
         testData.add(new String[]{"Login", "243", "true", "1434291240004"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 2).build();
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -138,7 +137,7 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "142", "true", "1434291240002"});
         testData.add(new String[]{"Login", "165", "true", "1434291240003"});
         testData.add(new String[]{"Login", "109", "true", "1434291240004"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -152,7 +151,7 @@ public class ThroughputTestUnitTest {
         testData.add(new String[]{"Login", "100", "true", "1434291240000"});
         testData.add(new String[]{"Login", "124", "true", "1434291245000"});
         testData.add(new String[]{"Login", "250", "true", "1434291246000"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         ThroughputTest test = new ThroughputTest.Builder("throughput", 1).build();
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();

@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.ci;
 
 import uk.co.automatictester.lightning.core.state.TestSet;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.exceptions.JenkinsReportGenerationException;
 
 import java.io.FileOutputStream;
@@ -10,13 +10,13 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-public class JenkinsReporter extends CIReporter {
+public class JenkinsReporter extends CiReporter {
 
     private JenkinsReporter(TestSet testSet) {
         super(testSet);
     }
 
-    private JenkinsReporter(JMeterTransactions jmeterTransactions) {
+    private JenkinsReporter(JmeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
     }
 
@@ -24,7 +24,7 @@ public class JenkinsReporter extends CIReporter {
         return new JenkinsReporter(testSet);
     }
 
-    public static JenkinsReporter fromJmeterTransactions(JMeterTransactions jmeterTransactions) {
+    public static JenkinsReporter fromJmeterTransactions(JmeterTransactions jmeterTransactions) {
         return new JenkinsReporter(jmeterTransactions);
     }
 

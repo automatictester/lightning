@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.structures;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TestDataTest {
         transactions.add(new String[]{"Login", "1200", "true"});
         transactions.add(new String[]{"Login", "1000", "true"});
         transactions.add(new String[]{"Search", "800", "true"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(transactions);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(transactions);
 
         TestData testDataA = TestData.getInstance();
         testDataA.addClientSideTestData(jmeterTransactions);
@@ -35,7 +35,7 @@ public class TestDataTest {
         transactions.add(new String[]{"Login", "1200", "true"});
         transactions.add(new String[]{"Login", "1000", "true"});
         transactions.add(new String[]{"Search", "800", "true"});
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(transactions);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(transactions);
 
         List<String[]> entries = new ArrayList<>();
         entries.add(new String[]{"1455366135623", "9128", "192.168.0.12 CPU"});

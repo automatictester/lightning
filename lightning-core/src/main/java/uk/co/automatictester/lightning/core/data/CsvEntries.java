@@ -22,10 +22,6 @@ public abstract class CsvEntries {
         this.entries.addAll(entries);
     }
 
-    public void add(String[] entry) {
-        entries.add(entry);
-    }
-
     public List<String[]> getEntries() {
         return entries;
     }
@@ -46,12 +42,6 @@ public abstract class CsvEntries {
         }
     }
 
-    void throwExceptionIfEmpty() {
-        if (entries.isEmpty()) {
-            throw new CSVFileNoTransactionsException();
-        }
-    }
-
     void loadFromFile(File perfMonCsvFile) {
         try (FileReader fr = new FileReader(perfMonCsvFile)) {
             CsvParserSettings csvParserSettings = getCsvParserSettings();
@@ -61,6 +51,12 @@ public abstract class CsvEntries {
             entries.addAll(items);
         } catch (IOException e) {
             throw new CSVFileIOException(e);
+        }
+    }
+
+    void throwExceptionIfEmpty() {
+        if (entries.isEmpty()) {
+            throw new CSVFileNoTransactionsException();
         }
     }
 

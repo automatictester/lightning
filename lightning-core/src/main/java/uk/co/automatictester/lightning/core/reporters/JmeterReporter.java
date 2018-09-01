@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.core.reporters;
 
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 
-public class JMeterReporter {
+public class JmeterReporter {
 
-    private JMeterReporter() {
+    private JmeterReporter() {
     }
 
-    public static String getJMeterReport(JMeterTransactions jmeterTransactions) {
+    public static String getJMeterReport(JmeterTransactions jmeterTransactions) {
         int transactionCount = jmeterTransactions.size();
         int failCount = jmeterTransactions.getFailCount();
         return String.format("Transactions executed: %d, failed: %d", transactionCount, failCount);

@@ -1,18 +1,18 @@
 package uk.co.automatictester.lightning.core.ci;
 
 import uk.co.automatictester.lightning.core.state.TestSet;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 
-public abstract class CIReporter {
+public abstract class CiReporter {
 
     protected TestSet testSet;
-    protected JMeterTransactions jmeterTransactions;
+    protected JmeterTransactions jmeterTransactions;
 
-    protected CIReporter(TestSet testSet) {
+    protected CiReporter(TestSet testSet) {
         this.testSet = testSet;
     }
 
-    protected CIReporter(JMeterTransactions jmeterTransactions) {
+    protected CiReporter(JmeterTransactions jmeterTransactions) {
         this.jmeterTransactions = jmeterTransactions;
     }
 

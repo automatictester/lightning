@@ -2,14 +2,14 @@ package uk.co.automatictester.lightning.core.reporters;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JMeterReporterTest {
+public class JmeterReporterTest {
 
     @DataProvider(name = "counts")
     private Object[][] counts() {
@@ -23,11 +23,11 @@ public class JMeterReporterTest {
     public void testPrintJMeterReport(int total, int failures) {
         String expectedOutput = String.format("Transactions executed: %d, failed: %d", total, failures);
 
-        JMeterTransactions transactions = mock(JMeterTransactions.class);
+        JmeterTransactions transactions = mock(JmeterTransactions.class);
         when(transactions.size()).thenReturn(total);
         when(transactions.getFailCount()).thenReturn(failures);
 
-        String output = JMeterReporter.getJMeterReport(transactions);
+        String output = JmeterReporter.getJMeterReport(transactions);
         assertThat(output, containsString(expectedOutput));
     }
 }

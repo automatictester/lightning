@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.facade;
 
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.data.PerfMonEntries;
-import uk.co.automatictester.lightning.core.s3.JUnitS3Reporter;
+import uk.co.automatictester.lightning.core.s3.JunitS3Reporter;
 import uk.co.automatictester.lightning.core.s3.JenkinsS3Reporter;
 import uk.co.automatictester.lightning.core.s3.LightningLambdaConfig;
 import uk.co.automatictester.lightning.core.s3.client.S3Client;
@@ -41,7 +41,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public void loadTestDataFromS3() {
-        jmeterTransactions = JMeterTransactions.fromS3Object(region, bucket, jmeterCsv);
+        jmeterTransactions = JmeterTransactions.fromS3Object(region, bucket, jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
         testData.addClientSideTestData(jmeterTransactions);
@@ -57,7 +57,7 @@ public class LightningCoreS3Facade extends LightningCoreFacade {
     }
 
     public String saveJunitReportToS3() {
-        JUnitS3Reporter junitS3Reporter = new JUnitS3Reporter(region, bucket);
+        JunitS3Reporter junitS3Reporter = new JunitS3Reporter(region, bucket);
         return junitS3Reporter.generateJUnitReportToS3(testSet);
     }
 

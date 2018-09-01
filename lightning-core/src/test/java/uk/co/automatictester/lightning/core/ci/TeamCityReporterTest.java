@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.ci;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
@@ -18,7 +18,7 @@ public class TeamCityReporterTest {
 
     @Test
     public void testPrintTeamCityReportStatistics() {
-        JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
+        JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(1204);
         when(jmeterTransactions.getFailCount()).thenReturn(25);
 
@@ -52,7 +52,7 @@ public class TeamCityReporterTest {
     public void testSetTeamCityBuildStatusTextTest_report_passed() {
         String expectedOutput = String.format("##teamcity[buildStatus text='Transactions executed: 10, failed: 0']");
 
-        JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
+        JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(10);
         when(jmeterTransactions.getFailCount()).thenReturn(0);
 
@@ -64,7 +64,7 @@ public class TeamCityReporterTest {
     public void testSetTeamCityBuildStatusTextTest_report_failed() {
         String expectedOutput = String.format("##teamcity[buildProblem description='Transactions executed: 10, failed: 1']");
 
-        JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
+        JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(10);
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 

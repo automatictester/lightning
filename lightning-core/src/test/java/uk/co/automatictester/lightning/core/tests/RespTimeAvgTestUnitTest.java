@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
@@ -22,7 +22,7 @@ public class RespTimeAvgTestUnitTest {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -37,7 +37,7 @@ public class RespTimeAvgTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -50,7 +50,7 @@ public class RespTimeAvgTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -62,7 +62,7 @@ public class RespTimeAvgTestUnitTest {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 11220).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -75,7 +75,7 @@ public class RespTimeAvgTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -87,7 +87,7 @@ public class RespTimeAvgTestUnitTest {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -116,7 +116,7 @@ public class RespTimeAvgTestUnitTest {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("my name", 800).withDescription("my description").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         String expectedOutput = String.format("Test name:            my name%n" +
                 "Test type:            avgRespTimeTest%n" +

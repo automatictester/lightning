@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 import uk.co.automatictester.lightning.core.utils.Percent;
@@ -25,7 +25,7 @@ public class PassedTransactionsRelativeTest extends ClientSideTest {
     }
 
     @Override
-    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
+    protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
         int failureCount = getFailureCount(jmeterTransactions);
         actualResult = (int) (((float) failureCount / transactionCount) * 100);
     }

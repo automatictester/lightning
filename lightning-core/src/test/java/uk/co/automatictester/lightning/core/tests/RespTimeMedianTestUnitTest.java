@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
@@ -43,7 +43,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -66,7 +66,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -87,7 +87,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -108,7 +108,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -129,7 +129,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -141,7 +141,7 @@ public class RespTimeMedianTestUnitTest {
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 800).withDescription("Verify median").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();

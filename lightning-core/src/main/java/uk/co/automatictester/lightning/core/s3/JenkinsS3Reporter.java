@@ -1,12 +1,12 @@
 package uk.co.automatictester.lightning.core.s3;
 
-import uk.co.automatictester.lightning.core.ci.CIReporter;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.ci.CiReporter;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.s3.client.S3Client;
 import uk.co.automatictester.lightning.core.s3.client.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
-public class JenkinsS3Reporter extends CIReporter {
+public class JenkinsS3Reporter extends CiReporter {
 
     private static S3Client s3Client;
 
@@ -15,7 +15,7 @@ public class JenkinsS3Reporter extends CIReporter {
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
-    private JenkinsS3Reporter(String region, String bucket, JMeterTransactions jmeterTransactions) {
+    private JenkinsS3Reporter(String region, String bucket, JmeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
@@ -24,7 +24,7 @@ public class JenkinsS3Reporter extends CIReporter {
         return new JenkinsS3Reporter(region, bucket, testSet);
     }
 
-    public static JenkinsS3Reporter fromJmeterTransactions(String region, String bucket, JMeterTransactions jmeterTransactions) {
+    public static JenkinsS3Reporter fromJmeterTransactions(String region, String bucket, JmeterTransactions jmeterTransactions) {
         return new JenkinsS3Reporter(region, bucket, jmeterTransactions);
     }
 

@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
 import java.util.List;
 
-import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
+import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_DURATION_INDEX;
 
 public abstract class RespTimeBasedTest extends ClientSideTest {
 
@@ -20,8 +20,8 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
     @Override
     public void execute() {
         try {
-            JMeterTransactions originalJMeterTransactions = TestData.getInstance().getClientSideTestData();
-            JMeterTransactions transactions = filterTransactions(originalJMeterTransactions);
+            JmeterTransactions originalJmeterTransactions = TestData.getInstance().getClientSideTestData();
+            JmeterTransactions transactions = filterTransactions(originalJmeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
             longestTransactions = transactions.getLongestTransactions();
@@ -61,7 +61,7 @@ public abstract class RespTimeBasedTest extends ClientSideTest {
     }
 
     @Override
-    protected void calculateActualResult(JMeterTransactions transactions) {
+    protected void calculateActualResult(JmeterTransactions transactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         transactions.getEntries().stream()
                 .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))

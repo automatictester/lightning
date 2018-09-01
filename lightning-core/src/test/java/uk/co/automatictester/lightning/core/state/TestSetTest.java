@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.state;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.ConsoleOutputTest;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.structures.LightningTests;
 import uk.co.automatictester.lightning.core.structures.TestData;
@@ -31,7 +31,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> clientSideTestData = new ArrayList<>();
         clientSideTestData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         clientSideTestData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(clientSideTestData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(clientSideTestData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
         ServerSideLessThanTest testA = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
@@ -70,7 +70,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
         List<LightningTest> tests = new ArrayList<>();
@@ -101,7 +101,7 @@ public class TestSetTest extends ConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
         List<LightningTest> tests = new ArrayList<>();

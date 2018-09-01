@@ -1,9 +1,9 @@
 package uk.co.automatictester.lightning.core.facade;
 
-import uk.co.automatictester.lightning.core.ci.junit.JUnitReporter;
+import uk.co.automatictester.lightning.core.ci.junit.JunitReporter;
 import uk.co.automatictester.lightning.core.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.core.config.LightningConfig;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
@@ -32,7 +32,7 @@ public class LightningCoreLocalFacade extends LightningCoreFacade {
     }
 
     public void loadTestData() {
-        jmeterTransactions = JMeterTransactions.fromFile(jmeterCsv);
+        jmeterTransactions = JmeterTransactions.fromFile(jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
         testData.addClientSideTestData(jmeterTransactions);
@@ -48,7 +48,7 @@ public class LightningCoreLocalFacade extends LightningCoreFacade {
     }
 
     public void saveJunitReport() {
-        JUnitReporter junitreporter = new JUnitReporter();
+        JunitReporter junitreporter = new JunitReporter();
         junitreporter.generateJUnitReport(testSet);
     }
 

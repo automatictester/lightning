@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.ci;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class JenkinsReporterTest {
 
     @Test
     public void testSetJenkinsBuildName_report() throws IOException {
-        JMeterTransactions jmeterTransactions = mock(JMeterTransactions.class);
+        JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(3);
         when(jmeterTransactions.getFailCount()).thenReturn(1);
 

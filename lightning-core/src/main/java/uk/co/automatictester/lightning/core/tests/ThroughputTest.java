@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 
@@ -33,7 +33,7 @@ public class ThroughputTest extends ClientSideTest {
     }
 
     @Override
-    protected void calculateActualResult(JMeterTransactions transactions) {
+    protected void calculateActualResult(JmeterTransactions transactions) {
         long firstTransactionTimestamp = transactions.getFirstTransactionTimestamp();
         long lastTransactionTimestamp = transactions.getLastTransactionTimestamp();
         double transactionTimespanInMilliseconds = lastTransactionTimestamp - firstTransactionTimestamp;

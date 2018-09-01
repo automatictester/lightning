@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
@@ -42,7 +42,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -65,7 +65,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -86,7 +86,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -107,7 +107,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -128,7 +128,7 @@ public class RespTimeNthPercentileTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
@@ -140,7 +140,7 @@ public class RespTimeNthPercentileTestUnitTest {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 9, -90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_143_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
@@ -151,7 +151,7 @@ public class RespTimeNthPercentileTestUnitTest {
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 9, -90).withDescription("Verify 90th percentile").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(SEARCH_143_SUCCESS);
-        JMeterTransactions jmeterTransactions = JMeterTransactions.fromList(testData);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
         assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));

@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.ci.junit;
 
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.ci.junit.JUnitReporter;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.TestSet;
 import uk.co.automatictester.lightning.core.tests.base.LightningTest;
@@ -12,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JUnitReporterTest {
+public class JunitReporterTest {
 
     @Test
     public void testGetTestsuite() {
@@ -21,7 +20,7 @@ public class JUnitReporterTest {
         when(testSet.getErrorCount()).thenReturn(1);
         when(testSet.getFailCount()).thenReturn(1);
 
-        Element testsuite = new JUnitReporter().getTestsuite(testSet);
+        Element testsuite = new JunitReporter().getTestsuite(testSet);
         assertThat(testsuite.getTagName(), equalTo("testsuite"));
         assertThat(testsuite.getAttribute("tests"), equalTo("3"));
         assertThat(testsuite.getAttribute("errors"), equalTo("1"));
@@ -36,7 +35,7 @@ public class JUnitReporterTest {
         when(test.getResult()).thenReturn(TestResult.PASS);
         when(test.getName()).thenReturn("some name");
 
-        Element testcase = new JUnitReporter().getTestcase(test);
+        Element testcase = new JunitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -51,7 +50,7 @@ public class JUnitReporterTest {
         when(test.getActualResultDescription()).thenReturn("some message");
         when(test.getType()).thenReturn("some type");
 
-        Element testcase = new JUnitReporter().getTestcase(test);
+        Element testcase = new JunitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -69,7 +68,7 @@ public class JUnitReporterTest {
         when(test.getActualResultDescription()).thenReturn("some message");
         when(test.getType()).thenReturn("some type");
 
-        Element testcase = new JUnitReporter().getTestcase(test);
+        Element testcase = new JunitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));

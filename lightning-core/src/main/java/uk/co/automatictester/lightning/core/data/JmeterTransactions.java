@@ -18,14 +18,14 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.min;
-import static uk.co.automatictester.lightning.core.enums.JMeterColumns.*;
+import static uk.co.automatictester.lightning.core.enums.JmeterColumns.*;
 
-public class JMeterTransactions extends CsvEntries {
+public class JmeterTransactions extends CsvEntries {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
-    private static final Logger log = LoggerFactory.getLogger(JMeterTransactions.class);
+    private static final Logger log = LoggerFactory.getLogger(JmeterTransactions.class);
 
-    private JMeterTransactions(File csvFile) {
+    private JmeterTransactions(File csvFile) {
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
@@ -37,7 +37,7 @@ public class JMeterTransactions extends CsvEntries {
         log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
     }
 
-    private JMeterTransactions(String region, String bucket, String key) {
+    private JmeterTransactions(String region, String bucket, String key) {
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
@@ -50,23 +50,23 @@ public class JMeterTransactions extends CsvEntries {
         log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
     }
 
-    private JMeterTransactions(List<String[]> entries) {
+    private JmeterTransactions(List<String[]> entries) {
         super(entries);
     }
 
-    public static JMeterTransactions fromFile(File csvFile) {
-        return new JMeterTransactions(csvFile);
+    public static JmeterTransactions fromFile(File csvFile) {
+        return new JmeterTransactions(csvFile);
     }
 
-    public static JMeterTransactions fromS3Object(String region, String bucket, String key) {
-        return new JMeterTransactions(region, bucket, key);
+    public static JmeterTransactions fromS3Object(String region, String bucket, String key) {
+        return new JmeterTransactions(region, bucket, key);
     }
 
-    public static JMeterTransactions fromList(List<String[]> entries) {
-        return new JMeterTransactions(entries);
+    public static JmeterTransactions fromList(List<String[]> entries) {
+        return new JmeterTransactions(entries);
     }
 
-    public JMeterTransactions getTransactionsWith(String expectedTransactionName) {
+    public JmeterTransactions getTransactionsWith(String expectedTransactionName) {
         List<String[]> transactions = new ArrayList<>();
         entries.forEach(transaction -> {
             String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
@@ -78,10 +78,10 @@ public class JMeterTransactions extends CsvEntries {
         if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(expectedTransactionName);
         }
-        return JMeterTransactions.fromList(transactions);
+        return JmeterTransactions.fromList(transactions);
     }
 
-    public JMeterTransactions getTransactionsMatching(String expectedTransactionName) {
+    public JmeterTransactions getTransactionsMatching(String expectedTransactionName) {
         Pattern pattern = Pattern.compile(expectedTransactionName);
         List<String[]> transactions = new ArrayList<>();
         entries.forEach(transaction -> {
@@ -94,7 +94,7 @@ public class JMeterTransactions extends CsvEntries {
         if (transactions.size() == 0) {
             throw new CSVFileNonexistentLabelException(expectedTransactionName);
         }
-        return JMeterTransactions.fromList(transactions);
+        return JmeterTransactions.fromList(transactions);
     }
 
     public List<Integer> getLongestTransactions() {

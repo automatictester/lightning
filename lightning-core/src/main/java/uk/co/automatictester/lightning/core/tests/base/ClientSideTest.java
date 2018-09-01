@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
 import org.apache.commons.lang3.NotImplementedException;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.structures.TestData;
 
@@ -20,8 +20,8 @@ public abstract class ClientSideTest extends LightningTest {
     @Override
     public void execute() {
         try {
-            JMeterTransactions originalJMeterTransactions = TestData.getInstance().getClientSideTestData();
-            JMeterTransactions transactions = filterTransactions(originalJMeterTransactions);
+            JmeterTransactions originalJmeterTransactions = TestData.getInstance().getClientSideTestData();
+            JmeterTransactions transactions = filterTransactions(originalJmeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
             calculateActualResultDescription();
@@ -52,15 +52,15 @@ public abstract class ClientSideTest extends LightningTest {
                 getResultForReport());
     }
 
-    public JMeterTransactions filterTransactions(JMeterTransactions originalJMeterTransactions) {
+    public JmeterTransactions filterTransactions(JmeterTransactions originalJmeterTransactions) {
         String transactionName = getTransactionName();
         if (transactionName == null) {
-            return originalJMeterTransactions;
+            return originalJmeterTransactions;
         } else {
             if (isRegexp()) {
-                return originalJMeterTransactions.getTransactionsMatching(transactionName);
+                return originalJmeterTransactions.getTransactionsMatching(transactionName);
             } else {
-                return originalJMeterTransactions.getTransactionsWith(transactionName);
+                return originalJmeterTransactions.getTransactionsWith(transactionName);
             }
         }
     }
@@ -77,7 +77,7 @@ public abstract class ClientSideTest extends LightningTest {
         throw new NotImplementedException("Method not implemented for LightningTest which is not RespTimeBasedTest");
     }
 
-    protected int getFailureCount(JMeterTransactions transactions) {
+    protected int getFailureCount(JmeterTransactions transactions) {
         return (int) transactions.getEntries().stream()
                 .filter(t -> "false".equals(t[2]))
                 .count();
@@ -92,7 +92,7 @@ public abstract class ClientSideTest extends LightningTest {
         return transactionCount;
     }
 
-    protected abstract void calculateActualResult(JMeterTransactions jmeterTransactions);
+    protected abstract void calculateActualResult(JmeterTransactions jmeterTransactions);
 
     protected abstract void calculateActualResultDescription();
 

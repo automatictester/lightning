@@ -1,15 +1,15 @@
 package uk.co.automatictester.lightning.core.facade;
 
 import uk.co.automatictester.lightning.core.ci.TeamCityReporter;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
-import uk.co.automatictester.lightning.core.reporters.JMeterReporter;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
+import uk.co.automatictester.lightning.core.reporters.JmeterReporter;
 import uk.co.automatictester.lightning.core.reporters.TestSetReporter;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
 public abstract class LightningCoreFacade {
 
     protected TestSet testSet = new TestSet();
-    protected JMeterTransactions jmeterTransactions;
+    protected JmeterTransactions jmeterTransactions;
     private TeamCityReporter teamCityReporter;
 
     public String executeTests() {
@@ -18,7 +18,7 @@ public abstract class LightningCoreFacade {
     }
 
     public String runReport() {
-        return JMeterReporter.getJMeterReport(jmeterTransactions);
+        return JmeterReporter.getJMeterReport(jmeterTransactions);
     }
 
     public String getTestSetExecutionSummaryReport() {

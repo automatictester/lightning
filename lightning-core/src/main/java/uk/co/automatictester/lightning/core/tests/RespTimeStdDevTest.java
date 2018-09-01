@@ -3,14 +3,14 @@ package uk.co.automatictester.lightning.core.tests;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.ClientSideTest;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static uk.co.automatictester.lightning.core.enums.JMeterColumns.TRANSACTION_DURATION_INDEX;
+import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_DURATION_INDEX;
 
 public class RespTimeStdDevTest extends ClientSideTest {
 
@@ -32,7 +32,7 @@ public class RespTimeStdDevTest extends ClientSideTest {
     }
 
     @Override
-    protected void calculateActualResult(JMeterTransactions jmeterTransactions) {
+    protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         jmeterTransactions.getEntries().stream()
                 .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))

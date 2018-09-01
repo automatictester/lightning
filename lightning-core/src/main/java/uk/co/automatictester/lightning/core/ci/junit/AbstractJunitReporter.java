@@ -17,11 +17,11 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 
-public abstract class AbstractJUnitReporter {
+public abstract class AbstractJunitReporter {
 
     protected Document doc;
 
-    protected AbstractJUnitReporter() {
+    protected AbstractJunitReporter() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
         try {

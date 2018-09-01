@@ -1,9 +1,9 @@
 package uk.co.automatictester.lightning.core.ci;
 
-import uk.co.automatictester.lightning.core.data.JMeterTransactions;
+import uk.co.automatictester.lightning.core.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.TestSet;
 
-public class TeamCityReporter extends CIReporter {
+public class TeamCityReporter extends CiReporter {
 
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
@@ -13,7 +13,7 @@ public class TeamCityReporter extends CIReporter {
         super(testSet);
     }
 
-    private TeamCityReporter(JMeterTransactions jmeterTransactions) {
+    private TeamCityReporter(JmeterTransactions jmeterTransactions) {
         super(jmeterTransactions);
     }
 
@@ -21,7 +21,7 @@ public class TeamCityReporter extends CIReporter {
         return new TeamCityReporter(testSet);
     }
 
-    public static TeamCityReporter fromJmeterTransactions(JMeterTransactions jmeterTransactions) {
+    public static TeamCityReporter fromJmeterTransactions(JmeterTransactions jmeterTransactions) {
         return new TeamCityReporter(jmeterTransactions);
     }
 
