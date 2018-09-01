@@ -15,32 +15,32 @@ public abstract class S3Client {
 
     private static final Logger log = LoggerFactory.getLogger(S3Client.class);
     protected AmazonS3 client;
-    private String s3Bucket;
+    protected String bucket;
 
     protected S3Client(AmazonS3 client) {
         this.client = client;
     }
 
     public S3Client setBucket(String bucket) {
-        s3Bucket = bucket;
+        this.bucket = bucket;
         return this;
     }
 
     public String getObjectAsString(String key) {
-        log.info("Getting S3 object: {}/{}", s3Bucket, key);
-        return client.getObjectAsString(s3Bucket, key);
+        log.info("Getting S3 object: {}/{}", bucket, key);
+        return client.getObjectAsString(bucket, key);
     }
 
     public String putObject(String key, String content) {
         String s3key = key + "-" + getRandomString();
-        log.info("Putting S3 object: {}/{}", s3Bucket, s3key);
-        client.putObject(s3Bucket, s3key, content);
+        log.info("Putting S3 object: {}/{}", bucket, s3key);
+        client.putObject(bucket, s3key, content);
         return s3key;
     }
 
     public void putObjectFromFile(String file) throws IOException {
-        log.info("Putting S3 object from file: {}/{}", s3Bucket, file);
-        client.putObject(s3Bucket, file, readFileToString(file));
+        log.info("Putting S3 object from file: {}/{}", bucket, file);
+        client.putObject(bucket, file, readFileToString(file));
     }
 
     public boolean createBucketIfDoesNotExist(String bucket) {

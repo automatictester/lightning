@@ -21,4 +21,9 @@ public class MockedS3Client extends S3Client {
                 .build();
         return new MockedS3Client(client);
     }
+
+    @Override
+    public String toString() {
+        return String.format("URL: %s, bucket: %s", S3_MOCK_URL, bucket);
+    }
 }

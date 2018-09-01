@@ -18,8 +18,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.core.Is.is;
 
-public class S3ClientTest {
+public class MockedS3ClientTest {
 
+    private static final String S3_MOCK_URL = "http://localhost:8001";
     private static final String REGION = "eu-west-2";
     private AmazonS3 amazonS3Client;
     private S3Mock s3Mock;
@@ -32,8 +33,7 @@ public class S3ClientTest {
     public void setupEnv() {
         int port = 8001;
 
-        String serviceEndpoint = String.format("http://localhost:%d", port);
-        AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(serviceEndpoint, REGION);
+        AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(S3_MOCK_URL, REGION);
         amazonS3Client = AmazonS3ClientBuilder
                 .standard()
                 .withPathStyleAccessEnabled(true)
@@ -103,8 +103,9 @@ public class S3ClientTest {
     }
 
     @Test
-    public void testGetRealInstance() {
-        S3Client realClient = RealS3Client.createInstance(REGION);
+    public void testToString() {
+        String toString = String.format("URL: %s, bucket: %s", S3_MOCK_URL, bucket);
+        assertThat(lightning3Client.toString(), is(equalTo(toString)));
     }
 
     private String getRandomKey() {

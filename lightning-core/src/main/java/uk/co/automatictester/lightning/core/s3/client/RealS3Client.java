@@ -14,4 +14,9 @@ public class RealS3Client extends S3Client {
         AmazonS3 client = amazonS3ClientBuilder.build();
         return new RealS3Client(client);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Region: %s, bucket: %s", client.getRegionName(), bucket);
+    }
 }
