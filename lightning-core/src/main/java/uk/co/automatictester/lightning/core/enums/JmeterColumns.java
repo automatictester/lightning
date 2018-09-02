@@ -1,18 +1,18 @@
 package uk.co.automatictester.lightning.core.enums;
 
 public enum JmeterColumns {
-    TRANSACTION_LABEL_INDEX(0),
-    TRANSACTION_DURATION_INDEX(1),
-    TRANSACTION_RESULT_INDEX(2),
+    TRANSACTION_LABEL(0),
+    TRANSACTION_DURATION(1),
+    TRANSACTION_RESULT(2),
     TRANSACTION_TIMESTAMP(3);
 
-    private int value;
+    private int column;
 
-    JmeterColumns(int value) {
-        this.value = value;
+    JmeterColumns(int column) {
+        this.column = column;
     }
 
-    public int getValue() {
-        return value;
+    public int getColumn() {
+        return column;
     }
 }

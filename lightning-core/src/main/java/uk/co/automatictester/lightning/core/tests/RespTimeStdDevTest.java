@@ -10,7 +10,7 @@ import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import java.util.Arrays;
 import java.util.List;
 
-import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_DURATION_INDEX;
+import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_DURATION;
 
 public class RespTimeStdDevTest extends AbstractClientSideTest {
 
@@ -35,7 +35,7 @@ public class RespTimeStdDevTest extends AbstractClientSideTest {
     protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         jmeterTransactions.getEntries().stream()
-                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION_INDEX.getValue()]))
+                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION.getColumn()]))
                 .forEach(ds::addValue);
         actualResult = (int) ds.getStandardDeviation();
     }

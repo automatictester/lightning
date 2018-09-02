@@ -70,7 +70,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
     public JmeterTransactions getTransactionsWith(String expectedTransactionName) {
         List<String[]> transactions = new ArrayList<>();
         entries.forEach(transaction -> {
-            String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
+            String transactionName = transaction[TRANSACTION_LABEL.getColumn()];
             boolean isInScope = transactionName.equals(expectedTransactionName);
             if (isInScope) {
                 transactions.add(transaction);
@@ -86,7 +86,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
         Pattern pattern = Pattern.compile(expectedTransactionName);
         List<String[]> transactions = new ArrayList<>();
         entries.forEach(transaction -> {
-            String transactionName = transaction[TRANSACTION_LABEL_INDEX.getValue()];
+            String transactionName = transaction[TRANSACTION_LABEL.getColumn()];
             boolean isInScope = pattern.matcher(transactionName).matches();
             if (isInScope) {
                 transactions.add(transaction);
@@ -105,7 +105,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
 
     public int getFailCount() {
         return (int) entries.stream()
-                .filter(t -> "false".equals(t[TRANSACTION_RESULT_INDEX.getValue()]))
+                .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
                 .count();
     }
 
@@ -138,7 +138,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
     private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> biPredicate) {
         long edgeTimestamp = 0;
         for (String[] transaction : entries) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getValue()]);
+            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getColumn()]);
             boolean isEdgeTimestamp = biPredicate.test(edgeTimestamp, currentTransactionTimestamp);
             if (isEdgeTimestamp) {
                 edgeTimestamp = currentTransactionTimestamp;
@@ -149,7 +149,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
 
     private List<Integer> getTransactionDurationsDesc() {
         return entries.stream()
-                .map(e -> Integer.parseInt(e[TRANSACTION_DURATION_INDEX.getValue()]))
+                .map(e -> Integer.parseInt(e[TRANSACTION_DURATION.getColumn()]))
                 .sorted((i1, i2) -> i2 - i1)
                 .collect(Collectors.toList());
     }

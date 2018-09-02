@@ -44,7 +44,7 @@ public class PerfMonEntries extends AbstractCsvEntries {
 
     public PerfMonEntries getEntriesWith(String hostAndMetric) {
         List<String[]> list = entries.stream()
-                .filter(e -> e[HOST_AND_METRIC_INDEX.getValue()].equals(hostAndMetric))
+                .filter(e -> e[HOST_AND_METRIC.getColumn()].equals(hostAndMetric))
                 .collect(Collectors.toList());
         PerfMonEntries filteredDataEntries = PerfMonEntries.fromList(list);
         if (filteredDataEntries.size() == 0) {
@@ -58,7 +58,7 @@ public class PerfMonEntries extends AbstractCsvEntries {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(false);
-        parserSettings.selectIndexes(TIMESTAMP_INDEX.getValue(), VALUE_INDEX.getValue(), HOST_AND_METRIC_INDEX.getValue());
+        parserSettings.selectIndexes(TIMESTAMP.getColumn(), VALUE.getColumn(), HOST_AND_METRIC.getColumn());
         RowListProcessor rowProcessor = new RowListProcessor();
         ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
         parserSettings.setProcessor(concurrentRowProcessor);

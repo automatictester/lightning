@@ -57,7 +57,7 @@ public abstract class AbstractTest {
     }
 
     String getResultForReport() {
-        return result.getValue();
+        return result.toString();
     }
 
     public abstract String getTestExecutionReport();

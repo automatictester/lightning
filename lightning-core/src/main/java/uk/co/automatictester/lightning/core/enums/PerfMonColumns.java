@@ -1,17 +1,17 @@
 package uk.co.automatictester.lightning.core.enums;
 
 public enum PerfMonColumns {
-    TIMESTAMP_INDEX(0),
-    VALUE_INDEX(1),
-    HOST_AND_METRIC_INDEX(2);
+    TIMESTAMP(0),
+    VALUE(1),
+    HOST_AND_METRIC(2);
 
-    private int value;
+    private int column;
 
-    PerfMonColumns(int value) {
-        this.value = value;
+    PerfMonColumns(int column) {
+        this.column = column;
     }
 
-    public int getValue() {
-        return value;
+    public int getColumn() {
+        return column;
     }
 }

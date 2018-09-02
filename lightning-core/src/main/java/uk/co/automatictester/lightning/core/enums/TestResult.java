@@ -1,17 +1,15 @@
 package uk.co.automatictester.lightning.core.enums;
 
+import org.apache.commons.lang3.StringUtils;
+
 public enum TestResult {
-    PASS("Pass"),
-    FAIL("FAIL"),
-    ERROR("ERROR");
-
-    private String value;
-
-    TestResult(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
+    PASS {
+        @Override
+        public String toString() {
+            String lowerCaseName = this.name().toLowerCase();
+            return StringUtils.capitalize(lowerCaseName);
+        }
+    },
+    FAIL,
+    ERROR
 }

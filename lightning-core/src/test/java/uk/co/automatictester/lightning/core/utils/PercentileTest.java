@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.is;
 public class PercentileTest {
 
     @DataProvider(name = "positiveTestData")
-    private Integer[][] positiveTestData() {
+    private Object[][] positiveTestData() {
         return new Integer[][]{
                 {1},
                 {100}
@@ -17,7 +17,7 @@ public class PercentileTest {
     }
 
     @DataProvider(name = "negativeTestData")
-    private Integer[][] negativeTestData() {
+    private Object[][] negativeTestData() {
         return new Integer[][]{
                 {-1},
                 {0},
