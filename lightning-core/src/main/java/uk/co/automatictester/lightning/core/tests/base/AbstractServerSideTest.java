@@ -71,7 +71,7 @@ public abstract class AbstractServerSideTest extends AbstractTest {
 
     private void calculateActualResult(PerfMonEntries entries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        entries.getEntries().stream()
+        entries.stream()
                 .map(e -> Double.parseDouble(e[VALUE.getColumn()]))
                 .forEach(ds::addValue);
         actualResult = (int) ds.getMean();

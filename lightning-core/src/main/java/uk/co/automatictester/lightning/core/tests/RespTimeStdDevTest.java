@@ -34,7 +34,7 @@ public class RespTimeStdDevTest extends AbstractClientSideTest {
     @Override
     protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        jmeterTransactions.getEntries().stream()
+        jmeterTransactions.stream()
                 .map(t -> Double.parseDouble(t[TRANSACTION_DURATION.getColumn()]))
                 .forEach(ds::addValue);
         actualResult = (int) ds.getStandardDeviation();

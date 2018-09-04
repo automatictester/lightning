@@ -9,6 +9,7 @@ import uk.co.automatictester.lightning.core.s3client.base.S3Client;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public abstract class AbstractCsvEntries {
 
@@ -24,6 +25,10 @@ public abstract class AbstractCsvEntries {
 
     public List<String[]> getEntries() {
         return entries;
+    }
+
+    public Stream<String[]> stream() {
+        return entries.stream();
     }
 
     public int size() {

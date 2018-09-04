@@ -9,8 +9,8 @@ import uk.co.automatictester.lightning.core.state.data.base.AbstractCsvEntries;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.*;
 
 public class PerfMonEntries extends AbstractCsvEntries {
@@ -45,7 +45,7 @@ public class PerfMonEntries extends AbstractCsvEntries {
     public PerfMonEntries getEntriesWith(String hostAndMetric) {
         List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC.getColumn()].equals(hostAndMetric))
-                .collect(Collectors.toList());
+                .collect(toList());
         PerfMonEntries filteredDataEntries = PerfMonEntries.fromList(list);
         if (filteredDataEntries.size() == 0) {
             throw new CSVFileNonexistentHostAndMetricException(hostAndMetric);

@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.lang.Math.min;
+import static java.util.Comparator.reverseOrder;
+import static java.util.stream.Collectors.toList;
 import static uk.co.automatictester.lightning.core.enums.JmeterColumns.*;
 
 public class JmeterTransactions extends AbstractCsvEntries {
@@ -99,8 +100,12 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     public List<Integer> getLongestTransactions() {
-        List<Integer> transactionDurations = getTransactionDurationsDesc();
-        return getLongestTransactionDurations(transactionDurations);
+        int numberOfLongestTransactions = min(entries.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
+        return entries.stream()
+                .map(e -> Integer.parseInt(e[TRANSACTION_DURATION.getColumn()]))
+                .sorted(reverseOrder())
+                .limit(numberOfLongestTransactions)
+                .collect(toList());
     }
 
     public int getFailCount() {
@@ -145,19 +150,5 @@ public class JmeterTransactions extends AbstractCsvEntries {
             }
         }
         return edgeTimestamp;
-    }
-
-    private List<Integer> getTransactionDurationsDesc() {
-        return entries.stream()
-                .map(e -> Integer.parseInt(e[TRANSACTION_DURATION.getColumn()]))
-                .sorted((i1, i2) -> i2 - i1)
-                .collect(Collectors.toList());
-    }
-
-    private List<Integer> getLongestTransactionDurations(List<Integer> transactionDurations) {
-        int transactionDurationsCount = min(transactionDurations.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
-        return transactionDurations.stream()
-                .limit(transactionDurationsCount)
-                .collect(Collectors.toList());
     }
 }
