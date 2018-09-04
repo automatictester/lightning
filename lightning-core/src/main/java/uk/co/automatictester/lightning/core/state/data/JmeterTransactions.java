@@ -14,7 +14,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiPredicate;
 import java.util.regex.Pattern;
 
 import static java.lang.Math.min;
@@ -115,13 +114,20 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     public long getFirstTransactionTimestamp() {
-        BiPredicate<Long, Long> isBefore = (edgeTimestamp, currentTimestamp) -> edgeTimestamp == 0 || currentTimestamp < edgeTimestamp;
-        return getEdgeTransactionTimestamp(isBefore);
+        return entries.stream()
+                .mapToLong(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
+                .sorted()
+                .limit(1)
+                .sum();
     }
 
     public long getLastTransactionTimestamp() {
-        BiPredicate<Long, Long> isAfter = (edgeTimestamp, currentTimestamp) -> edgeTimestamp == 0 || currentTimestamp > edgeTimestamp;
-        return getEdgeTransactionTimestamp(isAfter);
+        return entries.stream()
+                .map(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
+                .sorted(reverseOrder())
+                .limit(1)
+                .mapToLong(e -> e)
+                .sum();
     }
 
     public String getJmeterReport() {
@@ -138,17 +144,5 @@ public class JmeterTransactions extends AbstractCsvEntries {
         ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
         parserSettings.setProcessor(concurrentRowProcessor);
         return parserSettings;
-    }
-
-    private long getEdgeTransactionTimestamp(BiPredicate<Long, Long> biPredicate) {
-        long edgeTimestamp = 0;
-        for (String[] transaction : entries) {
-            long currentTransactionTimestamp = Long.parseLong(transaction[TRANSACTION_TIMESTAMP.getColumn()]);
-            boolean isEdgeTimestamp = biPredicate.test(edgeTimestamp, currentTransactionTimestamp);
-            if (isEdgeTimestamp) {
-                edgeTimestamp = currentTransactionTimestamp;
-            }
-        }
-        return edgeTimestamp;
     }
 }
