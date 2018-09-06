@@ -12,12 +12,13 @@ import uk.co.automatictester.lightning.core.state.data.base.AbstractCsvEntries;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import static java.lang.Math.min;
 import static java.util.Comparator.reverseOrder;
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static uk.co.automatictester.lightning.core.enums.JmeterColumns.*;
 
@@ -68,33 +69,20 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     public JmeterTransactions getTransactionsWith(String expectedTransactionName) {
-        List<String[]> transactions = new ArrayList<>();
-        entries.forEach(transaction -> {
-            String transactionName = transaction[TRANSACTION_LABEL.getColumn()];
-            boolean isInScope = transactionName.equals(expectedTransactionName);
-            if (isInScope) {
-                transactions.add(transaction);
-            }
-        });
-        if (transactions.size() == 0) {
-            throw new CSVFileNonexistentLabelException(expectedTransactionName);
-        }
-        return JmeterTransactions.fromList(transactions);
+        Predicate<String[]> isTransactionNameEqualToExpected = t -> t[TRANSACTION_LABEL.getColumn()].equals(expectedTransactionName);
+        return getTransactions(isTransactionNameEqualToExpected, expectedTransactionName);
     }
 
     public JmeterTransactions getTransactionsMatching(String expectedTransactionName) {
         Pattern pattern = Pattern.compile(expectedTransactionName);
-        List<String[]> transactions = new ArrayList<>();
-        entries.forEach(transaction -> {
-            String transactionName = transaction[TRANSACTION_LABEL.getColumn()];
-            boolean isInScope = pattern.matcher(transactionName).matches();
-            if (isInScope) {
-                transactions.add(transaction);
-            }
-        });
-        if (transactions.size() == 0) {
-            throw new CSVFileNonexistentLabelException(expectedTransactionName);
-        }
+        Predicate<String[]> isTransactionNameMatchingExpected = t -> pattern.matcher(t[TRANSACTION_LABEL.getColumn()]).matches();
+        return getTransactions(isTransactionNameMatchingExpected, expectedTransactionName);
+    }
+
+    private JmeterTransactions getTransactions(Predicate<String[]> predicate, String expectedTransactionName) {
+        List<String[]> transactions = entries.stream()
+                .filter(predicate)
+                .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, expectedTransactionName)));
         return JmeterTransactions.fromList(transactions);
     }
 
@@ -146,5 +134,12 @@ public class JmeterTransactions extends AbstractCsvEntries {
         ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
         parserSettings.setProcessor(concurrentRowProcessor);
         return parserSettings;
+    }
+
+    private List<String[]> returnListOrThrowExceptionIfEmpty(List<String[]> list, String expectedTransactionName) {
+        if (list.size() == 0) {
+            throw new CSVFileNonexistentLabelException(expectedTransactionName);
+        }
+        return list;
     }
 }
