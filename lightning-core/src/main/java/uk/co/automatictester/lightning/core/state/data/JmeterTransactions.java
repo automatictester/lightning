@@ -118,7 +118,8 @@ public class JmeterTransactions extends AbstractCsvEntries {
                 .mapToLong(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
                 .sorted()
                 .limit(1)
-                .sum();
+                .findFirst()
+                .getAsLong();
     }
 
     public long getLastTransactionTimestamp() {
@@ -127,7 +128,8 @@ public class JmeterTransactions extends AbstractCsvEntries {
                 .sorted(reverseOrder())
                 .limit(1)
                 .mapToLong(e -> e)
-                .sum();
+                .findFirst()
+                .getAsLong();
     }
 
     public String getJmeterReport() {
