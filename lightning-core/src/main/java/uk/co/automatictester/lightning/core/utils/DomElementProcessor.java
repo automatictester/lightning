@@ -20,7 +20,7 @@ public class DomElementProcessor {
     public static ServerSideTestType getSubType(Element element) {
         NodeList list = element.getElementsByTagName("subType");
         Node descriptionElement = list.item(0);
-        String subType = (descriptionElement == null) ? "" : descriptionElement.getTextContent();
+        String subType = getTextContentOrEmptyString(descriptionElement);
         ServerSideTestType testSubType;
         if (subType.equalsIgnoreCase(ServerSideTestType.LESS_THAN.name())) {
             testSubType = ServerSideTestType.LESS_THAN;
@@ -62,7 +62,7 @@ public class DomElementProcessor {
     public static String getTestDescription(Element element) {
         NodeList list = element.getElementsByTagName("description");
         Node descriptionElement = list.item(0);
-        return (descriptionElement == null) ? "" : descriptionElement.getTextContent();
+        return getTextContentOrEmptyString(descriptionElement);
     }
 
     public static int getIntegerValueFromElement(Element element, String subElement) {
@@ -101,6 +101,10 @@ public class DomElementProcessor {
     public static int getPercentAsInt(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
         return Percent.from(elementValue).getValue();
+    }
+
+    private static String getTextContentOrEmptyString(Node node) {
+        return (node == null) ? "" : node.getTextContent();
     }
 
     private static String getSubElementTextContent(Element element, String tagName) {
