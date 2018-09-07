@@ -16,9 +16,9 @@ public abstract class AbstractCiReporter {
         this.jmeterTransactions = jmeterTransactions;
     }
 
-    protected String getReportSummary() {
+    protected String reportSummary() {
         int executed = jmeterTransactions.size();
-        int failed = jmeterTransactions.getFailCount();
+        int failed = jmeterTransactions.failCount();
         return String.format("Transactions executed: %s, failed: %s", executed, failed);
     }
 }

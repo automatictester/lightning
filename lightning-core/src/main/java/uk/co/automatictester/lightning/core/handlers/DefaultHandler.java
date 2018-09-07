@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 public class DefaultHandler extends ElementHandler {
 
     @Override
-    protected String getExpectedElementName() {
+    protected String expectedElementName() {
         return "";
     }
 

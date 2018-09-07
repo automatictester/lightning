@@ -20,11 +20,11 @@ public abstract class AbstractRespTimeTest extends AbstractClientSideTest {
     @Override
     public void execute() {
         try {
-            JmeterTransactions originalJmeterTransactions = TestData.getInstance().getClientSideTestData();
+            JmeterTransactions originalJmeterTransactions = TestData.getInstance().clientSideTestData();
             JmeterTransactions transactions = filterTransactions(originalJmeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
-            longestTransactions = transactions.getLongestTransactions();
+            longestTransactions = transactions.longestTransactions();
             calculateActualResultDescription();
             calculateTestResult();
         } catch (Exception e) {
@@ -34,7 +34,7 @@ public abstract class AbstractRespTimeTest extends AbstractClientSideTest {
     }
 
     @Override
-    public List<Integer> getLongestTransactions() {
+    public List<Integer> longestTransactions() {
         return longestTransactions;
     }
 
@@ -49,15 +49,15 @@ public abstract class AbstractRespTimeTest extends AbstractClientSideTest {
                         "Transaction count:    %s%n" +
                         "Longest transactions: %s%n" +
                         "Test result:          %s%n",
-                getName(),
-                getType(),
-                getDescriptionForReport(),
-                getTransactionNameForReport(),
-                getExpectedResultDescription(),
-                getActualResultDescription(),
-                getTransactionCount(),
-                getLongestTransactions(),
-                getResultForReport());
+                name(),
+                type(),
+                descriptionForReport(),
+                transactionNameForReport(),
+                expectedResultDescription(),
+                actualResultDescription(),
+                transactionCount(),
+                longestTransactions(),
+                resultForReport());
     }
 
     @Override
@@ -66,8 +66,8 @@ public abstract class AbstractRespTimeTest extends AbstractClientSideTest {
         transactions.stream()
                 .map(t -> Double.parseDouble(t[TRANSACTION_DURATION.getColumn()]))
                 .forEach(ds::addValue);
-        actualResult = getResult(ds);
+        actualResult = calculateNumericResult(ds);
     }
 
-    protected abstract int getResult(DescriptiveStatistics ds);
+    protected abstract int calculateNumericResult(DescriptiveStatistics ds);
 }

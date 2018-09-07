@@ -21,12 +21,12 @@ public class PassedTransactionsRelativeTest extends AbstractClientSideTest {
     private PassedTransactionsRelativeTest(String testName, Percent percent) {
         super(TEST_TYPE, testName);
         this.allowedPercentOfFailedTransactions = percent;
-        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, allowedPercentOfFailedTransactions.getValue());
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, allowedPercentOfFailedTransactions.value());
     }
 
     @Override
     protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
-        int failureCount = getFailureCount(jmeterTransactions);
+        int failureCount = failureCount(jmeterTransactions);
         actualResult = (int) (((float) failureCount / transactionCount) * 100);
     }
 
@@ -37,7 +37,7 @@ public class PassedTransactionsRelativeTest extends AbstractClientSideTest {
 
     @Override
     protected void calculateTestResult() {
-        result = (actualResult > (float) allowedPercentOfFailedTransactions.getValue()) ? TestResult.FAIL : TestResult.PASS;
+        result = (actualResult > (float) allowedPercentOfFailedTransactions.value()) ? TestResult.FAIL : TestResult.PASS;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PassedTransactionsRelativeTest extends AbstractClientSideTest {
 
     @Override
     public String toString() {
-        return String.format("Type: %s, name: %s, threshold: %d, transaction: %s, description: %s, regexp: %s", TEST_TYPE, name, allowedPercentOfFailedTransactions.getValue(), transactionName, description, regexp);
+        return String.format("Type: %s, name: %s, threshold: %d, transaction: %s, description: %s, regexp: %s", TEST_TYPE, name, allowedPercentOfFailedTransactions.value(), transactionName, description, regexp);
     }
 
     public static class Builder {

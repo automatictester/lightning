@@ -16,9 +16,9 @@ public class JunitReporterTest {
     @Test
     public void testGetTestsuite() {
         LightningTestSetResult testSet = mock(LightningTestSetResult.class);
-        when(testSet.getTestCount()).thenReturn(3);
-        when(testSet.getErrorCount()).thenReturn(1);
-        when(testSet.getFailCount()).thenReturn(1);
+        when(testSet.testCount()).thenReturn(3);
+        when(testSet.errorCount()).thenReturn(1);
+        when(testSet.failCount()).thenReturn(1);
 
         Element testsuite = new JunitReporter().getTestsuite(testSet);
         assertThat(testsuite.getTagName(), equalTo("testsuite"));
@@ -32,8 +32,8 @@ public class JunitReporterTest {
     @Test
     public void testGetPassedTestcase() {
         AbstractTest test = mock(AbstractTest.class);
-        when(test.getResult()).thenReturn(TestResult.PASS);
-        when(test.getName()).thenReturn("some name");
+        when(test.result()).thenReturn(TestResult.PASS);
+        when(test.name()).thenReturn("some name");
 
         Element testcase = new JunitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
@@ -44,11 +44,11 @@ public class JunitReporterTest {
     @Test
     public void testGetFailedTestcase() {
         AbstractTest test = mock(AbstractTest.class);
-        when(test.getResult()).thenReturn(TestResult.FAIL);
-        when(test.getName()).thenReturn("some name");
+        when(test.result()).thenReturn(TestResult.FAIL);
+        when(test.name()).thenReturn("some name");
         when(test.getTestExecutionReport()).thenReturn("some content");
-        when(test.getActualResultDescription()).thenReturn("some message");
-        when(test.getType()).thenReturn("some type");
+        when(test.actualResultDescription()).thenReturn("some message");
+        when(test.type()).thenReturn("some type");
 
         Element testcase = new JunitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
@@ -62,11 +62,11 @@ public class JunitReporterTest {
     @Test
     public void testGetErrorTestcase() {
         AbstractTest test = mock(AbstractTest.class);
-        when(test.getResult()).thenReturn(TestResult.ERROR);
-        when(test.getName()).thenReturn("some name");
+        when(test.result()).thenReturn(TestResult.ERROR);
+        when(test.name()).thenReturn("some name");
         when(test.getTestExecutionReport()).thenReturn("some content");
-        when(test.getActualResultDescription()).thenReturn("some message");
-        when(test.getType()).thenReturn("some type");
+        when(test.actualResultDescription()).thenReturn("some message");
+        when(test.type()).thenReturn("some type");
 
         Element testcase = new JunitReporter().getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));

@@ -20,9 +20,9 @@ public class JenkinsReporterTest {
     @Test
     public void testSetJenkinsBuildName_verify() throws IOException {
         LightningTestSetResult testSet = mock(LightningTestSetResult.class);
-        when(testSet.getTestCount()).thenReturn(3);
-        when(testSet.getFailCount()).thenReturn(1);
-        when(testSet.getErrorCount()).thenReturn(1);
+        when(testSet.testCount()).thenReturn(3);
+        when(testSet.failCount()).thenReturn(1);
+        when(testSet.errorCount()).thenReturn(1);
 
         JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
 
@@ -35,7 +35,7 @@ public class JenkinsReporterTest {
     public void testSetJenkinsBuildName_report() throws IOException {
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(3);
-        when(jmeterTransactions.getFailCount()).thenReturn(1);
+        when(jmeterTransactions.failCount()).thenReturn(1);
 
         JenkinsReporter.fromJmeterTransactions(jmeterTransactions).setJenkinsBuildName();
 

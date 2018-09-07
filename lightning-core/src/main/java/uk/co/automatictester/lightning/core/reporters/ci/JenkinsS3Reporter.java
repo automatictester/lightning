@@ -31,16 +31,16 @@ public class JenkinsS3Reporter extends AbstractCiReporter {
     public String storeJenkinsBuildNameInS3() {
         String jenkinsReportContent;
         if (testSet != null) {
-            jenkinsReportContent = getVerifySummary();
+            jenkinsReportContent = verifySummary();
         } else {
-            jenkinsReportContent = getReportSummary();
+            jenkinsReportContent = reportSummary();
         }
         return storeJenkinsReportToS3(jenkinsReportContent);
     }
 
-    private String getVerifySummary() {
-        int executed = testSet.getTestCount();
-        int failed = testSet.getFailCount() + testSet.getErrorCount();
+    private String verifySummary() {
+        int executed = testSet.testCount();
+        int failed = testSet.failCount() + testSet.errorCount();
         return String.format("Tests executed: %s, failed: %s", executed, failed);
     }
 

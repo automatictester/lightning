@@ -25,8 +25,8 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+        assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 0"));
     }
 
     @Test
@@ -39,8 +39,8 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+        assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 0"));
     }
 
     @Test
@@ -53,8 +53,8 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 1"));
     }
 
     @Test
@@ -67,8 +67,8 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 0"));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+        assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 0"));
     }
 
     @Test
@@ -80,8 +80,8 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 1"));
     }
 
     @Test
@@ -94,8 +94,8 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Number of failed transactions = 1"));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 1"));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
+        assertThat(test.result(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

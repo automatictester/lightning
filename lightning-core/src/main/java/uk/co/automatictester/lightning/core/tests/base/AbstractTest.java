@@ -23,40 +23,40 @@ public abstract class AbstractTest {
         this.actualResult = 0;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public String getType() {
+    public String type() {
         return type;
     }
 
-    public String getDescription() {
+    public String description() {
         return description;
     }
 
-    public String getExpectedResultDescription() {
+    public String expectedResultDescription() {
         return expectedResultDescription;
     }
 
-    public String getActualResultDescription() {
+    public String actualResultDescription() {
         return actualResultDescription;
     }
 
-    public TestResult getResult() {
+    public TestResult result() {
         return result;
     }
 
-    public int getActualResult() {
+    public int actualResult() {
         return actualResult;
     }
 
-    String getDescriptionForReport() {
-        String message = String.format("Test description:     %s%n", getDescription());
-        return isBlank(getDescription()) ? "" : message;
+    String descriptionForReport() {
+        String message = String.format("Test description:     %s%n", description());
+        return isBlank(description()) ? "" : message;
     }
 
-    String getResultForReport() {
+    String resultForReport() {
         return result.toString();
     }
 

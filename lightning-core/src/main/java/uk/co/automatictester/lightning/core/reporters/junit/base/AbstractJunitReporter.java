@@ -43,7 +43,7 @@ public abstract class AbstractJunitReporter {
         });
     }
 
-    protected Transformer getTransformer() {
+    protected Transformer transformer() {
         Transformer transformer;
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -59,9 +59,9 @@ public abstract class AbstractJunitReporter {
 
     public Element getTestsuite(LightningTestSetResult testSet) {
         Element testsuite = doc.createElement("testsuite");
-        String testCount = String.valueOf(testSet.getTestCount());
-        String failCount = String.valueOf(testSet.getFailCount());
-        String errorCount = String.valueOf(testSet.getErrorCount());
+        String testCount = String.valueOf(testSet.testCount());
+        String failCount = String.valueOf(testSet.failCount());
+        String errorCount = String.valueOf(testSet.errorCount());
 
         testsuite.setAttribute("tests", testCount);
         testsuite.setAttribute("failures", failCount);
@@ -75,10 +75,10 @@ public abstract class AbstractJunitReporter {
     public Element getTestcase(AbstractTest test) {
         Element testcase = doc.createElement("testcase");
         testcase.setAttribute("time", "0");
-        String testName = test.getName();
+        String testName = test.name();
         testcase.setAttribute("name", testName);
 
-        TestResult testResult = test.getResult();
+        TestResult testResult = test.result();
         Element resultElement = null;
         switch (testResult) {
             case FAIL:
@@ -97,8 +97,8 @@ public abstract class AbstractJunitReporter {
     }
 
     private static void setCommonFailureData(Element element, AbstractTest test) {
-        String testType = test.getType();
-        String actualResultDescription = test.getActualResultDescription();
+        String testType = test.type();
+        String actualResultDescription = test.actualResultDescription();
         String testExecutionReport = test.getTestExecutionReport();
 
         element.setAttribute("type", testType);

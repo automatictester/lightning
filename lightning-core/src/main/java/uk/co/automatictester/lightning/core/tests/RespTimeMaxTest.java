@@ -29,7 +29,7 @@ public class RespTimeMaxTest extends AbstractRespTimeTest {
     }
 
     @Override
-    protected int getResult(DescriptiveStatistics ds) {
+    protected int calculateNumericResult(DescriptiveStatistics ds) {
         return (int) ds.getMax();
     }
 

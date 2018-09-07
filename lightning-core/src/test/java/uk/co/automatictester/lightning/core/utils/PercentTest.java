@@ -30,7 +30,7 @@ public class PercentTest {
     @Test(dataProvider = "positiveTestData")
     public void testIsPercentileTrue(int integer) {
         Percent p = Percent.from(integer);
-        assertThat(p.getValue(), is(equalTo((integer))));
+        assertThat(p.value(), is(equalTo((integer))));
         assertThat(p.toString(), is(equalTo((String.valueOf(integer)))));
     }
 

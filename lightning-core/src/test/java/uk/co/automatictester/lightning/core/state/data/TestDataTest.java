@@ -1,9 +1,6 @@
 package uk.co.automatictester.lightning.core.state.data;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
-import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +44,14 @@ public class TestDataTest {
         testData.addClientSideTestData(jmeterTransactions);
         testData.addServerSideTestData(perfMonEntries);
         
-        assertThat(testData.getClientSideTestData().size(), is(equalTo(3)));
-        assertThat(testData.getServerSideTestData().size(), is(equalTo(2)));
+        assertThat(testData.clientSideTestData().size(), is(equalTo(3)));
+        assertThat(testData.serverSideTestData().size(), is(equalTo(2)));
         assertThat(testData.toString(), is(equalTo("JMeter: 3, PerfMon: 2")));
 
         testData.flush();
 
-        assertThat(testData.getClientSideTestData().size(), is(equalTo(0)));
-        assertThat(testData.getServerSideTestData().size(), is(equalTo(0)));
+        assertThat(testData.clientSideTestData().size(), is(equalTo(0)));
+        assertThat(testData.serverSideTestData().size(), is(equalTo(0)));
         assertThat(testData.toString(), is(equalTo("JMeter: 0, PerfMon: 0")));
     }
 }

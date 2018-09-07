@@ -18,26 +18,26 @@ public class TestData {
 
     public void flush() {
         if (transactions != null) {
-            transactions.getEntries().clear();
+            transactions.entries().clear();
         }
         if (entries != null) {
-            entries.getEntries().clear();
+            entries.entries().clear();
         }
     }
 
     public void addClientSideTestData(JmeterTransactions jmeterTransactions) {
-        transactions = JmeterTransactions.fromList(jmeterTransactions.getEntries());
+        transactions = JmeterTransactions.fromList(jmeterTransactions.entries());
     }
 
     public void addServerSideTestData(PerfMonEntries perfMonEntries) {
-        entries = PerfMonEntries.fromList(perfMonEntries.getEntries());
+        entries = PerfMonEntries.fromList(perfMonEntries.entries());
     }
 
-    public JmeterTransactions getClientSideTestData() {
+    public JmeterTransactions clientSideTestData() {
         return transactions;
     }
 
-    public PerfMonEntries getServerSideTestData() {
+    public PerfMonEntries serverSideTestData() {
         return entries;
     }
 

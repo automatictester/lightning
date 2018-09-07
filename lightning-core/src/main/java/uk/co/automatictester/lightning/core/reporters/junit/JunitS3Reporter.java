@@ -26,7 +26,7 @@ public class JunitS3Reporter extends AbstractJunitReporter {
     }
 
     private String saveReportToS3() {
-        Transformer transformer = getTransformer();
+        Transformer transformer = transformer();
         DOMSource source = new DOMSource(doc);
 
         StringWriter writer = new StringWriter();

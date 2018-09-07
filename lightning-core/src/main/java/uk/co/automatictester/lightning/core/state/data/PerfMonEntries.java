@@ -43,7 +43,7 @@ public class PerfMonEntries extends AbstractCsvEntries {
         return new PerfMonEntries(region, bucket, key);
     }
 
-    public PerfMonEntries getEntriesWith(String hostAndMetric) {
+    public PerfMonEntries entriesWith(String hostAndMetric) {
         List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC.getColumn()].equals(hostAndMetric))
                 .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, hostAndMetric)));
@@ -51,7 +51,7 @@ public class PerfMonEntries extends AbstractCsvEntries {
     }
 
     @Override
-    protected CsvParserSettings getCsvParserSettings() {
+    protected CsvParserSettings csvParserSettings() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(false);

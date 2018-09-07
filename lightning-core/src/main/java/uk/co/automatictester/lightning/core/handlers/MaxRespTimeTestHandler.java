@@ -5,14 +5,14 @@ import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeMaxTest;
 
-import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.*;
-import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.getTransactionName;
-import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.hasRegexp;
+import static uk.co.automatictester.lightning.core.utils.DomElements.*;
+import static uk.co.automatictester.lightning.core.utils.DomElements.getTransactionName;
+import static uk.co.automatictester.lightning.core.utils.DomElements.hasRegexp;
 
 public class MaxRespTimeTestHandler extends ElementHandler {
 
     @Override
-    protected String getExpectedElementName() {
+    protected String expectedElementName() {
         return "maxRespTimeTest";
     }
 

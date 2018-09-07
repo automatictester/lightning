@@ -18,7 +18,7 @@ public class JunitReporter extends AbstractJunitReporter {
     }
 
     private void saveReportToDisk() {
-        Transformer transformer = getTransformer();
+        Transformer transformer = transformer();
         DOMSource source = new DOMSource(doc);
 
         File junitReport = new File("junit.xml");

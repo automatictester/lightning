@@ -13,41 +13,41 @@ public abstract class AbstractLightningCoreFacade {
 
     public String executeTests() {
         testSetResult.executeTests();
-        return testSetResult.getTestExecutionReport();
+        return testSetResult.testExecutionReport();
     }
 
     public String runReport() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.getClientSideTestData();
+        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
         return jmeterTransactions.getJmeterReport();
     }
 
-    public String getTestSetExecutionSummaryReport() {
-        return testSetResult.getTestSetExecutionSummaryReport();
+    public String testSetExecutionSummaryReport() {
+        return testSetResult.testSetExecutionSummaryReport();
     }
 
     public boolean hasExecutionFailed() {
-        return testSetResult.getFailCount() + testSetResult.getErrorCount() != 0;
+        return testSetResult.failCount() + testSetResult.errorCount() != 0;
     }
 
     public boolean hasFailedTransactions() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.getClientSideTestData();
-        return jmeterTransactions.getFailCount() != 0;
+        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
+        return jmeterTransactions.failCount() != 0;
     }
 
-    public String getTeamCityVerifyStatistics() {
-        return TeamCityReporter.fromTestSet(testSetResult).getTeamCityVerifyStatistics();
+    public String teamCityVerifyStatistics() {
+        return TeamCityReporter.fromTestSet(testSetResult).teamCityVerifyStatistics();
     }
 
-    public String getTeamCityBuildReportSummary() {
+    public String teamCityBuildReportSummary() {
         setTeamCityReporter();
-        return teamCityReporter.getTeamCityBuildReportSummary();
+        return teamCityReporter.teamCityBuildReportSummary();
     }
 
-    public String getTeamCityReportStatistics() {
+    public String teamCityReportStatistics() {
         setTeamCityReporter();
-        return teamCityReporter.getTeamCityReportStatistics();
+        return teamCityReporter.teamCityReportStatistics();
     }
 
     private void setTeamCityReporter() {

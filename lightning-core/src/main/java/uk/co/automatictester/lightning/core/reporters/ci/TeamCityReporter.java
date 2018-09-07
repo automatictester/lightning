@@ -26,24 +26,24 @@ public class TeamCityReporter extends AbstractCiReporter {
         return new TeamCityReporter(jmeterTransactions);
     }
 
-    public String getTeamCityBuildReportSummary() {
-        String outputTemplate = jmeterTransactions.getFailCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
-        String reportSummary = getReportSummary();
+    public String teamCityBuildReportSummary() {
+        String outputTemplate = jmeterTransactions.failCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
+        String reportSummary = reportSummary();
         return String.format(outputTemplate, reportSummary);
     }
 
-    public String getTeamCityVerifyStatistics() {
+    public String teamCityVerifyStatistics() {
         StringBuilder output = new StringBuilder();
-        testSet.getTests().forEach(test -> {
-            String teamCityConsoleOutputEntry = String.format(TEAMCITY_STATISTICS, test.getName(), test.getActualResult());
+        testSet.tests().forEach(test -> {
+            String teamCityConsoleOutputEntry = String.format(TEAMCITY_STATISTICS, test.name(), test.actualResult());
             output.append(teamCityConsoleOutputEntry);
         });
         return output.toString();
     }
 
-    public String getTeamCityReportStatistics() {
+    public String teamCityReportStatistics() {
         String output = "";
-        String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", jmeterTransactions.getFailCount());
+        String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", jmeterTransactions.failCount());
         output += failedTransactionsStats;
         String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", jmeterTransactions.size());
         output += totalTransactionsStats;

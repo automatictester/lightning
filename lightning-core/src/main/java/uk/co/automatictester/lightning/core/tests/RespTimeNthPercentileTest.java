@@ -34,7 +34,7 @@ public class RespTimeNthPercentileTest extends AbstractRespTimeTest {
     }
 
     @Override
-    protected int getResult(DescriptiveStatistics ds) {
+    protected int calculateNumericResult(DescriptiveStatistics ds) {
         ds.setPercentileImpl(new Percentile().withEstimationType(Percentile.EstimationType.R_3));
         return actualResult = (int) ds.getPercentile((double) percentile);
     }

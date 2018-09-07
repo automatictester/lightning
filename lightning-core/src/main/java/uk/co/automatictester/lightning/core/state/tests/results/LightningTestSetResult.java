@@ -26,50 +26,50 @@ public class LightningTestSetResult {
         testExecutionReport = output.toString();
     }
 
-    public String getTestExecutionReport() {
+    public String testExecutionReport() {
         return testExecutionReport;
     }
 
-    public List<AbstractTest> getTests() {
+    public List<AbstractTest> tests() {
         return LightningTestSet.getInstance().get();
     }
 
-    public int getTestCount() {
+    public int testCount() {
         return passCount + failCount + ignoreCount;
     }
 
-    public int getPassCount() {
+    public int passCount() {
         return passCount;
     }
 
-    public int getFailCount() {
+    public int failCount() {
         return failCount;
     }
 
-    public int getErrorCount() {
+    public int errorCount() {
         return ignoreCount;
     }
 
-    public String getTestSetExecutionSummaryReport() {
+    public String testSetExecutionSummaryReport() {
         return String.format("%n============= EXECUTION SUMMARY =============%n"
                         + "Tests executed:    %s%n"
                         + "Tests passed:      %s%n"
                         + "Tests failed:      %s%n"
                         + "Tests errors:      %s%n"
                         + "Test set status:   %s",
-                getTestCount(),
-                getPassCount(),
-                getFailCount(),
-                getErrorCount(),
-                getTestSetStatus());
+                testCount(),
+                passCount(),
+                failCount(),
+                errorCount(),
+                testSetStatus());
     }
 
-    private String getTestSetStatus() {
-        return hasFailed() ? "FAIL" : "Pass";
+    private String testSetStatus() {
+        return hasFailed() ? TestResult.FAIL.toString() : TestResult.PASS.toString();
     }
 
     private boolean hasFailed() {
-        return getFailCount() != 0 || getErrorCount() != 0;
+        return failCount() != 0 || errorCount() != 0;
     }
 
     private void resetTestCounts() {
@@ -79,7 +79,7 @@ public class LightningTestSetResult {
     }
 
     private void setCounts(AbstractTest test) {
-        TestResult testResult = test.getResult();
+        TestResult testResult = test.result();
         switch (testResult) {
             case PASS:
                 passCount++;
@@ -95,6 +95,6 @@ public class LightningTestSetResult {
 
     @Override
     public String toString() {
-        return String.format("Tests: %d, passed: %d, failed: %d, ignored: %d", getTestCount(), passCount, failCount, ignoreCount);
+        return String.format("Tests: %d, passed: %d, failed: %d, ignored: %d", testCount(), passCount, failCount, ignoreCount);
     }
 }

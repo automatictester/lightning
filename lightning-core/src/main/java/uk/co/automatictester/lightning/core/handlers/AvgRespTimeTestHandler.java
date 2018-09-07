@@ -5,12 +5,12 @@ import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeAvgTest;
 
-import static uk.co.automatictester.lightning.core.utils.DomElementProcessor.*;
+import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class AvgRespTimeTestHandler extends ElementHandler {
 
     @Override
-    protected String getExpectedElementName() {
+    protected String expectedElementName() {
         return "avgRespTimeTest";
     }
 

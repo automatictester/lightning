@@ -23,7 +23,7 @@ public abstract class AbstractCsvEntries {
         this.entries.addAll(entries);
     }
 
-    public List<String[]> getEntries() {
+    public List<String[]> entries() {
         return entries;
     }
 
@@ -38,7 +38,7 @@ public abstract class AbstractCsvEntries {
     protected void loadFromS3Object(String csvObject) {
         String csvObjectContent = s3Client.getObjectAsString(csvObject);
         try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            CsvParserSettings csvParserSettings = getCsvParserSettings();
+            CsvParserSettings csvParserSettings = csvParserSettings();
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(isr);
             entries.addAll(items);
@@ -49,7 +49,7 @@ public abstract class AbstractCsvEntries {
 
     protected void loadFromFile(File perfMonCsvFile) {
         try (FileReader fr = new FileReader(perfMonCsvFile)) {
-            CsvParserSettings csvParserSettings = getCsvParserSettings();
+            CsvParserSettings csvParserSettings = csvParserSettings();
             csvParserSettings.setInputBufferSize(20_000_000);
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(fr);
@@ -65,5 +65,5 @@ public abstract class AbstractCsvEntries {
         }
     }
 
-    protected abstract CsvParserSettings getCsvParserSettings();
+    protected abstract CsvParserSettings csvParserSettings();
 }

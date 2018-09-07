@@ -24,7 +24,7 @@ public class AbstractTestUnitTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         AbstractClientSideTest test = Mockito.mock(AbstractClientSideTest.class, Mockito.CALLS_REAL_METHODS);
-        when(test.getTransactionName()).thenReturn("Search");
+        when(test.transactionName()).thenReturn("Search");
 
         JmeterTransactions filteredTransactions = test.filterTransactions(jmeterTransactions);
         assertThat(filteredTransactions.size(), is(equalTo((1))));
@@ -38,7 +38,7 @@ public class AbstractTestUnitTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         AbstractClientSideTest test = Mockito.mock(AbstractClientSideTest.class, Mockito.CALLS_REAL_METHODS);
-        when(test.getTransactionName()).thenReturn(null);
+        when(test.transactionName()).thenReturn(null);
 
         JmeterTransactions filteredTransactions = test.filterTransactions(jmeterTransactions);
         assertThat(filteredTransactions.size(), is(equalTo((2))));

@@ -20,9 +20,9 @@ public class TeamCityReporterTest {
     public void testPrintTeamCityReportStatistics() {
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(1204);
-        when(jmeterTransactions.getFailCount()).thenReturn(25);
+        when(jmeterTransactions.failCount()).thenReturn(25);
 
-        String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).getTeamCityReportStatistics();
+        String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).teamCityReportStatistics();
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='25']"));
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Total transactions' value='1204']"));
     }
@@ -30,20 +30,20 @@ public class TeamCityReporterTest {
     @Test
     public void testPrintTeamCityVerifyStatistics() {
         final PassedTransactionsAbsoluteTest clientTest = mock(PassedTransactionsAbsoluteTest.class);
-        when(clientTest.getName()).thenReturn("Failed transactions");
-        when(clientTest.getActualResult()).thenReturn(1);
+        when(clientTest.name()).thenReturn("Failed transactions");
+        when(clientTest.actualResult()).thenReturn(1);
 
         final AbstractServerSideTest serverTest = mock(AbstractServerSideTest.class);
-        when(serverTest.getName()).thenReturn("Memory utilization");
-        when(serverTest.getActualResult()).thenReturn(45);
+        when(serverTest.name()).thenReturn("Memory utilization");
+        when(serverTest.actualResult()).thenReturn(45);
 
         LightningTestSetResult testSet = mock(LightningTestSetResult.class);
-        when(testSet.getTests()).thenReturn(new ArrayList<AbstractTest>() {{
+        when(testSet.tests()).thenReturn(new ArrayList<AbstractTest>() {{
             add(clientTest);
             add(serverTest);
         }});
 
-        String output = TeamCityReporter.fromTestSet(testSet).getTeamCityVerifyStatistics();
+        String output = TeamCityReporter.fromTestSet(testSet).teamCityVerifyStatistics();
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));
         assertThat(output, containsString("##teamcity[buildStatisticValue key='Memory utilization' value='45']"));
     }
@@ -54,9 +54,9 @@ public class TeamCityReporterTest {
 
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(10);
-        when(jmeterTransactions.getFailCount()).thenReturn(0);
+        when(jmeterTransactions.failCount()).thenReturn(0);
 
-        String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).getTeamCityBuildReportSummary();
+        String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).teamCityBuildReportSummary();
         assertThat(output, containsString(expectedOutput));
     }
 
@@ -66,9 +66,9 @@ public class TeamCityReporterTest {
 
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.size()).thenReturn(10);
-        when(jmeterTransactions.getFailCount()).thenReturn(1);
+        when(jmeterTransactions.failCount()).thenReturn(1);
 
-        String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).getTeamCityBuildReportSummary();
+        String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).teamCityBuildReportSummary();
         assertThat(output, containsString(expectedOutput));
     }
 }

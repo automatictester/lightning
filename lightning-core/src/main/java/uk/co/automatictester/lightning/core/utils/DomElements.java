@@ -6,11 +6,11 @@ import org.w3c.dom.NodeList;
 import uk.co.automatictester.lightning.core.enums.ServerSideTestType;
 import uk.co.automatictester.lightning.core.exceptions.*;
 
-public class DomElementProcessor {
+public class DomElements {
 
     private static final String EXCEPTION_MESSAGE = "Incorrect %s value for %s: %s";
 
-    private DomElementProcessor() {
+    private DomElements() {
     }
 
     public static String getTestName(Element element) {
@@ -89,7 +89,7 @@ public class DomElementProcessor {
 
     public static int getPercentile(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
-        if (Percentile.isPercentile(elementValue)) {
+        if (Percentiles.isPercentile(elementValue)) {
             return elementValue;
         } else {
             String parentNodeName = element.getNodeName();
@@ -100,7 +100,7 @@ public class DomElementProcessor {
 
     public static int getPercentAsInt(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
-        return Percent.from(elementValue).getValue();
+        return Percent.from(elementValue).value();
     }
 
     private static String getTextContentOrEmptyString(Node node) {

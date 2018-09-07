@@ -14,7 +14,7 @@ public abstract class ElementHandler {
 
     public void processHandler(Element element) {
         String elementName = element.getTagName();
-        String expectedElementName = getExpectedElementName();
+        String expectedElementName = expectedElementName();
         if (isBlank(expectedElementName) || elementName.equals(expectedElementName)) {
             handleHere(element);
         } else {
@@ -22,7 +22,7 @@ public abstract class ElementHandler {
         }
     }
 
-    protected abstract String getExpectedElementName();
+    protected abstract String expectedElementName();
 
     protected abstract void handleHere(Element element);
 }

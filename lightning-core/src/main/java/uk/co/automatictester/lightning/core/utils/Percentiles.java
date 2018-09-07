@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.utils;
 
-public class Percentile {
+public class Percentiles {
 
-    private Percentile() {
+    private Percentiles() {
     }
 
     public static boolean isPercentile(int percentile) {

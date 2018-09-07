@@ -62,7 +62,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         core.loadConfigFromS3();
 
         String testExecutionReport = core.executeTests();
-        String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
+        String testSetExecutionSummaryReport = core.testSetExecutionSummaryReport();
 
         String combinedTestReport = String.format("\n%s%s\n", testExecutionReport, testSetExecutionSummaryReport);
         log.info(combinedTestReport);
@@ -92,7 +92,7 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
 
     private void notifyCIServer() {
         if (mode.equals("verify")) {
-            String teamCityReport = core.getTeamCityVerifyStatistics();
+            String teamCityReport = core.teamCityVerifyStatistics();
             log.info(teamCityReport);
             String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
             response.setTeamCityReport(teamCityReportS3Path);
@@ -101,8 +101,8 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
             response.setJenkinsReport(jenkinsReportS3Path);
 
         } else if (mode.equals("report")) {
-            String teamCityBuildStatusText = core.getTeamCityBuildReportSummary();
-            String teamCityReportStatistics = core.getTeamCityReportStatistics();
+            String teamCityBuildStatusText = core.teamCityBuildReportSummary();
+            String teamCityReportStatistics = core.teamCityReportStatistics();
             String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
             log.info(combinedTeamCityReport);
             String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);

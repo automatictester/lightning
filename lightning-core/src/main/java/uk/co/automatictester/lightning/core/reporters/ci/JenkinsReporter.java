@@ -32,16 +32,16 @@ public class JenkinsReporter extends AbstractCiReporter {
     public void setJenkinsBuildName() {
         String fileContent = null;
         if (testSet != null) {
-            fileContent = getVerifySummary();
+            fileContent = verifySummary();
         } else if (jmeterTransactions != null) {
-            fileContent = getReportSummary();
+            fileContent = reportSummary();
         }
         writeJenkinsBuildNameSetterFile(fileContent);
     }
 
-    private String getVerifySummary() {
-        int executed = testSet.getTestCount();
-        int failed = testSet.getFailCount() + testSet.getErrorCount();
+    private String verifySummary() {
+        int executed = testSet.testCount();
+        int failed = testSet.failCount() + testSet.errorCount();
         return String.format("Tests executed: %s, failed: %s", executed, failed);
     }
 

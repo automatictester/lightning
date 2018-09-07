@@ -21,7 +21,7 @@ public abstract class AbstractServerSideTest extends AbstractTest {
     @Override
     public void execute() {
         try {
-            PerfMonEntries originalDataEntries = TestData.getInstance().getServerSideTestData();
+            PerfMonEntries originalDataEntries = TestData.getInstance().serverSideTestData();
             PerfMonEntries dataEntries = filterDataEntries(originalDataEntries);
             dataEntriesCount = dataEntries.size();
             calculateActualResult(dataEntries);
@@ -43,29 +43,29 @@ public abstract class AbstractServerSideTest extends AbstractTest {
                         "Actual result:        %s%n" +
                         "Entries count:        %s%n" +
                         "Test result:          %s%n",
-                getName(),
-                getType(),
-                getDescriptionForReport(),
-                getHostAndMetric(),
-                getExpectedResultDescription(),
-                getActualResultDescription(),
-                getDataEntriesCount(),
-                getResultForReport());
+                name(),
+                type(),
+                descriptionForReport(),
+                hostAndMetric(),
+                expectedResultDescription(),
+                actualResultDescription(),
+                dataEntriesCount(),
+                resultForReport());
     }
 
     protected void calculateActualResultDescription() {
         actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, actualResult);
     }
 
-    public String getHostAndMetric() {
+    public String hostAndMetric() {
         return hostAndMetric;
     }
 
     private PerfMonEntries filterDataEntries(PerfMonEntries originalPerfMonEntries) {
-        return originalPerfMonEntries.getEntriesWith(getHostAndMetric());
+        return originalPerfMonEntries.entriesWith(hostAndMetric());
     }
 
-    private int getDataEntriesCount() {
+    private int dataEntriesCount() {
         return dataEntriesCount;
     }
 

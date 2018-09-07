@@ -24,7 +24,7 @@ public class ServerSideBetweenTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class ServerSideBetweenTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
 
     @Test

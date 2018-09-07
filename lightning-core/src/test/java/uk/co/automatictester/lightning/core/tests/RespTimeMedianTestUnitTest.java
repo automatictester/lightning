@@ -47,7 +47,7 @@ public class RespTimeMedianTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class RespTimeMedianTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class RespTimeMedianTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class RespTimeMedianTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
 
     @Test
@@ -133,7 +133,7 @@ public class RespTimeMedianTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
 
     @Test
@@ -145,8 +145,8 @@ public class RespTimeMedianTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
-        assertThat(test.getActualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
+        assertThat(test.result(), is(equalTo(TestResult.ERROR)));
+        assertThat(test.actualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));
     }
 
     @Test

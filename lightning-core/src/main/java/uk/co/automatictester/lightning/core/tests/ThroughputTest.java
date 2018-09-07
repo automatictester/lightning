@@ -34,8 +34,8 @@ public class ThroughputTest extends AbstractClientSideTest {
 
     @Override
     protected void calculateActualResult(JmeterTransactions transactions) {
-        long firstTransactionTimestamp = transactions.getFirstTransactionTimestamp();
-        long lastTransactionTimestamp = transactions.getLastTransactionTimestamp();
+        long firstTransactionTimestamp = transactions.firstTransactionTimestamp();
+        long lastTransactionTimestamp = transactions.lastTransactionTimestamp();
         double transactionTimespanInMilliseconds = lastTransactionTimestamp - firstTransactionTimestamp;
         actualResult = transactionCount / (transactionTimespanInMilliseconds / 1000);
     }

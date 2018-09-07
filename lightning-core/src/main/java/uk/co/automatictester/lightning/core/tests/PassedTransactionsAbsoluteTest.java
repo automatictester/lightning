@@ -26,7 +26,7 @@ public class PassedTransactionsAbsoluteTest extends AbstractClientSideTest {
 
     @Override
     protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
-        failureCount = getFailureCount(jmeterTransactions);
+        failureCount = failureCount(jmeterTransactions);
         actualResult = failureCount;
     }
 

@@ -22,7 +22,7 @@ public abstract class AbstractClientSideTest extends AbstractTest {
     @Override
     public void execute() {
         try {
-            JmeterTransactions originalJmeterTransactions = TestData.getInstance().getClientSideTestData();
+            JmeterTransactions originalJmeterTransactions = TestData.getInstance().clientSideTestData();
             JmeterTransactions transactions = filterTransactions(originalJmeterTransactions);
             transactionCount = transactions.size();
             calculateActualResult(transactions);
@@ -44,30 +44,30 @@ public abstract class AbstractClientSideTest extends AbstractTest {
                         "Actual result:        %s%n" +
                         "Transaction count:    %s%n" +
                         "Test result:          %s%n",
-                getName(),
-                getType(),
-                getDescriptionForReport(),
-                getTransactionNameForReport(),
-                getExpectedResultDescription(),
-                getActualResultDescription(),
-                getTransactionCount(),
-                getResultForReport());
+                name(),
+                type(),
+                descriptionForReport(),
+                transactionNameForReport(),
+                expectedResultDescription(),
+                actualResultDescription(),
+                transactionCount(),
+                resultForReport());
     }
 
     public JmeterTransactions filterTransactions(JmeterTransactions originalJmeterTransactions) {
-        String transactionName = getTransactionName();
+        String transactionName = transactionName();
         if (transactionName == null) {
             return originalJmeterTransactions;
         } else {
             if (isRegexp()) {
-                return originalJmeterTransactions.getTransactionsMatching(transactionName);
+                return originalJmeterTransactions.transactionsMatching(transactionName);
             } else {
-                return originalJmeterTransactions.getTransactionsWith(transactionName);
+                return originalJmeterTransactions.transactionsWith(transactionName);
             }
         }
     }
 
-    public String getTransactionName() {
+    public String transactionName() {
         return transactionName;
     }
 
@@ -75,22 +75,22 @@ public abstract class AbstractClientSideTest extends AbstractTest {
         return regexp;
     }
 
-    public List<Integer> getLongestTransactions() {
+    public List<Integer> longestTransactions() {
         throw new NotImplementedException("Method not implemented for AbstractTest which is not AbstractRespTimeTest");
     }
 
-    protected int getFailureCount(JmeterTransactions transactions) {
+    protected int failureCount(JmeterTransactions transactions) {
         return (int) transactions.stream()
                 .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
                 .count();
     }
 
-    String getTransactionNameForReport() {
-        String message = String.format("Transaction name:     %s%n", getTransactionName());
-        return getTransactionName() != null ? message : "";
+    String transactionNameForReport() {
+        String message = String.format("Transaction name:     %s%n", transactionName());
+        return transactionName() != null ? message : "";
     }
 
-    int getTransactionCount() {
+    int transactionCount() {
         return transactionCount;
     }
 

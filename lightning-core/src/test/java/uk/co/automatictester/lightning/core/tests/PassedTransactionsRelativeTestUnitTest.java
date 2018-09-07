@@ -34,8 +34,8 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10"));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+        assertThat(test.actualResultDescription(), containsString("Percent of failed transactions = 10"));
     }
 
     @Test
@@ -48,8 +48,8 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 0"));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+        assertThat(test.actualResultDescription(), containsString("Percent of failed transactions = 0"));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 50"));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.actualResultDescription(), containsString("Percent of failed transactions = 50"));
     }
 
     @Test
@@ -76,8 +76,8 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 0"));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+        assertThat(test.actualResultDescription(), containsString("Percent of failed transactions = 0"));
     }
 
     @Test
@@ -102,8 +102,8 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 10"));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.actualResultDescription(), containsString("Percent of failed transactions = 10"));
     }
 
     @Test
@@ -116,8 +116,8 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
-        assertThat(test.getActualResultDescription(), containsString("Percent of failed transactions = 50"));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.actualResultDescription(), containsString("Percent of failed transactions = 50"));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class PassedTransactionsRelativeTestUnitTest {
 
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
+        assertThat(test.result(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

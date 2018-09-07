@@ -21,7 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
 
@@ -59,10 +58,10 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         testSet.executeTests();
         revertStream();
 
-        assertThat(testSet.getTestCount(), is(4));
-        assertThat(testSet.getPassCount(), is(2));
-        assertThat(testSet.getFailCount(), is(1));
-        assertThat(testSet.getErrorCount(), is(1));
+        assertThat(testSet.testCount(), is(4));
+        assertThat(testSet.passCount(), is(2));
+        assertThat(testSet.failCount(), is(1));
+        assertThat(testSet.errorCount(), is(1));
     }
 
     @Test
@@ -88,10 +87,10 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         testSet.executeTests();
         revertStream();
 
-        assertThat(testSet.getTestCount(), is(2));
-        assertThat(testSet.getPassCount(), is(2));
-        assertThat(testSet.getFailCount(), is(0));
-        assertThat(testSet.getErrorCount(), is(0));
+        assertThat(testSet.testCount(), is(2));
+        assertThat(testSet.passCount(), is(2));
+        assertThat(testSet.failCount(), is(0));
+        assertThat(testSet.errorCount(), is(0));
         assertThat(testSet.toString(), is(equalTo("Tests: 2, passed: 2, failed: 0, ignored: 0")));
     }
 
@@ -120,10 +119,10 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         testSet.executeTests();
         revertStream();
 
-        assertThat(testSet.getTestCount(), is(3));
-        assertThat(testSet.getPassCount(), is(1));
-        assertThat(testSet.getFailCount(), is(1));
-        assertThat(testSet.getErrorCount(), is(1));
+        assertThat(testSet.testCount(), is(3));
+        assertThat(testSet.passCount(), is(1));
+        assertThat(testSet.failCount(), is(1));
+        assertThat(testSet.errorCount(), is(1));
         assertThat(testSet.toString(), is(equalTo("Tests: 3, passed: 1, failed: 1, ignored: 1")));
     }
 
@@ -157,7 +156,7 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
                 "Tests errors:      0%n" +
                 "Test set status:   Pass");
 
-        String output = testSet.getTestSetExecutionSummaryReport();
+        String output = testSet.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
     }
 
@@ -193,7 +192,7 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
                 "Tests errors:      0%n" +
                 "Test set status:   FAIL");
 
-        String output = testSet.getTestSetExecutionSummaryReport();
+        String output = testSet.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
     }
 
@@ -227,7 +226,7 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
                 "Tests errors:      1%n" +
                 "Test set status:   FAIL");
 
-        String output = testSet.getTestSetExecutionSummaryReport();
+        String output = testSet.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
     }
 }

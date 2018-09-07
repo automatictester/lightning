@@ -77,7 +77,7 @@ public class CliTestRunner {
         String testExecutionReport = core.executeTests();
         log(testExecutionReport);
 
-        String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
+        String testSetExecutionSummaryReport = core.testSetExecutionSummaryReport();
         log(testSetExecutionSummaryReport);
 
         long testSetExecEnd = System.currentTimeMillis();
@@ -101,14 +101,14 @@ public class CliTestRunner {
     private static void notifyCIServer() {
         switch (mode) {
             case verify:
-                String teamCityVerifyStatistics = core.getTeamCityVerifyStatistics();
+                String teamCityVerifyStatistics = core.teamCityVerifyStatistics();
                 log(teamCityVerifyStatistics);
                 core.setJenkinsBuildNameForVerify();
                 break;
             case report:
-                String teamCityBuildReportSummary = core.getTeamCityBuildReportSummary();
+                String teamCityBuildReportSummary = core.teamCityBuildReportSummary();
                 log(teamCityBuildReportSummary);
-                String teamCityReportStatistics = core.getTeamCityReportStatistics();
+                String teamCityReportStatistics = core.teamCityReportStatistics();
                 log(teamCityReportStatistics);
                 core.setJenkinsBuildNameForReport();
                 break;

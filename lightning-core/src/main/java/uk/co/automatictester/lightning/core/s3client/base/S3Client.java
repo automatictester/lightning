@@ -32,7 +32,7 @@ public abstract class S3Client {
     }
 
     public String putObject(String key, String content) {
-        String s3key = key + "-" + getRandomString();
+        String s3key = key + "-" + randomString();
         log.info("Putting S3 object: {}/{}", bucket, s3key);
         client.putObject(bucket, s3key, content);
         return s3key;
@@ -51,7 +51,7 @@ public abstract class S3Client {
         return false;
     }
 
-    private static String getRandomString() {
+    private static String randomString() {
         int stringLength = 8;
         return RandomStringUtils.randomAlphanumeric(stringLength).toUpperCase();
     }

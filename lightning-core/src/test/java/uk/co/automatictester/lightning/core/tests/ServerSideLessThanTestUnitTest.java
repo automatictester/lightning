@@ -26,7 +26,7 @@ public class ServerSideLessThanTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ServerSideLessThanTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.FAIL)));
+        assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class ServerSideLessThanTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ServerSideLessThanTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.PASS)));
+        assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ServerSideLessThanTestUnitTest {
         PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
         TestData.getInstance().addServerSideTestData(dataEntries);
         test.execute();
-        assertThat(test.getResult(), is(equalTo(TestResult.ERROR)));
+        assertThat(test.result(), is(equalTo(TestResult.ERROR)));
     }
 
     @Test

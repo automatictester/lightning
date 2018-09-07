@@ -33,7 +33,7 @@ public class RespTimeMedianTest extends AbstractRespTimeTest {
     }
 
     @Override
-    protected int getResult(DescriptiveStatistics ds) {
+    protected int calculateNumericResult(DescriptiveStatistics ds) {
         return (int) ds.getPercentile(50);
     }
 

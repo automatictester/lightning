@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class PercentileTest {
+public class PercentilesTest {
 
     @DataProvider(name = "positiveTestData")
     private Object[][] positiveTestData() {
@@ -27,11 +27,11 @@ public class PercentileTest {
 
     @Test(dataProvider = "positiveTestData")
     public void testIsPercentileTrue(int integer) {
-        assertThat(Percentile.isPercentile(integer), is(true));
+        assertThat(Percentiles.isPercentile(integer), is(true));
     }
 
     @Test(dataProvider = "negativeTestData")
     public void testIsPercentileFalse(int integer) {
-        assertThat(Percentile.isPercentile(integer), is(false));
+        assertThat(Percentiles.isPercentile(integer), is(false));
     }
 }

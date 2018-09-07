@@ -19,8 +19,8 @@ public class JmeterTransactionsTest {
     @Test
     public void verifyReadMethod() {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromFile(CSV_2_TRANSACTIONS);
-        assertThat(jmeterTransactions.getEntries(), hasItem(LOGIN_3514_SUCCESS));
-        assertThat(jmeterTransactions.getEntries(), hasItem(SEARCH_11221_SUCCESS));
+        assertThat(jmeterTransactions.entries(), hasItem(LOGIN_3514_SUCCESS));
+        assertThat(jmeterTransactions.entries(), hasItem(SEARCH_11221_SUCCESS));
     }
 
     @Test(expectedExceptions = CSVFileIOException.class)
@@ -41,7 +41,7 @@ public class JmeterTransactionsTest {
         testData.add(new String[]{"Search", "800", "true"});
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
-        assertThat(jmeterTransactions.getTransactionsWith("Login").size(), is(2));
+        assertThat(jmeterTransactions.transactionsWith("Login").size(), is(2));
     }
 
     @Test(expectedExceptions = CSVFileNonexistentLabelException.class)
@@ -50,7 +50,7 @@ public class JmeterTransactionsTest {
         testData.add(new String[]{"Login", "1200", "true"});
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
-        jmeterTransactions.getTransactionsWith("nonexistent");
+        jmeterTransactions.transactionsWith("nonexistent");
     }
 
     @Test
@@ -63,7 +63,7 @@ public class JmeterTransactionsTest {
         testData.add(new String[]{"LogANY", "1100", "true"});
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
-        assertThat(jmeterTransactions.getTransactionsMatching("Log.{2,3}").size(), is(3));
+        assertThat(jmeterTransactions.transactionsMatching("Log.{2,3}").size(), is(3));
     }
 
     @Test(expectedExceptions = CSVFileNonexistentLabelException.class)
@@ -72,7 +72,7 @@ public class JmeterTransactionsTest {
         testData.add(new String[]{"Login", "1200", "true"});
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
-        jmeterTransactions.getTransactionsMatching("nonexistent");
+        jmeterTransactions.transactionsMatching("nonexistent");
     }
 
     @Test
@@ -85,7 +85,7 @@ public class JmeterTransactionsTest {
         testData.add(new String[]{"Search", "800", "false"});
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
-        assertThat(jmeterTransactions.getFailCount(), is(equalTo(2)));
+        assertThat(jmeterTransactions.failCount(), is(equalTo(2)));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class JmeterTransactionsTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 500, 421, 345));
-        assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
+        assertThat(jmeterTransactions.longestTransactions(), contains(expectedResult.toArray()));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class JmeterTransactionsTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 500, 421, 345));
-        assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
+        assertThat(jmeterTransactions.longestTransactions(), contains(expectedResult.toArray()));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class JmeterTransactionsTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 345));
-        assertThat(jmeterTransactions.getLongestTransactions(), contains(expectedResult.toArray()));
+        assertThat(jmeterTransactions.longestTransactions(), contains(expectedResult.toArray()));
     }
 
     @Test
