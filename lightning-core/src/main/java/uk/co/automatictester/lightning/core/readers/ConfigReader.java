@@ -6,7 +6,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
-import uk.co.automatictester.lightning.core.exceptions.XMLFileNoTestsException;
 import uk.co.automatictester.lightning.core.handlers.*;
 import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 
@@ -71,7 +70,7 @@ public class ConfigReader {
 
     protected static void throwExceptionIfNoTests() {
         if (LightningTestSet.getInstance().size() == 0) {
-            throw new XMLFileNoTestsException("No tests of expected type found in XML file");
+            throw new IllegalStateException("No tests of expected type found in XML file");
         }
     }
 }

@@ -4,7 +4,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.co.automatictester.lightning.core.enums.ServerSideTestType;
-import uk.co.automatictester.lightning.core.exceptions.*;
+import uk.co.automatictester.lightning.core.exceptions.XMLFileMissingElementException;
+import uk.co.automatictester.lightning.core.exceptions.XMLFileMissingElementValueException;
+import uk.co.automatictester.lightning.core.exceptions.XMLFileNoValidSubTypeException;
+import uk.co.automatictester.lightning.core.exceptions.XMLFilePercentileException;
 
 public class DomElements {
 
@@ -72,7 +75,7 @@ public class DomElements {
         } catch (NumberFormatException e) {
             String parentNodeName = element.getNodeName();
             String errorMessage = String.format(EXCEPTION_MESSAGE, subElement, parentNodeName, elementValue);
-            throw new XMLFileNumberFormatException(errorMessage);
+            throw new NumberFormatException(errorMessage);
         }
     }
 
@@ -83,7 +86,7 @@ public class DomElements {
         } catch (NumberFormatException e) {
             String parentNodeName = element.getNodeName();
             String errorMessage = String.format(EXCEPTION_MESSAGE, subElement, parentNodeName, elementValue);
-            throw new XMLFileNumberFormatException(errorMessage);
+            throw new NumberFormatException(errorMessage);
         }
     }
 

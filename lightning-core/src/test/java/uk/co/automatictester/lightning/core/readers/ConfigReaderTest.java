@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.readers;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.*;
-import uk.co.automatictester.lightning.core.readers.ConfigReader;
 import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.*;
 import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
@@ -151,7 +150,7 @@ public class ConfigReaderTest {
         System.setErr(null);
     }
 
-    @Test(expectedExceptions = XMLFileNumberFormatException.class)
+    @Test(expectedExceptions = NumberFormatException.class)
     public void verifyGetTestsMethodThrowsXMLFileNumberFormatException() {
         ConfigReader.readTests(TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION);
     }
@@ -176,12 +175,12 @@ public class ConfigReaderTest {
         ConfigReader.readTests(TEST_SET_XML_FILE_PERCENTILE_EXCEPTION);
     }
 
-    @Test(expectedExceptions = XMLFileNoTestsException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsException() {
         ConfigReader.readTests(TEST_SET_0_0_0);
     }
 
-    @Test(expectedExceptions = XMLFileNoTestsException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsExceptionOnUnmatchedTestType() {
         ConfigReader.readTests(new File("src/test/resources/xml/unknownTestType.xml"));
     }

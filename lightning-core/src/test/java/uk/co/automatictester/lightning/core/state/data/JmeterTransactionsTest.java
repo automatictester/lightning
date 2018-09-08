@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.state.data;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.core.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class JmeterTransactionsTest {
         JmeterTransactions.fromFile(CSV_NONEXISTENT);
     }
 
-    @Test(expectedExceptions = CSVFileNoTransactionsException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void verifyReadMethodNoTransactionsException() {
         JmeterTransactions.fromFile(CSV_0_TRANSACTIONS);
     }

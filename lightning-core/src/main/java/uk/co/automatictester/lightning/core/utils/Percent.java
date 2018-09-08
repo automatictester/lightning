@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.utils;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import uk.co.automatictester.lightning.core.exceptions.PercentException;
 
 public class Percent {
 
@@ -13,7 +12,7 @@ public class Percent {
             this.value = value;
         } else {
             String errorMessage = String.format("Incorrect value: %s. Should be integer in range 0-100", value);
-            throw new PercentException(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 

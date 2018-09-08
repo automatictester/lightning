@@ -1,8 +1,7 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
-import org.apache.commons.lang3.NotImplementedException;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.util.List;
@@ -76,7 +75,7 @@ public abstract class AbstractClientSideTest extends AbstractTest {
     }
 
     public List<Integer> longestTransactions() {
-        throw new NotImplementedException("Method not implemented for AbstractTest which is not AbstractRespTimeTest");
+        throw new UnsupportedOperationException("Method not implemented for AbstractTest which is not AbstractRespTimeTest");
     }
 
     protected int failureCount(JmeterTransactions transactions) {

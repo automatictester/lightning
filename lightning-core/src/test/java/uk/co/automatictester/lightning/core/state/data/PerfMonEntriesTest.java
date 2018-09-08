@@ -3,7 +3,6 @@ package uk.co.automatictester.lightning.core.state.data;
 import org.hamcrest.CoreMatchers;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.core.exceptions.CSVFileNoTransactionsException;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentHostAndMetricException;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
@@ -27,7 +26,7 @@ public class PerfMonEntriesTest {
         PerfMonEntries.fromFile(LegacyTestData.CSV_NONEXISTENT);
     }
 
-    @Test(expectedExceptions = CSVFileNoTransactionsException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void verifyReadMethodNoTransactionsException() {
         PerfMonEntries.fromFile(LegacyTestData.CSV_0_ENTRIES);
     }

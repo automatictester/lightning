@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.utils;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.exceptions.PercentException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +33,7 @@ public class PercentTest {
         assertThat(p.toString(), is(equalTo((String.valueOf(integer)))));
     }
 
-    @Test(dataProvider = "negativeTestData", expectedExceptions = PercentException.class)
+    @Test(dataProvider = "negativeTestData", expectedExceptions = IllegalArgumentException.class)
     public void testIsPercentileFalse(int integer) {
         Percent.from(integer);
     }
