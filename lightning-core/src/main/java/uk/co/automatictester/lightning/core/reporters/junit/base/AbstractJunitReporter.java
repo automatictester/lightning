@@ -33,11 +33,10 @@ public abstract class AbstractJunitReporter {
         doc.setXmlStandalone(true);
     }
 
-    protected void generateJUnitReportContent(LightningTestSetResult testSet) {
+    protected void generateJUnitReportContent(LightningTestSetResult testSet) { // TODO: bad
         Element testsuite = getTestsuite(testSet);
         Node rootElement = doc.appendChild(testsuite);
-        LightningTestSet tests = LightningTestSet.getInstance();
-        tests.get().forEach(test -> {
+        testSet.tests().forEach(test -> {
             Element testcase = getTestcase(test);
             rootElement.appendChild(testcase);
         });

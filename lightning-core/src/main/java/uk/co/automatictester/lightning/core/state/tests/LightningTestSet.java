@@ -6,16 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LightningTestSet {
-
-    private static final LightningTestSet INSTANCE = new LightningTestSet();
     private final List<AbstractTest> tests = new ArrayList<>();
-
-    private LightningTestSet() {
-    }
-
-    public static LightningTestSet getInstance() {
-        return INSTANCE;
-    }
 
     public void flush() {
         tests.clear();

@@ -29,7 +29,8 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void loadConfig() {
-        ConfigReader.readTests(lightningXml);
+        ConfigReader configReader = new ConfigReader();
+        testSet = configReader.readTests(lightningXml);
     }
 
     public void loadTestData() {

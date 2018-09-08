@@ -13,11 +13,13 @@ public class LightningTestSetResult {
     private int ignoreCount = 0;
     private String testExecutionReport = "";
 
-    public void executeTests() {
+    private LightningTestSet testSet; // TODO: only temp
+
+    public void executeTests(LightningTestSet testSet) {
+        this.testSet = testSet;
         resetTestCounts();
         StringBuilder output = new StringBuilder();
-        LightningTestSet tests = LightningTestSet.getInstance();
-        tests.get().forEach(test -> {
+        testSet.get().forEach(test -> {
             test.execute();
             setCounts(test);
             String testExecutionReport = test.getTestExecutionReport();
@@ -30,8 +32,8 @@ public class LightningTestSetResult {
         return testExecutionReport;
     }
 
-    public List<AbstractTest> tests() {
-        return LightningTestSet.getInstance().get();
+    public List<AbstractTest> tests() { // TODO: very bad
+        return testSet.get();
     }
 
     public int testCount() {

@@ -18,19 +18,17 @@ import java.io.InputStream;
 
 public class ConfigS3Reader extends ConfigReader {
 
-    private ConfigS3Reader() {
-    }
-
-    public static void readTests(String region, String bucket, String key) {
+    public LightningTestSet readTests(String region, String bucket, String key) {
         S3Client client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
-        LightningTestSet.getInstance().flush();
+        testSet.flush();
         String xmlObjectContent = client.getObjectAsString(key);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
+        return testSet;
     }
 
-    private static NodeList readXmlFile(String xmlObjectContent) {
+    private NodeList readXmlFile(String xmlObjectContent) {
         try (InputStream is = new ByteArrayInputStream(xmlObjectContent.getBytes())) {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();

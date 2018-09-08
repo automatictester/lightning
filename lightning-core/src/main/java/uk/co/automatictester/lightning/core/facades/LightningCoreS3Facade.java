@@ -38,7 +38,8 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public void loadConfigFromS3() {
-        ConfigS3Reader.readTests(region, bucket, lightningXml);
+        ConfigS3Reader configReader = new ConfigS3Reader();
+        testSet = configReader.readTests(region, bucket, lightningXml);
     }
 
     public void loadTestDataFromS3() {

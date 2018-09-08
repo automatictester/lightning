@@ -3,16 +3,18 @@ package uk.co.automatictester.lightning.core.facades.base;
 import uk.co.automatictester.lightning.core.reporters.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
+import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
 
 public abstract class AbstractLightningCoreFacade {
 
     protected final LightningTestSetResult testSetResult = new LightningTestSetResult();
     protected JmeterTransactions jmeterTransactions;
+    protected LightningTestSet testSet;
     private TeamCityReporter teamCityReporter;
 
     public String executeTests() {
-        testSetResult.executeTests();
+        testSetResult.executeTests(testSet);
         return testSetResult.testExecutionReport();
     }
 

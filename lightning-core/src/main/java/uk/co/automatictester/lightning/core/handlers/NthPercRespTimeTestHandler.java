@@ -11,6 +11,10 @@ import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class NthPercRespTimeTestHandler extends ElementHandler {
 
+    public NthPercRespTimeTestHandler(LightningTestSet testSet) {
+        this.testSet = testSet;
+    }
+
     @Override
     protected Optional<String> expectedElementName() {
         return Optional.of("nthPercRespTimeTest");
@@ -31,6 +35,6 @@ public class NthPercRespTimeTestHandler extends ElementHandler {
             }
         }
         AbstractClientSideTest test = builder.build();
-        LightningTestSet.getInstance().add(test);
+        testSet.add(test);
     }
 }

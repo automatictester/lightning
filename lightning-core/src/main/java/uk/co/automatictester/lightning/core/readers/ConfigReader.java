@@ -17,17 +17,17 @@ import java.io.IOException;
 
 public class ConfigReader {
 
-    protected ConfigReader() {
-    }
+    protected LightningTestSet testSet = new LightningTestSet();
 
-    public static void readTests(File xmlFile) {
-        LightningTestSet.getInstance().flush();
+    public LightningTestSet readTests(File xmlFile) {
+        testSet.flush(); // TODO - do we really need it ?
         NodeList nodes = readXmlFile(xmlFile);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
+        return testSet;
     }
 
-    private static NodeList readXmlFile(File xmlFile) {
+    private NodeList readXmlFile(File xmlFile) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -39,20 +39,20 @@ public class ConfigReader {
         }
     }
 
-    protected static void loadAllTests(NodeList nodes) {
+    protected void loadAllTests(NodeList nodes) {
         for (int i = 0; i < nodes.getLength(); i++) {
             if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodes.item(i);
 
-                AvgRespTimeTestHandler avgRespTimeTestHandler = new AvgRespTimeTestHandler();
-                RespTimeStdDevTestHandler respTimeStdDevTestHandler = new RespTimeStdDevTestHandler();
-                PassedTransactionsTestHandler passedTransactionsTestHandler = new PassedTransactionsTestHandler();
-                NthPercRespTimeTestHandler nthPercRespTimeTestHandler = new NthPercRespTimeTestHandler();
-                ThroughputTestHandler throughputTestHandler = new ThroughputTestHandler();
-                MaxRespTimeTestHandler maxRespTimeTestHandler = new MaxRespTimeTestHandler();
-                MedianRespTimeTestHandler medianRespTimeTestHandler = new MedianRespTimeTestHandler();
-                ServerSideTestHandler serverSideTestHandler = new ServerSideTestHandler();
-                DefaultHandler defaultHandler = new DefaultHandler();
+                AvgRespTimeTestHandler avgRespTimeTestHandler = new AvgRespTimeTestHandler(testSet);
+                RespTimeStdDevTestHandler respTimeStdDevTestHandler = new RespTimeStdDevTestHandler(testSet);
+                PassedTransactionsTestHandler passedTransactionsTestHandler = new PassedTransactionsTestHandler(testSet);
+                NthPercRespTimeTestHandler nthPercRespTimeTestHandler = new NthPercRespTimeTestHandler(testSet);
+                ThroughputTestHandler throughputTestHandler = new ThroughputTestHandler(testSet);
+                MaxRespTimeTestHandler maxRespTimeTestHandler = new MaxRespTimeTestHandler(testSet);
+                MedianRespTimeTestHandler medianRespTimeTestHandler = new MedianRespTimeTestHandler(testSet);
+                ServerSideTestHandler serverSideTestHandler = new ServerSideTestHandler(testSet);
+                DefaultHandler defaultHandler = new DefaultHandler(testSet);
 
                 avgRespTimeTestHandler.setNextHandler(respTimeStdDevTestHandler);
                 respTimeStdDevTestHandler.setNextHandler(passedTransactionsTestHandler);
@@ -68,8 +68,8 @@ public class ConfigReader {
         }
     }
 
-    protected static void throwExceptionIfNoTests() {
-        if (LightningTestSet.getInstance().size() == 0) {
+    protected void throwExceptionIfNoTests() {
+        if (testSet.size() == 0) {
             throw new IllegalStateException("No tests of expected type found in XML file");
         }
     }

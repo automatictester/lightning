@@ -11,6 +11,10 @@ import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class MaxRespTimeTestHandler extends ElementHandler {
 
+    public MaxRespTimeTestHandler(LightningTestSet testSet) {
+        this.testSet = testSet;
+    }
+
     @Override
     protected Optional<String> expectedElementName() {
         return Optional.of("maxRespTimeTest");
@@ -30,6 +34,6 @@ public class MaxRespTimeTestHandler extends ElementHandler {
             }
         }
         AbstractClientSideTest test = builder.build();
-        LightningTestSet.getInstance().add(test);
+        testSet.add(test);
     }
 }

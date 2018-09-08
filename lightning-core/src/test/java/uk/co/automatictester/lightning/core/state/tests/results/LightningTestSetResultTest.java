@@ -50,18 +50,17 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         tests.add(testB);
         tests.add(testC);
 
-        LightningTestSetResult testSet = new LightningTestSetResult();
-        LightningTestSet lightningTestSet = LightningTestSet.getInstance();
-        lightningTestSet.flush();
-        lightningTestSet.addAll(tests);
+        LightningTestSetResult testSetResult = new LightningTestSetResult();
+        LightningTestSet testSet = new LightningTestSet();
+        testSet.addAll(tests);
         configureStream();
-        testSet.executeTests();
+        testSetResult.executeTests(testSet);
         revertStream();
 
-        assertThat(testSet.testCount(), is(4));
-        assertThat(testSet.passCount(), is(2));
-        assertThat(testSet.failCount(), is(1));
-        assertThat(testSet.errorCount(), is(1));
+        assertThat(testSetResult.testCount(), is(4));
+        assertThat(testSetResult.passCount(), is(2));
+        assertThat(testSetResult.failCount(), is(1));
+        assertThat(testSetResult.errorCount(), is(1));
     }
 
     @Test
@@ -79,19 +78,18 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         tests.add(passedTransactionsAbsoluteTestA);
         tests.add(passedTransactionsAbsoluteTestB);
 
-        LightningTestSetResult testSet = new LightningTestSetResult();
-        LightningTestSet lightningTestSet = LightningTestSet.getInstance();
-        lightningTestSet.flush();
-        lightningTestSet.addAll(tests);
+        LightningTestSetResult testSetResult = new LightningTestSetResult();
+        LightningTestSet testSet = new LightningTestSet();
+        testSet.addAll(tests);
         configureStream();
-        testSet.executeTests();
+        testSetResult.executeTests(testSet);
         revertStream();
 
-        assertThat(testSet.testCount(), is(2));
-        assertThat(testSet.passCount(), is(2));
-        assertThat(testSet.failCount(), is(0));
-        assertThat(testSet.errorCount(), is(0));
-        assertThat(testSet.toString(), is(equalTo("Tests: 2, passed: 2, failed: 0, ignored: 0")));
+        assertThat(testSetResult.testCount(), is(2));
+        assertThat(testSetResult.passCount(), is(2));
+        assertThat(testSetResult.failCount(), is(0));
+        assertThat(testSetResult.errorCount(), is(0));
+        assertThat(testSetResult.toString(), is(equalTo("Tests: 2, passed: 2, failed: 0, ignored: 0")));
     }
 
     @Test
@@ -111,19 +109,18 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         tests.add(respTimeAvgTestB);
         tests.add(respTimeAvgTestC);
 
-        LightningTestSetResult testSet = new LightningTestSetResult();
-        LightningTestSet lightningTestSet = LightningTestSet.getInstance();
-        lightningTestSet.flush();
-        lightningTestSet.addAll(tests);
+        LightningTestSetResult testSetResult = new LightningTestSetResult();
+        LightningTestSet testSet = new LightningTestSet();
+        testSet.addAll(tests);
         configureStream();
-        testSet.executeTests();
+        testSetResult.executeTests(testSet);
         revertStream();
 
-        assertThat(testSet.testCount(), is(3));
-        assertThat(testSet.passCount(), is(1));
-        assertThat(testSet.failCount(), is(1));
-        assertThat(testSet.errorCount(), is(1));
-        assertThat(testSet.toString(), is(equalTo("Tests: 3, passed: 1, failed: 1, ignored: 1")));
+        assertThat(testSetResult.testCount(), is(3));
+        assertThat(testSetResult.passCount(), is(1));
+        assertThat(testSetResult.failCount(), is(1));
+        assertThat(testSetResult.errorCount(), is(1));
+        assertThat(testSetResult.toString(), is(equalTo("Tests: 3, passed: 1, failed: 1, ignored: 1")));
     }
 
     @Test
@@ -141,12 +138,11 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         tests.add(passedTransactionsAbsoluteTestA);
         tests.add(passedTransactionsAbsoluteTestB);
 
-        LightningTestSetResult testSet = new LightningTestSetResult();
-        LightningTestSet lightningTestSet = LightningTestSet.getInstance();
-        lightningTestSet.flush();
-        lightningTestSet.addAll(tests);
+        LightningTestSetResult testSetResult = new LightningTestSetResult();
+        LightningTestSet testSet = new LightningTestSet();
+        testSet.addAll(tests);
         configureStream();
-        testSet.executeTests();
+        testSetResult.executeTests(testSet);
         revertStream();
 
         String expectedResult = String.format("============= EXECUTION SUMMARY =============%n" +
@@ -156,7 +152,7 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
                 "Tests errors:      0%n" +
                 "Test set status:   Pass");
 
-        String output = testSet.testSetExecutionSummaryReport();
+        String output = testSetResult.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
     }
 
@@ -177,12 +173,11 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         tests.add(respTimeAvgTestB);
         tests.add(respTimeAvgTestC);
 
-        LightningTestSetResult testSet = new LightningTestSetResult();
-        LightningTestSet lightningTestSet = LightningTestSet.getInstance();
-        lightningTestSet.flush();
-        lightningTestSet.addAll(tests);
+        LightningTestSetResult testSetResult = new LightningTestSetResult();
+        LightningTestSet testSet = new LightningTestSet();
+        testSet.addAll(tests);
         configureStream();
-        testSet.executeTests();
+        testSetResult.executeTests(testSet);
         revertStream();
 
         String expectedResult = String.format("============= EXECUTION SUMMARY =============%n" +
@@ -192,7 +187,7 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
                 "Tests errors:      0%n" +
                 "Test set status:   FAIL");
 
-        String output = testSet.testSetExecutionSummaryReport();
+        String output = testSetResult.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
     }
 
@@ -211,12 +206,11 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
         tests.add(respTimeAvgTestA);
         tests.add(respTimeAvgTestC);
 
-        LightningTestSetResult testSet = new LightningTestSetResult();
-        LightningTestSet lightningTestSet = LightningTestSet.getInstance();
-        lightningTestSet.flush();
-        lightningTestSet.addAll(tests);
+        LightningTestSetResult testSetResult = new LightningTestSetResult();
+        LightningTestSet testSet = new LightningTestSet();
+        testSet.addAll(tests);
         configureStream();
-        testSet.executeTests();
+        testSetResult.executeTests(testSet);
         revertStream();
 
         String expectedResult = String.format("============= EXECUTION SUMMARY =============%n" +
@@ -226,7 +220,7 @@ public class LightningTestSetResultTest extends AbstractConsoleOutputTest {
                 "Tests errors:      1%n" +
                 "Test set status:   FAIL");
 
-        String output = testSet.testSetExecutionSummaryReport();
+        String output = testSetResult.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
     }
 }

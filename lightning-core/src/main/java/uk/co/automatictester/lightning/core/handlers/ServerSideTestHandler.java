@@ -14,6 +14,10 @@ import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class ServerSideTestHandler extends ElementHandler {
 
+    public ServerSideTestHandler(LightningTestSet testSet) {
+        this.testSet = testSet;
+    }
+
     @Override
     protected Optional<String> expectedElementName() {
         return Optional.of("serverSideTest");
@@ -60,6 +64,6 @@ public class ServerSideTestHandler extends ElementHandler {
                 break;
         }
 
-        LightningTestSet.getInstance().add(test);
+        testSet.add(test);
     }
 }
