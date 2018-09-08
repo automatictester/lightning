@@ -5,6 +5,8 @@ import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeMedianTest;
 
+import java.util.Optional;
+
 import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 import static uk.co.automatictester.lightning.core.utils.DomElements.getTransactionName;
 import static uk.co.automatictester.lightning.core.utils.DomElements.hasRegexp;
@@ -12,8 +14,8 @@ import static uk.co.automatictester.lightning.core.utils.DomElements.hasRegexp;
 public class MedianRespTimeTestHandler extends ElementHandler {
 
     @Override
-    protected String expectedElementName() {
-        return "medianRespTimeTest";
+    protected Optional<String> expectedElementName() {
+        return Optional.of("medianRespTimeTest");
     }
 
     @Override

@@ -2,11 +2,13 @@ package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
 
+import java.util.Optional;
+
 public class DefaultHandler extends ElementHandler {
 
     @Override
-    protected String expectedElementName() {
-        return "";
+    protected Optional<String> expectedElementName() {
+        return Optional.empty();
     }
 
     @Override

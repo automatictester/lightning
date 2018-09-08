@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import java.util.Optional;
 
 public abstract class ElementHandler {
 
@@ -14,15 +14,15 @@ public abstract class ElementHandler {
 
     public void processHandler(Element element) {
         String elementName = element.getTagName();
-        String expectedElementName = expectedElementName();
-        if (isBlank(expectedElementName) || elementName.equals(expectedElementName)) {
+        Optional<String> expectedElementName = expectedElementName();
+        if (!expectedElementName.isPresent() || elementName.equals(expectedElementName.get())) {
             handleHere(element);
         } else {
             nextHandler.processHandler(element);
         }
     }
 
-    protected abstract String expectedElementName();
+    protected abstract Optional<String> expectedElementName();
 
     protected abstract void handleHere(Element element);
 }

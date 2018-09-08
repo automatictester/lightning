@@ -5,13 +5,15 @@ import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeNthPercentileTest;
 
+import java.util.Optional;
+
 import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class NthPercRespTimeTestHandler extends ElementHandler {
 
     @Override
-    protected String expectedElementName() {
-        return "nthPercRespTimeTest";
+    protected Optional<String> expectedElementName() {
+        return Optional.of("nthPercRespTimeTest");
     }
 
     @Override

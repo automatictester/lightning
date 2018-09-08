@@ -6,13 +6,15 @@ import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsRelativeTest;
 
+import java.util.Optional;
+
 import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class PassedTransactionsTestHandler extends ElementHandler {
 
     @Override
-    protected String expectedElementName() {
-        return "passedTransactionsTest";
+    protected Optional<String> expectedElementName() {
+        return Optional.of("passedTransactionsTest");
     }
 
     @Override

@@ -8,13 +8,15 @@ import uk.co.automatictester.lightning.core.tests.ServerSideGreaterThanTest;
 import uk.co.automatictester.lightning.core.tests.ServerSideLessThanTest;
 import uk.co.automatictester.lightning.core.tests.base.AbstractServerSideTest;
 
+import java.util.Optional;
+
 import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class ServerSideTestHandler extends ElementHandler {
 
     @Override
-    protected String expectedElementName() {
-        return "serverSideTest";
+    protected Optional<String> expectedElementName() {
+        return Optional.of("serverSideTest");
     }
 
     @Override
