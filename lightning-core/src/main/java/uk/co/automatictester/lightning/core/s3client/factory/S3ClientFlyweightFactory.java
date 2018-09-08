@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.s3client.factory;
 
 import uk.co.automatictester.lightning.core.s3client.MockedS3Client;
 import uk.co.automatictester.lightning.core.s3client.RealS3Client;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
 
 import java.util.HashMap;
 import java.util.Map;

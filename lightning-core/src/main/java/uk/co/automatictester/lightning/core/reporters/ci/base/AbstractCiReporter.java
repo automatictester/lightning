@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.reporters.ci.base;
 
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
+import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
 
 public abstract class AbstractCiReporter {
 

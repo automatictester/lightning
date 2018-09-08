@@ -2,9 +2,9 @@ package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
-import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsRelativeTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 
 import java.util.Optional;
 

@@ -1,12 +1,12 @@
 package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
+import uk.co.automatictester.lightning.core.readers.ConfigReader;
 import uk.co.automatictester.lightning.core.reporters.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.JunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
-import uk.co.automatictester.lightning.core.readers.ConfigReader;
 
 import java.io.File;
 

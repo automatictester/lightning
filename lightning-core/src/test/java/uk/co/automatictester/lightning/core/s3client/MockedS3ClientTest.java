@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import io.findify.s3mock.S3Mock;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.*;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
 
 import java.io.IOException;
 import java.nio.file.Files;

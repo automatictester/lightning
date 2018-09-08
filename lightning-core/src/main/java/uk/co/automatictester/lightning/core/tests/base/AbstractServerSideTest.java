@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.tests.base;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.VALUE;

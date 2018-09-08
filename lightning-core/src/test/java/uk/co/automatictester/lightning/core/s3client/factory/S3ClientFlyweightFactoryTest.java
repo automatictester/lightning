@@ -1,8 +1,7 @@
 package uk.co.automatictester.lightning.core.s3client.factory;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.s3client.base;
+package uk.co.automatictester.lightning.core.s3client;
 
 import com.amazonaws.services.s3.AmazonS3;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -11,17 +11,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-public abstract class S3Client {
+public abstract class AbstractS3Client implements S3Client {
 
-    private static final Logger log = LoggerFactory.getLogger(S3Client.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractS3Client.class);
     protected final AmazonS3 CLIENT;
     protected String bucket;
 
-    protected S3Client(AmazonS3 client) {
+    protected AbstractS3Client(AmazonS3 client) {
         this.CLIENT = client;
     }
 
-    public S3Client setBucket(String bucket) {
+    public AbstractS3Client setBucket(String bucket) {
         this.bucket = bucket;
         return this;
     }

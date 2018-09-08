@@ -2,9 +2,8 @@ package uk.co.automatictester.lightning.core.s3client;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
 
-public class RealS3Client extends S3Client {
+public class RealS3Client extends AbstractS3Client {
 
     private RealS3Client(AmazonS3 client) {
         super(client);

@@ -1,9 +1,9 @@
 package uk.co.automatictester.lightning.core.reporters.ci;
 
 import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
 
 public class JenkinsS3Reporter extends AbstractCiReporter {

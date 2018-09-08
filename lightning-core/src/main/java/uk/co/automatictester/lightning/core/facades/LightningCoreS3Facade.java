@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
+import uk.co.automatictester.lightning.core.readers.ConfigS3Reader;
+import uk.co.automatictester.lightning.core.reporters.ci.JenkinsS3Reporter;
+import uk.co.automatictester.lightning.core.reporters.junit.JunitS3Reporter;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
+import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
-import uk.co.automatictester.lightning.core.reporters.junit.JunitS3Reporter;
-import uk.co.automatictester.lightning.core.reporters.ci.JenkinsS3Reporter;
-import uk.co.automatictester.lightning.core.readers.ConfigS3Reader;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 public class LightningCoreS3Facade extends AbstractLightningCoreFacade {

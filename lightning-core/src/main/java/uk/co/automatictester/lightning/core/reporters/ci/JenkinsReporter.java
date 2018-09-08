@@ -1,9 +1,9 @@
 package uk.co.automatictester.lightning.core.reporters.ci;
 
-import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.exceptions.JenkinsReportGenerationException;
+import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
+import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
+import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

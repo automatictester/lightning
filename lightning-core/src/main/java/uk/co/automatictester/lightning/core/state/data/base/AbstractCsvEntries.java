@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.core.state.data.base;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -2,14 +2,12 @@ package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
-import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeMaxTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 
 import java.util.Optional;
 
 import static uk.co.automatictester.lightning.core.utils.DomElements.*;
-import static uk.co.automatictester.lightning.core.utils.DomElements.getTransactionName;
-import static uk.co.automatictester.lightning.core.utils.DomElements.hasRegexp;
 
 public class MaxRespTimeTestHandler extends ElementHandler {
 

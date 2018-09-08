@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.core.s3client;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

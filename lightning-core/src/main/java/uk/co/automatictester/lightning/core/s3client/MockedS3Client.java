@@ -3,9 +3,8 @@ package uk.co.automatictester.lightning.core.s3client;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
 
-public class MockedS3Client extends S3Client {
+public class MockedS3Client extends AbstractS3Client {
 
     private static final String S3_MOCK_URL = "http://localhost:8001";
 

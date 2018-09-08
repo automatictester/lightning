@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.facades;
 
 import io.findify.s3mock.S3Mock;
 import org.testng.annotations.*;
-import uk.co.automatictester.lightning.core.s3client.base.S3Client;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 
 import java.io.IOException;
