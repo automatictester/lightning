@@ -1,44 +1,16 @@
-package uk.co.automatictester.lightning.core.readers;
+package uk.co.automatictester.lightning.core.config;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.handlers.*;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-
-public class ConfigReader {
+public abstract class AbstractConfigReader implements ConfigReader {
 
     protected TestSet testSet = new TestSet();
 
-    public TestSet readTests(File xmlFile) {
-        NodeList nodes = readXmlFile(xmlFile);
-        loadAllTests(nodes);
-        throwExceptionIfNoTests();
-        return testSet;
-    }
-
-    private NodeList readXmlFile(File xmlFile) {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(xmlFile);
-            Node node = doc.getDocumentElement();
-            return node.getChildNodes();
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new XMLFileException(e);
-        }
-    }
-
-    protected void loadAllTests(NodeList nodes) {
+    public void loadAllTests(NodeList nodes) {
         for (int i = 0; i < nodes.getLength(); i++) {
             if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodes.item(i);

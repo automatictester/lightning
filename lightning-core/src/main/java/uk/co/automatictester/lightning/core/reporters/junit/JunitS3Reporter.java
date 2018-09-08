@@ -21,7 +21,7 @@ public class JunitS3Reporter extends AbstractJunitReporter {
     }
 
     public String generateJunitReportToS3(TestSet testSet) {
-        generateJUnitReportContent(testSet);
+        generateJunitReportContent(testSet);
         return saveReportToS3();
     }
 

@@ -1,7 +1,8 @@
 package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
-import uk.co.automatictester.lightning.core.readers.ConfigS3Reader;
+import uk.co.automatictester.lightning.core.config.ConfigReader;
+import uk.co.automatictester.lightning.core.config.S3ConfigReader;
 import uk.co.automatictester.lightning.core.reporters.ci.JenkinsS3Reporter;
 import uk.co.automatictester.lightning.core.reporters.junit.JunitS3Reporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
@@ -38,8 +39,8 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public void loadConfigFromS3() {
-        ConfigS3Reader configReader = new ConfigS3Reader();
-        testSet = configReader.readTests(region, bucket, lightningXml);
+        ConfigReader configReader = new S3ConfigReader(region, bucket);
+        testSet = configReader.readTests(lightningXml);
     }
 
     public void loadTestDataFromS3() {

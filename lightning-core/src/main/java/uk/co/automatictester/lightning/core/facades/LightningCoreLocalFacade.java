@@ -1,7 +1,8 @@
 package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
-import uk.co.automatictester.lightning.core.readers.ConfigReader;
+import uk.co.automatictester.lightning.core.config.ConfigReader;
+import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
 import uk.co.automatictester.lightning.core.reporters.ci.JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.JunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
@@ -29,8 +30,9 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void loadConfig() {
-        ConfigReader configReader = new ConfigReader();
-        testSet = configReader.readTests(lightningXml);
+        ConfigReader configReader = new LocalFileSystemConfigReader();
+        String xmlFile = lightningXml.toPath().toString();
+        testSet = configReader.readTests(xmlFile);
     }
 
     public void loadTestData() {

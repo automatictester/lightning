@@ -32,7 +32,7 @@ public abstract class AbstractJunitReporter {
         doc.setXmlStandalone(true);
     }
 
-    protected void generateJUnitReportContent(TestSet testSet) { // TODO: bad
+    protected void generateJunitReportContent(TestSet testSet) { // TODO: bad
         Element testsuite = getTestsuite(testSet);
         Node rootElement = doc.appendChild(testsuite);
         testSet.get().forEach(test -> {

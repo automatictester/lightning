@@ -13,7 +13,7 @@ import java.io.File;
 public class JunitReporter extends AbstractJunitReporter {
 
     public void generateJunitReport(TestSet testSet) {
-        generateJUnitReportContent(testSet);
+        generateJunitReportContent(testSet);
         saveReportToDisk();
     }
 

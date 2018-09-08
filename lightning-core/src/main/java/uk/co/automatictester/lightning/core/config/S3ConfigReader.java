@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.readers;
+package uk.co.automatictester.lightning.core.config;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -16,11 +16,19 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ConfigS3Reader extends ConfigReader {
+public class S3ConfigReader extends AbstractConfigReader {
 
-    public TestSet readTests(String region, String bucket, String key) {
+    private String region;
+    private String bucket;
+
+    public S3ConfigReader(String region, String bucket) {
+        this.region = region;
+        this.bucket = bucket;
+    }
+
+    public TestSet readTests(String xmlFile) {
         S3Client client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
-        String xmlObjectContent = client.getObjectAsString(key);
+        String xmlObjectContent = client.getObjectAsString(xmlFile);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);
         throwExceptionIfNoTests();

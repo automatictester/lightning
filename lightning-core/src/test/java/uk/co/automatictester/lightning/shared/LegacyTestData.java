@@ -15,21 +15,6 @@ public class LegacyTestData {
     private static final String JMETER_CSV_RESOURCES = RESOURCES + "csv/jmeter/";
     private static final String PERFMON_CSV_RESOURCES = RESOURCES + "csv/perfmon/";
 
-    // XML files
-    public static final File TEST_SET_3_0_0 = new File(XML_RESOURCES + "3_0_0.xml");
-    public static final File TEST_SET_AVG_RESP_TIME = new File(XML_RESOURCES + "avgRespTimeTest.xml");
-    public static final File TEST_SET_MAX_RESP_TIME = new File(XML_RESOURCES + "maxRespTimeTest.xml");
-    public static final File TEST_SET_PERCENTILE = new File(XML_RESOURCES + "nthPercRespTimeTest.xml");
-    public static final File TEST_SET_PASSED = new File(XML_RESOURCES + "passedTransactionsTest.xml");
-    public static final File TEST_SET_PASSED_PERCENT = new File(XML_RESOURCES + "passedTransactionsPercentTest.xml");
-    public static final File TEST_SET_STD_DEV = new File(XML_RESOURCES + "respTimeStdDevTest.xml");
-    public static final File TEST_SET_THROUGHPUT = new File(XML_RESOURCES + "throughputTest.xml");
-    public static final File TEST_SET_MEDIAN = new File(XML_RESOURCES + "medianRespTimeTest.xml");
-    public static final File TEST_SET_NOT_WELL_FORMED = new File(XML_RESOURCES + "not_well_formed.xml");
-    public static final File TEST_SET_SERVER_LESS = new File(XML_RESOURCES + "serverSideTest_lessThan.xml");
-    public static final File TEST_SET_SERVER_BETWEEN = new File(XML_RESOURCES + "serverSideTest_between.xml");
-    public static final File TEST_SET_SERVER_GREATER = new File(XML_RESOURCES + "serverSideTest_greaterThan.xml");
-
     // JMeter CSV files
     public static final File CSV_2_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "2_transactions.csv");
     public static final File CSV_0_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "0_transactions.csv");

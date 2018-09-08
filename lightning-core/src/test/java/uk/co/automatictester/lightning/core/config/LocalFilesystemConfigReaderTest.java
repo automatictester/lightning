@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.readers;
+package uk.co.automatictester.lightning.core.config;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
@@ -7,7 +7,6 @@ import uk.co.automatictester.lightning.core.tests.*;
 import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -16,11 +15,11 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static uk.co.automatictester.lightning.shared.LegacyTestData.*;
 
-public class ConfigReaderTest {
+public class LocalFilesystemConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodPercentileTest() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_PERCENTILE);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/nthPercRespTimeTest.xml");
         List<AbstractTest> tests = testSet.get();
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #4", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
@@ -30,7 +29,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodStdDevTest() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_STD_DEV);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/respTimeStdDevTest.xml");
         List<AbstractTest> tests = testSet.get();
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Search").build();
 
@@ -40,7 +39,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodPassedTest() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_PASSED);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsTest.xml");
         List<AbstractTest> tests = testSet.get();
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #3", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
 
@@ -50,7 +49,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodPassedPercentTest() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_PASSED_PERCENT);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsPercentTest.xml");
         List<AbstractTest> tests = testSet.get();
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #3", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
 
@@ -60,7 +59,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodAvgRespTime() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_AVG_RESP_TIME);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/avgRespTimeTest.xml");
         List<AbstractTest> tests = testSet.get();
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Login").build();
 
@@ -70,7 +69,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodMaxRespTime() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_MAX_RESP_TIME);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/maxRespTimeTest.xml");
         List<AbstractTest> tests = testSet.get();
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Login").build();
 
@@ -80,7 +79,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodMedianRespTime() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_MEDIAN);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/medianRespTimeTest.xml");
         List<AbstractTest> tests = testSet.get();
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #4", 11244).withDescription("Verify median response time").withTransactionName("Search").build();
 
@@ -90,7 +89,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodThroughput() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_THROUGHPUT);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/throughputTest.xml");
         List<AbstractTest> tests = testSet.get();
         ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").build();
 
@@ -100,7 +99,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethod_Server_Less() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_SERVER_LESS);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/serverSideTest_lessThan.xml");
         List<AbstractTest> tests = testSet.get();
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #2", 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
@@ -110,7 +109,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethod_Server_Between() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_SERVER_BETWEEN);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/serverSideTest_between.xml");
         List<AbstractTest> tests = testSet.get();
         ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #2", 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
@@ -120,7 +119,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethod_Server_Greater() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_SERVER_GREATER);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/serverSideTest_greaterThan.xml");
         List<AbstractTest> tests = testSet.get();
         ServerSideGreaterThanTest test = new ServerSideGreaterThanTest.Builder("Test #2", 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
@@ -130,7 +129,7 @@ public class ConfigReaderTest {
 
     @Test
     public void verifyGetTestsMethodThreeTestsOfTwoKinds() {
-        TestSet testSet = new ConfigReader().readTests(TEST_SET_3_0_0);
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/3_0_0.xml");
         List<AbstractTest> tests = testSet.get();
 
         assertThat(tests, hasSize(3));
@@ -145,24 +144,24 @@ public class ConfigReaderTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setErr(new PrintStream(outContent));
 
-        new ConfigReader().readTests(TEST_SET_NOT_WELL_FORMED);
+        new LocalFileSystemConfigReader().readTests("src/test/resources/xml/not_well_formed.xml");
 
         System.setErr(null);
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsException() {
-        new ConfigReader().readTests(new File("src/test/resources/xml/0_0_0.xml"));
+        new LocalFileSystemConfigReader().readTests("src/test/resources/xml/0_0_0.xml");
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsExceptionOnOnlyUnmatchedTest() {
-        new ConfigReader().readTests(new File("src/test/resources/xml/unknownTestType.xml"));
+        new LocalFileSystemConfigReader().readTests("src/test/resources/xml/unknownTestType.xml");
     }
 
     @Test
     public void verifyGetTestsMethodIgnoresUnmatchedTest() {
-        TestSet testSet = new ConfigReader().readTests(new File("src/test/resources/xml/knownAndUnknownTestType.xml"));
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/knownAndUnknownTestType.xml");
         List<AbstractTest> tests = testSet.get();
         assertThat(tests, hasSize(1));
     }
