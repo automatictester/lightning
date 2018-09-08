@@ -5,8 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
-import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,10 +32,10 @@ public abstract class AbstractJunitReporter {
         doc.setXmlStandalone(true);
     }
 
-    protected void generateJUnitReportContent(LightningTestSetResult testSet) { // TODO: bad
+    protected void generateJUnitReportContent(TestSet testSet) { // TODO: bad
         Element testsuite = getTestsuite(testSet);
         Node rootElement = doc.appendChild(testsuite);
-        testSet.tests().forEach(test -> {
+        testSet.get().forEach(test -> {
             Element testcase = getTestcase(test);
             rootElement.appendChild(testcase);
         });
@@ -56,9 +55,9 @@ public abstract class AbstractJunitReporter {
         return transformer;
     }
 
-    public Element getTestsuite(LightningTestSetResult testSet) {
+    public Element getTestsuite(TestSet testSet) {
         Element testsuite = doc.createElement("testsuite");
-        String testCount = String.valueOf(testSet.testCount());
+        String testCount = String.valueOf(testSet.size());
         String failCount = String.valueOf(testSet.failCount());
         String errorCount = String.valueOf(testSet.errorCount());
 

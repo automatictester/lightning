@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.reporters.junit;
 
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
 import uk.co.automatictester.lightning.core.reporters.junit.base.AbstractJunitReporter;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -12,7 +12,7 @@ import java.io.File;
 
 public class JunitReporter extends AbstractJunitReporter {
 
-    public void generateJUnitReport(LightningTestSetResult testSet) {
+    public void generateJunitReport(TestSet testSet) {
         generateJUnitReportContent(testSet);
         saveReportToDisk();
     }

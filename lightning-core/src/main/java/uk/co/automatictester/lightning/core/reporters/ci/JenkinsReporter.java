@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.core.reporters.ci;
 import uk.co.automatictester.lightning.core.exceptions.JenkinsReportGenerationException;
 import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class JenkinsReporter extends AbstractCiReporter {
 
-    private JenkinsReporter(LightningTestSetResult testSet) {
+    private JenkinsReporter(TestSet testSet) {
         super(testSet);
     }
 
@@ -21,7 +21,7 @@ public class JenkinsReporter extends AbstractCiReporter {
         super(jmeterTransactions);
     }
 
-    public static JenkinsReporter fromTestSet(LightningTestSetResult testSet) {
+    public static JenkinsReporter fromTestSet(TestSet testSet) {
         return new JenkinsReporter(testSet);
     }
 
@@ -40,7 +40,7 @@ public class JenkinsReporter extends AbstractCiReporter {
     }
 
     private String verifySummary() {
-        int executed = testSet.testCount();
+        int executed = testSet.size();
         int failed = testSet.failCount() + testSet.errorCount();
         return String.format("Tests executed: %s, failed: %s", executed, failed);
     }

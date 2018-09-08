@@ -1,13 +1,13 @@
 package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import java.util.Optional;
 
 public class DefaultHandler extends ElementHandler {
 
-    public DefaultHandler(LightningTestSet testSet) {
+    public DefaultHandler(TestSet testSet) {
         this.testSet = testSet;
     }
 

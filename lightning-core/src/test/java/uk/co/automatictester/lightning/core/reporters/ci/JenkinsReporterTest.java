@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.reporters.ci;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,8 +19,8 @@ public class JenkinsReporterTest {
 
     @Test
     public void testSetJenkinsBuildName_verify() throws IOException {
-        LightningTestSetResult testSet = mock(LightningTestSetResult.class);
-        when(testSet.testCount()).thenReturn(3);
+        TestSet testSet = mock(TestSet.class);
+        when(testSet.size()).thenReturn(3);
         when(testSet.failCount()).thenReturn(1);
         when(testSet.errorCount()).thenReturn(1);
 

@@ -2,10 +2,10 @@ package uk.co.automatictester.lightning.core.reporters.ci;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
 import uk.co.automatictester.lightning.core.tests.base.AbstractServerSideTest;
+import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
 
 import java.util.ArrayList;
 
@@ -37,8 +37,8 @@ public class TeamCityReporterTest {
         when(serverTest.name()).thenReturn("Memory utilization");
         when(serverTest.actualResult()).thenReturn(45);
 
-        LightningTestSetResult testSet = mock(LightningTestSetResult.class);
-        when(testSet.tests()).thenReturn(new ArrayList<AbstractTest>() {{
+        TestSet testSet = mock(TestSet.class);
+        when(testSet.get()).thenReturn(new ArrayList<AbstractTest>() {{
             add(clientTest);
             add(serverTest);
         }});

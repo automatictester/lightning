@@ -42,7 +42,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void setJenkinsBuildNameForVerify() {
-        JenkinsReporter.fromTestSet(testSetResult).setJenkinsBuildName();
+        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
     }
 
     public void setJenkinsBuildNameForReport() {
@@ -51,7 +51,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
 
     public void saveJunitReport() {
         JunitReporter junitreporter = new JunitReporter();
-        junitreporter.generateJUnitReport(testSetResult);
+        junitreporter.generateJunitReport(testSet);
     }
 
     private void loadPerfMonDataIfProvided() {

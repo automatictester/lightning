@@ -3,19 +3,17 @@ package uk.co.automatictester.lightning.core.facades.base;
 import uk.co.automatictester.lightning.core.reporters.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
-import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 public abstract class AbstractLightningCoreFacade {
 
-    protected final LightningTestSetResult testSetResult = new LightningTestSetResult();
     protected JmeterTransactions jmeterTransactions;
-    protected LightningTestSet testSet;
+    protected TestSet testSet;
     private TeamCityReporter teamCityReporter;
 
     public String executeTests() {
-        testSetResult.executeTests(testSet);
-        return testSetResult.testExecutionReport();
+        testSet.executeTests();
+        return testSet.testExecutionReport();
     }
 
     public String runReport() {
@@ -25,11 +23,11 @@ public abstract class AbstractLightningCoreFacade {
     }
 
     public String testSetExecutionSummaryReport() {
-        return testSetResult.testSetExecutionSummaryReport();
+        return testSet.testSetExecutionSummaryReport();
     }
 
     public boolean hasExecutionFailed() {
-        return testSetResult.failCount() + testSetResult.errorCount() != 0;
+        return testSet.hasFailed();
     }
 
     public boolean hasFailedTransactions() {
@@ -39,7 +37,7 @@ public abstract class AbstractLightningCoreFacade {
     }
 
     public String teamCityVerifyStatistics() {
-        return TeamCityReporter.fromTestSet(testSetResult).teamCityVerifyStatistics();
+        return TeamCityReporter.fromTestSet(testSet).teamCityVerifyStatistics();
     }
 
     public String teamCityBuildReportSummary() {

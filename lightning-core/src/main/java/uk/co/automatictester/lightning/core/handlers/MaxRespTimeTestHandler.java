@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.handlers;
 
 import org.w3c.dom.Element;
-import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.RespTimeMaxTest;
 import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 
@@ -11,7 +11,7 @@ import static uk.co.automatictester.lightning.core.utils.DomElements.*;
 
 public class MaxRespTimeTestHandler extends ElementHandler {
 
-    public MaxRespTimeTestHandler(LightningTestSet testSet) {
+    public MaxRespTimeTestHandler(TestSet testSet) {
         this.testSet = testSet;
     }
 

@@ -2,8 +2,8 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 

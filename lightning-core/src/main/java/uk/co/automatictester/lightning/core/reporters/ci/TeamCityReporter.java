@@ -2,7 +2,7 @@ package uk.co.automatictester.lightning.core.reporters.ci;
 
 import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 public class TeamCityReporter extends AbstractCiReporter {
 
@@ -10,7 +10,7 @@ public class TeamCityReporter extends AbstractCiReporter {
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
 
-    private TeamCityReporter(LightningTestSetResult testSet) {
+    private TeamCityReporter(TestSet testSet) {
         super(testSet);
     }
 
@@ -18,7 +18,7 @@ public class TeamCityReporter extends AbstractCiReporter {
         super(jmeterTransactions);
     }
 
-    public static TeamCityReporter fromTestSet(LightningTestSetResult testSet) {
+    public static TeamCityReporter fromTestSet(TestSet testSet) {
         return new TeamCityReporter(testSet);
     }
 
@@ -34,7 +34,7 @@ public class TeamCityReporter extends AbstractCiReporter {
 
     public String teamCityVerifyStatistics() {
         StringBuilder output = new StringBuilder();
-        testSet.tests().forEach(test -> {
+        testSet.get().forEach(test -> {
             String teamCityConsoleOutputEntry = String.format(TEAMCITY_STATISTICS, test.name(), test.actualResult());
             output.append(teamCityConsoleOutputEntry);
         });

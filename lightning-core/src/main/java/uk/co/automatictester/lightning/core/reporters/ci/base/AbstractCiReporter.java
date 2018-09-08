@@ -1,14 +1,14 @@
 package uk.co.automatictester.lightning.core.reporters.ci.base;
 
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 public abstract class AbstractCiReporter {
 
-    protected LightningTestSetResult testSet;
+    protected TestSet testSet;
     protected JmeterTransactions jmeterTransactions;
 
-    protected AbstractCiReporter(LightningTestSetResult testSet) {
+    protected AbstractCiReporter(TestSet testSet) {
         this.testSet = testSet;
     }
 

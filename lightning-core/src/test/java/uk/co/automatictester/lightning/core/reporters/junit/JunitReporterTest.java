@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.core.reporters.junit;
 import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSetResult;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,8 +15,8 @@ public class JunitReporterTest {
 
     @Test
     public void testGetTestsuite() {
-        LightningTestSetResult testSet = mock(LightningTestSetResult.class);
-        when(testSet.testCount()).thenReturn(3);
+        TestSet testSet = mock(TestSet.class);
+        when(testSet.size()).thenReturn(3);
         when(testSet.errorCount()).thenReturn(1);
         when(testSet.failCount()).thenReturn(1);
 

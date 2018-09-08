@@ -7,7 +7,7 @@ import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
-import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,9 +18,8 @@ import java.io.InputStream;
 
 public class ConfigS3Reader extends ConfigReader {
 
-    public LightningTestSet readTests(String region, String bucket, String key) {
+    public TestSet readTests(String region, String bucket, String key) {
         S3Client client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
-        testSet.flush();
         String xmlObjectContent = client.getObjectAsString(key);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);

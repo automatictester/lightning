@@ -51,7 +51,7 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public String storeJenkinsBuildNameForVerifyInS3() {
-        return JenkinsS3Reporter.fromTestSet(region, bucket, testSetResult).storeJenkinsBuildNameInS3();
+        return JenkinsS3Reporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
     }
 
     public String storeJenkinsBuildNameForReportInS3() {
@@ -60,7 +60,7 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
 
     public String saveJunitReportToS3() {
         JunitS3Reporter junitS3Reporter = new JunitS3Reporter(region, bucket);
-        return junitS3Reporter.generateJUnitReportToS3(testSetResult);
+        return junitS3Reporter.generateJunitReportToS3(testSet);
     }
 
     public String putS3Object(String key, String content) {

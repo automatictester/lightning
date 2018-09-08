@@ -7,7 +7,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.handlers.*;
-import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,10 +17,9 @@ import java.io.IOException;
 
 public class ConfigReader {
 
-    protected LightningTestSet testSet = new LightningTestSet();
+    protected TestSet testSet = new TestSet();
 
-    public LightningTestSet readTests(File xmlFile) {
-        testSet.flush(); // TODO - do we really need it ?
+    public TestSet readTests(File xmlFile) {
         NodeList nodes = readXmlFile(xmlFile);
         loadAllTests(nodes);
         throwExceptionIfNoTests();
