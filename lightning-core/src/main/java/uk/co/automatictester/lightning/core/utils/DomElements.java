@@ -92,7 +92,7 @@ public class DomElements {
 
     public static int getPercentile(Element element, String subElement) {
         int elementValue = getIntegerValueFromElement(element, subElement);
-        if (Percentiles.isPercentile(elementValue)) {
+        if (isPercentile(elementValue)) {
             return elementValue;
         } else {
             String parentNodeName = element.getNodeName();
@@ -135,5 +135,9 @@ public class DomElements {
         } else {
             return node;
         }
+    }
+
+    private static boolean isPercentile(int percentile) {
+        return (percentile > 0) && (percentile <= 100);
     }
 }
