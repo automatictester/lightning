@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class IntToOrdConverterTest {
+public class OrdinalsTest {
 
     @DataProvider(name = "testData")
     private Object[][] testData() {
@@ -28,6 +28,6 @@ public class IntToOrdConverterTest {
 
     @Test(dataProvider = "testData")
     public void testConvert(String integer, String ordinal) {
-        assertThat(IntToOrdConverter.convert(Integer.parseInt(integer)), equalTo(ordinal));
+        assertThat(Ordinals.fromInt(Integer.parseInt(integer)), equalTo(ordinal));
     }
 }

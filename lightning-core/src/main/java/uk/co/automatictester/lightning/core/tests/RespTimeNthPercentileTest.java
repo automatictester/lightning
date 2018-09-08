@@ -6,7 +6,7 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.tests.base.AbstractRespTimeTest;
-import uk.co.automatictester.lightning.core.utils.IntToOrdConverter;
+import uk.co.automatictester.lightning.core.utils.Ordinals;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,12 +25,12 @@ public class RespTimeNthPercentileTest extends AbstractRespTimeTest {
         super(TEST_TYPE, testName);
         this.maxRespTime = maxRespTime;
         this.percentile = percentile;
-        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, IntToOrdConverter.convert(percentile), maxRespTime);
+        this.expectedResultDescription = String.format(EXPECTED_RESULT_MESSAGE, Ordinals.fromInt(percentile), maxRespTime);
     }
 
     @Override
     public void calculateActualResultDescription() {
-        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, IntToOrdConverter.convert(percentile), actualResult);
+        actualResultDescription = String.format(ACTUAL_RESULT_MESSAGE, Ordinals.fromInt(percentile), actualResult);
     }
 
     @Override
