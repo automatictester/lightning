@@ -7,17 +7,14 @@ import java.util.List;
 
 public class LightningTestSet {
 
-    private static LightningTestSet instance;
-    private List<AbstractTest> tests = new ArrayList<>();
+    private static final LightningTestSet INSTANCE = new LightningTestSet();
+    private final List<AbstractTest> tests = new ArrayList<>();
 
     private LightningTestSet() {
     }
 
-    public synchronized static LightningTestSet getInstance() {
-        if (instance == null) {
-            instance = new LightningTestSet();
-        }
-        return instance;
+    public static LightningTestSet getInstance() {
+        return INSTANCE;
     }
 
     public void flush() {

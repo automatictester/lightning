@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Percent {
 
-    private int value;
+    private final int value;
 
     private Percent(int value) {
         if (isPercent(value)) {

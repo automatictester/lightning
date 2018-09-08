@@ -2,18 +2,15 @@ package uk.co.automatictester.lightning.core.state.data;
 
 public class TestData {
 
-    private static TestData instance;
+    private static final TestData INSTANCE = new TestData();
     private JmeterTransactions transactions;
     private PerfMonEntries entries;
 
     private TestData() {
     }
 
-    public synchronized static TestData getInstance() {
-        if (instance == null) {
-            instance = new TestData();
-        }
-        return instance;
+    public static TestData getInstance() {
+        return INSTANCE;
     }
 
     public void flush() {

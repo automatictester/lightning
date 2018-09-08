@@ -7,7 +7,7 @@ import uk.co.automatictester.lightning.core.state.tests.results.LightningTestSet
 
 public abstract class AbstractLightningCoreFacade {
 
-    protected LightningTestSetResult testSetResult = new LightningTestSetResult();
+    protected final LightningTestSetResult testSetResult = new LightningTestSetResult();
     protected JmeterTransactions jmeterTransactions;
     private TeamCityReporter teamCityReporter;
 

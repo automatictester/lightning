@@ -18,6 +18,6 @@ public class RealS3Client extends S3Client {
 
     @Override
     public String toString() {
-        return String.format("Region: %s, bucket: %s", client.getRegionName(), bucket);
+        return String.format("Region: %s, bucket: %s", CLIENT.getRegionName(), bucket);
     }
 }

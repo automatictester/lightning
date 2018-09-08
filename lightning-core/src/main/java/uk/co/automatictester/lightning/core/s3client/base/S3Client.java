@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public abstract class S3Client {
 
     private static final Logger log = LoggerFactory.getLogger(S3Client.class);
-    protected AmazonS3 client;
+    protected final AmazonS3 CLIENT;
     protected String bucket;
 
     protected S3Client(AmazonS3 client) {
-        this.client = client;
+        this.CLIENT = client;
     }
 
     public S3Client setBucket(String bucket) {
@@ -28,24 +28,24 @@ public abstract class S3Client {
 
     public String getObjectAsString(String key) {
         log.info("Getting S3 object: {}/{}", bucket, key);
-        return client.getObjectAsString(bucket, key);
+        return CLIENT.getObjectAsString(bucket, key);
     }
 
     public String putObject(String key, String content) {
         String s3key = key + "-" + randomString();
         log.info("Putting S3 object: {}/{}", bucket, s3key);
-        client.putObject(bucket, s3key, content);
+        CLIENT.putObject(bucket, s3key, content);
         return s3key;
     }
 
     public void putObjectFromFile(String file) throws IOException {
         log.info("Putting S3 object from file: {}/{}", bucket, file);
-        client.putObject(bucket, file, readFileToString(file));
+        CLIENT.putObject(bucket, file, readFileToString(file));
     }
 
     public boolean createBucketIfDoesNotExist(String bucket) {
-        if (!client.doesBucketExistV2(bucket)) {
-            client.createBucket(bucket);
+        if (!CLIENT.doesBucketExistV2(bucket)) {
+            CLIENT.createBucket(bucket);
             return true;
         }
         return false;

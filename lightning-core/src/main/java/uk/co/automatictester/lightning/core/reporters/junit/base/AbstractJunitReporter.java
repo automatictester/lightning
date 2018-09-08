@@ -19,7 +19,7 @@ import javax.xml.transform.TransformerFactory;
 
 public abstract class AbstractJunitReporter {
 
-    protected Document doc;
+    protected final Document doc;
 
     protected AbstractJunitReporter() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
