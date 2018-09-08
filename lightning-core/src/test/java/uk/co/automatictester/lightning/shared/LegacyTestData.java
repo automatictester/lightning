@@ -17,7 +17,6 @@ public class LegacyTestData {
 
     // XML files
     public static final File TEST_SET_3_0_0 = new File(XML_RESOURCES + "3_0_0.xml");
-    public static final File TEST_SET_0_0_0 = new File(XML_RESOURCES + "0_0_0.xml");
     public static final File TEST_SET_AVG_RESP_TIME = new File(XML_RESOURCES + "avgRespTimeTest.xml");
     public static final File TEST_SET_MAX_RESP_TIME = new File(XML_RESOURCES + "maxRespTimeTest.xml");
     public static final File TEST_SET_PERCENTILE = new File(XML_RESOURCES + "nthPercRespTimeTest.xml");
@@ -30,11 +29,6 @@ public class LegacyTestData {
     public static final File TEST_SET_SERVER_LESS = new File(XML_RESOURCES + "serverSideTest_lessThan.xml");
     public static final File TEST_SET_SERVER_BETWEEN = new File(XML_RESOURCES + "serverSideTest_between.xml");
     public static final File TEST_SET_SERVER_GREATER = new File(XML_RESOURCES + "serverSideTest_greaterThan.xml");
-    public static final File TEST_SET_XML_FILE_NO_VALID_SUB_TYPE_EXCEPTION = new File(XML_RESOURCES + "XMLFileNoValidSubTypeException.xml");
-    public static final File TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION = new File(XML_RESOURCES + "XMLFileNumberFormatException.xml");
-    public static final File TEST_SET_XML_FILE_MISSING_ELEMENT_VALUE_EXCEPTION = new File(XML_RESOURCES + "XMLFileMissingElementValueException.xml");
-    public static final File TEST_SET_XML_FILE_MISSING_ELEMENT_EXCEPTION = new File(XML_RESOURCES + "XMLFileMissingElementException.xml");
-    public static final File TEST_SET_XML_FILE_PERCENTILE_EXCEPTION = new File(XML_RESOURCES + "XMLFilePercentileException.xml");
 
     // JMeter CSV files
     public static final File CSV_2_TRANSACTIONS = new File(JMETER_CSV_RESOURCES + "2_transactions.csv");

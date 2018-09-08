@@ -21,10 +21,10 @@ public class ConfigS3Reader extends ConfigReader {
     private ConfigS3Reader() {
     }
 
-    public static void readTests(String region, String bucket, String xmlObject) {
+    public static void readTests(String region, String bucket, String key) {
         S3Client client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         LightningTestSet.getInstance().flush();
-        String xmlObjectContent = client.getObjectAsString(xmlObject);
+        String xmlObjectContent = client.getObjectAsString(key);
         NodeList nodes = readXmlFile(xmlObjectContent);
         loadAllTests(nodes);
         throwExceptionIfNoTests();

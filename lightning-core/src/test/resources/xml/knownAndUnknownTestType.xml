@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <nthPercRespTimeTest>
+        <testName>Test #4</testName>
+        <description>Verify nth percentile</description>
+        <transactionName>Search</transactionName>
+        <percentile>80</percentile>
+        <maxRespTime>11245</maxRespTime>
+    </nthPercRespTimeTest>
+
+    <unknownTestType>
+        <testName>Test #1</testName>
+        <description>Verify average login times</description>
+        <transactionName>Login</transactionName>
+        <maxAvgRespTime>4000</maxAvgRespTime>
+    </unknownTestType>
+
+</testSet>

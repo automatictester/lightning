@@ -1,7 +1,7 @@
 package uk.co.automatictester.lightning.core.readers;
 
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.exceptions.*;
+import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.state.tests.LightningTestSet;
 import uk.co.automatictester.lightning.core.tests.*;
 import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
@@ -150,39 +150,21 @@ public class ConfigReaderTest {
         System.setErr(null);
     }
 
-    @Test(expectedExceptions = NumberFormatException.class)
-    public void verifyGetTestsMethodThrowsXMLFileNumberFormatException() {
-        ConfigReader.readTests(TEST_SET_XML_FILE_NUMBER_FORMAT_EXCEPTION);
-    }
-
-    @Test(expectedExceptions = XMLFileNoValidSubTypeException.class)
-    public void verifyGetTestsMethodThrowsXMLFileNoValidSubTypeException() {
-        ConfigReader.readTests(TEST_SET_XML_FILE_NO_VALID_SUB_TYPE_EXCEPTION);
-    }
-
-    @Test(expectedExceptions = XMLFileMissingElementValueException.class)
-    public void verifyGetTestsMethodThrowsXMLFileMissingElementValueException() {
-        ConfigReader.readTests(TEST_SET_XML_FILE_MISSING_ELEMENT_VALUE_EXCEPTION);
-    }
-
-    @Test(expectedExceptions = XMLFileMissingElementException.class)
-    public void verifyGetTestsMethodThrowsXMLFileMissingElementException() {
-        ConfigReader.readTests(TEST_SET_XML_FILE_MISSING_ELEMENT_EXCEPTION);
-    }
-
-    @Test(expectedExceptions = XMLFilePercentileException.class)
-    public void verifyGetTestsMethodThrowsXMLFilePercentileException() {
-        ConfigReader.readTests(TEST_SET_XML_FILE_PERCENTILE_EXCEPTION);
-    }
-
     @Test(expectedExceptions = IllegalStateException.class)
     public void verifyGetTestsMethodThrowsXMLFileNoTestsException() {
-        ConfigReader.readTests(TEST_SET_0_0_0);
+        ConfigReader.readTests(new File("src/test/resources/xml/0_0_0.xml"));
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
-    public void verifyGetTestsMethodThrowsXMLFileNoTestsExceptionOnUnmatchedTestType() {
+    public void verifyGetTestsMethodThrowsXMLFileNoTestsExceptionOnOnlyUnmatchedTest() {
         ConfigReader.readTests(new File("src/test/resources/xml/unknownTestType.xml"));
+    }
+
+    @Test
+    public void verifyGetTestsMethodIgnoresUnmatchedTest() {
+        ConfigReader.readTests(new File("src/test/resources/xml/knownAndUnknownTestType.xml"));
+        List<AbstractTest> tests = LightningTestSet.getInstance().get();
+        assertThat(tests, hasSize(1));
     }
 
 }
