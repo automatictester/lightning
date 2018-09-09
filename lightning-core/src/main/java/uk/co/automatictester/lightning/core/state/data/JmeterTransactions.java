@@ -2,6 +2,7 @@ package uk.co.automatictester.lightning.core.state.data;
 
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -19,10 +20,10 @@ public class JmeterTransactions {
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
-    private CsvEntries entries;
+    private List<String[]> entries;
 
     private JmeterTransactions(List<String[]> jmeterTransactions) {
-        entries = new CsvEntries(jmeterTransactions);
+        entries = new ArrayList<>(jmeterTransactions);
     }
 
     public static JmeterTransactions fromList(List<String[]> entries) {
@@ -41,7 +42,7 @@ public class JmeterTransactions {
     }
 
     private JmeterTransactions transactions(Predicate<String[]> predicate, String expectedTransactionName) {
-        List<String[]> transactions = entries.asStream()
+        List<String[]> transactions = entries.stream()
                 .filter(predicate)
                 .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, expectedTransactionName)));
         return JmeterTransactions.fromList(transactions);
@@ -49,7 +50,7 @@ public class JmeterTransactions {
 
     public List<Integer> longestTransactions() {
         int numberOfLongestTransactions = min(entries.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
-        return entries.asStream()
+        return entries.stream()
                 .map(e -> Integer.parseInt(e[TRANSACTION_DURATION.getColumn()]))
                 .sorted(reverseOrder())
                 .limit(numberOfLongestTransactions)
@@ -57,7 +58,7 @@ public class JmeterTransactions {
     }
 
     public int failCount() {
-        return (int) entries.asStream()
+        return (int) entries.stream()
                 .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
                 .count();
     }
@@ -67,15 +68,15 @@ public class JmeterTransactions {
     }
 
     public Stream<String[]> asStream() {
-        return entries.asStream();
+        return entries.stream();
     }
 
     public List<String[]> asList() {
-        return entries.asList();
+        return entries;
     }
 
     public long firstTransactionTimestamp() {
-        return entries.asStream()
+        return entries.stream()
                 .mapToLong(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
                 .sorted()
                 .limit(1)
@@ -84,7 +85,7 @@ public class JmeterTransactions {
     }
 
     public long lastTransactionTimestamp() {
-        return entries.asStream()
+        return entries.stream()
                 .map(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
                 .sorted(reverseOrder())
                 .limit(1)

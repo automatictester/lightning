@@ -2,6 +2,7 @@ package uk.co.automatictester.lightning.core.state.data;
 
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentHostAndMetricException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,10 +12,10 @@ import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.HOST_AND
 
 public class PerfMonEntries {
 
-    private CsvEntries entries;
+    private List<String[]> entries;
 
     private PerfMonEntries(List<String[]> perfMonEntries) {
-        entries = new CsvEntries(perfMonEntries);
+        entries = new ArrayList<>(perfMonEntries);
     }
 
     public static PerfMonEntries fromList(List<String[]> perfMonEntries) {
@@ -26,15 +27,15 @@ public class PerfMonEntries {
     }
 
     public Stream<String[]> asStream() {
-        return entries.asStream();
+        return entries.stream();
     }
 
     public List<String[]> asList() {
-        return entries.asList();
+        return entries;
     }
 
     public PerfMonEntries entriesWith(String hostAndMetric) {
-        List<String[]> list = entries.asStream()
+        List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC.getColumn()].equals(hostAndMetric))
                 .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, hostAndMetric)));
         return PerfMonEntries.fromList(list);
