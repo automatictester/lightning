@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.tests.base.AbstractRespTimeTest;
 import uk.co.automatictester.lightning.core.utils.Ordinals;
 
 import java.util.Arrays;

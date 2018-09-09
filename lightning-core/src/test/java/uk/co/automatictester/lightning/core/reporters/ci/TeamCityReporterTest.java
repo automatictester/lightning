@@ -3,9 +3,10 @@ package uk.co.automatictester.lightning.core.reporters.ci;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
+import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
+import uk.co.automatictester.lightning.core.tests.LightningTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
-import uk.co.automatictester.lightning.core.tests.base.AbstractServerSideTest;
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
+import uk.co.automatictester.lightning.core.tests.AbstractServerSideTest;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class TeamCityReporterTest {
         when(serverTest.actualResult()).thenReturn(45);
 
         TestSet testSet = mock(TestSet.class);
-        when(testSet.get()).thenReturn(new ArrayList<AbstractTest>() {{
+        when(testSet.get()).thenReturn(new ArrayList<LightningTest>() {{
             add(clientTest);
             add(serverTest);
         }});

@@ -6,7 +6,7 @@ import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.ServerSideBetweenTest;
 import uk.co.automatictester.lightning.core.tests.ServerSideGreaterThanTest;
 import uk.co.automatictester.lightning.core.tests.ServerSideLessThanTest;
-import uk.co.automatictester.lightning.core.tests.base.AbstractServerSideTest;
+import uk.co.automatictester.lightning.core.tests.AbstractServerSideTest;
 
 import java.util.Optional;
 

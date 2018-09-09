@@ -6,7 +6,8 @@ import org.w3c.dom.Node;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
+import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
+import uk.co.automatictester.lightning.core.tests.LightningTest;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -54,7 +55,7 @@ public class JunitReport {
         return testsuite;
     }
 
-    Element getTestcase(AbstractTest test) {
+    Element getTestcase(LightningTest test) {
         Element testcase = doc.createElement("testcase");
         testcase.setAttribute("time", "0");
         String testName = test.name();
@@ -78,7 +79,7 @@ public class JunitReport {
         return testcase;
     }
 
-    private static void setCommonFailureData(Element element, AbstractTest test) {
+    private static void setCommonFailureData(Element element, LightningTest test) {
         String testType = test.type();
         String actualResultDescription = test.actualResultDescription();
         String testExecutionReport = test.getTestExecutionReport();

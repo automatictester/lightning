@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.tests.base;
+package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;
@@ -7,7 +7,7 @@ import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.VALUE;
 
-public abstract class AbstractServerSideTest extends AbstractTest {
+public abstract class AbstractServerSideTest extends AbstractLightningTest {
 
     protected static final String TEST_TYPE = "serverSideTest";
     private static final String ACTUAL_RESULT_MESSAGE = "Average value = %s";

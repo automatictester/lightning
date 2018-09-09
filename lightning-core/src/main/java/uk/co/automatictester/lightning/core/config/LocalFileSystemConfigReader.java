@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class LocalFileSystemConfigReader extends AbstractConfigReader {
 
+    @Override
     public TestSet readTests(String xmlFile) {
         NodeList nodes = readXmlFile(new File(xmlFile));
         loadAllTests(nodes);

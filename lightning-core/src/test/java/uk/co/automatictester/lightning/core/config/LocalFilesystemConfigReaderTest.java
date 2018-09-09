@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.*;
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
+import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -20,7 +20,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodPercentileTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/nthPercRespTimeTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #4", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
@@ -30,7 +30,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodStdDevTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/respTimeStdDevTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
@@ -40,7 +40,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodPassedTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #3", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -50,7 +50,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodPassedPercentTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsPercentTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #3", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -60,7 +60,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodAvgRespTime() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/avgRespTimeTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -70,7 +70,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodMaxRespTime() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/maxRespTimeTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Login").build();
 
         assertThat(tests, hasSize(1));
@@ -80,7 +80,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodMedianRespTime() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/medianRespTimeTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #4", 11244).withDescription("Verify median response time").withTransactionName("Search").build();
 
         assertThat(tests, hasSize(1));
@@ -90,7 +90,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodThroughput() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/throughputTest.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").build();
 
         assertThat(tests, hasSize(1));
@@ -100,7 +100,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethod_Server_Less() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/serverSideTest_lessThan.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #2", 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
@@ -110,7 +110,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethod_Server_Between() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/serverSideTest_between.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #2", 40000, 80000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
@@ -120,7 +120,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethod_Server_Greater() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/serverSideTest_greaterThan.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         ServerSideGreaterThanTest test = new ServerSideGreaterThanTest.Builder("Test #2", 20000).withDescription("Verify server-side resource utilisation").withHostAndMetric("192.168.0.12 CPU").build();
 
         assertThat(tests, hasSize(1));
@@ -130,7 +130,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodThreeTestsOfTwoKinds() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/3_0_0.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
 
         assertThat(tests, hasSize(3));
         assertThat(tests.contains(PASSED_TRANSACTIONS_TEST_3_0_0_A), is(true));
@@ -162,7 +162,7 @@ public class LocalFilesystemConfigReaderTest {
     @Test
     public void verifyGetTestsMethodIgnoresUnmatchedTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/knownAndUnknownTestType.xml");
-        List<AbstractTest> tests = testSet.get();
+        List<LightningTest> tests = testSet.get();
         assertThat(tests, hasSize(1));
     }
 

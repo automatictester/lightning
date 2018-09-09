@@ -4,7 +4,8 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
+import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
+import uk.co.automatictester.lightning.core.tests.LightningTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,7 +33,7 @@ public class JunitReportTest {
     @Test
     public void testGetPassedTestcase() {
         TestSet testSet = mock(TestSet.class);
-        AbstractTest test = mock(AbstractTest.class);
+        LightningTest test = mock(LightningTest.class);
         when(test.result()).thenReturn(TestResult.PASS);
         when(test.name()).thenReturn("some name");
 
@@ -45,7 +46,7 @@ public class JunitReportTest {
     @Test
     public void testGetFailedTestcase() {
         TestSet testSet = mock(TestSet.class);
-        AbstractTest test = mock(AbstractTest.class);
+        LightningTest test = mock(LightningTest.class);
         when(test.result()).thenReturn(TestResult.FAIL);
         when(test.name()).thenReturn("some name");
         when(test.getTestExecutionReport()).thenReturn("some content");
@@ -64,7 +65,7 @@ public class JunitReportTest {
     @Test
     public void testGetErrorTestcase() {
         TestSet testSet = mock(TestSet.class);
-        AbstractTest test = mock(AbstractTest.class);
+        LightningTest test = mock(LightningTest.class);
         when(test.result()).thenReturn(TestResult.ERROR);
         when(test.name()).thenReturn("some name");
         when(test.getTestExecutionReport()).thenReturn("some content");

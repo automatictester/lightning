@@ -5,11 +5,8 @@ import uk.co.automatictester.lightning.core.AbstractConsoleOutputTest;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
-import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
-import uk.co.automatictester.lightning.core.tests.RespTimeAvgTest;
-import uk.co.automatictester.lightning.core.tests.ServerSideGreaterThanTest;
-import uk.co.automatictester.lightning.core.tests.ServerSideLessThanTest;
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
+import uk.co.automatictester.lightning.core.tests.*;
+import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
@@ -24,7 +21,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
     @Test
     public void verifyExecuteServerMethod_2_1_1() {
         PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestA = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
-        List<AbstractTest> tests = new ArrayList<>();
+        List<LightningTest> tests = new ArrayList<>();
         tests.add(passedTransactionsAbsoluteTestA);
 
         List<String[]> clientSideTestData = new ArrayList<>();
@@ -69,7 +66,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
-        List<AbstractTest> tests = new ArrayList<>();
+        List<LightningTest> tests = new ArrayList<>();
         tests.add(passedTransactionsAbsoluteTestA);
         tests.add(passedTransactionsAbsoluteTestB);
 
@@ -96,7 +93,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
-        List<AbstractTest> tests = new ArrayList<>();
+        List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
         tests.add(respTimeAvgTestB);
         tests.add(respTimeAvgTestC);
@@ -123,7 +120,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
-        List<AbstractTest> tests = new ArrayList<>();
+        List<LightningTest> tests = new ArrayList<>();
         tests.add(passedTransactionsAbsoluteTestA);
         tests.add(passedTransactionsAbsoluteTestB);
 
@@ -156,7 +153,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
-        List<AbstractTest> tests = new ArrayList<>();
+        List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
         tests.add(respTimeAvgTestB);
         tests.add(respTimeAvgTestC);
@@ -189,7 +186,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
         TestData.getInstance().addClientSideTestData(jmeterTransactions);
 
-        List<AbstractTest> tests = new ArrayList<>();
+        List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
         tests.add(respTimeAvgTestC);
 

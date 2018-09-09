@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.tests.base;
+package uk.co.automatictester.lightning.core.tests;
 
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_RESULT;
 
-public abstract class AbstractClientSideTest extends AbstractTest {
+public abstract class AbstractClientSideTest extends AbstractLightningTest {
 
     protected String transactionName;
     protected int transactionCount;
@@ -75,7 +75,7 @@ public abstract class AbstractClientSideTest extends AbstractTest {
     }
 
     public List<Integer> longestTransactions() {
-        throw new UnsupportedOperationException("Method not implemented for AbstractTest which is not AbstractRespTimeTest");
+        throw new UnsupportedOperationException("Method not implemented for LightningTest which is not AbstractRespTimeTest");
     }
 
     protected int failureCount(JmeterTransactions transactions) {

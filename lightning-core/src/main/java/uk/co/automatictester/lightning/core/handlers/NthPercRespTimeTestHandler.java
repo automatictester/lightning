@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.core.handlers;
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.RespTimeNthPercentileTest;
-import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
+import uk.co.automatictester.lightning.core.tests.AbstractClientSideTest;
 
 import java.util.Optional;
 

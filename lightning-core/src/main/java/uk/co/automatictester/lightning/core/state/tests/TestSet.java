@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.state.tests;
 
-import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
+import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
+import uk.co.automatictester.lightning.core.tests.LightningTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import static uk.co.automatictester.lightning.core.enums.TestResult.*;
 
 public class TestSet {
 
-    private final List<AbstractTest> tests = new ArrayList<>();
+    private final List<LightningTest> tests = new ArrayList<>();
     private final TestSetResults results = new TestSetResults();
 
     public void executeTests() {
@@ -43,15 +44,15 @@ public class TestSet {
         return results.hasFailed();
     }
 
-    public void add(AbstractTest test) {
+    public void add(LightningTest test) {
         tests.add(test);
     }
 
-    public void addAll(List<AbstractTest> test) {
+    public void addAll(List<LightningTest> test) {
         tests.addAll(test);
     }
 
-    public List<AbstractTest> get() {
+    public List<LightningTest> get() {
         return tests;
     }
 

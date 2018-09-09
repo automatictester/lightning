@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.tests.base;
+package uk.co.automatictester.lightning.core.tests;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import uk.co.automatictester.lightning.core.enums.TestResult;

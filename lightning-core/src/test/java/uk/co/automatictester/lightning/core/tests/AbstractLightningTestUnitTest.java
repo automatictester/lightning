@@ -3,7 +3,6 @@ package uk.co.automatictester.lightning.core.tests;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.tests.base.AbstractClientSideTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
 
-public class AbstractTestUnitTest {
+public class AbstractLightningTestUnitTest {
 
     @Test
     public void testFilterTransactionsSome() {

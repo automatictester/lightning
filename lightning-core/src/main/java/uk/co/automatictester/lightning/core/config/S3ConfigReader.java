@@ -26,6 +26,7 @@ public class S3ConfigReader extends AbstractConfigReader {
         this.bucket = bucket;
     }
 
+    @Override
     public TestSet readTests(String xmlFile) {
         S3Client client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         String xmlObjectContent = client.getObjectAsString(xmlFile);
