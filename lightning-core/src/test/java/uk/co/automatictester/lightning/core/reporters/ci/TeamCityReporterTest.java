@@ -53,7 +53,7 @@ public class TeamCityReporterTest {
         String expectedOutput = String.format("##teamcity[buildStatus text='Transactions executed: 10, failed: 0']");
 
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
-        when(jmeterTransactions.size()).thenReturn(10);
+        when(jmeterTransactions.summaryReport()).thenReturn("Transactions executed: 10, failed: 0");
         when(jmeterTransactions.failCount()).thenReturn(0);
 
         String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).teamCityBuildReportSummary();
@@ -65,7 +65,7 @@ public class TeamCityReporterTest {
         String expectedOutput = String.format("##teamcity[buildProblem description='Transactions executed: 10, failed: 1']");
 
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
-        when(jmeterTransactions.size()).thenReturn(10);
+        when(jmeterTransactions.summaryReport()).thenReturn("Transactions executed: 10, failed: 1");
         when(jmeterTransactions.failCount()).thenReturn(1);
 
         String output = TeamCityReporter.fromJmeterTransactions(jmeterTransactions).teamCityBuildReportSummary();

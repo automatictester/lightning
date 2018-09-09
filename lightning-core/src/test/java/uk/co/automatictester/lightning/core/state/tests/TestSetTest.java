@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.mock;
 
 public class TestSetTest extends AbstractConsoleOutputTest {
 
@@ -52,6 +53,8 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         assertThat(testSet.size(), is(4));
         assertThat(testSet.failCount(), is(1));
         assertThat(testSet.errorCount(), is(1));
+
+        assertThat(testSet.jenkinsSummaryReport(), containsString("Tests executed: 4, failed: 2"));
     }
 
     @Test

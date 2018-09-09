@@ -19,7 +19,7 @@ public abstract class AbstractLightningCoreFacade {
     public String runReport() {
         TestData testData = TestData.getInstance();
         JmeterTransactions jmeterTransactions = testData.clientSideTestData();
-        return jmeterTransactions.getJmeterReport();
+        return jmeterTransactions.summaryReport();
     }
 
     public String testSetExecutionSummaryReport() {

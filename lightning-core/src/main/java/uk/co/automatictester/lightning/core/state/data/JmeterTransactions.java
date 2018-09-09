@@ -129,7 +129,7 @@ public class JmeterTransactions {
                 .getAsLong();
     }
 
-    public String getJmeterReport() {
+    public String summaryReport() {
         return String.format("Transactions executed: %d, failed: %d", entries.size(), failCount());
     }
 

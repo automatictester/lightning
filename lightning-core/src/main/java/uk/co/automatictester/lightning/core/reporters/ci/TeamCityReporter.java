@@ -1,21 +1,22 @@
 package uk.co.automatictester.lightning.core.reporters.ci;
 
-import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
-public class TeamCityReporter extends AbstractCiReporter {
+public class TeamCityReporter {
 
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
+    private TestSet testSet;
+    private JmeterTransactions jmeterTransactions;
 
     private TeamCityReporter(TestSet testSet) {
-        super(testSet);
+        this.testSet = testSet;
     }
 
     private TeamCityReporter(JmeterTransactions jmeterTransactions) {
-        super(jmeterTransactions);
+        this.jmeterTransactions = jmeterTransactions;
     }
 
     public static TeamCityReporter fromTestSet(TestSet testSet) {
@@ -28,7 +29,7 @@ public class TeamCityReporter extends AbstractCiReporter {
 
     public String teamCityBuildReportSummary() {
         String outputTemplate = jmeterTransactions.failCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
-        String reportSummary = reportSummary();
+        String reportSummary = jmeterTransactions.summaryReport();
         return String.format(outputTemplate, reportSummary);
     }
 

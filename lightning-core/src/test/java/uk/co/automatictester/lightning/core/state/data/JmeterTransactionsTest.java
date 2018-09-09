@@ -152,7 +152,7 @@ public class JmeterTransactionsTest {
         testData.add(new String[]{"Login", "721", "false", "1434291246000"});
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
 
-        String output = jmeterTransactions.getJmeterReport();
+        String output = jmeterTransactions.summaryReport();
         assertThat(output, containsString("Transactions executed: 5, failed: 2"));
     }
 }

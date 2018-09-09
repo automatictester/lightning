@@ -1,22 +1,23 @@
 package uk.co.automatictester.lightning.core.reporters.ci;
 
-import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
-public class JenkinsS3Reporter extends AbstractCiReporter {
+public class JenkinsS3Reporter {
 
     private static S3Client s3Client;
+    private TestSet testSet;
+    private JmeterTransactions jmeterTransactions;
 
     private JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
-        super(testSet);
+        this.testSet = testSet;
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
     private JenkinsS3Reporter(String region, String bucket, JmeterTransactions jmeterTransactions) {
-        super(jmeterTransactions);
+        this.jmeterTransactions = jmeterTransactions;
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
@@ -31,17 +32,11 @@ public class JenkinsS3Reporter extends AbstractCiReporter {
     public String storeJenkinsBuildNameInS3() {
         String jenkinsReportContent;
         if (testSet != null) {
-            jenkinsReportContent = verifySummary();
+            jenkinsReportContent = testSet.jenkinsSummaryReport();
         } else {
-            jenkinsReportContent = reportSummary();
+            jenkinsReportContent = jmeterTransactions.summaryReport();
         }
         return storeJenkinsReportToS3(jenkinsReportContent);
-    }
-
-    private String verifySummary() {
-        int executed = testSet.size();
-        int failed = testSet.failCount() + testSet.errorCount();
-        return String.format("Tests executed: %s, failed: %s", executed, failed);
     }
 
     private String storeJenkinsReportToS3(String summary) {

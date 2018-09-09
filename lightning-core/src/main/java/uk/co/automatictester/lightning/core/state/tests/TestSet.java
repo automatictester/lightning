@@ -31,6 +31,10 @@ public class TestSet {
         return results.testSetExecutionSummaryReport();
     }
 
+    public String jenkinsSummaryReport() {
+        return results.jenkinsSummary();
+    }
+
     public int failCount() {
         return results.failCount();
     }
@@ -72,6 +76,12 @@ public class TestSet {
 
         boolean hasFailed() {
             return failCount() != 0 || errorCount() != 0;
+        }
+
+        String jenkinsSummary() {
+            int executed = TestSet.this.size();
+            int failed = TestSet.this.failCount() + TestSet.this.errorCount();
+            return String.format("Tests executed: %s, failed: %s", executed, failed);
         }
 
         String testSetExecutionSummaryReport() {

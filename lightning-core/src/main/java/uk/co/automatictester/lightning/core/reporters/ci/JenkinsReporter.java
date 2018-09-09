@@ -1,7 +1,6 @@
 package uk.co.automatictester.lightning.core.reporters.ci;
 
 import uk.co.automatictester.lightning.core.exceptions.JenkinsReportGenerationException;
-import uk.co.automatictester.lightning.core.reporters.ci.base.AbstractCiReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
@@ -11,14 +10,17 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-public class JenkinsReporter extends AbstractCiReporter {
+public class JenkinsReporter {
+
+    private TestSet testSet;
+    private JmeterTransactions jmeterTransactions;
 
     private JenkinsReporter(TestSet testSet) {
-        super(testSet);
+        this.testSet = testSet;
     }
 
     private JenkinsReporter(JmeterTransactions jmeterTransactions) {
-        super(jmeterTransactions);
+        this.jmeterTransactions = jmeterTransactions;
     }
 
     public static JenkinsReporter fromTestSet(TestSet testSet) {
@@ -32,17 +34,11 @@ public class JenkinsReporter extends AbstractCiReporter {
     public void setJenkinsBuildName() {
         String fileContent = null;
         if (testSet != null) {
-            fileContent = verifySummary();
+            fileContent = testSet.jenkinsSummaryReport();
         } else if (jmeterTransactions != null) {
-            fileContent = reportSummary();
+            fileContent = jmeterTransactions.summaryReport();
         }
         writeJenkinsBuildNameSetterFile(fileContent);
-    }
-
-    private String verifySummary() {
-        int executed = testSet.size();
-        int failed = testSet.failCount() + testSet.errorCount();
-        return String.format("Tests executed: %s, failed: %s", executed, failed);
     }
 
     private void writeJenkinsBuildNameSetterFile(String summary) {
