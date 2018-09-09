@@ -4,31 +4,29 @@ import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
 import com.univocity.parsers.common.processor.RowListProcessor;
 import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentHostAndMetricException;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
-import uk.co.automatictester.lightning.core.state.data.base.AbstractCsvEntries;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.*;
 
-public class PerfMonEntries extends AbstractCsvEntries {
+public class PerfMonEntries {
+
+    private CsvEntries entries = new CsvEntries();
 
     private PerfMonEntries(File perfMonCsvFile) {
-        loadFromFile(perfMonCsvFile);
-        throwExceptionIfEmpty();
+        entries.loadFromFile(perfMonCsvFile, csvParserSettings());
     }
 
     private PerfMonEntries(List<String[]> perfMonEntries) {
-        super(perfMonEntries);
+        entries = new CsvEntries(perfMonEntries);
     }
 
     private PerfMonEntries(String region, String bucket, String key) {
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
-        loadFromS3Object(key);
-        throwExceptionIfEmpty();
+        entries.loadFromS3Object(region, bucket, key, csvParserSettings());
     }
 
     public static PerfMonEntries fromFile(File perfMonCvsFile) {
@@ -43,15 +41,26 @@ public class PerfMonEntries extends AbstractCsvEntries {
         return new PerfMonEntries(region, bucket, key);
     }
 
+    public int size() {
+        return entries.size();
+    }
+
+    public Stream<String[]> asStream() {
+        return entries.asStream();
+    }
+
+    public List<String[]> asList() {
+        return entries.asList();
+    }
+
     public PerfMonEntries entriesWith(String hostAndMetric) {
-        List<String[]> list = entries.stream()
+        List<String[]> list = entries.asStream()
                 .filter(e -> e[HOST_AND_METRIC.getColumn()].equals(hostAndMetric))
                 .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, hostAndMetric)));
         return PerfMonEntries.fromList(list);
     }
 
-    @Override
-    protected CsvParserSettings csvParserSettings() {
+    private CsvParserSettings csvParserSettings() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(false);

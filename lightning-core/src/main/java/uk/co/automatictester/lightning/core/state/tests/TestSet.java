@@ -1,6 +1,5 @@
 package uk.co.automatictester.lightning.core.state.tests;
 
-import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 import uk.co.automatictester.lightning.core.tests.LightningTest;
 
 import java.util.ArrayList;

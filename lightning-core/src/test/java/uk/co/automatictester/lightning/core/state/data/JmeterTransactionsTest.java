@@ -18,8 +18,8 @@ public class JmeterTransactionsTest {
     @Test
     public void verifyReadMethod() {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromFile(CSV_2_TRANSACTIONS);
-        assertThat(jmeterTransactions.entries(), hasItem(LOGIN_3514_SUCCESS));
-        assertThat(jmeterTransactions.entries(), hasItem(SEARCH_11221_SUCCESS));
+        assertThat(jmeterTransactions.asList(), hasItem(LOGIN_3514_SUCCESS));
+        assertThat(jmeterTransactions.asList(), hasItem(SEARCH_11221_SUCCESS));
     }
 
     @Test(expectedExceptions = CSVFileIOException.class)

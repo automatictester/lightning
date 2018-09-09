@@ -63,7 +63,7 @@ public abstract class AbstractRespTimeTest extends AbstractClientSideTest {
     @Override
     protected void calculateActualResult(JmeterTransactions transactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        transactions.stream()
+        transactions.asStream()
                 .map(t -> Double.parseDouble(t[TRANSACTION_DURATION.getColumn()]))
                 .forEach(ds::addValue);
         actualResult = calculateNumericResult(ds);

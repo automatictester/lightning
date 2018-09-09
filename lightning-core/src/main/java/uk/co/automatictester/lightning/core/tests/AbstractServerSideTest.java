@@ -71,7 +71,7 @@ public abstract class AbstractServerSideTest extends AbstractLightningTest {
 
     private void calculateActualResult(PerfMonEntries entries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
-        entries.stream()
+        entries.asStream()
                 .map(e -> Double.parseDouble(e[VALUE.getColumn()]))
                 .forEach(ds::addValue);
         actualResult = (int) ds.getMean();

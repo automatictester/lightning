@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.*;
-import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

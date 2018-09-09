@@ -79,7 +79,7 @@ public abstract class AbstractClientSideTest extends AbstractLightningTest {
     }
 
     protected int failureCount(JmeterTransactions transactions) {
-        return (int) transactions.stream()
+        return (int) transactions.asStream()
                 .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
                 .count();
     }

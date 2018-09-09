@@ -3,7 +3,6 @@ package uk.co.automatictester.lightning.core.reporters.ci;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
-import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 import uk.co.automatictester.lightning.core.tests.LightningTest;
 import uk.co.automatictester.lightning.core.tests.PassedTransactionsAbsoluteTest;
 import uk.co.automatictester.lightning.core.tests.AbstractServerSideTest;

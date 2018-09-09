@@ -6,7 +6,6 @@ import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.core.tests.*;
-import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;

@@ -6,8 +6,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
-import uk.co.automatictester.lightning.core.state.data.base.AbstractCsvEntries;
 
 import java.io.File;
 import java.time.Duration;
@@ -15,6 +13,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static java.lang.Math.min;
 import static java.util.Comparator.reverseOrder;
@@ -22,17 +21,17 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static uk.co.automatictester.lightning.core.enums.JmeterColumns.*;
 
-public class JmeterTransactions extends AbstractCsvEntries {
+public class JmeterTransactions {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
     private static final Logger log = LoggerFactory.getLogger(JmeterTransactions.class);
+    private CsvEntries entries = new CsvEntries();
 
     private JmeterTransactions(File csvFile) {
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
-        loadFromFile(csvFile);
-        throwExceptionIfEmpty();
+        entries.loadFromFile(csvFile, csvParserSettings());
 
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
@@ -40,20 +39,18 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     private JmeterTransactions(String region, String bucket, String key) {
-        s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
-        loadFromS3Object(key);
-        throwExceptionIfEmpty();
+        entries.loadFromS3Object(region, bucket, key, csvParserSettings());
 
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
         log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
     }
 
-    private JmeterTransactions(List<String[]> entries) {
-        super(entries);
+    private JmeterTransactions(List<String[]> jmeterTransactions) {
+        entries = new CsvEntries(jmeterTransactions);
     }
 
     public static JmeterTransactions fromFile(File csvFile) {
@@ -80,7 +77,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     private JmeterTransactions transactions(Predicate<String[]> predicate, String expectedTransactionName) {
-        List<String[]> transactions = entries.stream()
+        List<String[]> transactions = entries.asStream()
                 .filter(predicate)
                 .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, expectedTransactionName)));
         return JmeterTransactions.fromList(transactions);
@@ -88,7 +85,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
 
     public List<Integer> longestTransactions() {
         int numberOfLongestTransactions = min(entries.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
-        return entries.stream()
+        return entries.asStream()
                 .map(e -> Integer.parseInt(e[TRANSACTION_DURATION.getColumn()]))
                 .sorted(reverseOrder())
                 .limit(numberOfLongestTransactions)
@@ -96,13 +93,25 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     public int failCount() {
-        return (int) entries.stream()
+        return (int) entries.asStream()
                 .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
                 .count();
     }
 
+    public int size() {
+        return entries.size();
+    }
+
+    public Stream<String[]> asStream() {
+        return entries.asStream();
+    }
+
+    public List<String[]> asList() {
+        return entries.asList();
+    }
+
     public long firstTransactionTimestamp() {
-        return entries.stream()
+        return entries.asStream()
                 .mapToLong(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
                 .sorted()
                 .limit(1)
@@ -111,7 +120,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
     }
 
     public long lastTransactionTimestamp() {
-        return entries.stream()
+        return entries.asStream()
                 .map(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
                 .sorted(reverseOrder())
                 .limit(1)
@@ -124,8 +133,7 @@ public class JmeterTransactions extends AbstractCsvEntries {
         return String.format("Transactions executed: %d, failed: %d", entries.size(), failCount());
     }
 
-    @Override
-    protected CsvParserSettings csvParserSettings() {
+    private CsvParserSettings csvParserSettings() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(true);

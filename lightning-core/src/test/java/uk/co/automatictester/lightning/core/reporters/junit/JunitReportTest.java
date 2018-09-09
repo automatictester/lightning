@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import org.w3c.dom.Element;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
-import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 import uk.co.automatictester.lightning.core.tests.LightningTest;
 
 import static org.hamcrest.CoreMatchers.equalTo;

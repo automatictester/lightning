@@ -1,32 +1,32 @@
-package uk.co.automatictester.lightning.core.state.data.base;
+package uk.co.automatictester.lightning.core.state.data;
 
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
+import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class AbstractCsvEntries {
+public class CsvEntries {
 
     protected List<String[]> entries = new ArrayList<>();
-    protected static S3Client s3Client;
 
-    protected AbstractCsvEntries() {
+    public CsvEntries() {
     }
 
-    protected AbstractCsvEntries(List<String[]> entries) {
+    public CsvEntries(List<String[]> entries) {
         this.entries.addAll(entries);
     }
 
-    public List<String[]> entries() {
+    public List<String[]> asList() {
         return entries;
     }
 
-    public Stream<String[]> stream() {
+    public Stream<String[]> asStream() {
         return entries.stream();
     }
 
@@ -34,21 +34,21 @@ public abstract class AbstractCsvEntries {
         return entries.size();
     }
 
-    protected void loadFromS3Object(String csvObject) {
-        String csvObjectContent = s3Client.getObjectAsString(csvObject);
+    public void loadFromS3Object(String region, String bucket, String key, CsvParserSettings csvParserSettings) {
+        S3Client s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
+        String csvObjectContent = s3Client.getObjectAsString(key);
         try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            CsvParserSettings csvParserSettings = csvParserSettings();
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(isr);
             entries.addAll(items);
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
+        throwExceptionIfEmpty();
     }
 
-    protected void loadFromFile(File perfMonCsvFile) {
+    public void loadFromFile(File perfMonCsvFile, CsvParserSettings csvParserSettings) {
         try (FileReader fr = new FileReader(perfMonCsvFile)) {
-            CsvParserSettings csvParserSettings = csvParserSettings();
             csvParserSettings.setInputBufferSize(20_000_000);
             CsvParser csvParser = new CsvParser(csvParserSettings);
             List<String[]> items = csvParser.parseAll(fr);
@@ -56,13 +56,12 @@ public abstract class AbstractCsvEntries {
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
+        throwExceptionIfEmpty();
     }
 
-    protected void throwExceptionIfEmpty() {
+    private void throwExceptionIfEmpty() {
         if (entries.isEmpty()) {
             throw new IllegalStateException("No entries found in CSV file");
         }
     }
-
-    protected abstract CsvParserSettings csvParserSettings();
 }

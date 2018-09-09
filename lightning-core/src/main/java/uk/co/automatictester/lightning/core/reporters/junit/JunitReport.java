@@ -6,7 +6,6 @@ import org.w3c.dom.Node;
 import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.exceptions.JunitReportGenerationException;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
-import uk.co.automatictester.lightning.core.tests.AbstractLightningTest;
 import uk.co.automatictester.lightning.core.tests.LightningTest;
 
 import javax.xml.parsers.DocumentBuilder;
