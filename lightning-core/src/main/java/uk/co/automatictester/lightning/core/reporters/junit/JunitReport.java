@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.reporters.junit.base;
+package uk.co.automatictester.lightning.core.reporters.junit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,16 +11,18 @@ import uk.co.automatictester.lightning.core.tests.base.AbstractTest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 
-public abstract class AbstractJunitReporter {
+public class JunitReport {
 
-    protected final Document doc;
+    private final Document doc;
+    private final TestSet testSet;
 
-    protected AbstractJunitReporter() {
+    public JunitReport(TestSet testSet) {
+        this.testSet = testSet;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
         try {
@@ -32,30 +34,12 @@ public abstract class AbstractJunitReporter {
         doc.setXmlStandalone(true);
     }
 
-    protected void generateJunitReportContent(TestSet testSet) { // TODO: bad
-        Element testsuite = getTestsuite(testSet);
-        Node rootElement = doc.appendChild(testsuite);
-        testSet.get().forEach(test -> {
-            Element testcase = getTestcase(test);
-            rootElement.appendChild(testcase);
-        });
+    public String generateReportContent() {
+        generateXmlDocument();
+        return transformXmlDocumentToString();
     }
 
-    protected Transformer transformer() {
-        Transformer transformer;
-        try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            transformer = transformerFactory.newTransformer();
-        } catch (TransformerConfigurationException e) {
-            throw new JunitReportGenerationException(e);
-        }
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        return transformer;
-    }
-
-    public Element getTestsuite(TestSet testSet) {
+    Element getTestsuite() {
         Element testsuite = doc.createElement("testsuite");
         String testCount = String.valueOf(testSet.size());
         String failCount = String.valueOf(testSet.failCount());
@@ -70,7 +54,7 @@ public abstract class AbstractJunitReporter {
         return testsuite;
     }
 
-    public Element getTestcase(AbstractTest test) {
+    Element getTestcase(AbstractTest test) {
         Element testcase = doc.createElement("testcase");
         testcase.setAttribute("time", "0");
         String testName = test.name();
@@ -102,5 +86,40 @@ public abstract class AbstractJunitReporter {
         element.setAttribute("type", testType);
         element.setAttribute("message", actualResultDescription);
         element.setTextContent(testExecutionReport);
+    }
+
+    private void generateXmlDocument() {
+        Element testsuite = getTestsuite();
+        Node rootElement = doc.appendChild(testsuite);
+        testSet.get().forEach(test -> {
+            Element testcase = getTestcase(test);
+            rootElement.appendChild(testcase);
+        });
+    }
+
+    private String transformXmlDocumentToString() {
+        Transformer transformer = transformer();
+        DOMSource source = new DOMSource(doc);
+        StringWriter stringWriter = new StringWriter();
+        try {
+            transformer.transform(source, new StreamResult(stringWriter));
+        } catch (TransformerException e) {
+            throw new JunitReportGenerationException(e);
+        }
+        return stringWriter.toString();
+    }
+
+    private Transformer transformer() {
+        Transformer transformer;
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
+        } catch (TransformerConfigurationException e) {
+            throw new JunitReportGenerationException(e);
+        }
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        return transformer;
     }
 }

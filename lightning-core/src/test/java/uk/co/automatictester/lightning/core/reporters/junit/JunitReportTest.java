@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JunitReporterTest {
+public class JunitReportTest {
 
     @Test
     public void testGetTestsuite() {
@@ -20,7 +20,7 @@ public class JunitReporterTest {
         when(testSet.errorCount()).thenReturn(1);
         when(testSet.failCount()).thenReturn(1);
 
-        Element testsuite = new JunitReporter().getTestsuite(testSet);
+        Element testsuite = new JunitReport(testSet).getTestsuite();
         assertThat(testsuite.getTagName(), equalTo("testsuite"));
         assertThat(testsuite.getAttribute("tests"), equalTo("3"));
         assertThat(testsuite.getAttribute("errors"), equalTo("1"));
@@ -31,11 +31,12 @@ public class JunitReporterTest {
 
     @Test
     public void testGetPassedTestcase() {
+        TestSet testSet = mock(TestSet.class);
         AbstractTest test = mock(AbstractTest.class);
         when(test.result()).thenReturn(TestResult.PASS);
         when(test.name()).thenReturn("some name");
 
-        Element testcase = new JunitReporter().getTestcase(test);
+        Element testcase = new JunitReport(testSet).getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -43,6 +44,7 @@ public class JunitReporterTest {
 
     @Test
     public void testGetFailedTestcase() {
+        TestSet testSet = mock(TestSet.class);
         AbstractTest test = mock(AbstractTest.class);
         when(test.result()).thenReturn(TestResult.FAIL);
         when(test.name()).thenReturn("some name");
@@ -50,7 +52,7 @@ public class JunitReporterTest {
         when(test.actualResultDescription()).thenReturn("some message");
         when(test.type()).thenReturn("some type");
 
-        Element testcase = new JunitReporter().getTestcase(test);
+        Element testcase = new JunitReport(testSet).getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -61,6 +63,7 @@ public class JunitReporterTest {
 
     @Test
     public void testGetErrorTestcase() {
+        TestSet testSet = mock(TestSet.class);
         AbstractTest test = mock(AbstractTest.class);
         when(test.result()).thenReturn(TestResult.ERROR);
         when(test.name()).thenReturn("some name");
@@ -68,7 +71,7 @@ public class JunitReporterTest {
         when(test.actualResultDescription()).thenReturn("some message");
         when(test.type()).thenReturn("some type");
 
-        Element testcase = new JunitReporter().getTestcase(test);
+        Element testcase = new JunitReport(testSet).getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));

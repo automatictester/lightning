@@ -4,7 +4,7 @@ import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFa
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.S3ConfigReader;
 import uk.co.automatictester.lightning.core.reporters.ci.JenkinsS3Reporter;
-import uk.co.automatictester.lightning.core.reporters.junit.JunitS3Reporter;
+import uk.co.automatictester.lightning.core.reporters.junit.S3JunitReporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
@@ -60,8 +60,7 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public String saveJunitReportToS3() {
-        JunitS3Reporter junitS3Reporter = new JunitS3Reporter(region, bucket);
-        return junitS3Reporter.generateJunitReportToS3(testSet);
+        return S3JunitReporter.generateReport(region, bucket, testSet);
     }
 
     public String putS3Object(String key, String content) {

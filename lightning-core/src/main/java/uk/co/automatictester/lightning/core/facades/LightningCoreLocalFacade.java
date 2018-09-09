@@ -1,10 +1,10 @@
 package uk.co.automatictester.lightning.core.facades;
 
-import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
+import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
 import uk.co.automatictester.lightning.core.reporters.ci.JenkinsReporter;
-import uk.co.automatictester.lightning.core.reporters.junit.JunitReporter;
+import uk.co.automatictester.lightning.core.reporters.junit.LocalFileSystemJunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
@@ -52,8 +52,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void saveJunitReport() {
-        JunitReporter junitreporter = new JunitReporter();
-        junitreporter.generateJunitReport(testSet);
+        LocalFileSystemJunitReporter.generateReport(testSet);
     }
 
     private void loadPerfMonDataIfProvided() {
