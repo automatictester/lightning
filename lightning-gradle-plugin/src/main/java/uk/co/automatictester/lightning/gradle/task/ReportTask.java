@@ -32,9 +32,9 @@ public class ReportTask extends LightningTask {
     }
 
     private void notifyCIServer() {
-        String teamCityBuildReportSummary = core.getTeamCityBuildReportSummary();
+        String teamCityBuildReportSummary = core.teamCityBuildReportSummary();
         log(teamCityBuildReportSummary);
-        String teamCityReportStatistics = core.getTeamCityReportStatistics();
+        String teamCityReportStatistics = core.teamCityReportStatistics();
         log(teamCityReportStatistics);
         core.setJenkinsBuildNameForReport();
     }

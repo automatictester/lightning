@@ -33,7 +33,7 @@ public class VerifyTask extends LightningTask {
         String testExecutionReport = core.executeTests();
         log(testExecutionReport);
 
-        String testSetExecutionSummaryReport = core.getTestSetExecutionSummaryReport();
+        String testSetExecutionSummaryReport = core.testSetExecutionSummaryReport();
         log(testSetExecutionSummaryReport);
 
         long testSetExecEnd = System.currentTimeMillis();
@@ -51,7 +51,7 @@ public class VerifyTask extends LightningTask {
     }
 
     private void notifyCIServer() {
-        String teamCityVerifyStatistics = core.getTeamCityVerifyStatistics();
+        String teamCityVerifyStatistics = core.teamCityVerifyStatistics();
         log(teamCityVerifyStatistics);
         core.setJenkinsBuildNameForVerify();
     }
