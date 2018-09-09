@@ -2,13 +2,16 @@ package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
+import uk.co.automatictester.lightning.core.readers.CsvDataReader;
+import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
+import uk.co.automatictester.lightning.core.readers.PerfMonDataReader;
 import uk.co.automatictester.lightning.core.reporters.jenkins.LocalFileSystemJenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.LocalFileSystemJunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.io.File;
+import java.util.List;
 
 public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
 
@@ -35,10 +38,11 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void loadTestData() {
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromFile(jmeterCsv);
+        CsvDataReader reader = new JmeterDataReader();
+        List<String[]> entries = reader.fromFile(jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
-        testData.addClientSideTestData(jmeterTransactions.asList()); // TODO
+        testData.addClientSideTestData(entries);
         loadPerfMonDataIfProvided();
     }
 
@@ -60,8 +64,9 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(perfMonCsv); // TODO
-            TestData.getInstance().addServerSideTestData(perfMonDataEntries.asList());
+            CsvDataReader reader = new PerfMonDataReader();
+            List<String[]> entries = reader.fromFile(perfMonCsv);
+            TestData.getInstance().addServerSideTestData(entries);
         }
     }
 }

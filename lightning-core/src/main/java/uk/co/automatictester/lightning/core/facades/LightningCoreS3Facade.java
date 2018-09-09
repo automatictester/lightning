@@ -2,13 +2,17 @@ package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.S3ConfigReader;
+import uk.co.automatictester.lightning.core.readers.CsvDataReader;
+import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
+import uk.co.automatictester.lightning.core.readers.PerfMonDataReader;
 import uk.co.automatictester.lightning.core.reporters.jenkins.S3JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.S3JunitReporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
+
+import java.util.List;
 
 public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
 
@@ -43,10 +47,11 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public void loadTestDataFromS3() {
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromS3Object(region, bucket, jmeterCsv);
+        CsvDataReader reader = new JmeterDataReader();
+        List<String[]> entries = reader.fromS3Object(region, bucket, jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
-        testData.addClientSideTestData(jmeterTransactions.asList()); // TODO
+        testData.addClientSideTestData(entries);
         loadPerfMonDataIfProvided();
     }
 
@@ -72,8 +77,9 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromS3Object(region, bucket, perfMonCsv); // TODO
-            TestData.getInstance().addServerSideTestData(perfMonDataEntries.asList());
+            CsvDataReader reader = new PerfMonDataReader();
+            List<String[]> entries = reader.fromS3Object(region, bucket, perfMonCsv);
+            TestData.getInstance().addServerSideTestData(entries);
         }
     }
 }

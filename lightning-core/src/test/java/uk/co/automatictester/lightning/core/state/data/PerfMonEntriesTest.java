@@ -1,10 +1,7 @@
 package uk.co.automatictester.lightning.core.state.data;
 
-import org.hamcrest.CoreMatchers;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentHostAndMetricException;
-import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +10,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class PerfMonEntriesTest {
-
-    @Test
-    public void verifyReadMethod() {
-        PerfMonEntries perfMonEntries = PerfMonEntries.fromFile(LegacyTestData.CSV_2_ENTRIES);
-        assertThat(perfMonEntries.asList(), CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_9128));
-        assertThat(perfMonEntries.asList(), CoreMatchers.hasItem(LegacyTestData.CPU_ENTRY_21250));
-    }
-
-    @Test(expectedExceptions = CSVFileIOException.class)
-    public void verifyReadMethodIOException() {
-        PerfMonEntries.fromFile(LegacyTestData.CSV_NONEXISTENT);
-    }
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void verifyReadMethodNoTransactionsException() {
-        PerfMonEntries.fromFile(LegacyTestData.CSV_0_ENTRIES);
-    }
 
     @Test
     public void testExcludeHostAndMetricOtherThanMethod() {
@@ -50,5 +30,4 @@ public class PerfMonEntriesTest {
 
         perfMonEntries.entriesWith("192.168.0.14 CPU");
     }
-
 }

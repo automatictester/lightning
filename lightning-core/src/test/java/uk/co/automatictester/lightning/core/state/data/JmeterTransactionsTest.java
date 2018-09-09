@@ -3,6 +3,9 @@ package uk.co.automatictester.lightning.core.state.data;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
+import uk.co.automatictester.lightning.core.readers.CsvDataReader;
+import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
+import uk.co.automatictester.lightning.shared.LegacyTestData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,23 +18,6 @@ import static org.hamcrest.Matchers.*;
 import static uk.co.automatictester.lightning.shared.LegacyTestData.*;
 
 public class JmeterTransactionsTest {
-
-    @Test
-    public void verifyReadMethod() {
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromFile(CSV_2_TRANSACTIONS);
-        assertThat(jmeterTransactions.asList(), hasItem(LOGIN_3514_SUCCESS));
-        assertThat(jmeterTransactions.asList(), hasItem(SEARCH_11221_SUCCESS));
-    }
-
-    @Test(expectedExceptions = CSVFileIOException.class)
-    public void verifyReadMethodIOException() {
-        JmeterTransactions.fromFile(CSV_NONEXISTENT);
-    }
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void verifyReadMethodNoTransactionsException() {
-        JmeterTransactions.fromFile(CSV_0_TRANSACTIONS);
-    }
 
     @Test
     public void testExcludeLabelsOtherThanMethod() {

@@ -1,15 +1,7 @@
 package uk.co.automatictester.lightning.core.state.data;
 
-import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
-import com.univocity.parsers.common.processor.RowListProcessor;
-import com.univocity.parsers.csv.CsvParserSettings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
 
-import java.io.File;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -27,41 +19,10 @@ public class JmeterTransactions {
     private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
     private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
     private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
-    private static final Logger log = LoggerFactory.getLogger(JmeterTransactions.class);
-    private CsvEntries entries = new CsvEntries();
-
-    private JmeterTransactions(File csvFile) {
-        Instant start = Instant.now();
-        log.debug("Reading CSV file - start");
-
-        entries.loadFromFile(csvFile, csvParserSettings());
-
-        Instant finish = Instant.now();
-        Duration duration = Duration.between(start, finish);
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
-    }
-
-    private JmeterTransactions(String region, String bucket, String key) {
-        Instant start = Instant.now();
-        log.debug("Reading CSV file - start");
-
-        entries.loadFromS3Object(region, bucket, key, csvParserSettings());
-
-        Instant finish = Instant.now();
-        Duration duration = Duration.between(start, finish);
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
-    }
+    private CsvEntries entries;
 
     private JmeterTransactions(List<String[]> jmeterTransactions) {
         entries = new CsvEntries(jmeterTransactions);
-    }
-
-    public static JmeterTransactions fromFile(File csvFile) {
-        return new JmeterTransactions(csvFile);
-    }
-
-    public static JmeterTransactions fromS3Object(String region, String bucket, String key) {
-        return new JmeterTransactions(region, bucket, key);
     }
 
     public static JmeterTransactions fromList(List<String[]> entries) {
@@ -145,17 +106,6 @@ public class JmeterTransactions {
         String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", failCount());
         String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", size());
         return String.format("%s%s", failedTransactionsStats, totalTransactionsStats);
-    }
-
-    private CsvParserSettings csvParserSettings() {
-        CsvParserSettings parserSettings = new CsvParserSettings();
-        parserSettings.setLineSeparatorDetectionEnabled(true);
-        parserSettings.setHeaderExtractionEnabled(true);
-        parserSettings.selectFields("label", "elapsed", "success", "timeStamp");
-        RowListProcessor rowProcessor = new RowListProcessor();
-        ConcurrentRowProcessor concurrentRowProcessor = new ConcurrentRowProcessor(rowProcessor);
-        parserSettings.setProcessor(concurrentRowProcessor);
-        return parserSettings;
     }
 
     private List<String[]> returnListOrThrowExceptionIfEmpty(List<String[]> list, String expectedTransactionName) {
