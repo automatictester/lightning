@@ -1,5 +1,5 @@
 
-File junitfile = new File(basedir, "target/jmeter/bin/junit.xml");
+File junitfile = new File(basedir, "junit.xml");
 if (!junitfile.exists()) {
     throw new FileNotFoundException("Could not find file: " + junitfile);
 }
