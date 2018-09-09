@@ -8,9 +8,6 @@ public class CsvEntries {
 
     protected List<String[]> entries = new ArrayList<>();
 
-    public CsvEntries() {
-    }
-
     public CsvEntries(List<String[]> entries) {
         this.entries.addAll(entries);
     }

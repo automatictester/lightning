@@ -40,6 +40,9 @@ public abstract class CsvDataReader {
     }
 
     public List<String[]> fromS3Object(String region, String bucket, String key) {
+        Instant start = Instant.now();
+        log.debug("Reading CSV file - start");
+
         List<String[]> entries = new ArrayList<>();
         S3Client s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         String csvObjectContent = s3Client.getObjectAsString(key);
@@ -51,6 +54,10 @@ public abstract class CsvDataReader {
             throw new CSVFileIOException(e);
         }
         throwExceptionIfEmpty(entries);
+
+        Instant finish = Instant.now();
+        Duration duration = Duration.between(start, finish);
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
         return entries;
     }
 
