@@ -15,14 +15,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JenkinsReporterTest {
+public class LocalFileSystemJenkinsReporterTest {
 
     @Test
     public void testSetJenkinsBuildName_verify() throws IOException {
         TestSet testSet = mock(TestSet.class);
         when(testSet.jenkinsSummaryReport()).thenReturn("Tests executed: 3, failed: 2");
 
-        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
+        LocalFileSystemJenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
 
         String fileContent = readFileToStringAndDelete();
         assertThat(fileContent, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));
@@ -34,7 +34,7 @@ public class JenkinsReporterTest {
         JmeterTransactions jmeterTransactions = mock(JmeterTransactions.class);
         when(jmeterTransactions.summaryReport()).thenReturn("Transactions executed: 3, failed: 1");
 
-        JenkinsReporter.fromJmeterTransactions(jmeterTransactions).setJenkinsBuildName();
+        LocalFileSystemJenkinsReporter.fromJmeterTransactions(jmeterTransactions).setJenkinsBuildName();
 
         String fileContent = readFileToStringAndDelete();
         assertThat(fileContent, containsString("In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file=\"lightning-jenkins.properties\",property=\"result.string\"}"));

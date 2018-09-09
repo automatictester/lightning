@@ -24,6 +24,9 @@ import static uk.co.automatictester.lightning.core.enums.JmeterColumns.*;
 public class JmeterTransactions {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
+    private static final String TEAMCITY_BUILD_STATUS = "##teamcity[buildStatus text='%s']";
+    private static final String TEAMCITY_BUILD_PROBLEM = "##teamcity[buildProblem description='%s']%n";
+    private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
     private static final Logger log = LoggerFactory.getLogger(JmeterTransactions.class);
     private CsvEntries entries = new CsvEntries();
 
@@ -131,6 +134,17 @@ public class JmeterTransactions {
 
     public String summaryReport() {
         return String.format("Transactions executed: %d, failed: %d", entries.size(), failCount());
+    }
+
+    public String teamCityBuildReportSummary() {
+        String outputTemplate = failCount() > 0 ? TEAMCITY_BUILD_PROBLEM : TEAMCITY_BUILD_STATUS;
+        return String.format(outputTemplate, summaryReport());
+    }
+
+    public String teamCityReportStatistics() {
+        String failedTransactionsStats = String.format(TEAMCITY_STATISTICS, "Failed transactions", failCount());
+        String totalTransactionsStats = String.format(TEAMCITY_STATISTICS, "Total transactions", size());
+        return String.format("%s%s", failedTransactionsStats, totalTransactionsStats);
     }
 
     private CsvParserSettings csvParserSettings() {

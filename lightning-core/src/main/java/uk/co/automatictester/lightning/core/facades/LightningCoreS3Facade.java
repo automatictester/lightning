@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.core.facades;
 import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.S3ConfigReader;
-import uk.co.automatictester.lightning.core.reporters.ci.JenkinsS3Reporter;
+import uk.co.automatictester.lightning.core.reporters.ci.S3JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.S3JunitReporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
@@ -52,11 +52,11 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public String storeJenkinsBuildNameForVerifyInS3() {
-        return JenkinsS3Reporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
+        return S3JenkinsReporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
     }
 
     public String storeJenkinsBuildNameForReportInS3() {
-        return JenkinsS3Reporter.fromJmeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
+        return S3JenkinsReporter.fromJmeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
     }
 
     public String saveJunitReportToS3() {

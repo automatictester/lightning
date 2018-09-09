@@ -10,25 +10,25 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-public class JenkinsReporter {
+public class LocalFileSystemJenkinsReporter {
 
     private TestSet testSet;
     private JmeterTransactions jmeterTransactions;
 
-    private JenkinsReporter(TestSet testSet) {
+    private LocalFileSystemJenkinsReporter(TestSet testSet) {
         this.testSet = testSet;
     }
 
-    private JenkinsReporter(JmeterTransactions jmeterTransactions) {
+    private LocalFileSystemJenkinsReporter(JmeterTransactions jmeterTransactions) {
         this.jmeterTransactions = jmeterTransactions;
     }
 
-    public static JenkinsReporter fromTestSet(TestSet testSet) {
-        return new JenkinsReporter(testSet);
+    public static LocalFileSystemJenkinsReporter fromTestSet(TestSet testSet) {
+        return new LocalFileSystemJenkinsReporter(testSet);
     }
 
-    public static JenkinsReporter fromJmeterTransactions(JmeterTransactions jmeterTransactions) {
-        return new JenkinsReporter(jmeterTransactions);
+    public static LocalFileSystemJenkinsReporter fromJmeterTransactions(JmeterTransactions jmeterTransactions) {
+        return new LocalFileSystemJenkinsReporter(jmeterTransactions);
     }
 
     public void setJenkinsBuildName() {

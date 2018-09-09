@@ -5,28 +5,28 @@ import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFa
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
-public class JenkinsS3Reporter {
+public class S3JenkinsReporter {
 
     private static S3Client s3Client;
     private TestSet testSet;
     private JmeterTransactions jmeterTransactions;
 
-    private JenkinsS3Reporter(String region, String bucket, TestSet testSet) {
+    private S3JenkinsReporter(String region, String bucket, TestSet testSet) {
         this.testSet = testSet;
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
-    private JenkinsS3Reporter(String region, String bucket, JmeterTransactions jmeterTransactions) {
+    private S3JenkinsReporter(String region, String bucket, JmeterTransactions jmeterTransactions) {
         this.jmeterTransactions = jmeterTransactions;
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
     }
 
-    public static JenkinsS3Reporter fromTestSet(String region, String bucket, TestSet testSet) {
-        return new JenkinsS3Reporter(region, bucket, testSet);
+    public static S3JenkinsReporter fromTestSet(String region, String bucket, TestSet testSet) {
+        return new S3JenkinsReporter(region, bucket, testSet);
     }
 
-    public static JenkinsS3Reporter fromJmeterTransactions(String region, String bucket, JmeterTransactions jmeterTransactions) {
-        return new JenkinsS3Reporter(region, bucket, jmeterTransactions);
+    public static S3JenkinsReporter fromJmeterTransactions(String region, String bucket, JmeterTransactions jmeterTransactions) {
+        return new S3JenkinsReporter(region, bucket, jmeterTransactions);
     }
 
     public String storeJenkinsBuildNameInS3() {

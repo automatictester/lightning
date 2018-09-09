@@ -3,7 +3,7 @@ package uk.co.automatictester.lightning.core.facades;
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
 import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
-import uk.co.automatictester.lightning.core.reporters.ci.JenkinsReporter;
+import uk.co.automatictester.lightning.core.reporters.ci.LocalFileSystemJenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.LocalFileSystemJunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
@@ -44,11 +44,11 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void setJenkinsBuildNameForVerify() {
-        JenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
+        LocalFileSystemJenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
     }
 
     public void setJenkinsBuildNameForReport() {
-        JenkinsReporter.fromJmeterTransactions(jmeterTransactions).setJenkinsBuildName();
+        LocalFileSystemJenkinsReporter.fromJmeterTransactions(jmeterTransactions).setJenkinsBuildName();
     }
 
     public void saveJunitReport() {

@@ -2,6 +2,7 @@ package uk.co.automatictester.lightning.core.state.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.AbstractConsoleOutputTest;
+import uk.co.automatictester.lightning.core.reporters.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
@@ -15,6 +16,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestSetTest extends AbstractConsoleOutputTest {
 
@@ -207,5 +209,36 @@ public class TestSetTest extends AbstractConsoleOutputTest {
 
         String output = testSet.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
+    }
+
+    @Test
+    public void testTeamCityVerifyStatistics() {
+        PassedTransactionsAbsoluteTest clientTest = new PassedTransactionsAbsoluteTest.Builder("Failed transactions", 0).build();
+        ServerSideLessThanTest serverTest = new ServerSideLessThanTest.Builder("CPU utilization", 40000).withHostAndMetric("192.168.0.12 CPU").build();
+        List<LightningTest> tests = new ArrayList<>();
+        tests.add(clientTest);
+        tests.add(serverTest);
+        TestSet testSet = new TestSet();
+        testSet.addAll(tests);
+
+        List<String[]> clientSideTestData = new ArrayList<>();
+        clientSideTestData.add(LegacyTestData.LOGIN_3514_SUCCESS);
+        clientSideTestData.add(LegacyTestData.LOGIN_1200_FAILURE);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(clientSideTestData);
+        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+
+        List<String[]> serverSideTestData = new ArrayList<>();
+        serverSideTestData.add(LegacyTestData.CPU_ENTRY_10000);
+        serverSideTestData.add(LegacyTestData.CPU_ENTRY_30000);
+        PerfMonEntries dataEntries = PerfMonEntries.fromList(serverSideTestData);
+        TestData.getInstance().addServerSideTestData(dataEntries);
+
+        configureStream();
+        testSet.executeTests();
+        revertStream();
+
+        String output = testSet.teamCityVerifyStatistics();
+        assertThat(output, containsString("##teamcity[buildStatisticValue key='Failed transactions' value='1']"));
+        assertThat(output, containsString("##teamcity[buildStatisticValue key='CPU utilization' value='20000']"));
     }
 }

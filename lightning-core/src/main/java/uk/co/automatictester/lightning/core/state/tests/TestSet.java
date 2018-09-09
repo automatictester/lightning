@@ -9,6 +9,7 @@ import static uk.co.automatictester.lightning.core.enums.TestResult.*;
 
 public class TestSet {
 
+    private static final String TEAMCITY_STATISTICS = "##teamcity[buildStatisticValue key='%s' value='%s']%n";
     private final List<LightningTest> tests = new ArrayList<>();
     private final TestSetResults results = new TestSetResults();
 
@@ -33,6 +34,10 @@ public class TestSet {
 
     public String jenkinsSummaryReport() {
         return results.jenkinsSummary();
+    }
+
+    public String teamCityVerifyStatistics() {
+        return results.teamCityVerifyStatistics();
     }
 
     public int failCount() {
@@ -96,6 +101,15 @@ public class TestSet {
                     failCount(),
                     errorCount(),
                     testSetStatus());
+        }
+
+        public String teamCityVerifyStatistics() {
+            StringBuilder output = new StringBuilder();
+            TestSet.this.get().forEach(test -> {
+                String teamCityConsoleOutputEntry = String.format(TEAMCITY_STATISTICS, test.name(), test.actualResult());
+                output.append(teamCityConsoleOutputEntry);
+            });
+            return output.toString();
         }
 
         int failCount() {

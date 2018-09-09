@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -154,5 +155,25 @@ public class JmeterTransactionsTest {
 
         String output = jmeterTransactions.summaryReport();
         assertThat(output, containsString("Transactions executed: 5, failed: 2"));
+    }
+
+    @Test
+    public void testTeamCityBuildReportSummaryPassed() {
+        List<String[]> testData = new ArrayList<>();
+        testData.add(new String[]{"Login", "345", "true", "1434291246000"});
+        testData.add(new String[]{"Login", "650", "true", "1434291245000"});
+        testData.add(new String[]{"Login", "721", "true", "1434291246000"});
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
+        assertThat(jmeterTransactions.teamCityBuildReportSummary(), containsString("##teamcity[buildStatus text='Transactions executed: 3, failed: 0']"));
+    }
+
+    @Test
+    public void testTeamCityBuildReportSummaryFailed() {
+        List<String[]> testData = new ArrayList<>();
+        testData.add(new String[]{"Login", "345", "false", "1434291246000"});
+        testData.add(new String[]{"Login", "650", "true", "1434291245000"});
+        testData.add(new String[]{"Login", "721", "false", "1434291246000"});
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
+        assertThat(jmeterTransactions.teamCityBuildReportSummary(), containsString("##teamcity[buildProblem description='Transactions executed: 3, failed: 2']"));
     }
 }
