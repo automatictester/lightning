@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.facades.base;
+package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
@@ -6,7 +6,6 @@ import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 public abstract class AbstractLightningCoreFacade {
 
-    protected JmeterTransactions jmeterTransactions;
     protected TestSet testSet;
 
     public String executeTests() {
@@ -39,10 +38,14 @@ public abstract class AbstractLightningCoreFacade {
     }
 
     public String teamCityBuildReportSummary() {
+        TestData testData = TestData.getInstance();
+        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
         return jmeterTransactions.teamCityBuildReportSummary();
     }
 
     public String teamCityReportStatistics() {
+        TestData testData = TestData.getInstance();
+        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
         return jmeterTransactions.teamCityReportStatistics();
     }
 }

@@ -2,8 +2,7 @@ package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
-import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
-import uk.co.automatictester.lightning.core.reporters.ci.LocalFileSystemJenkinsReporter;
+import uk.co.automatictester.lightning.core.reporters.jenkins.LocalFileSystemJenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.LocalFileSystemJunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
@@ -36,7 +35,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void loadTestData() {
-        jmeterTransactions = JmeterTransactions.fromFile(jmeterCsv);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromFile(jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
         testData.addClientSideTestData(jmeterTransactions);
@@ -44,11 +43,15 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void setJenkinsBuildNameForVerify() {
-        LocalFileSystemJenkinsReporter.fromTestSet(testSet).setJenkinsBuildName();
+        String report = testSet.jenkinsSummaryReport();
+        LocalFileSystemJenkinsReporter.storeJenkinsBuildName(report);
     }
 
     public void setJenkinsBuildNameForReport() {
-        LocalFileSystemJenkinsReporter.fromJmeterTransactions(jmeterTransactions).setJenkinsBuildName();
+        TestData testData = TestData.getInstance();
+        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
+        String report = jmeterTransactions.summaryReport();
+        LocalFileSystemJenkinsReporter.storeJenkinsBuildName(report);
     }
 
     public void saveJunitReport() {

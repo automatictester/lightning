@@ -1,9 +1,8 @@
 package uk.co.automatictester.lightning.core.facades;
 
-import uk.co.automatictester.lightning.core.facades.base.AbstractLightningCoreFacade;
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.S3ConfigReader;
-import uk.co.automatictester.lightning.core.reporters.ci.S3JenkinsReporter;
+import uk.co.automatictester.lightning.core.reporters.jenkins.S3JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.S3JunitReporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
@@ -44,7 +43,7 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public void loadTestDataFromS3() {
-        jmeterTransactions = JmeterTransactions.fromS3Object(region, bucket, jmeterCsv);
+        JmeterTransactions jmeterTransactions = JmeterTransactions.fromS3Object(region, bucket, jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
         testData.addClientSideTestData(jmeterTransactions);
@@ -52,11 +51,15 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public String storeJenkinsBuildNameForVerifyInS3() {
-        return S3JenkinsReporter.fromTestSet(region, bucket, testSet).storeJenkinsBuildNameInS3();
+        String report = testSet.jenkinsSummaryReport();
+        return new S3JenkinsReporter(region, bucket).storeJenkinsBuildNameToS3(report);
     }
 
     public String storeJenkinsBuildNameForReportInS3() {
-        return S3JenkinsReporter.fromJmeterTransactions(region, bucket, jmeterTransactions).storeJenkinsBuildNameInS3();
+        TestData testData = TestData.getInstance();
+        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
+        String report = jmeterTransactions.summaryReport();
+        return new S3JenkinsReporter(region, bucket).storeJenkinsBuildNameToS3(report);
     }
 
     public String saveJunitReportToS3() {

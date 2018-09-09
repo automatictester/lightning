@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.state.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.AbstractConsoleOutputTest;
-import uk.co.automatictester.lightning.core.reporters.ci.TeamCityReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
@@ -15,8 +14,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TestSetTest extends AbstractConsoleOutputTest {
 
