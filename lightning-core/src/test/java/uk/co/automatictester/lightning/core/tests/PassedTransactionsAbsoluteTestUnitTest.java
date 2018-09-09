@@ -21,9 +21,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
         assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 0"));
@@ -35,9 +33,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
         assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 0"));
@@ -49,9 +45,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_FAILURE);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
         assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 1"));
@@ -63,9 +57,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
         assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 0"));
@@ -76,9 +68,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
         assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 1"));
@@ -90,9 +80,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_FAILURE);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
         assertThat(test.actualResultDescription(), containsString("Number of failed transactions = 1"));
@@ -103,9 +91,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.ERROR)));
     }
@@ -140,9 +126,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
@@ -162,9 +146,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
@@ -184,9 +166,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("incorrect").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
@@ -205,9 +185,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withTransactionName("Login").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));
@@ -226,9 +204,7 @@ public class PassedTransactionsAbsoluteTestUnitTest {
         PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));

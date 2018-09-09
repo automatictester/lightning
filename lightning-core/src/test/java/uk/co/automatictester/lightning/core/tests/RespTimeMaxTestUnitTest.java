@@ -20,9 +20,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -33,9 +31,7 @@ public class RespTimeMaxTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -45,9 +41,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 11220).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
         assertThat(test.actualResult(), equalTo(11221));
@@ -59,9 +53,7 @@ public class RespTimeMaxTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
@@ -71,9 +63,7 @@ public class RespTimeMaxTestUnitTest {
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.ERROR)));
         assertThat(test.actualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));

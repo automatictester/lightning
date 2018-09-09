@@ -1,5 +1,7 @@
 package uk.co.automatictester.lightning.core.state.data;
 
+import java.util.List;
+
 public class TestData {
 
     private static final TestData INSTANCE = new TestData();
@@ -22,12 +24,12 @@ public class TestData {
         }
     }
 
-    public void addClientSideTestData(JmeterTransactions jmeterTransactions) {
-        transactions = JmeterTransactions.fromList(jmeterTransactions.asList());
+    public void addClientSideTestData(List<String[]> jmeterTransactions) {
+        transactions = JmeterTransactions.fromList(jmeterTransactions);
     }
 
-    public void addServerSideTestData(PerfMonEntries perfMonEntries) {
-        entries = PerfMonEntries.fromList(perfMonEntries.asList());
+    public void addServerSideTestData(List<String[]> perfMonEntries) {
+        entries = PerfMonEntries.fromList(perfMonEntries);
     }
 
     public JmeterTransactions clientSideTestData() {

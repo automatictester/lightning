@@ -23,8 +23,7 @@ public class ServerSideLessThanTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -35,8 +34,7 @@ public class ServerSideLessThanTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
@@ -46,8 +44,7 @@ public class ServerSideLessThanTestUnitTest {
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -59,8 +56,7 @@ public class ServerSideLessThanTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -71,8 +67,7 @@ public class ServerSideLessThanTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.ERROR)));
     }
@@ -92,8 +87,7 @@ public class ServerSideLessThanTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         String output = test.getTestExecutionReport();
         assertThat(output, containsString(expectedOutput));

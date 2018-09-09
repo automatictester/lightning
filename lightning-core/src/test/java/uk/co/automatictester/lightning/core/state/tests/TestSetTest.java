@@ -26,8 +26,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> clientSideTestData = new ArrayList<>();
         clientSideTestData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         clientSideTestData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(clientSideTestData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(clientSideTestData);
 
         ServerSideLessThanTest testA = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         ServerSideGreaterThanTest testB = new ServerSideGreaterThanTest.Builder("Test #2", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
@@ -36,8 +35,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> serverSideTestData = new ArrayList<>();
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10000);
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10001);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(serverSideTestData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(serverSideTestData);
 
         tests.add(testA);
         tests.add(testB);
@@ -64,8 +62,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(passedTransactionsAbsoluteTestA);
@@ -91,8 +88,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
@@ -118,8 +114,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(passedTransactionsAbsoluteTestA);
@@ -151,8 +146,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
@@ -184,8 +178,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
 
         List<LightningTest> tests = new ArrayList<>();
         tests.add(respTimeAvgTestA);
@@ -221,14 +214,12 @@ public class TestSetTest extends AbstractConsoleOutputTest {
         List<String[]> clientSideTestData = new ArrayList<>();
         clientSideTestData.add(LegacyTestData.LOGIN_3514_SUCCESS);
         clientSideTestData.add(LegacyTestData.LOGIN_1200_FAILURE);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(clientSideTestData);
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(clientSideTestData);
 
         List<String[]> serverSideTestData = new ArrayList<>();
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_10000);
         serverSideTestData.add(LegacyTestData.CPU_ENTRY_30000);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(serverSideTestData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(serverSideTestData);
 
         configureStream();
         testSet.executeTests();

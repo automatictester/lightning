@@ -38,7 +38,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
         JmeterTransactions jmeterTransactions = JmeterTransactions.fromFile(jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
-        testData.addClientSideTestData(jmeterTransactions);
+        testData.addClientSideTestData(jmeterTransactions.asList()); // TODO
         loadPerfMonDataIfProvided();
     }
 
@@ -60,8 +60,8 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(perfMonCsv);
-            TestData.getInstance().addServerSideTestData(perfMonDataEntries);
+            PerfMonEntries perfMonDataEntries = PerfMonEntries.fromFile(perfMonCsv); // TODO
+            TestData.getInstance().addServerSideTestData(perfMonDataEntries.asList());
         }
     }
 }

@@ -17,10 +17,9 @@ public class TestDataTest {
         transactions.add(new String[]{"Login", "1200", "true"});
         transactions.add(new String[]{"Login", "1000", "true"});
         transactions.add(new String[]{"Search", "800", "true"});
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(transactions);
 
         TestData testDataA = TestData.getInstance();
-        testDataA.addClientSideTestData(jmeterTransactions);
+        testDataA.addClientSideTestData(transactions);
 
         TestData testDataB = TestData.getInstance();
 
@@ -33,16 +32,14 @@ public class TestDataTest {
         transactions.add(new String[]{"Login", "1200", "true"});
         transactions.add(new String[]{"Login", "1000", "true"});
         transactions.add(new String[]{"Search", "800", "true"});
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(transactions);
 
         List<String[]> entries = new ArrayList<>();
         entries.add(new String[]{"1455366135623", "9128", "192.168.0.12 CPU"});
         entries.add(new String[]{"1455366145623", "1232", "192.168.0.12 CPU"});
-        PerfMonEntries perfMonEntries = PerfMonEntries.fromList(entries);
 
         TestData testData = TestData.getInstance();
-        testData.addClientSideTestData(jmeterTransactions);
-        testData.addServerSideTestData(perfMonEntries);
+        testData.addClientSideTestData(transactions);
+        testData.addServerSideTestData(entries);
         
         assertThat(testData.clientSideTestData().size(), is(equalTo(3)));
         assertThat(testData.serverSideTestData().size(), is(equalTo(2)));

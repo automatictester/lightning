@@ -28,9 +28,7 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -44,9 +42,7 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -58,9 +54,7 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(LOGIN_198_SUCCESS);
         testData.add(LOGIN_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -72,9 +66,7 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
@@ -86,9 +78,7 @@ public class RespTimeStdDevTestUnitTest {
         testData.add(LOGIN_198_SUCCESS);
         testData.add(LOGIN_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
@@ -98,9 +88,7 @@ public class RespTimeStdDevTestUnitTest {
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #1", 8).withDescription("Verify standard deviance").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LOGIN_198_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.ERROR)));
         assertThat(test.actualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));

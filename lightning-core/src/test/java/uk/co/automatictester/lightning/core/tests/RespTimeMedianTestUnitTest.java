@@ -43,9 +43,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -66,9 +64,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -87,9 +83,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -108,9 +102,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
@@ -129,9 +121,7 @@ public class RespTimeMedianTestUnitTest {
         testData.add(SEARCH_198_SUCCESS);
         testData.add(SEARCH_221_SUCCESS);
         testData.add(SEARCH_249_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
@@ -141,9 +131,7 @@ public class RespTimeMedianTestUnitTest {
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 800).withDescription("Verify median").withTransactionName("nonexistent").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        TestData.getInstance().addClientSideTestData(jmeterTransactions);
+        TestData.getInstance().addClientSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.ERROR)));
         assertThat(test.actualResultDescription(), is(equalTo("No transactions with label equal to 'nonexistent' found in CSV file")));

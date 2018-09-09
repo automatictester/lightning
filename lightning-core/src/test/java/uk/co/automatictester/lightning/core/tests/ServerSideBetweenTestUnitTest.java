@@ -21,8 +21,7 @@ public class ServerSideBetweenTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.PASS)));
     }
@@ -33,8 +32,7 @@ public class ServerSideBetweenTestUnitTest {
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
-        PerfMonEntries dataEntries = PerfMonEntries.fromList(testData);
-        TestData.getInstance().addServerSideTestData(dataEntries);
+        TestData.getInstance().addServerSideTestData(testData);
         test.execute();
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
