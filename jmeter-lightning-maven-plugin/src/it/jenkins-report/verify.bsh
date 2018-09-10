@@ -1,0 +1,14 @@
+
+File buildLog = new File(basedir, "lightning-jenkins.properties");
+Scanner scanner = new Scanner(buildLog);
+List buildLogContent = new ArrayList();
+
+while(scanner.hasNextLine()) {
+    buildLogContent.add(scanner.nextLine());
+}
+
+boolean contentFound = buildLogContent.contains("result.string=Transactions executed\\: 2, failed\\: 1");
+
+if (!contentFound) {
+    throw new RuntimeException("Content not found!");
+}
