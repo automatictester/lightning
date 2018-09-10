@@ -31,10 +31,11 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
             runTests();
             String junitReportS3Path = core.saveJunitReportToS3();
             response.setJunitReport(junitReportS3Path);
+            notifyCiServerForVerify();
         } else if (mode.equals("report")) {
             runReport();
+            notifyCiServerForReport();
         }
-        notifyCIServer();
 
         return response;
     }
@@ -90,26 +91,25 @@ public class LightningHandler implements RequestHandler<LightningRequest, Lightn
         }
     }
 
-    private void notifyCIServer() {
-        if (mode.equals("verify")) {
-            String teamCityReport = core.teamCityVerifyStatistics();
-            log.info(teamCityReport);
-            String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
-            response.setTeamCityReport(teamCityReportS3Path);
+    private void notifyCiServerForVerify() {
+        String teamCityReport = core.teamCityVerifyStatistics();
+        log.info(teamCityReport);
+        String teamCityReportS3Path = core.putS3Object("output/teamcity.log", teamCityReport);
+        response.setTeamCityReport(teamCityReportS3Path);
 
-            String jenkinsReportS3Path = core.storeJenkinsBuildNameForVerifyInS3();
-            response.setJenkinsReport(jenkinsReportS3Path);
+        String jenkinsReportS3Path = core.storeJenkinsBuildNameForVerifyInS3();
+        response.setJenkinsReport(jenkinsReportS3Path);
+    }
 
-        } else if (mode.equals("report")) {
-            String teamCityBuildStatusText = core.teamCityBuildReportSummary();
-            String teamCityReportStatistics = core.teamCityReportStatistics();
-            String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
-            log.info(combinedTeamCityReport);
-            String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
-            response.setTeamCityReport(combinedTeamCityReportS3Path);
+    private void notifyCiServerForReport() {
+        String teamCityBuildStatusText = core.teamCityBuildReportSummary();
+        String teamCityReportStatistics = core.teamCityReportStatistics();
+        String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
+        log.info(combinedTeamCityReport);
+        String combinedTeamCityReportS3Path = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
+        response.setTeamCityReport(combinedTeamCityReportS3Path);
 
-            String jenkinsReportS3Path = core.storeJenkinsBuildNameForReportInS3();
-            response.setJenkinsReport(jenkinsReportS3Path);
-        }
+        String jenkinsReportS3Path = core.storeJenkinsBuildNameForReportInS3();
+        response.setJenkinsReport(jenkinsReportS3Path);
     }
 }

@@ -78,12 +78,13 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
             case verify:
                 runTests();
                 core.saveJunitReport();
+                notifyCiServerForVerify();
                 break;
             case report:
                 runReport();
+                notifyCiServerForReport();
                 break;
         }
-        notifyCIServer();
     }
 
     private void runTests() {
@@ -116,21 +117,18 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
         }
     }
 
-    private void notifyCIServer() {
-        switch (mode) {
-            case verify:
-                String teamCityVerifyStatistics = core.teamCityVerifyStatistics();
-                log(teamCityVerifyStatistics);
-                core.setJenkinsBuildNameForVerify();
-                break;
-            case report:
-                String teamCityBuildReportSummary = core.teamCityBuildReportSummary();
-                log(teamCityBuildReportSummary);
-                String teamCityReportStatistics = core.teamCityReportStatistics();
-                log(teamCityReportStatistics);
-                core.setJenkinsBuildNameForReport();
-                break;
-        }
+    private void notifyCiServerForVerify() {
+        String teamCityVerifyStatistics = core.teamCityVerifyStatistics();
+        log(teamCityVerifyStatistics);
+        core.setJenkinsBuildNameForVerify();
+    }
+
+    private void notifyCiServerForReport() {
+        String teamCityBuildReportSummary = core.teamCityBuildReportSummary();
+        log(teamCityBuildReportSummary);
+        String teamCityReportStatistics = core.teamCityReportStatistics();
+        log(teamCityReportStatistics);
+        core.setJenkinsBuildNameForReport();
     }
 
     private void log(String text) {

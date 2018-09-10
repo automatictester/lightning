@@ -48,13 +48,14 @@ public class CliTestRunner {
             case verify:
                 runTests();
                 core.saveJunitReport();
+                notifyCiServerForVerify();
                 break;
             case report:
                 runReport();
+                notifyCiServerForReport();
                 break;
         }
 
-        notifyCIServer();
         setExitCode();
     }
 
@@ -98,21 +99,18 @@ public class CliTestRunner {
         }
     }
 
-    private static void notifyCIServer() {
-        switch (mode) {
-            case verify:
-                String teamCityVerifyStatistics = core.teamCityVerifyStatistics();
-                log(teamCityVerifyStatistics);
-                core.setJenkinsBuildNameForVerify();
-                break;
-            case report:
-                String teamCityBuildReportSummary = core.teamCityBuildReportSummary();
-                log(teamCityBuildReportSummary);
-                String teamCityReportStatistics = core.teamCityReportStatistics();
-                log(teamCityReportStatistics);
-                core.setJenkinsBuildNameForReport();
-                break;
-        }
+    private static void notifyCiServerForVerify() {
+        String teamCityVerifyStatistics = core.teamCityVerifyStatistics();
+        log(teamCityVerifyStatistics);
+        core.setJenkinsBuildNameForVerify();
+    }
+
+    private static void notifyCiServerForReport() {
+        String teamCityBuildReportSummary = core.teamCityBuildReportSummary();
+        log(teamCityBuildReportSummary);
+        String teamCityReportStatistics = core.teamCityReportStatistics();
+        log(teamCityReportStatistics);
+        core.setJenkinsBuildNameForReport();
     }
 
     private static void setExitCode() {

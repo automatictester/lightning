@@ -124,10 +124,11 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         if (mode.equals("verify")) {
             runTests();
             responseJunitReportKey = core.saveJunitReportToS3();
+            notifyCiServerForVerify();
         } else if (mode.equals("report")) {
             runReport();
+            notifyCiServerForReport();
         }
-        notifyCIServer();
     }
 
     private void runTests() {
@@ -164,23 +165,20 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         }
     }
 
-    private void notifyCIServer() {
-        if (mode.equals("verify")) {
-            String teamCityReport = core.teamCityVerifyStatistics();
-            log(teamCityReport);
-            responseTeamCityLogKey = core.putS3Object("output/teamcity.log", teamCityReport);
+    private void notifyCiServerForVerify() {
+        String teamCityReport = core.teamCityVerifyStatistics();
+        log(teamCityReport);
+        responseTeamCityLogKey = core.putS3Object("output/teamcity.log", teamCityReport);
+        responseJenkinsReportKey = core.storeJenkinsBuildNameForVerifyInS3();
+    }
 
-            responseJenkinsReportKey = core.storeJenkinsBuildNameForVerifyInS3();
-
-        } else if (mode.equals("report")) {
-            String teamCityBuildStatusText = core.teamCityBuildReportSummary();
-            String teamCityReportStatistics = core.teamCityReportStatistics();
-            String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
-            log(combinedTeamCityReport);
-            responseTeamCityLogKey = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
-
-            responseJenkinsReportKey = core.storeJenkinsBuildNameForReportInS3();
-        }
+    private void notifyCiServerForReport() {
+        String teamCityBuildStatusText = core.teamCityBuildReportSummary();
+        String teamCityReportStatistics = core.teamCityReportStatistics();
+        String combinedTeamCityReport = String.format("\n%s\n%s", teamCityBuildStatusText, teamCityReportStatistics);
+        log(combinedTeamCityReport);
+        responseTeamCityLogKey = core.putS3Object("output/teamcity.log", combinedTeamCityReport);
+        responseJenkinsReportKey = core.storeJenkinsBuildNameForReportInS3();
     }
 
     private void log(String text) {
