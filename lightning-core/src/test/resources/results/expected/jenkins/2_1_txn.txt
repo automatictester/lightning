@@ -1,0 +1,1 @@
+result.string=Transactions executed\: 2, failed\: 1

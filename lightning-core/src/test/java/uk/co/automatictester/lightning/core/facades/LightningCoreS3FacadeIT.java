@@ -29,6 +29,7 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     private int expectedExitCode;
     private String expectedLogEntries;
     private String expectedJunitReport;
+    private String expectedJenkinsReport;
 
     private int responseExitCode;
     private String responseVerifyLogKey;
@@ -70,18 +71,18 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
     @DataProvider(name = "testData")
     private Object[][] testData() {
         return new Object[][]{
-                {"report", null, "src/test/resources/csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/report.txt"},
-                {"report", null, "src/test/resources/csv/jmeter/2_transactions.csv", null, 0, null, null},
-                {"report", null, "src/test/resources/csv/jmeter/2_transactions_1_failed.csv", null, 1, null, null},
-                {"verify", "src/test/resources/xml/1_1_1.xml", "src/test/resources/csv/jmeter/10_transactions.csv", null, 1, null, "/results/expected/1_1_1.txt"},
-                {"verify", "src/test/resources/xml/3_0_0.xml", "src/test/resources/csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/3_0_0.txt"},
-                {"verify", "src/test/resources/xml/1_client_2_server.xml", "src/test/resources/csv/jmeter/10_transactions.csv", "src/test/resources/csv/perfmon/2_entries.csv", 0, null, "/results/expected/1_client_2_server.txt"},
-                {"verify", "src/test/resources/xml/junit_report.xml", "src/test/resources/csv/jmeter/2_transactions.csv", "src/test/resources/csv/perfmon/junit_report.csv", 1, "/results/expected/junit/junit_expected.xml", null}
+                {"report", null, "src/test/resources/csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/report.txt", "/results/expected/jenkins/10_0_txn.txt"},
+                {"report", null, "src/test/resources/csv/jmeter/2_transactions.csv", null, 0, null, null, null},
+                {"report", null, "src/test/resources/csv/jmeter/2_transactions_1_failed.csv", null, 1, null, null, "/results/expected/jenkins/2_1_txn.txt"},
+                {"verify", "src/test/resources/xml/1_1_1.xml", "src/test/resources/csv/jmeter/10_transactions.csv", null, 1, null, "/results/expected/1_1_1.txt", "/results/expected/jenkins/3_2.txt"},
+                {"verify", "src/test/resources/xml/3_0_0.xml", "src/test/resources/csv/jmeter/10_transactions.csv", null, 0, null, "/results/expected/3_0_0.txt", "/results/expected/jenkins/3_0.txt"},
+                {"verify", "src/test/resources/xml/1_client_2_server.xml", "src/test/resources/csv/jmeter/10_transactions.csv", "src/test/resources/csv/perfmon/2_entries.csv", 0, null, "/results/expected/1_client_2_server.txt", null},
+                {"verify", "src/test/resources/xml/junit_report.xml", "src/test/resources/csv/jmeter/2_transactions.csv", "src/test/resources/csv/perfmon/junit_report.csv", 1, "/results/expected/junit/junit_expected.xml", null, null}
         };
     }
 
     @Test(dataProvider = "testData")
-    public void s3facadeIT(String mode, String lightningXml, String jmeterCsv, String perfMonCsv, int expectedExitCode, String expectedJunitReport, String expectedLogEntries) throws IOException {
+    public void s3facadeIT(String mode, String lightningXml, String jmeterCsv, String perfMonCsv, int expectedExitCode, String expectedJunitReport, String expectedLogEntries, String expectedJenkinsReport) throws IOException {
         this.responseExitCode = 0;
         this.mode = mode;
         this.lightningXml = lightningXml;
@@ -90,6 +91,7 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         this.expectedExitCode = expectedExitCode;
         this.expectedJunitReport = expectedJunitReport;
         this.expectedLogEntries = expectedLogEntries;
+        this.expectedJenkinsReport = expectedJenkinsReport;
 
         saveTestDataToS3();
         run();
@@ -211,8 +213,11 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
         }
     }
 
-    private void assertJenkinsReport() {
+    private void assertJenkinsReport() throws IOException {
         assertThat(responseJenkinsReportKey, notNullValue());
+        if (expectedJenkinsReport != null) {
+            assertThat(readS3ObjectToString(responseJenkinsReportKey), containsString(readResourceFileToString(expectedJenkinsReport)));
+        }
     }
 
     private String readResourceFileToString(String file) throws IOException {

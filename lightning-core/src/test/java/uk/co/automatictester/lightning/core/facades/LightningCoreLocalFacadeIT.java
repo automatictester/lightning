@@ -28,6 +28,7 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
     private int expectedExitCode;
     private String expectedJunitReport;
     private String expectedConsoleOutput;
+    private String expectedJenkinsReport;
 
     @BeforeMethod
     public void setup() {
@@ -42,18 +43,18 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
     @DataProvider(name = "testData")
     private Object[][] testData() {
         return new Object[][]{
-                {Mode.report, null, new File("src/test/resources/csv/jmeter/10_transactions.csv"), null, 0, null, "/results/expected/report.txt"},
-                {Mode.report, null, new File("src/test/resources/csv/jmeter/2_transactions.csv"), null, 0, null, null},
-                {Mode.report, null, new File("src/test/resources/csv/jmeter/2_transactions_1_failed.csv"), null, 1, null, null},
-                {Mode.verify, new File("src/test/resources/xml/1_1_1.xml"), new File("src/test/resources/csv/jmeter/10_transactions.csv"), null, 1, null, "/results/expected/1_1_1.txt"},
-                {Mode.verify, new File("src/test/resources/xml/3_0_0.xml"), new File("src/test/resources/csv/jmeter/10_transactions.csv"), null, 0, null, "/results/expected/3_0_0.txt"},
-                {Mode.verify, new File("src/test/resources/xml/1_client_2_server.xml"), new File("src/test/resources/csv/jmeter/10_transactions.csv"), new File("src/test/resources/csv/perfmon/2_entries.csv"), 0, null, "/results/expected/1_client_2_server.txt"},
-                {Mode.verify, new File("src/test/resources/xml/junit_report.xml"), new File("src/test/resources/csv/jmeter/2_transactions.csv"), new File("src/test/resources/csv/perfmon/junit_report.csv"), 1, "/results/expected/junit/junit_expected.xml", null}
+                {Mode.report, null, new File("src/test/resources/csv/jmeter/10_transactions.csv"), null, 0, null, "/results/expected/report.txt", "/results/expected/jenkins/10_0_txn.txt"},
+                {Mode.report, null, new File("src/test/resources/csv/jmeter/2_transactions.csv"), null, 0, null, null, null},
+                {Mode.report, null, new File("src/test/resources/csv/jmeter/2_transactions_1_failed.csv"), null, 1, null, null, "/results/expected/jenkins/2_1_txn.txt"},
+                {Mode.verify, new File("src/test/resources/xml/1_1_1.xml"), new File("src/test/resources/csv/jmeter/10_transactions.csv"), null, 1, null, "/results/expected/1_1_1.txt", "/results/expected/jenkins/3_2.txt"},
+                {Mode.verify, new File("src/test/resources/xml/3_0_0.xml"), new File("src/test/resources/csv/jmeter/10_transactions.csv"), null, 0, null, "/results/expected/3_0_0.txt", "/results/expected/jenkins/3_0.txt"},
+                {Mode.verify, new File("src/test/resources/xml/1_client_2_server.xml"), new File("src/test/resources/csv/jmeter/10_transactions.csv"), new File("src/test/resources/csv/perfmon/2_entries.csv"), 0, null, "/results/expected/1_client_2_server.txt", null},
+                {Mode.verify, new File("src/test/resources/xml/junit_report.xml"), new File("src/test/resources/csv/jmeter/2_transactions.csv"), new File("src/test/resources/csv/perfmon/junit_report.csv"), 1, "/results/expected/junit/junit_expected.xml", null, null}
         };
     }
 
     @Test(dataProvider = "testData")
-    public void localFacadeIT(Mode mode, File lightningXml, File jmeterCsv, File perfMonCsv, int expectedExitCode, String expectedJunitReport, String expectedConsoleOutput) throws IOException {
+    public void localFacadeIT(Mode mode, File lightningXml, File jmeterCsv, File perfMonCsv, int expectedExitCode, String expectedJunitReport, String expectedConsoleOutput, String expectedJenkinsReport) throws IOException {
         this.exitCode = 0;
         this.mode = mode;
         this.lightningXml = lightningXml;
@@ -62,11 +63,13 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
         this.expectedExitCode = expectedExitCode;
         this.expectedJunitReport = expectedJunitReport;
         this.expectedConsoleOutput = expectedConsoleOutput;
+        this.expectedJenkinsReport = expectedJenkinsReport;
 
         run();
         assertExitCode();
         assertConsoleOutput();
         assertJunitReport();
+        assertJenkinsReport();
     }
 
     private void run() {
@@ -153,10 +156,22 @@ public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
         }
     }
 
+    private void assertJenkinsReport() throws IOException {
+        if (expectedJenkinsReport != null) {
+            assertThat(fileContentContainsResourceFile(expectedJenkinsReport, "lightning-jenkins.properties"), is(true));
+        }
+    }
+
     private boolean fileContentIsEqual(String resourceFilePath, String file) throws IOException {
         String resourceFileContent = readResourceFileToString(resourceFilePath);
         String outputFile = readFileToString(file);
         return resourceFileContent.equals(outputFile);
+    }
+
+    private boolean fileContentContainsResourceFile(String resourceFilePath, String file) throws IOException {
+        String resourceFileContent = readResourceFileToString(resourceFilePath);
+        String outputFile = readFileToString(file);
+        return outputFile.contains(resourceFileContent);
     }
 
     private boolean consoleOutputContainsFileContent(String resourceFilePath) throws IOException {
