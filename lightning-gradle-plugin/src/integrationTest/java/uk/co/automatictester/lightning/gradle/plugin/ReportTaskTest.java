@@ -5,6 +5,7 @@ import org.gradle.testkit.runner.GradleRunner;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.gradle.internal.impldep.org.hamcrest.MatcherAssert.assertThat;
 import static org.gradle.internal.impldep.org.hamcrest.core.Is.is;
@@ -36,7 +37,7 @@ public class ReportTaskTest extends FileAndOutputComparisonTest {
     }
 
     @Test
-    public void runReportWithFailureExpected() {
+    public void runReportWithFailureExpected() throws IOException {
         BuildResult result = GradleRunner.create()
                 .withProjectDir(new File("src/integrationTest/resources/build/failure_report"))
                 .withArguments(":report")
@@ -44,5 +45,6 @@ public class ReportTaskTest extends FileAndOutputComparisonTest {
                 .buildAndFail();
 
         assertThat(taskOutputContainsFileContent("/results/expected/report_failure.txt", result), is(true));
+        assertThat(fileContainsText("lightning-jenkins.properties", "result.string=Transactions executed\\: 2, failed\\: 1"), is(true));
     }
 }

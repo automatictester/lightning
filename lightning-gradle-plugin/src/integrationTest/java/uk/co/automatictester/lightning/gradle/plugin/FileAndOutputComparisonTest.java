@@ -14,6 +14,11 @@ class FileAndOutputComparisonTest {
         return FileUtils.contentEquals(resourceFile, new File(filePath));
     }
 
+    boolean fileContainsText(String filePath, String text) throws IOException {
+        String fileContent = FileUtils.readFileToString(new File(filePath));
+        return fileContent.contains(text);
+    }
+
     boolean taskOutputContainsFileContent(String resourceFilePath, BuildResult buildResult) {
         String resourceFileContent = new Scanner(this.getClass().getResourceAsStream(resourceFilePath)).useDelimiter("\\A").next();
         String filteredBuildOutput = buildResult.getOutput().replaceAll("Execution time:\\s*\\d*[ms]*\\s", "");

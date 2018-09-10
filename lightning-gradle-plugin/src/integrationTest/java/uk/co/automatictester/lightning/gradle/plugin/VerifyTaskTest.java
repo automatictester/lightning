@@ -64,7 +64,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
     }
 
     @Test
-    public void runVerifyWithFailureAndError() {
+    public void runVerifyWithFailureAndError() throws IOException {
         BuildResult result = GradleRunner.create()
                 .withProjectDir(new File("src/integrationTest/resources/build/1_1_1"))
                 .withArguments(":verify")
@@ -73,6 +73,7 @@ public class VerifyTaskTest extends FileAndOutputComparisonTest {
 
         assertThat(result.task(":verify").getOutcome(), is(FAILED));
         assertThat(taskOutputContainsFileContent("/results/expected/1_1_1.txt", result), is(true));
+        assertThat(fileContainsText("lightning-jenkins.properties", "result.string=Tests executed\\: 3, failed\\: 2"), is(true));
     }
 
     @Test(dataProvider = "getProjectDir")
