@@ -1,0 +1,2 @@
+#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file="lightning-jenkins.properties",property="result.string"}
+result.string=Transactions executed\: 2, failed\: 1
