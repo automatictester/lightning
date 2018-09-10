@@ -210,6 +210,32 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>jenkins-report</id>
+                        <phase>test</phase>
+                        <configuration>
+                            <executable>bash</executable>
+                            <arguments>
+                                <argument>src/test/scripts/file/jenkins_report.sh</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jenkins-verify</id>
+                        <phase>test</phase>
+                        <configuration>
+                            <executable>bash</executable>
+                            <arguments>
+                                <argument>src/test/scripts/file/jenkins_verify.sh</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>jar</id>
                         <phase>test</phase>
                         <configuration>
