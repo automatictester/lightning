@@ -10,7 +10,7 @@ body {
   color: #606c71; }
 
 a {
-  color: #1e6bb8;
+  color: #1565C0;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
@@ -57,7 +57,7 @@ a {
   color: #fff;
   text-align: center;
   background-color: #159957;
-  background-image: linear-gradient(120deg, #457fca, #5691c8); }
+  background-image: linear-gradient(120deg, #b92b27, #1565C0); }
 
 @media screen and (min-width: 64em) {
   .page-header {
@@ -112,7 +112,7 @@ a {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
-  color: #1e6bb8; }
+  color: #1565C0; }
 .main-content p {
   margin-bottom: 1em; }
 .main-content code {
