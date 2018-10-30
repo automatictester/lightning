@@ -15,7 +15,7 @@ cache:
 jobs:
   include:
     - stage: Test
-      script: mvn -pl lightning-core clean install -DmockS3
+      script: mvn -pl lightning-core clean verify -DmockS3
       name: "Core"
       env: CACHE=core
     - script:
