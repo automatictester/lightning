@@ -14,11 +14,14 @@ cache:
 jobs:
   include:
   - stage: Core
+    name: "Core"
     script: mvn -pl lightning-core clean install -DmockS3
   - stage: Clients
     name: "Lambda"
     script: mvn -pl lightning-aws-lambda clean verify
   - script: mvn -pl jmeter-lightning-maven-plugin clean verify
     name: "Maven"
+  - script: mvn -pl lightning-standalone clean compile assembly:single test
+    name: "Standalone"
   - script: (cd lightning-gradle-plugin; ./gradlew clean check)
     name: "Gradle"
