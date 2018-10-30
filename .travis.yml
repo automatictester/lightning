@@ -11,5 +11,7 @@ jobs:
   - stage: Core
     script: mvn -pl lightning-core clean install -DmockS3
   - stage: Clients
+    name: "Lambda"
     script: mvn -pl lightning-aws-lambda clean verify
-    script: mvn -pl jmeter-lightning-maven-plugin clean verify
+  - script: mvn -pl jmeter-lightning-maven-plugin clean verify
+    name: "Maven"
