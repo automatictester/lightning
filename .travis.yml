@@ -8,7 +8,8 @@ cache:
   - $HOME/.m2
 jobs:
   include:
-  - stage: lightning-core
+  - stage: Core
     script: mvn -pl lightning-core clean install -DmockS3
-  - stage: lightning-aws-lambda
+  - stage: Clients
     script: mvn -pl lightning-aws-lambda clean verify
+    script: mvn -pl jmeter-lightning-maven-plugin clean verify
