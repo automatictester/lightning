@@ -3,9 +3,14 @@ dist: trusty
 language: java
 install: true
 jdk: openjdk8
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - $HOME/.m2
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
 jobs:
   include:
   - stage: Core
@@ -15,3 +20,5 @@ jobs:
     script: mvn -pl lightning-aws-lambda clean verify
   - script: mvn -pl jmeter-lightning-maven-plugin clean verify
     name: "Maven"
+  - script: (cd lightning-gradle-plugin; ./gradlew clean check)
+    name: "Gradle"
