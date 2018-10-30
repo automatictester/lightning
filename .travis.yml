@@ -4,8 +4,9 @@ language: java
 install: true
 jdk: openjdk8
 before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -rf ~/.m2/repository/uk/co/automatictester/*lightning*/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - $HOME/.m2
@@ -13,15 +14,27 @@ cache:
   - $HOME/.gradle/wrapper/
 jobs:
   include:
-  - stage: Core
-    name: "Core"
-    script: mvn -pl lightning-core clean install -DmockS3
-  - stage: Clients
-    name: "Lambda"
-    script: mvn -pl lightning-aws-lambda clean verify
-  - script: mvn -pl jmeter-lightning-maven-plugin clean verify
-    name: "Maven"
-  - script: mvn -pl lightning-standalone clean compile assembly:single test
-    name: "Standalone"
-  - script: (cd lightning-gradle-plugin; ./gradlew clean check)
-    name: "Gradle"
+    - stage: Test
+      script: mvn -pl lightning-core clean install -DmockS3
+      name: "Core"
+      env: CACHE=core
+    - script:
+        - mvn -pl lightning-core clean install -DmockS3
+        - mvn -pl lightning-aws-lambda clean verify
+      name: "Lambda"
+      env: CACHE=lambda
+    - script:
+        - mvn -pl lightning-core clean install -DmockS3
+        - mvn -pl jmeter-lightning-maven-plugin clean verify
+      name: "Maven"
+      env: CACHE=maven
+    - script:
+        - mvn -pl lightning-core clean install -DmockS3
+        - mvn -pl lightning-standalone clean compile assembly:single test
+      name: "Standalone"
+      env: CACHE=standalone
+    - script:
+        - mvn -pl lightning-core clean install -DmockS3
+        - (cd lightning-gradle-plugin; ./gradlew clean check)
+      name: "Gradle"
+      env: CACHE=gradle
