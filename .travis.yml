@@ -1,0 +1,15 @@
+os: linux
+dist: trusty
+language: java
+install: true
+jdk: openjdk8
+before_cache: rm -rf ~/.m2/repository/uk/co/automatictester/*lightning*/
+cache:
+  directories:
+  - $HOME/.m2
+jobs:
+  include:
+  - stage: lightning-core
+    script: mvn -pl lightning-core clean install -DmockS3
+  - stage: lightning-aws-lambda
+    script: mvn -pl lightning-aws-lambda clean verify
