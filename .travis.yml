@@ -3,7 +3,6 @@ dist: trusty
 language: java
 install: true
 jdk: openjdk8
-before_cache: rm -rf ~/.m2/repository/uk/co/automatictester/*lightning*/
 cache:
   directories:
   - $HOME/.m2
