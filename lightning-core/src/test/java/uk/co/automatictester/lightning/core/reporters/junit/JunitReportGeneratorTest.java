@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class JunitReportTest {
+public class JunitReportGeneratorTest {
 
     @Test
     public void testGetTestsuite() {
@@ -20,7 +20,7 @@ public class JunitReportTest {
         when(testSet.errorCount()).thenReturn(1);
         when(testSet.failCount()).thenReturn(1);
 
-        Element testsuite = new JunitReport(testSet).getTestsuite();
+        Element testsuite = new JunitReportGenerator(testSet).getTestsuite();
         assertThat(testsuite.getTagName(), equalTo("testsuite"));
         assertThat(testsuite.getAttribute("tests"), equalTo("3"));
         assertThat(testsuite.getAttribute("errors"), equalTo("1"));
@@ -36,7 +36,7 @@ public class JunitReportTest {
         when(test.result()).thenReturn(TestResult.PASS);
         when(test.name()).thenReturn("some name");
 
-        Element testcase = new JunitReport(testSet).getTestcase(test);
+        Element testcase = new JunitReportGenerator(testSet).getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -52,7 +52,7 @@ public class JunitReportTest {
         when(test.actualResultDescription()).thenReturn("some message");
         when(test.type()).thenReturn("some type");
 
-        Element testcase = new JunitReport(testSet).getTestcase(test);
+        Element testcase = new JunitReportGenerator(testSet).getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));
@@ -71,7 +71,7 @@ public class JunitReportTest {
         when(test.actualResultDescription()).thenReturn("some message");
         when(test.type()).thenReturn("some type");
 
-        Element testcase = new JunitReport(testSet).getTestcase(test);
+        Element testcase = new JunitReportGenerator(testSet).getTestcase(test);
         assertThat(testcase.getTagName(), equalTo("testcase"));
         assertThat(testcase.getAttribute("time"), equalTo("0"));
         assertThat(testcase.getAttribute("name"), equalTo("some name"));

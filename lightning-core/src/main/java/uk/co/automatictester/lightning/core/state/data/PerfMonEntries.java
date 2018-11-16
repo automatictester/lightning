@@ -37,11 +37,11 @@ public class PerfMonEntries {
     public PerfMonEntries entriesWith(String hostAndMetric) {
         List<String[]> list = entries.stream()
                 .filter(e -> e[HOST_AND_METRIC.getColumn()].equals(hostAndMetric))
-                .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, hostAndMetric)));
+                .collect(collectingAndThen(toList(), filteredList -> validateAndReturn(filteredList, hostAndMetric)));
         return PerfMonEntries.fromList(list);
     }
 
-    private List<String[]> returnListOrThrowExceptionIfEmpty(List<String[]> list, String hostAndMetric) {
+    private List<String[]> validateAndReturn(List<String[]> list, String hostAndMetric) {
         if (list.size() == 0) {
             throw new CSVFileNonexistentHostAndMetricException(hostAndMetric);
         }

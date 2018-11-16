@@ -44,7 +44,7 @@ public class JmeterTransactions {
     private JmeterTransactions transactions(Predicate<String[]> predicate, String expectedTransactionName) {
         List<String[]> transactions = entries.stream()
                 .filter(predicate)
-                .collect(collectingAndThen(toList(), filteredList -> returnListOrThrowExceptionIfEmpty(filteredList, expectedTransactionName)));
+                .collect(collectingAndThen(toList(), filteredList -> validateAndReturn(filteredList, expectedTransactionName)));
         return JmeterTransactions.fromList(transactions);
     }
 
@@ -94,6 +94,9 @@ public class JmeterTransactions {
                 .getAsLong();
     }
 
+
+
+
     public String summaryReport() {
         return String.format("Transactions executed: %d, failed: %d", entries.size(), failCount());
     }
@@ -109,7 +112,7 @@ public class JmeterTransactions {
         return String.format("%s%s", failedTransactionsStats, totalTransactionsStats);
     }
 
-    private List<String[]> returnListOrThrowExceptionIfEmpty(List<String[]> list, String expectedTransactionName) {
+    private List<String[]> validateAndReturn(List<String[]> list, String expectedTransactionName) {
         if (list.size() == 0) {
             throw new CSVFileNonexistentLabelException(expectedTransactionName);
         }

@@ -16,12 +16,12 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
 
-public class JunitReport {
+public class JunitReportGenerator {
 
     private final Document doc;
     private final TestSet testSet;
 
-    public JunitReport(TestSet testSet) {
+    public JunitReportGenerator(TestSet testSet) {
         this.testSet = testSet;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db;
@@ -34,7 +34,7 @@ public class JunitReport {
         doc.setXmlStandalone(true);
     }
 
-    public String generateReportContent() {
+    public String generate() {
         generateXmlDocument();
         return transformXmlDocumentToString();
     }

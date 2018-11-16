@@ -16,8 +16,8 @@ public class LocalFileSystemJunitReporter {
     }
 
     public static void generateReport(TestSet testSet) {
-        JunitReport junitReport = new JunitReport(testSet);
-        String report = junitReport.generateReportContent();
+        JunitReportGenerator reportGenerator = new JunitReportGenerator(testSet);
+        String report = reportGenerator.generate();
         storeReportToDisk(report);
     }
 

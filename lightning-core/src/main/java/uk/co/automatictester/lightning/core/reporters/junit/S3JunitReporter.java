@@ -14,8 +14,8 @@ public class S3JunitReporter {
 
     public static String generateReport(String region, String bucket, TestSet testSet) {
         s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
-        JunitReport junitReport = new JunitReport(testSet);
-        String report = junitReport.generateReportContent();
+        JunitReportGenerator reportGenerator = new JunitReportGenerator(testSet);
+        String report = reportGenerator.generate();
         return storeReportToS3(report);
     }
 

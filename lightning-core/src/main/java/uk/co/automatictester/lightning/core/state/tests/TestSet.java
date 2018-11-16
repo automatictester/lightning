@@ -24,6 +24,22 @@ public class TestSet {
         results.setTestExecutionReport(testExecutionReport);
     }
 
+    public void add(LightningTest test) {
+        tests.add(test);
+    }
+
+    public void addAll(List<LightningTest> test) {
+        tests.addAll(test);
+    }
+
+    public List<LightningTest> get() {
+        return tests;
+    }
+
+    public int size() {
+        return tests.size();
+    }
+
     public String testExecutionReport() {
         return results.testExecutionReport();
     }
@@ -50,22 +66,6 @@ public class TestSet {
 
     public boolean hasFailed() {
         return results.hasFailed();
-    }
-
-    public void add(LightningTest test) {
-        tests.add(test);
-    }
-
-    public void addAll(List<LightningTest> test) {
-        tests.addAll(test);
-    }
-
-    public List<LightningTest> get() {
-        return tests;
-    }
-
-    public int size() {
-        return tests.size();
     }
 
     private class TestSetResults {
