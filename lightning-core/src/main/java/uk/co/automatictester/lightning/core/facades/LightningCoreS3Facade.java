@@ -5,6 +5,7 @@ import uk.co.automatictester.lightning.core.config.S3ConfigReader;
 import uk.co.automatictester.lightning.core.readers.CsvDataReader;
 import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
 import uk.co.automatictester.lightning.core.readers.PerfMonDataReader;
+import uk.co.automatictester.lightning.core.reporters.TransactionReporter;
 import uk.co.automatictester.lightning.core.reporters.jenkins.S3JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.S3JunitReporter;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
@@ -62,8 +63,9 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
 
     public String storeJenkinsBuildNameForReportInS3() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
-        String report = jmeterTransactions.summaryReport();
+        JmeterTransactions transactions = testData.clientSideTestData();
+        TransactionReporter reporter = new TransactionReporter(transactions);
+        String report = reporter.summaryReport();
         return new S3JenkinsReporter(region, bucket).storeJenkinsBuildNameToS3(report);
     }
 

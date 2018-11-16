@@ -128,38 +128,4 @@ public class JmeterTransactionsTest {
         List<Integer> expectedResult = new ArrayList<>(Arrays.asList(721, 650, 345));
         assertThat(jmeterTransactions.longestTransactions(), contains(expectedResult.toArray()));
     }
-
-    @Test
-    public void testPrintJMeterReport() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "421", "true", "1434291240000"});
-        testData.add(new String[]{"Login", "500", "false", "1434291245000"});
-        testData.add(new String[]{"Login", "345", "true", "1434291246000"});
-        testData.add(new String[]{"Login", "650", "true", "1434291245000"});
-        testData.add(new String[]{"Login", "721", "false", "1434291246000"});
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-
-        String output = jmeterTransactions.summaryReport();
-        assertThat(output, containsString("Transactions executed: 5, failed: 2"));
-    }
-
-    @Test
-    public void testTeamCityBuildReportSummaryPassed() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "345", "true", "1434291246000"});
-        testData.add(new String[]{"Login", "650", "true", "1434291245000"});
-        testData.add(new String[]{"Login", "721", "true", "1434291246000"});
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        assertThat(jmeterTransactions.teamCityBuildReportSummary(), containsString("##teamcity[buildStatus text='Transactions executed: 3, failed: 0']"));
-    }
-
-    @Test
-    public void testTeamCityBuildReportSummaryFailed() {
-        List<String[]> testData = new ArrayList<>();
-        testData.add(new String[]{"Login", "345", "false", "1434291246000"});
-        testData.add(new String[]{"Login", "650", "true", "1434291245000"});
-        testData.add(new String[]{"Login", "721", "false", "1434291246000"});
-        JmeterTransactions jmeterTransactions = JmeterTransactions.fromList(testData);
-        assertThat(jmeterTransactions.teamCityBuildReportSummary(), containsString("##teamcity[buildProblem description='Transactions executed: 3, failed: 2']"));
-    }
 }

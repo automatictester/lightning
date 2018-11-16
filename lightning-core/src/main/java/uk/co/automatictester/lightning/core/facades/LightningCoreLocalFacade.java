@@ -5,6 +5,7 @@ import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
 import uk.co.automatictester.lightning.core.readers.CsvDataReader;
 import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
 import uk.co.automatictester.lightning.core.readers.PerfMonDataReader;
+import uk.co.automatictester.lightning.core.reporters.TransactionReporter;
 import uk.co.automatictester.lightning.core.reporters.jenkins.LocalFileSystemJenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.LocalFileSystemJunitReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
@@ -53,8 +54,9 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
 
     public void setJenkinsBuildNameForReport() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
-        String report = jmeterTransactions.summaryReport();
+        JmeterTransactions transactions = testData.clientSideTestData();
+        TransactionReporter reporter = new TransactionReporter(transactions);
+        String report = reporter.summaryReport();
         LocalFileSystemJenkinsReporter.storeJenkinsBuildName(report);
     }
 

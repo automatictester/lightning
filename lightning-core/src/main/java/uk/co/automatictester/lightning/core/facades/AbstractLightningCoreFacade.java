@@ -1,5 +1,6 @@
 package uk.co.automatictester.lightning.core.facades;
 
+import uk.co.automatictester.lightning.core.reporters.TransactionReporter;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
@@ -15,8 +16,9 @@ public abstract class AbstractLightningCoreFacade {
 
     public String runReport() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
-        return jmeterTransactions.summaryReport();
+        JmeterTransactions transactions = testData.clientSideTestData();
+        TransactionReporter reporter = new TransactionReporter(transactions);
+        return reporter.summaryReport();
     }
 
     public String testSetExecutionSummaryReport() {
@@ -39,13 +41,15 @@ public abstract class AbstractLightningCoreFacade {
 
     public String teamCityBuildReportSummary() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
-        return jmeterTransactions.teamCityBuildReportSummary();
+        JmeterTransactions transactions = testData.clientSideTestData();
+        TransactionReporter reporter = new TransactionReporter(transactions);
+        return reporter.teamCityBuildReportSummary();
     }
 
     public String teamCityReportStatistics() {
         TestData testData = TestData.getInstance();
-        JmeterTransactions jmeterTransactions = testData.clientSideTestData();
-        return jmeterTransactions.teamCityReportStatistics();
+        JmeterTransactions transactions = testData.clientSideTestData();
+        TransactionReporter reporter = new TransactionReporter(transactions);
+        return reporter.teamCityReportStatistics();
     }
 }
