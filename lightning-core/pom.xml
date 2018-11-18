@@ -53,7 +53,6 @@
                 </configuration>
             </plugin>
 
-            <!-- set java version -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -64,7 +63,6 @@
                 </configuration>
             </plugin>
 
-            <!-- run unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -74,7 +72,6 @@
                 </configuration>
             </plugin>
 
-            <!-- run integration tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
