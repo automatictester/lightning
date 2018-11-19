@@ -53,43 +53,41 @@ def archiveStandaloneJar() {
 disableConcurrentBuilds()
 
 timestamps {
-    lock('lightning-pipeline') {
-        node('linux') {
-            stage('Prepare') {
-                cleanupWorkspaceAndCloneRepo()
-                sh "git checkout ${env.BRANCH_NAME}"
-                purge()
+    node('linux') {
+        stage('Prepare') {
+            cleanupWorkspaceAndCloneRepo()
+            sh "git checkout ${env.BRANCH_NAME}"
+            purge()
+        }
+        stage('Build lightning-core') {
+            if ("${params.BUILD_CORE}" == "true") {
+                buildCore()
             }
-            stage('Build lightning-core') {
-                if ("${params.BUILD_CORE}" == "true") {
-                    buildCore()
-                }
+        }
+        stage('Set release version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitStandaloneReleaseVersion()
             }
-            stage('Set release version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitStandaloneReleaseVersion()
-                }
+        }
+        stage('Run unit tests, generate JAR file and run E2E tests') {
+            buildAndTest()
+        }
+        stage('Tag release') {
+            if ("${params.TEST_ONLY}" == "false") {
+                tagStandaloneRelease()
             }
-            stage('Run unit tests, generate JAR file and run E2E tests') {
-                buildAndTest()
+        }
+        stage('Archive JAR') {
+            archiveStandaloneJar()
+        }
+        stage('Set snapshot version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitStandaloneSnapshotVersion()
             }
-            stage('Tag release') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    tagStandaloneRelease()
-                }
-            }
-            stage('Archive JAR') {
-                archiveStandaloneJar()
-            }
-            stage('Set snapshot version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitStandaloneSnapshotVersion()
-                }
-            }
-            stage('Push release to origin/master') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    push()
-                }
+        }
+        stage('Push release to origin/master') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                push()
             }
         }
     }

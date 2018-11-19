@@ -56,40 +56,38 @@ def tagCoreRelease() {
 disableConcurrentBuilds()
 
 timestamps {
-    lock('lightning-pipeline') {
-        node('linux') {
-            stage('Prepare') {
-                cleanupWorkspaceAndCloneRepo()
-                sh "git checkout ${env.BRANCH_NAME}"
-                purge()
+    node('linux') {
+        stage('Prepare') {
+            cleanupWorkspaceAndCloneRepo()
+            sh "git checkout ${env.BRANCH_NAME}"
+            purge()
+        }
+        stage('Set release version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitCoreReleaseVersion()
             }
-            stage('Set release version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitCoreReleaseVersion()
-                }
+        }
+        stage('Verify and install') {
+            testAndInstallCore()
+        }
+        stage('Tag release') {
+            if ("${params.TEST_ONLY}" == "false") {
+                tagCoreRelease()
             }
-            stage('Verify and install') {
-                testAndInstallCore()
+        }
+        stage('Release') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                releaseCore()
             }
-            stage('Tag release') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    tagCoreRelease()
-                }
+        }
+        stage('Set snapshot version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitCoreSnapshotVersion()
             }
-            stage('Release') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    releaseCore()
-                }
-            }
-            stage('Set snapshot version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitCoreSnapshotVersion()
-                }
-            }
-            stage('Push release to origin/master') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    push()
-                }
+        }
+        stage('Push release to origin/master') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                push()
             }
         }
     }

@@ -56,45 +56,43 @@ def releaseGradlePlugin() {
 disableConcurrentBuilds()
 
 timestamps {
-    lock('lightning-pipeline') {
-        node('linux') {
-            stage('Prepare') {
-                cleanupWorkspaceAndCloneRepo()
-                sh "git checkout ${env.BRANCH_NAME}"
-                purge()
+    node('linux') {
+        stage('Prepare') {
+            cleanupWorkspaceAndCloneRepo()
+            sh "git checkout ${env.BRANCH_NAME}"
+            purge()
+        }
+        stage('Build lightning-core') {
+            if ("${params.BUILD_CORE}" == "true") {
+                buildCore()
             }
-            stage('Build lightning-core') {
-                if ("${params.BUILD_CORE}" == "true") {
-                    buildCore()
-                }
+        }
+        stage('Set release version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitGradlePluginReleaseVersion()
             }
-            stage('Set release version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitGradlePluginReleaseVersion()
-                }
+        }
+        stage('Run checks') {
+            testGradlePlugin()
+        }
+        stage('Tag release') {
+            if ("${params.TEST_ONLY}" == "false") {
+                tagGradlePluginRelease()
             }
-            stage('Run checks') {
-                testGradlePlugin()
+        }
+        stage('Release') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                releaseGradlePlugin()
             }
-            stage('Tag release') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    tagGradlePluginRelease()
-                }
+        }
+        stage('Set snapshot version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitGradlePluginSnapshotVersion()
             }
-            stage('Release') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    releaseGradlePlugin()
-                }
-            }
-            stage('Set snapshot version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitGradlePluginSnapshotVersion()
-                }
-            }
-            stage('Push release to origin/master') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    push()
-                }
+        }
+        stage('Push release to origin/master') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                push()
             }
         }
     }

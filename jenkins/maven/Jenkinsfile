@@ -56,45 +56,43 @@ def releaseMavenPlugin() {
 disableConcurrentBuilds()
 
 timestamps {
-    lock('lightning-pipeline') {
-        node('linux') {
-            stage('Prepare') {
-                cleanupWorkspaceAndCloneRepo()
-                sh "git checkout ${env.BRANCH_NAME}"
-                purge()
+    node('linux') {
+        stage('Prepare') {
+            cleanupWorkspaceAndCloneRepo()
+            sh "git checkout ${env.BRANCH_NAME}"
+            purge()
+        }
+        stage('Build lightning-core') {
+            if ("${params.BUILD_CORE}" == "true") {
+                buildCore()
             }
-            stage('Build lightning-core') {
-                if ("${params.BUILD_CORE}" == "true") {
-                    buildCore()
-                }
+        }
+        stage('Set release version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitMavenPluginReleaseVersion()
             }
-            stage('Set release version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitMavenPluginReleaseVersion()
-                }
+        }
+        stage('Integration test') {
+            runIntegrationTests()
+        }
+        stage('Tag release') {
+            if ("${params.TEST_ONLY}" == "false") {
+                tagMavenPluginRelease()
             }
-            stage('Integration test') {
-                runIntegrationTests()
+        }
+        stage('Release') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                releaseMavenPlugin()
             }
-            stage('Tag release') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    tagMavenPluginRelease()
-                }
+        }
+        stage('Set snapshot version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitMavenPluginSnapshotVersion()
             }
-            stage('Release') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    releaseMavenPlugin()
-                }
-            }
-            stage('Set snapshot version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitMavenPluginSnapshotVersion()
-                }
-            }
-            stage('Push release to origin/master') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    push()
-                }
+        }
+        stage('Push release to origin/master') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                push()
             }
         }
     }

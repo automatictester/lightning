@@ -55,83 +55,81 @@ def archiveLambdaJar() {
 disableConcurrentBuilds()
 
 timestamps {
-    lock('lightning-pipeline') {
-        node('linux') {
-            stage('Prepare') {
-                cleanupWorkspaceAndCloneRepo()
-                sh "git checkout ${env.BRANCH_NAME}"
-                purge()
+    node('linux') {
+        stage('Prepare') {
+            cleanupWorkspaceAndCloneRepo()
+            sh "git checkout ${env.BRANCH_NAME}"
+            purge()
+        }
+        stage('Build lightning-core') {
+            if ("${params.BUILD_CORE}" == "true") {
+                buildCore()
             }
-            stage('Build lightning-core') {
-                if ("${params.BUILD_CORE}" == "true") {
-                    buildCore()
-                }
+        }
+        stage('Set release version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitLambdaReleaseVersion()
             }
-            stage('Set release version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitLambdaReleaseVersion()
-                }
+        }
+        stage('Build and unit test') {
+            buildAndUnitTest()
+        }
+        stage('Deploy to AWS') {
+            dir('lightning-aws-lambda') {
+                sh 'mv target/lightning-aws-lambda-*.jar target/lightning-aws-lambda.jar'
+                sh 'aws s3 cp target/lightning-aws-lambda.jar s3://automatictester.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
             }
-            stage('Build and unit test') {
-                buildAndUnitTest()
+            dir('lightning-aws-lambda/tf') {
+                sh 'terraform init -no-color'
+                sh 'terraform apply -no-color -auto-approve'
             }
-            stage('Deploy to AWS') {
-                dir('lightning-aws-lambda') {
-                    sh 'mv target/lightning-aws-lambda-*.jar target/lightning-aws-lambda.jar'
-                    sh 'aws s3 cp target/lightning-aws-lambda.jar s3://automatictester.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
+        }
+        stage('Test end-to-end') {
+            dir('lightning-aws-lambda') {
+                sh 'aws s3 sync src/test/resources s3://automatictester.co.uk-lightning-aws-lambda --delete --region eu-west-2'
+                sh './src/test/scripts/file/junit.sh'
+                sh './src/test/scripts/exit/code/report_2_0.sh'
+                sh './src/test/scripts/exit/code/report_2_1.sh'
+                sh './src/test/scripts/exit/code/verify_1_1_1.sh'
+                sh './src/test/scripts/exit/code/verify_3_0_0.sh'
+                sh './src/test/scripts/exit/code/verify_3_0_0_2s.sh'
+                sh './src/test/scripts/console/output/report_10_0.sh'
+                sh './src/test/scripts/console/output/verify_1_1_1.sh'
+                sh './src/test/scripts/console/output/verify_3_0_0.sh'
+                sh './src/test/scripts/console/output/verify_3_0_0_2s.sh'
+            }
+            stage('Volume testing') {
+                dir('lightning-aws-lambda/large-volume-data-generator') {
+                    sh './generate-100mb-csv.sh'
                 }
                 dir('lightning-aws-lambda/tf') {
-                    sh 'terraform init -no-color'
+                    sh 'terraform apply -no-color -auto-approve -var-file="volume-test.tfvars"'
+                }
+                dir('lightning-aws-lambda') {
+                    sh 'aws s3 cp large-volume-data-generator/jmeter-results.csv s3://automatictester.co.uk-lightning-aws-lambda/csv/jmeter/100mb.csv --region eu-west-2'
+                    sh './src/test/scripts/volume/volume.sh'
+                }
+                dir('lightning-aws-lambda/tf') {
                     sh 'terraform apply -no-color -auto-approve'
                 }
             }
-            stage('Test end-to-end') {
-                dir('lightning-aws-lambda') {
-                    sh 'aws s3 sync src/test/resources s3://automatictester.co.uk-lightning-aws-lambda --delete --region eu-west-2'
-                    sh './src/test/scripts/file/junit.sh'
-                    sh './src/test/scripts/exit/code/report_2_0.sh'
-                    sh './src/test/scripts/exit/code/report_2_1.sh'
-                    sh './src/test/scripts/exit/code/verify_1_1_1.sh'
-                    sh './src/test/scripts/exit/code/verify_3_0_0.sh'
-                    sh './src/test/scripts/exit/code/verify_3_0_0_2s.sh'
-                    sh './src/test/scripts/console/output/report_10_0.sh'
-                    sh './src/test/scripts/console/output/verify_1_1_1.sh'
-                    sh './src/test/scripts/console/output/verify_3_0_0.sh'
-                    sh './src/test/scripts/console/output/verify_3_0_0_2s.sh'
-                }
-                stage('Volume testing') {
-                    dir('lightning-aws-lambda/large-volume-data-generator') {
-                        sh './generate-100mb-csv.sh'
-                    }
-                    dir('lightning-aws-lambda/tf') {
-                        sh 'terraform apply -no-color -auto-approve -var-file="volume-test.tfvars"'
-                    }
-                    dir('lightning-aws-lambda') {
-                        sh 'aws s3 cp large-volume-data-generator/jmeter-results.csv s3://automatictester.co.uk-lightning-aws-lambda/csv/jmeter/100mb.csv --region eu-west-2'
-                        sh './src/test/scripts/volume/volume.sh'
-                    }
-                    dir('lightning-aws-lambda/tf') {
-                        sh 'terraform apply -no-color -auto-approve'
-                    }
-                }
+        }
+        stage('Tag release') {
+            if ("${params.TEST_ONLY}" == "false") {
+                tagLambdaRelease()
             }
-            stage('Tag release') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    tagLambdaRelease()
-                }
+        }
+        stage('Archive JAR') {
+            archiveLambdaJar()
+        }
+        stage('Set snapshot version number') {
+            if ("${params.TEST_ONLY}" == "false") {
+                commitLambdaSnapshotVersion()
             }
-            stage('Archive JAR') {
-                archiveLambdaJar()
-            }
-            stage('Set snapshot version number') {
-                if ("${params.TEST_ONLY}" == "false") {
-                    commitLambdaSnapshotVersion()
-                }
-            }
-            stage('Push release to origin/master') {
-                if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                    push()
-                }
+        }
+        stage('Push release to origin/master') {
+            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+                push()
             }
         }
     }
