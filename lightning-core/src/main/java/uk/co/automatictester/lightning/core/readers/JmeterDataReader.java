@@ -4,9 +4,9 @@ import com.univocity.parsers.common.processor.ConcurrentRowProcessor;
 import com.univocity.parsers.common.processor.RowListProcessor;
 import com.univocity.parsers.csv.CsvParserSettings;
 
-public class JmeterDataReader extends CsvDataReader {
+public class JmeterDataReader implements CsvDataReader {
 
-    protected CsvParserSettings csvParserSettings() {
+    public CsvParserSettings csvParserSettings() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(true);

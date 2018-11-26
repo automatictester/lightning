@@ -1,67 +1,14 @@
 package uk.co.automatictester.lightning.core.readers;
 
-import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
-import uk.co.automatictester.lightning.core.s3client.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 
-import java.io.*;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CsvDataReader {
+public interface CsvDataReader {
 
-    private static final Logger log = LoggerFactory.getLogger(CsvDataReader.class);
+    CsvParserSettings csvParserSettings();
 
-    public List<String[]> fromFile(File perfMonCsvFile) {
-        Instant start = Instant.now();
-        log.debug("Reading CSV file - start");
-
-        List<String[]> entries = new ArrayList<>();
-        csvParserSettings().setInputBufferSize(20_000_000);
-        CsvParser csvParser = new CsvParser(csvParserSettings());
-        try (FileReader fr = new FileReader(perfMonCsvFile)) {
-            entries.addAll(csvParser.parseAll(fr));
-        } catch (IOException e) {
-            throw new CSVFileIOException(e);
-        }
-        throwExceptionIfEmpty(entries);
-
-        Instant finish = Instant.now();
-        Duration duration = Duration.between(start, finish);
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
-        return entries;
-    }
-
-    public List<String[]> fromS3Object(String region, String bucket, String key) {
-        Instant start = Instant.now();
-        log.debug("Reading CSV file - start");
-
-        List<String[]> entries = new ArrayList<>();
-        S3Client s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
-        String csvObjectContent = s3Client.getObjectAsString(key);
-        CsvParser csvParser = new CsvParser(csvParserSettings());
-        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            entries.addAll(csvParser.parseAll(isr));
-        } catch (IOException e) {
-            throw new CSVFileIOException(e);
-        }
-        throwExceptionIfEmpty(entries);
-
-        Instant finish = Instant.now();
-        Duration duration = Duration.between(start, finish);
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
-        return entries;
-    }
-
-    protected abstract CsvParserSettings csvParserSettings();
-
-    private void throwExceptionIfEmpty(List<String[]> entries) {
+    default void throwExceptionIfEmpty(List<String[]> entries) {
         if (entries.isEmpty()) {
             throw new IllegalStateException("No entries found in CSV file");
         }

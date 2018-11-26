@@ -5,6 +5,7 @@ import uk.co.automatictester.lightning.core.config.S3ConfigReader;
 import uk.co.automatictester.lightning.core.readers.CsvDataReader;
 import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
 import uk.co.automatictester.lightning.core.readers.PerfMonDataReader;
+import uk.co.automatictester.lightning.core.readers.S3CsvDataReader;
 import uk.co.automatictester.lightning.core.reporters.TransactionReporter;
 import uk.co.automatictester.lightning.core.reporters.jenkins.S3JenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.S3JunitReporter;
@@ -48,8 +49,9 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
     }
 
     public void loadTestDataFromS3() {
-        CsvDataReader reader = new JmeterDataReader();
-        List<String[]> entries = reader.fromS3Object(region, bucket, jmeterCsv);
+        CsvDataReader jmeterReader = new JmeterDataReader();
+        S3CsvDataReader s3Reader = new S3CsvDataReader(jmeterReader);
+        List<String[]> entries = s3Reader.fromS3Object(region, bucket, jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
         testData.addClientSideTestData(entries);
@@ -79,8 +81,9 @@ public class LightningCoreS3Facade extends AbstractLightningCoreFacade {
 
     private void loadPerfMonDataIfProvided() {
         if (perfMonCsv != null) {
-            CsvDataReader reader = new PerfMonDataReader();
-            List<String[]> entries = reader.fromS3Object(region, bucket, perfMonCsv);
+            CsvDataReader perfMonReader = new PerfMonDataReader();
+            S3CsvDataReader s3Reader = new S3CsvDataReader(perfMonReader);
+            List<String[]> entries = s3Reader.fromS3Object(region, bucket, perfMonCsv);
             TestData.getInstance().addServerSideTestData(entries);
         }
     }

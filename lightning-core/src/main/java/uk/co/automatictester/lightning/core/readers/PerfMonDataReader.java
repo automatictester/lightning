@@ -6,9 +6,9 @@ import com.univocity.parsers.csv.CsvParserSettings;
 
 import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.*;
 
-public class PerfMonDataReader extends CsvDataReader {
+public class PerfMonDataReader implements CsvDataReader {
 
-    protected CsvParserSettings csvParserSettings() {
+    public CsvParserSettings csvParserSettings() {
         CsvParserSettings parserSettings = new CsvParserSettings();
         parserSettings.setLineSeparatorDetectionEnabled(true);
         parserSettings.setHeaderExtractionEnabled(false);

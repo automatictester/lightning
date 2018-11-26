@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static uk.co.automatictester.lightning.shared.LegacyTestData.*;
 
-public class JmeterDataReaderTest {
+public class S3CsvDataReaderTest {
 
     private static final String REGION = "eu-west-2";
     private static final String BUCKET = "automatictester.co.uk-lightning-aws-lambda";
@@ -41,31 +41,11 @@ public class JmeterDataReaderTest {
     @Test
     public void testFromS3Object() throws IOException {
         client.putObjectFromFile(CSV_2_TRANSACTIONS.toString());
-        CsvDataReader reader = new JmeterDataReader();
-        List<String[]> entries = reader.fromS3Object(REGION, BUCKET, CSV_2_TRANSACTIONS.toString());
+        CsvDataReader jmeterReader = new JmeterDataReader();
+        S3CsvDataReader s3Reader = new S3CsvDataReader(jmeterReader);
+        List<String[]> entries = s3Reader.fromS3Object(REGION, BUCKET, CSV_2_TRANSACTIONS.toString());
         assertThat(entries, hasItem(LOGIN_3514_SUCCESS));
         assertThat(entries, hasItem(SEARCH_11221_SUCCESS));
         assertThat(entries.size(), is(2));
-    }
-
-    @Test
-    public void testFromFile() {
-        CsvDataReader reader = new JmeterDataReader();
-        List<String[]> entries = reader.fromFile(CSV_2_TRANSACTIONS);
-        assertThat(entries, hasItem(LOGIN_3514_SUCCESS));
-        assertThat(entries, hasItem(SEARCH_11221_SUCCESS));
-        assertThat(entries.size(), is(2));
-    }
-
-    @Test(expectedExceptions = CSVFileIOException.class)
-    public void testFromFileIOException() {
-        CsvDataReader reader = new JmeterDataReader();
-        reader.fromFile(CSV_NONEXISTENT);
-    }
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void testFromFileNoTransactionsException() {
-        CsvDataReader reader = new JmeterDataReader();
-        reader.fromFile(CSV_0_TRANSACTIONS);
     }
 }
