@@ -2,8 +2,6 @@ package uk.co.automatictester.lightning.core.state.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.AbstractConsoleOutputTest;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
-import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.core.tests.*;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
@@ -14,6 +12,8 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class TestSetTest extends AbstractConsoleOutputTest {
 
@@ -107,6 +107,47 @@ public class TestSetTest extends AbstractConsoleOutputTest {
     }
 
     @Test
+    public void testPrintTestSetExecutionReport() {
+        PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestA = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
+        PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestB = new PassedTransactionsAbsoluteTest.Builder("Test #2", 0).withDescription("Verify number of passed tests").build();
+
+        List<String[]> testData = new ArrayList<>();
+        testData.add(LegacyTestData.LOGIN_3514_SUCCESS);
+        testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
+        TestData.getInstance().addClientSideTestData(testData);
+
+        List<LightningTest> tests = new ArrayList<>();
+        tests.add(passedTransactionsAbsoluteTestA);
+        tests.add(passedTransactionsAbsoluteTestB);
+
+        TestSet testSet = new TestSet();
+        testSet.addAll(tests);
+        configureStream();
+        testSet.executeTests();
+        revertStream();
+
+        String expectedResult = String.format("Test name:            Test #1%n" +
+                "Test type:            passedTransactionsTest%n" +
+                "Test description:     Verify number of passed tests%n" +
+                "Transaction name:     Login%n" +
+                "Expected result:      Number of failed transactions <= 0%n" +
+                "Actual result:        Number of failed transactions = 0%n" +
+                "Transaction count:    1%n" +
+                "Test result:          Pass%n" +
+                "%n" +
+                "Test name:            Test #2%n" +
+                "Test type:            passedTransactionsTest%n" +
+                "Test description:     Verify number of passed tests%n" +
+                "Expected result:      Number of failed transactions <= 0%n" +
+                "Actual result:        Number of failed transactions = 0%n" +
+                "Transaction count:    2%n" +
+                "Test result:          Pass");
+
+        String output = testSet.testExecutionReport();
+        assertThat(output, containsString(expectedResult));
+    }
+
+    @Test
     public void testPrintTestSetExecutionSummaryReportForPass() {
         PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestA = new PassedTransactionsAbsoluteTest.Builder("Test #1", 0).withDescription("Verify number of passed tests").withTransactionName("Login").build();
         PassedTransactionsAbsoluteTest passedTransactionsAbsoluteTestB = new PassedTransactionsAbsoluteTest.Builder("Test #2", 0).withDescription("Verify number of passed tests").build();
@@ -135,6 +176,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
 
         String output = testSet.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
+        assertFalse(testSet.hasFailed());
     }
 
     @Test
@@ -168,6 +210,7 @@ public class TestSetTest extends AbstractConsoleOutputTest {
 
         String output = testSet.testSetExecutionSummaryReport();
         assertThat(output, containsString(expectedResult));
+        assertTrue(testSet.hasFailed());
     }
 
     @Test

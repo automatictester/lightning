@@ -7,10 +7,16 @@ import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.state.tests.TestSet;
+import uk.co.automatictester.lightning.core.tests.LightningTest;
+import uk.co.automatictester.lightning.core.tests.RespTimeAvgTest;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 public class S3ConfigReaderTest {
 
@@ -34,14 +40,26 @@ public class S3ConfigReaderTest {
         s3Mock.stop();
     }
 
+    @Test
+    public void verifyGetTestsMethodAvgRespTime() throws IOException {
+        client.putObjectFromFile("src/test/resources/xml/avgRespTimeTest.xml");
+        TestSet testSet = new S3ConfigReader(REGION, BUCKET).readTests("src/test/resources/xml/avgRespTimeTest.xml");
+        List<LightningTest> tests = testSet.get();
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Login").build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
     @Test(expectedExceptions = XMLFileException.class)
     public void verifyGetTestsMethodThrowsXMLFileLoadingException() throws IOException {
-        // suppress error output - coming NOT from own code
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(outContent));
         client.putObjectFromFile("src/test/resources/xml/not_well_formed.xml");
-
         new S3ConfigReader(REGION, BUCKET).readTests("src/test/resources/xml/not_well_formed.xml");
-        System.setErr(null);
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void verifyGetTestsMethodThrowsXMLFileNoTestsException() throws IOException {
+        client.putObjectFromFile("src/test/resources/xml/0_0_0.xml");
+        new S3ConfigReader(REGION, BUCKET).readTests("src/test/resources/xml/0_0_0.xml");
     }
 }
