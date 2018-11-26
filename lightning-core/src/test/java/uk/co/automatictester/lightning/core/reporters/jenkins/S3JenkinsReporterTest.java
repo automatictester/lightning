@@ -35,7 +35,9 @@ public class S3JenkinsReporterTest {
 
     @AfterClass
     public void teardown() {
-        s3Mock.stop();
+        if (System.getProperty("mockS3") != null) {
+            s3Mock.stop();
+        }
     }
 
     @Test
