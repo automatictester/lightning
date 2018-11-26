@@ -6,6 +6,9 @@ import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.LightningTest;
 
+import java.util.Collections;
+
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -78,5 +81,25 @@ public class JunitReportGeneratorTest {
         assertThat(testcase.getTextContent(), equalTo("some content"));
         assertThat(testcase.getElementsByTagName("error").item(0).getAttributes().item(0).toString(), equalTo("message=\"some message\""));
         assertThat(testcase.getElementsByTagName("error").item(0).getAttributes().item(1).toString(), equalTo("type=\"some type\""));
+    }
+
+    @Test
+    public void testGenerate() {
+        LightningTest test = mock(LightningTest.class);
+        when(test.result()).thenReturn(TestResult.PASS);
+        when(test.name()).thenReturn("some name");
+
+        TestSet testSet = mock(TestSet.class);
+        when(testSet.get()).thenReturn(Collections.singletonList(test));
+        when(testSet.size()).thenReturn(1);
+        when(testSet.errorCount()).thenReturn(0);
+        when(testSet.failCount()).thenReturn(0);
+
+        String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite errors=\"0\" failures=\"0\" name=\"Lightning\" tests=\"1\" time=\"0\">\n" +
+                "    <testcase name=\"some name\" time=\"0\"/>\n" +
+                "</testsuite>";
+
+        String report = new JunitReportGenerator(testSet).generate();
+        assertThat(report, containsString(expectedResult));
     }
 }
