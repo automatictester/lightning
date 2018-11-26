@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <medianRespTimeTest>
+        <testName>Test #4</testName>
+        <description>Verify median response time</description>
+        <transactionName>Log[a-z]{2,10}</transactionName>
+        <regexp/>
+        <maxRespTime>11244</maxRespTime>
+    </medianRespTimeTest>
+
+</testSet>

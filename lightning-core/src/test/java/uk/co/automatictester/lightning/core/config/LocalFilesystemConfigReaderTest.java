@@ -27,10 +27,30 @@ public class LocalFilesystemConfigReaderTest {
     }
 
     @Test
+    public void verifyGetTestsMethodPercentileTestWithRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/nthPercRespTimeTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #4", 11245, 80).withDescription("Verify nth percentile").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
     public void verifyGetTestsMethodStdDevTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/respTimeStdDevTest.xml");
         List<LightningTest> tests = testSet.get();
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Search").build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
+    public void verifyGetTestsMethodStdDevTestWithRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/respTimeStdDevTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #2", 500).withDescription("Verify standard deviation").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -47,10 +67,30 @@ public class LocalFilesystemConfigReaderTest {
     }
 
     @Test
+    public void verifyGetTestsMethodPassedTestWithRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        PassedTransactionsAbsoluteTest test = new PassedTransactionsAbsoluteTest.Builder("Test #3", 0).withDescription("Verify number of passed tests").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
     public void verifyGetTestsMethodPassedPercentTest() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsPercentTest.xml");
         List<LightningTest> tests = testSet.get();
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #3", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
+    public void verifyGetTestsMethodPassedPercentTestWitgRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/passedTransactionsPercentTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #3", 0).withDescription("Verify percent of passed tests").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -67,10 +107,30 @@ public class LocalFilesystemConfigReaderTest {
     }
 
     @Test
+    public void verifyGetTestsMethodAvgRespTimeWithRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/avgRespTimeTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 4000).withDescription("Verify average login times").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
     public void verifyGetTestsMethodMaxRespTime() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/maxRespTimeTest.xml");
         List<LightningTest> tests = testSet.get();
         RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Login").build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
+    public void verifyGetTestsMethodMaxRespTimeWithRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/maxRespTimeTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        RespTimeMaxTest test = new RespTimeMaxTest.Builder("Test #1", 4000).withDescription("Verify max login times").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));
@@ -87,10 +147,30 @@ public class LocalFilesystemConfigReaderTest {
     }
 
     @Test
+    public void verifyGetTestsMethodMedianRespTimeWithRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/medianRespTimeTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #4", 11244).withDescription("Verify median response time").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
     public void verifyGetTestsMethodThroughput() {
         TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/throughputTest.xml");
         List<LightningTest> tests = testSet.get();
         ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").build();
+
+        assertThat(tests, hasSize(1));
+        assertThat(tests.contains(test), is(true));
+    }
+
+    @Test
+    public void verifyGetTestsMethodThroughputWithTransactionNameAndRegexp() {
+        TestSet testSet = new LocalFileSystemConfigReader().readTests("src/test/resources/xml/throughputTest_regexp.xml");
+        List<LightningTest> tests = testSet.get();
+        ThroughputTest test = new ThroughputTest.Builder("Test #2", 2).withDescription("Verify throughput").withTransactionName("Log[a-z]{2,10}").withRegexp().build();
 
         assertThat(tests, hasSize(1));
         assertThat(tests.contains(test), is(true));

@@ -13,7 +13,7 @@ import static uk.co.automatictester.lightning.shared.LegacyTestData.*;
 public class JmeterDataReaderTest {
 
     @Test
-    public void verifyReadMethod() {
+    public void testFromFile() {
         CsvDataReader reader = new JmeterDataReader();
         List<String[]> entries = reader.fromFile(CSV_2_TRANSACTIONS);
         assertThat(entries, hasItem(LOGIN_3514_SUCCESS));
@@ -22,13 +22,13 @@ public class JmeterDataReaderTest {
     }
 
     @Test(expectedExceptions = CSVFileIOException.class)
-    public void verifyReadMethodIOException() {
+    public void testFromFileIOException() {
         CsvDataReader reader = new JmeterDataReader();
         reader.fromFile(CSV_NONEXISTENT);
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
-    public void verifyReadMethodNoTransactionsException() {
+    public void testFromFileNoTransactionsException() {
         CsvDataReader reader = new JmeterDataReader();
         reader.fromFile(CSV_0_TRANSACTIONS);
     }

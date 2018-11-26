@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <passedTransactionsTest>
+        <testName>Test #3</testName>
+        <description>Verify percent of passed tests</description>
+        <transactionName>Log[a-z]{2,10}</transactionName>
+        <regexp/>
+        <allowedPercentOfFailedTransactions>0</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
+
+</testSet>

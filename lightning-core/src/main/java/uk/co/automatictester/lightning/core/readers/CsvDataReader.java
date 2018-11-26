@@ -23,11 +23,10 @@ public abstract class CsvDataReader {
         log.debug("Reading CSV file - start");
 
         List<String[]> entries = new ArrayList<>();
+        csvParserSettings().setInputBufferSize(20_000_000);
+        CsvParser csvParser = new CsvParser(csvParserSettings());
         try (FileReader fr = new FileReader(perfMonCsvFile)) {
-            csvParserSettings().setInputBufferSize(20_000_000);
-            CsvParser csvParser = new CsvParser(csvParserSettings());
-            List<String[]> items = csvParser.parseAll(fr);
-            entries.addAll(items);
+            entries.addAll(csvParser.parseAll(fr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }
@@ -46,10 +45,9 @@ public abstract class CsvDataReader {
         List<String[]> entries = new ArrayList<>();
         S3Client s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         String csvObjectContent = s3Client.getObjectAsString(key);
+        CsvParser csvParser = new CsvParser(csvParserSettings());
         try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            CsvParser csvParser = new CsvParser(csvParserSettings());
-            List<String[]> items = csvParser.parseAll(isr);
-            entries.addAll(items);
+            entries.addAll(csvParser.parseAll(isr));
         } catch (IOException e) {
             throw new CSVFileIOException(e);
         }

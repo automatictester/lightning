@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <maxRespTimeTest>
+        <testName>Test #1</testName>
+        <description>Verify max login times</description>
+        <transactionName>Log[a-z]{2,10}</transactionName>
+        <regexp/>
+        <maxAllowedRespTime>4000</maxAllowedRespTime>
+    </maxRespTimeTest>
+
+</testSet>

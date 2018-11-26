@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <nthPercRespTimeTest>
+        <testName>Test #4</testName>
+        <description>Verify nth percentile</description>
+        <transactionName>Log[a-z]{2,10}</transactionName>
+        <regexp/>
+        <percentile>80</percentile>
+        <maxRespTime>11245</maxRespTime>
+    </nthPercRespTimeTest>
+
+</testSet>
