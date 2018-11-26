@@ -11,7 +11,6 @@ public class LegacyTestData {
 
     // Resources
     private static final String RESOURCES = "src/test/resources/";
-    private static final String XML_RESOURCES = RESOURCES + "xml/";
     private static final String JMETER_CSV_RESOURCES = RESOURCES + "csv/jmeter/";
     private static final String PERFMON_CSV_RESOURCES = RESOURCES + "csv/perfmon/";
 
