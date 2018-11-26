@@ -10,8 +10,6 @@ import java.nio.file.Paths;
 
 public class LocalFileSystemJunitReporter {
 
-    private static final Path PATH = Paths.get("junit.xml");
-
     private LocalFileSystemJunitReporter() {
     }
 
@@ -22,6 +20,7 @@ public class LocalFileSystemJunitReporter {
     }
 
     private static void storeReportToDisk(String report) {
+        Path PATH = Paths.get("junit.xml");
         try {
             Files.write(PATH, report.getBytes());
         } catch (IOException e) {
