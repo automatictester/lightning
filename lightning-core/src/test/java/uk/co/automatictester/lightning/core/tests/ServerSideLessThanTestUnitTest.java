@@ -49,6 +49,8 @@ public class ServerSideLessThanTestUnitTest {
 
     @Test(dataProvider = "locale")
     public void verifyExecuteOneEntryPass(Locale locale) {
+        Locale.setDefault(locale);
+
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
