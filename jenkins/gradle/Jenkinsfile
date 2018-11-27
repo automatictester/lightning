@@ -52,7 +52,9 @@ pipeline {
         }
         stage('Check') {
             steps {
-                sh './gradlew clean check'
+                dir('lightning-gradle-plugin') {
+                    sh './gradlew clean check'
+                }
             }
             post {
                 always {
