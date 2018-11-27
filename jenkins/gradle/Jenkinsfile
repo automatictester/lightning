@@ -2,96 +2,108 @@
 
 library "SharedLib@${env.BRANCH_NAME}"
 
-properties([
-        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
-        parameters([
-                string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
-                string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
-                string(name: 'BUILD_CORE', defaultValue: 'true', description: ''),
-                string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
-                string(name: 'DRY_RUN', defaultValue: 'true', description: '')
-        ])
-])
-
-def commitGradlePluginReleaseVersion() {
-    dir('lightning-gradle-plugin') {
-        sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.RELEASE_VERSION}/\" gradle.properties"
-        sh "cat gradle.properties"
+pipeline {
+    agent {
+        label 'linux'
     }
-    sh "git add -A; git commit -m 'Release version bump'"
-}
-
-def commitGradlePluginSnapshotVersion() {
-    dir('lightning-gradle-plugin') {
-        sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.POST_RELEASE_SNAPSHOT_VERSION}/\" gradle.properties"
-        sh "cat gradle.properties"
+    parameters {
+        string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: '')
+        string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: '')
+        string(name: 'BUILD_CORE', defaultValue: 'true', description: '')
+        string(name: 'TEST_ONLY', defaultValue: 'true', description: '')
+        string(name: 'DRY_RUN', defaultValue: 'true', description: '')
     }
-    sh "git add -A; git commit -m 'Post-release version bump'"
-}
-
-def testGradlePlugin() {
-    try {
-        dir('lightning-gradle-plugin') {
-            sh './gradlew clean check'
-        }
-    } finally {
-        junit 'lightning-gradle-plugin/build/test-results/integrationTest/*.xml'
+    options {
+        timestamps()
+        skipDefaultCheckout()
+        disableConcurrentBuilds()
     }
-}
-
-def tagGradlePluginRelease() {
-    sh "git tag gradle-plugin-${params.RELEASE_VERSION}"
-}
-
-def releaseGradlePlugin() {
-    dir('lightning-gradle-plugin') {
-        // Maven Central
-        sh './gradlew clean uploadArchives'
-        // Gradle Plugin Portal
-        sh './gradlew clean publishPlugins'
-    }
-
-}
-
-disableConcurrentBuilds()
-
-timestamps {
-    node('linux') {
+    stages {
         stage('Prepare') {
             cleanupWorkspaceAndCloneRepo()
             sh "git checkout ${env.BRANCH_NAME}"
             purge()
         }
         stage('Build lightning-core') {
-            if ("${params.BUILD_CORE}" == "true") {
+            when {
+                expression {
+                    "${params.BUILD_CORE}" == "true"
+                }
+            }
+            steps {
                 buildCore()
             }
         }
         stage('Set release version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitGradlePluginReleaseVersion()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                dir('lightning-gradle-plugin') {
+                    sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.RELEASE_VERSION}/\" gradle.properties"
+                    sh "cat gradle.properties"
+                }
+                sh "git add -A; git commit -m 'Release version bump'"
             }
         }
-        stage('Run checks') {
-            testGradlePlugin()
+        stage('Check') {
+            steps {
+                sh './gradlew clean check'
+            }
+            post {
+                always {
+                    junit 'lightning-gradle-plugin/build/test-results/integrationTest/*.xml'
+                }
+            }
         }
         stage('Tag release') {
-            if ("${params.TEST_ONLY}" == "false") {
-                tagGradlePluginRelease()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "git tag gradle-plugin-${params.RELEASE_VERSION}"
             }
         }
         stage('Release') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                releaseGradlePlugin()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                }
+            }
+            steps {
+                dir('lightning-gradle-plugin') {
+                    // Maven Central
+                    sh './gradlew clean uploadArchives'
+                    // Gradle Plugin Portal
+                    sh './gradlew clean publishPlugins'
+                }
             }
         }
         stage('Set snapshot version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitGradlePluginSnapshotVersion()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                dir('lightning-gradle-plugin') {
+                    sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.POST_RELEASE_SNAPSHOT_VERSION}/\" gradle.properties"
+                    sh "cat gradle.properties"
+                }
+                sh "git add -A; git commit -m 'Post-release version bump'"
             }
         }
         stage('Push release to origin/master') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                }
+            }
+            steps {
                 push()
             }
         }
