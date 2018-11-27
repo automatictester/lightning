@@ -2,81 +2,95 @@
 
 library "SharedLib@${env.BRANCH_NAME}"
 
-properties([
-        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
-        parameters([
-                string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
-                string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
-                string(name: 'BUILD_CORE', defaultValue: 'true', description: ''),
-                string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
-                string(name: 'DRY_RUN', defaultValue: 'true', description: '')
-        ])
-])
-
-def tagStandaloneRelease() {
-    sh "git tag standalone-${params.RELEASE_VERSION}"
-}
-
-def buildAndTest() {
-    try {
-        sh './mvnw -pl lightning-standalone clean compile assembly:single test'
-    } finally {
-        junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
-        jacoco execPattern: '**/lightning-standalone/target/jacoco.exec', classPattern: '**/lightning-standalone/target/classes', sourcePattern: '**/lightning-standalone/src/main/java'
+pipeline {
+    agent {
+        label 'linux'
     }
-}
-
-def commitStandaloneReleaseVersion() {
-    sh "./mvnw -pl lightning-standalone versions:set -DnewVersion=${params.RELEASE_VERSION}"
-    sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
-}
-
-def commitStandaloneSnapshotVersion() {
-    sh "./mvnw -pl lightning-standalone versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
-    sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
-}
-
-def archiveStandaloneJar() {
-    archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
-}
-
-disableConcurrentBuilds()
-
-timestamps {
-    node('linux') {
+    parameters {
+        string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: '')
+        string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: '')
+        string(name: 'BUILD_CORE', defaultValue: 'true', description: '')
+        string(name: 'TEST_ONLY', defaultValue: 'true', description: '')
+        string(name: 'DRY_RUN', defaultValue: 'true', description: '')
+    }
+    options {
+        timestamps()
+        skipDefaultCheckout()
+        disableConcurrentBuilds()
+    }
+    stages {
         stage('Prepare') {
-            cleanupWorkspaceAndCloneRepo()
-            sh "git checkout ${env.BRANCH_NAME}"
-            purge()
+            steps {
+                cleanupWorkspaceAndCloneRepo()
+                sh "git checkout ${env.BRANCH_NAME}"
+                purge()
+            }
         }
         stage('Build lightning-core') {
-            if ("${params.BUILD_CORE}" == "true") {
+            when {
+                expression {
+                    "${params.BUILD_CORE}" == "true"
+                }
+            }
+            steps {
                 buildCore()
             }
         }
         stage('Set release version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitStandaloneReleaseVersion()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "./mvnw -pl lightning-standalone versions:set -DnewVersion=${params.RELEASE_VERSION}"
+                sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
             }
         }
         stage('Run unit tests, generate JAR file and run E2E tests') {
-            buildAndTest()
+            steps {
+                sh './mvnw -pl lightning-standalone clean compile assembly:single test'
+            }
+            post {
+                always {
+                    junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
+                    jacoco execPattern: '**/lightning-standalone/target/jacoco.exec', classPattern: '**/lightning-standalone/target/classes', sourcePattern: '**/lightning-standalone/src/main/java'
+                }
+            }
         }
         stage('Tag release') {
-            if ("${params.TEST_ONLY}" == "false") {
-                tagStandaloneRelease()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "git tag standalone-${params.RELEASE_VERSION}"
             }
         }
         stage('Archive JAR') {
-            archiveStandaloneJar()
+            steps {
+                archiveArtifacts artifacts: 'lightning-standalone/target/lightning-standalone-*.jar'
+            }
         }
         stage('Set snapshot version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitStandaloneSnapshotVersion()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "./mvnw -pl lightning-standalone versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
+                sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
             }
         }
         stage('Push release to origin/master') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                }
+            }
+            steps {
                 push()
             }
         }
