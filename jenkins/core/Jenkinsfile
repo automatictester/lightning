@@ -2,60 +2,94 @@
 
 library "SharedLib@${env.BRANCH_NAME}"
 
-properties([
-        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
-        parameters([
-                string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
-                string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
-                string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
-                string(name: 'DRY_RUN', defaultValue: 'true', description: '')
-        ])
-])
-
-disableConcurrentBuilds()
-
-timestamps {
-    node('linux') {
-        stage('Prepare') {
-            cleanupWorkspaceAndCloneRepo()
-            sh "git checkout ${env.BRANCH_NAME}"
-            purge()
-        }
-        stage('Set release version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
-                sh "git add -A; git commit -m 'Lightning Core release version bump'"
-            }
-        }
-        stage('Verify and install') {
-            try {
-                sh './mvnw -pl lightning-core clean install -DmockS3'
-            } finally {
-                junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
-                jacoco execPattern: '**/jacoco*.exec'
-            }
-        }
-        stage('Tag release') {
-            if ("${params.TEST_ONLY}" == "false") {
-                sh "git tag core-${params.RELEASE_VERSION}"
-            }
-        }
-        stage('Release') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-                    sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
+pipeline {
+    agent {
+        label 'linux'
+    }
+    parameters {
+        string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: '')
+        string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: '')
+        string(name: 'TEST_ONLY', defaultValue: 'true', description: '')
+        string(name: 'DRY_RUN', defaultValue: 'true', description: '')
+    }
+    options {
+        timestamps()
+        skipDefaultCheckout()
+        disableConcurrentBuilds()
+    }
+    stages {
+        node('linux') {
+            stage('Prepare') {
+                steps {
+                    cleanupWorkspaceAndCloneRepo()
+                    sh "git checkout ${env.BRANCH_NAME}"
+                    purge()
                 }
             }
-        }
-        stage('Set snapshot version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
-                sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
+            stage('Set release version number') {
+                when {
+                    expression {
+                        "${params.TEST_ONLY}" == "false"
+                    }
+                }
+                steps {
+                    sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
+                    sh "git add -A; git commit -m 'Lightning Core release version bump'"
+                }
             }
-        }
-        stage('Push release to origin/master') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                push()
+            stage('Verify') {
+                steps {
+                    sh './mvnw -pl lightning-core clean verify -DmockS3'
+                }
+                post {
+                    always {
+                        junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
+                        jacoco execPattern: '**/jacoco*.exec'
+                    }
+                }
+            }
+            stage('Tag release') {
+                when {
+                    expression {
+                        "${params.TEST_ONLY}" == "false"
+                    }
+                }
+                steps {
+                    sh "git tag core-${params.RELEASE_VERSION}"
+                }
+            }
+            stage('Release') {
+                when {
+                    expression {
+                        "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                    }
+                }
+                steps {
+                    withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
+                        sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
+                    }
+                }
+            }
+            stage('Set snapshot version number') {
+                when {
+                    expression {
+                        "${params.TEST_ONLY}" == "false"
+                    }
+                }
+                steps {
+                    sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
+                    sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
+                }
+            }
+            stage('Push release to origin/master') {
+                when {
+                    expression {
+                        "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                    }
+                }
+                steps {
+                    push()
+                }
             }
         }
     }
