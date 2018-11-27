@@ -19,9 +19,7 @@ def tagStandaloneRelease() {
 
 def buildAndTest() {
     try {
-        withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-            sh 'mvn -pl lightning-standalone clean compile assembly:single test'
-        }
+        sh './mvnw -pl lightning-standalone clean compile assembly:single test'
     } finally {
         junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
         jacoco execPattern: '**/lightning-standalone/target/jacoco.exec', classPattern: '**/lightning-standalone/target/classes', sourcePattern: '**/lightning-standalone/src/main/java'
@@ -29,21 +27,13 @@ def buildAndTest() {
 }
 
 def commitStandaloneReleaseVersion() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        dir('lightning-standalone') {
-            sh "mvn versions:set -DnewVersion=${params.RELEASE_VERSION}"
-        }
-        sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
-    }
+    sh "./mvnw -pl lightning-standalone versions:set -DnewVersion=${params.RELEASE_VERSION}"
+    sh "git add -A; git commit -m 'Lightning Standalone release version bump'"
 }
 
 def commitStandaloneSnapshotVersion() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        dir('lightning-standalone') {
-            sh "mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
-        }
-        sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
-    }
+    sh "./mvnw -pl lightning-standalone versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
+    sh "git add -A; git commit -m 'Lightning Standalone post-release version bump'"
 }
 
 def archiveStandaloneJar() {

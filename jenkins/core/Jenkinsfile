@@ -14,9 +14,7 @@ properties([
 
 def testAndInstallCore() {
     try {
-        withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-            sh 'mvn -pl lightning-core clean install -DmockS3'
-        }
+        sh './mvnw -pl lightning-core clean install -DmockS3'
     } finally {
         junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
         jacoco execPattern: '**/jacoco*.exec'
@@ -24,28 +22,18 @@ def testAndInstallCore() {
 }
 
 def commitCoreReleaseVersion() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        dir('lightning-core') {
-            sh "mvn versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
-        }
-        sh "git add -A; git commit -m 'Lightning Core release version bump'"
-    }
+    sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
+    sh "git add -A; git commit -m 'Lightning Core release version bump'"
 }
 
 def commitCoreSnapshotVersion() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        dir('lightning-core') {
-            sh "mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
-        }
-        sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
-    }
+    sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
+    sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
 }
 
 def releaseCore() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-            sh "mvn -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
-        }
+    withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
+        sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
     }
 }
 

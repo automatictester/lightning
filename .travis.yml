@@ -15,26 +15,26 @@ cache:
 jobs:
   include:
     - stage: Test
-      script: mvn -pl lightning-core clean verify -DmockS3
+      script: ./mvnw -pl lightning-core clean verify -DmockS3
       name: "Core"
       env: CACHE=core
     - script:
-        - mvn -pl lightning-core clean install -DmockS3
-        - mvn -pl lightning-aws-lambda clean verify
+        - ./mvnw -pl lightning-core clean install -DmockS3
+        - ./mvnw -pl lightning-aws-lambda clean verify
       name: "Lambda"
       env: CACHE=lambda
     - script:
-        - mvn -pl lightning-core clean install -DmockS3
-        - mvn -pl jmeter-lightning-maven-plugin clean verify
+        - ./mvnw -pl lightning-core clean install -DmockS3
+        - ./mvnw -pl jmeter-lightning-maven-plugin clean verify
       name: "Maven"
       env: CACHE=maven
     - script:
-        - mvn -pl lightning-core clean install -DmockS3
-        - mvn -pl lightning-standalone clean compile assembly:single test
+        - ./mvnw -pl lightning-core clean install -DmockS3
+        - ./mvnw -pl lightning-standalone clean compile assembly:single test
       name: "Standalone"
       env: CACHE=standalone
     - script:
-        - mvn -pl lightning-core clean install -DmockS3
+        - ./mvnw -pl lightning-core clean install -DmockS3
         - (cd lightning-gradle-plugin; ./gradlew clean check)
       name: "Gradle"
       env: CACHE=gradle

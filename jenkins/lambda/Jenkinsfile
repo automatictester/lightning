@@ -19,9 +19,7 @@ def tagLambdaRelease() {
 
 def buildAndUnitTest() {
     try {
-        withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-            sh 'mvn -pl lightning-aws-lambda clean package'
-        }
+        sh './mvnw -pl lightning-aws-lambda clean package'
     } finally {
         junit 'lightning-aws-lambda/target/surefire-reports/junitreports/*.xml'
         jacoco execPattern: '**/lightning-aws-lambda/target/jacoco.exec', classPattern: '**/lightning-aws-lambda/target/classes', sourcePattern: '**/lightning-aws-lambda/src/main/java'
@@ -29,21 +27,13 @@ def buildAndUnitTest() {
 }
 
 def commitLambdaReleaseVersion() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        dir('lightning-aws-lambda') {
-            sh "mvn versions:set -DnewVersion=${params.RELEASE_VERSION}"
-        }
-        sh "git add -A; git commit -m 'Lightning AWS Lambda release version bump'"
-    }
+    sh "./mvnw -pl lightning-aws-lambda versions:set -DnewVersion=${params.RELEASE_VERSION}"
+    sh "git add -A; git commit -m 'Lightning AWS Lambda release version bump'"
 }
 
 def commitLambdaSnapshotVersion() {
-    withEnv(["PATH+MAVEN=${tool 'M3'}/bin"]) {
-        dir('lightning-aws-lambda') {
-            sh "mvn versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
-        }
-        sh "git add -A; git commit -m 'Lightning AWS Lambda post-release version bump'"
-    }
+    sh "./mvnw -pl lightning-aws-lambda versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
+    sh "git add -A; git commit -m 'Lightning AWS Lambda post-release version bump'"
 }
 
 def archiveLambdaJar() {
