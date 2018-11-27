@@ -18,78 +18,76 @@ pipeline {
         disableConcurrentBuilds()
     }
     stages {
-        node('linux') {
-            stage('Prepare') {
-                steps {
-                    cleanupWorkspaceAndCloneRepo()
-                    sh "git checkout ${env.BRANCH_NAME}"
-                    purge()
+        stage('Prepare') {
+            steps {
+                cleanupWorkspaceAndCloneRepo()
+                sh "git checkout ${env.BRANCH_NAME}"
+                purge()
+            }
+        }
+        stage('Set release version number') {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
                 }
             }
-            stage('Set release version number') {
-                when {
-                    expression {
-                        "${params.TEST_ONLY}" == "false"
-                    }
-                }
-                steps {
-                    sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
-                    sh "git add -A; git commit -m 'Lightning Core release version bump'"
+            steps {
+                sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
+                sh "git add -A; git commit -m 'Lightning Core release version bump'"
+            }
+        }
+        stage('Verify') {
+            steps {
+                sh './mvnw -pl lightning-core clean verify -DmockS3'
+            }
+            post {
+                always {
+                    junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
+                    jacoco execPattern: '**/jacoco*.exec'
                 }
             }
-            stage('Verify') {
-                steps {
-                    sh './mvnw -pl lightning-core clean verify -DmockS3'
-                }
-                post {
-                    always {
-                        junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
-                        jacoco execPattern: '**/jacoco*.exec'
-                    }
+        }
+        stage('Tag release') {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
                 }
             }
-            stage('Tag release') {
-                when {
-                    expression {
-                        "${params.TEST_ONLY}" == "false"
-                    }
-                }
-                steps {
-                    sh "git tag core-${params.RELEASE_VERSION}"
+            steps {
+                sh "git tag core-${params.RELEASE_VERSION}"
+            }
+        }
+        stage('Release') {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
                 }
             }
-            stage('Release') {
-                when {
-                    expression {
-                        "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
-                    }
-                }
-                steps {
-                    withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-                        sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
-                    }
+            steps {
+                withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
+                    sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
                 }
             }
-            stage('Set snapshot version number') {
-                when {
-                    expression {
-                        "${params.TEST_ONLY}" == "false"
-                    }
-                }
-                steps {
-                    sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
-                    sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
+        }
+        stage('Set snapshot version number') {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
                 }
             }
-            stage('Push release to origin/master') {
-                when {
-                    expression {
-                        "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
-                    }
+            steps {
+                sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
+                sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
+            }
+        }
+        stage('Push release to origin/master') {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
                 }
-                steps {
-                    push()
-                }
+            }
+            steps {
+                push()
             }
         }
     }
