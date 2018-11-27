@@ -20,9 +20,11 @@ pipeline {
     }
     stages {
         stage('Prepare') {
-            cleanupWorkspaceAndCloneRepo()
-            sh "git checkout ${env.BRANCH_NAME}"
-            purge()
+            steps {
+                cleanupWorkspaceAndCloneRepo()
+                sh "git checkout ${env.BRANCH_NAME}"
+                purge()
+            }
         }
         stage('Build lightning-core') {
             when {
