@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
@@ -17,19 +17,17 @@ import static org.hamcrest.core.Is.is;
 
 public class RespTimeAvgTestUnitTest {
 
-    @Test
-    public void verifyExecutePass() {
-        RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
-        testData.add(LegacyTestData.SEARCH_800_SUCCESS);
-        TestData.getInstance().addClientSideTestData(testData);
-        test.execute();
-        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+    @DataProvider(name = "locale")
+    private Object[][] locale() {
+        return new Object[][]{
+                {Locale.ENGLISH},
+                {Locale.FRENCH},
+        };
     }
 
-    @Test
-    public void verifyExecutePassOnNonDefaultLocale() {
-        Locale.setDefault(Locale.FRENCH);
+    @Test(dataProvider = "locale")
+    public void verifyExecutePass(Locale locale) {
+        Locale.setDefault(locale);
 
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 6010).withDescription("Verify response times").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();

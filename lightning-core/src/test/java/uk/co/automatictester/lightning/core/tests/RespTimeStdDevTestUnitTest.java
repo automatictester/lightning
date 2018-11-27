@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.util.ArrayList;
@@ -21,21 +21,17 @@ public class RespTimeStdDevTestUnitTest {
     private static final String[] SEARCH_221_SUCCESS = new String[]{"Search", "221", "true"};
     private static final String[] SEARCH_249_SUCCESS = new String[]{"Search", "249", "true"};
 
-    @Test
-    public void verifyExecutePass() {
-        RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #1", 25).withDescription("Verify standard deviance").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
-        testData.add(SEARCH_198_SUCCESS);
-        testData.add(SEARCH_221_SUCCESS);
-        testData.add(SEARCH_249_SUCCESS);
-        TestData.getInstance().addClientSideTestData(testData);
-        test.execute();
-        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+    @DataProvider(name = "locale")
+    private Object[][] locale() {
+        return new Object[][]{
+                {Locale.ENGLISH},
+                {Locale.FRENCH},
+        };
     }
 
-    @Test
-    public void verifyExecutePassOnNonDefaultLocale() {
-        Locale.setDefault(Locale.FRANCE);
+    @Test(dataProvider = "locale")
+    public void verifyExecutePass(Locale locale) {
+        Locale.setDefault(locale);
 
         RespTimeStdDevTest test = new RespTimeStdDevTest.Builder("Test #1", 25).withDescription("Verify standard deviance").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();

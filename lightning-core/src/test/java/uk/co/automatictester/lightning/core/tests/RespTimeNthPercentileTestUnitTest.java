@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.util.ArrayList;
@@ -28,28 +28,17 @@ public class RespTimeNthPercentileTestUnitTest {
     private static final String[] LOGIN_121_SUCCESS = new String[]{"Login", "121", "true"};
     private static final String[] LOGIN_125_SUCCESS = new String[]{"Login", "125", "true"};
 
-    @Test
-    public void testExecutePass() {
-        RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 246, 90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
-        testData.add(SEARCH_121_SUCCESS);
-        testData.add(SEARCH_125_SUCCESS);
-        testData.add(SEARCH_129_SUCCESS);
-        testData.add(SEARCH_135_SUCCESS);
-        testData.add(SEARCH_143_SUCCESS);
-        testData.add(SEARCH_148_SUCCESS);
-        testData.add(SEARCH_178_SUCCESS);
-        testData.add(SEARCH_198_SUCCESS);
-        testData.add(SEARCH_221_SUCCESS);
-        testData.add(SEARCH_249_SUCCESS);
-        TestData.getInstance().addClientSideTestData(testData);
-        test.execute();
-        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+    @DataProvider(name = "locale")
+    private Object[][] locale() {
+        return new Object[][]{
+                {Locale.ENGLISH},
+                {Locale.FRENCH},
+        };
     }
 
-    @Test
-    public void testExecutePassOnNonDefaultLocale() {
-        Locale.setDefault(Locale.FRENCH);
+    @Test(dataProvider = "locale")
+    public void testExecutePass(Locale locale) {
+        Locale.setDefault(locale);
 
         RespTimeNthPercentileTest test = new RespTimeNthPercentileTest.Builder("Test #1", 246, 90).withDescription("Verify 90th percentile").withTransactionName("Search").build();
         List<String[]> testData = new ArrayList<>();

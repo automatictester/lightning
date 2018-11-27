@@ -2,7 +2,6 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 

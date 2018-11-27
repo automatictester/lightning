@@ -1,8 +1,8 @@
 package uk.co.automatictester.lightning.core.tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
-import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
@@ -39,19 +39,16 @@ public class ServerSideLessThanTestUnitTest {
         assertThat(test.result(), is(equalTo(TestResult.FAIL)));
     }
 
-    @Test
-    public void verifyExecuteOneEntryPass() {
-        ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
-        testData.add(LegacyTestData.CPU_ENTRY_10000);
-        TestData.getInstance().addServerSideTestData(testData);
-        test.execute();
-        assertThat(test.result(), is(equalTo(TestResult.PASS)));
+    @DataProvider(name = "locale")
+    private Object[][] locale() {
+        return new Object[][]{
+                {Locale.ENGLISH},
+                {Locale.FRENCH},
+        };
     }
 
-    @Test
-    public void verifyExecutePassNonDefaultLocale() {
-        Locale.setDefault(Locale.FRENCH);
+    @Test(dataProvider = "locale")
+    public void verifyExecuteOneEntryPass(Locale locale) {
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
         List<String[]> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
