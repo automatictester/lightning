@@ -2,84 +2,101 @@
 
 library "SharedLib@${env.BRANCH_NAME}"
 
-properties([
-        [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
-        parameters([
-                string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: ''),
-                string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: ''),
-                string(name: 'BUILD_CORE', defaultValue: 'true', description: ''),
-                string(name: 'TEST_ONLY', defaultValue: 'true', description: ''),
-                string(name: 'DRY_RUN', defaultValue: 'true', description: '')
-        ])
-])
-
-def runIntegrationTests() {
-    try {
-        sh "./mvnw -pl jmeter-lightning-maven-plugin clean verify"
-    } finally {
-        jacoco execPattern: '**/jmeter-lightning-maven-plugin/target/jacoco.exec', classPattern: '**/jmeter-lightning-maven-plugin/target/classes', sourcePattern: '**/jmeter-lightning-maven-plugin/src/main/java'
+pipeline {
+    agent {
+        label 'linux'
     }
-}
-
-def commitMavenPluginReleaseVersion() {
-    sh "./mvnw -pl jmeter-lightning-maven-plugin versions:set -DnewVersion=${params.RELEASE_VERSION}"
-    sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
-}
-
-def commitMavenPluginSnapshotVersion() {
-    sh "./mvnw -pl jmeter-lightning-maven-plugin versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
-    sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
-}
-
-def tagMavenPluginRelease() {
-    sh "git tag maven-plugin-${params.RELEASE_VERSION}"
-}
-
-def releaseMavenPlugin() {
-    withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-        sh "./mvnw -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPGPP}"
+    parameters {
+        string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: '')
+        string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: '')
+        string(name: 'BUILD_CORE', defaultValue: 'true', description: '')
+        string(name: 'TEST_ONLY', defaultValue: 'true', description: '')
+        string(name: 'DRY_RUN', defaultValue: 'true', description: '')
     }
-}
-
-disableConcurrentBuilds()
-
-timestamps {
-    node('linux') {
+    options {
+        timestamps()
+        skipDefaultCheckout()
+        disableConcurrentBuilds()
+    }
+    stages {
         stage('Prepare') {
-            cleanupWorkspaceAndCloneRepo()
-            sh "git checkout ${env.BRANCH_NAME}"
-            purge()
+            steps {
+                cleanupWorkspaceAndCloneRepo()
+                sh "git checkout ${env.BRANCH_NAME}"
+                purge()
+            }
         }
         stage('Build lightning-core') {
-            if ("${params.BUILD_CORE}" == "true") {
+            when {
+                expression {
+                    "${params.BUILD_CORE}" == "true"
+                }
+            }
+            steps {
                 buildCore()
             }
         }
         stage('Set release version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitMavenPluginReleaseVersion()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "./mvnw -pl jmeter-lightning-maven-plugin versions:set -DnewVersion=${params.RELEASE_VERSION}"
+                sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin release version bump'"
             }
         }
         stage('Integration test') {
-            runIntegrationTests()
+            steps {
+                sh "./mvnw -pl jmeter-lightning-maven-plugin clean verify"
+            }
+            post {
+                always {
+                    jacoco execPattern: '**/jmeter-lightning-maven-plugin/target/jacoco.exec', classPattern: '**/jmeter-lightning-maven-plugin/target/classes', sourcePattern: '**/jmeter-lightning-maven-plugin/src/main/java'
+                }
+            }
         }
         stage('Tag release') {
-            if ("${params.TEST_ONLY}" == "false") {
-                tagMavenPluginRelease()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "git tag maven-plugin-${params.RELEASE_VERSION}"
             }
         }
         stage('Release') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
-                releaseMavenPlugin()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                }
+            }
+            steps {
+                withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
+                    sh "./mvnw -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPGPP}"
+                }
             }
         }
         stage('Set snapshot version number') {
-            if ("${params.TEST_ONLY}" == "false") {
-                commitMavenPluginSnapshotVersion()
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false"
+                }
+            }
+            steps {
+                sh "./mvnw -pl jmeter-lightning-maven-plugin versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION}"
+                sh "git add -A; git commit -m 'JMeter Lightning Maven Plugin post-release version bump'"
             }
         }
         stage('Push release to origin/master') {
-            if ("${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && env.BRANCH_NAME == "master") {
+            when {
+                expression {
+                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                }
+            }
+            steps {
                 push()
             }
         }
