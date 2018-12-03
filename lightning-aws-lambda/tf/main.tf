@@ -10,6 +10,8 @@ terraform {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_lambda_function" "lightning_ci" {
   function_name = "Lightning"
   handler = "uk.co.automatictester.lightning.lambda.LightningHandler"
@@ -17,7 +19,7 @@ resource "aws_lambda_function" "lightning_ci" {
   s3_bucket = "automatictester.co.uk-lightning-aws-lambda-jar"
   s3_key = "lightning-aws-lambda.jar"
   source_code_hash = "${base64sha256(file("${path.module}/../target/lightning-aws-lambda.jar"))}"
-  role = "arn:aws:iam::611654469811:role/LightningLambda"
+  role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LightningLambda"
   memory_size = "${var.memory}"
   timeout = "${var.timeout}"
 }
