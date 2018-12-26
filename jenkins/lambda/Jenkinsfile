@@ -61,7 +61,6 @@ pipeline {
         stage('Deploy to AWS') {
             steps {
                 dir('lightning-aws-lambda') {
-                    sh 'mv target/lightning-aws-lambda-*.jar target/lightning-aws-lambda.jar'
                     sh 'aws s3 cp target/lightning-aws-lambda.jar s3://automatictester.co.uk-lightning-aws-lambda-jar/lightning-aws-lambda.jar --region eu-west-2'
                 }
                 dir('lightning-aws-lambda/tf') {
@@ -117,7 +116,7 @@ pipeline {
         stage('Archive JAR') {
             steps {
                 dir('lightning-aws-lambda') {
-                    archiveArtifacts artifacts: 'target/lightning-aws-lambda*.jar'
+                    archiveArtifacts artifacts: 'target/lightning-aws-lambda.jar'
                 }
             }
         }

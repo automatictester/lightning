@@ -60,7 +60,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.artifactId}-${project.version}</finalName>
+                            <finalName>${project.artifactId}</finalName>
                             <transformers>
                                 <transformer
                                         implementation="com.github.edwgiz.mavenShadePlugin.log4j2CacheTransformer.PluginsCacheFileTransformer">
