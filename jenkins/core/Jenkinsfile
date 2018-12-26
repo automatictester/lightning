@@ -42,7 +42,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'lightning-core/target/surefire-reports/junitreports/*.xml'
+                    junit 'lightning-core/target/*-reports/junitreports/*.xml'
                     jacoco execPattern: '**/jacoco*.exec'
                 }
             }
