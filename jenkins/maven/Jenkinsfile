@@ -75,7 +75,7 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-                    sh "./mvnw -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPGPP}"
+                    sh "./mvnw -pl jmeter-lightning-maven-plugin clean deploy -P release -Dgpg.passphrase=${GPGPP} -DskipTests"
                 }
             }
         }

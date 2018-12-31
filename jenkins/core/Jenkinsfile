@@ -65,7 +65,7 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-                    sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP}"
+                    sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP} -DskipTests"
                 }
             }
         }
