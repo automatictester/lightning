@@ -9,8 +9,7 @@ pipeline {
     parameters {
         string(name: 'RELEASE_VERSION', defaultValue: '9.0.0', description: '')
         string(name: 'POST_RELEASE_SNAPSHOT_VERSION', defaultValue: '9.0.1-SNAPSHOT', description: '')
-        string(name: 'TEST_ONLY', defaultValue: 'true', description: '')
-        string(name: 'DRY_RUN', defaultValue: 'true', description: '')
+        booleanParam(name: 'RELEASE', defaultValue: false, description: '')
     }
     options {
         timestamps()
@@ -27,11 +26,6 @@ pipeline {
             }
         }
         stage('Set release version number') {
-            when {
-                expression {
-                    "${params.TEST_ONLY}" == "false"
-                }
-            }
             steps {
                 sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=false"
                 sh "git add -A; git commit -m 'Lightning Core release version bump'"
@@ -49,11 +43,6 @@ pipeline {
             }
         }
         stage('Tag release') {
-            when {
-                expression {
-                    "${params.TEST_ONLY}" == "false"
-                }
-            }
             steps {
                 sh "git tag core-${params.RELEASE_VERSION}"
             }
@@ -61,7 +50,7 @@ pipeline {
         stage('Release') {
             when {
                 expression {
-                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                    "${params.RELEASE}".toBoolean() && "${env.BRANCH_NAME}" == "master"
                 }
             }
             steps {
@@ -71,20 +60,15 @@ pipeline {
             }
         }
         stage('Set snapshot version number') {
-            when {
-                expression {
-                    "${params.TEST_ONLY}" == "false"
-                }
-            }
             steps {
                 sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=false"
                 sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
             }
         }
-        stage('Push release to origin/master') {
+        stage('Push release to origin') {
             when {
                 expression {
-                    "${params.TEST_ONLY}" == "false" && "${params.DRY_RUN}" == "false" && "${env.BRANCH_NAME}" == "master"
+                    "${params.RELEASE}".toBoolean() && "${env.BRANCH_NAME}" == "master"
                 }
             }
             steps {
