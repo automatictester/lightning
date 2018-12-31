@@ -49,7 +49,8 @@
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <autoDropAfterRelease>true</autoDropAfterRelease>
                 </configuration>
             </plugin>
 
