@@ -17,9 +17,9 @@ resource "aws_s3_bucket" "jar" {
 
 resource "aws_s3_bucket_object" "jar" {
   bucket               = "${aws_s3_bucket.jar.bucket}"
-  key                  = "lightning-aws-lambda.jar"
-  source               = "${path.module}/../target/lightning-aws-lambda.jar"
-  etag                 = "${md5(file("${path.module}/../target/lightning-aws-lambda.jar"))}"
+  key                  = "${var.jar_file_name}"
+  source               = "${path.module}/../target/${var.jar_file_name}"
+  etag                 = "${md5(file("${path.module}/../target/${var.jar_file_name}"))}"
 }
 
 resource "aws_s3_bucket" "data" {
@@ -78,8 +78,8 @@ resource "aws_lambda_function" "lightning" {
   handler                        = "uk.co.automatictester.lightning.lambda.LightningHandler"
   runtime                        = "java8"
   s3_bucket                      = "${aws_s3_bucket.jar.bucket}"
-  s3_key                         = "lightning-aws-lambda.jar"
-  source_code_hash               = "${base64sha256(file("${path.module}/../target/lightning-aws-lambda.jar"))}"
+  s3_key                         = "${var.jar_file_name}"
+  source_code_hash               = "${base64sha256(file("${path.module}/../target/${var.jar_file_name}"))}"
   role                           = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.lightning_role.name}"
   memory_size                    = "${var.memory}"
   timeout                        = "${var.timeout}"

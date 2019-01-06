@@ -4,6 +4,9 @@ variable "s3_bucket_jar" {
 variable "s3_bucket_data" {
   default = "automatictester.co.uk-lightning-aws-lambda"
 }
+variable "jar_file_name" {
+  default = "lightning-aws-lambda.jar"
+}
 variable "memory" {
   default = "256"
 }
