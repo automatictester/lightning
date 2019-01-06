@@ -80,7 +80,7 @@ resource "aws_lambda_function" "lightning" {
   s3_bucket                      = "${aws_s3_bucket.jar.bucket}"
   s3_key                         = "lightning-aws-lambda.jar"
   source_code_hash               = "${base64sha256(file("${path.module}/../target/lightning-aws-lambda.jar"))}"
-  role                           = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LightningLambda"
+  role                           = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.lightning_role.name}"
   memory_size                    = "${var.memory}"
   timeout                        = "${var.timeout}"
   reserved_concurrent_executions = "1"
