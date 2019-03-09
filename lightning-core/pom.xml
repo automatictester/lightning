@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>uk.co.automatictester</groupId>
+    <parent>
+        <groupId>uk.co.automatictester</groupId>
+        <artifactId>lightning</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>lightning-core</artifactId>
     <packaging>jar</packaging>
     <version>5.10.2-SNAPSHOT</version>
@@ -38,8 +43,25 @@
     </properties>
 
     <build>
-
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireReleaseDeps/>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -118,17 +140,13 @@
             </plugin>
 
         </plugins>
-
     </build>
 
     <profiles>
 
         <profile>
-
             <id>release</id>
-
             <build>
-
                 <plugins>
 
                     <plugin>
@@ -181,9 +199,7 @@
                     </plugin>
 
                 </plugins>
-
             </build>
-
         </profile>
 
     </profiles>
@@ -199,7 +215,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.275</version>
+            <version>1.11.294</version>
         </dependency>
 
         <dependency>
