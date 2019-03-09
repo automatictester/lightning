@@ -38,9 +38,8 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>enforce-deploy-and-release</id>
+                        <id>enforce-deploy</id>
                         <phase>deploy</phase>
-                        <phase>release</phase>
                         <goals>
                             <goal>enforce</goal>
                         </goals>
