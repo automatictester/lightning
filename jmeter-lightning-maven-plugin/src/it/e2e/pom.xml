@@ -18,29 +18,29 @@
             <plugin>
                 <groupId>com.lazerycode.jmeter</groupId>
                 <artifactId>jmeter-maven-plugin</artifactId>
-                <version>1.10.1</version>
+                <version>2.9.0</version>
                 <executions>
                     <execution>
                         <phase>integration-test</phase>
                         <goals>
                             <goal>jmeter</goal>
                         </goals>
-                        <configuration>
-                            <resultsFileFormat>csv</resultsFileFormat>
-                            <testResultsTimestamp>false</testResultsTimestamp>
-                            <testFilesIncluded>
-                                <jmeterTestFile>example.jmx</jmeterTestFile>
-                            </testFilesIncluded>
-                            <propertiesJMeter>
-                                <jmeter.save.saveservice.print_field_names>true
-                                </jmeter.save.saveservice.print_field_names>
-                                <jmeter.save.saveservice.successful>true</jmeter.save.saveservice.successful>
-                                <jmeter.save.saveservice.label>true</jmeter.save.saveservice.label>
-                                <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
-                            </propertiesJMeter>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <generateReports>false</generateReports>
+                    <resultsFileFormat>csv</resultsFileFormat>
+                    <testResultsTimestamp>false</testResultsTimestamp>
+                    <testFilesIncluded>
+                        <jmeterTestFile>example.jmx</jmeterTestFile>
+                    </testFilesIncluded>
+                    <propertiesJMeter>
+                        <jmeter.save.saveservice.print_field_names>true</jmeter.save.saveservice.print_field_names>
+                        <jmeter.save.saveservice.successful>true</jmeter.save.saveservice.successful>
+                        <jmeter.save.saveservice.label>true</jmeter.save.saveservice.label>
+                        <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
+                    </propertiesJMeter>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>@project.groupId@</groupId>
