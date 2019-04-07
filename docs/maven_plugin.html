@@ -44,14 +44,14 @@
         <li>You should get console output similar to this:</li>
     </ul>
 
-<pre><code>[INFO] --- jmeter-lightning-maven-plugin:0.1.1:lightning (default) @ jmeter-lightning-maven-plugin-example ---
+<pre><code>[INFO] --- jmeter-lightning-maven-plugin:1.5.0:lightning (default) @ jmeter-lightning-maven-plugin-example ---
 [INFO] Test name:            JMeter home page - average response time
 [INFO] Test type:            avgRespTimeTest
 [INFO] Transaction name:     JMeter home page
 [INFO] Expected result:      Average response time &lt;= 1000
-[INFO] Actual result:        Average response time = 67.0
+[INFO] Actual result:        Average response time = 208
 [INFO] Transaction count:    10
-[INFO] Longest transactions: [171, 58, 57, 56, 56]
+[INFO] Longest transactions: [277, 214, 206, 203, 202]
 [INFO] Test result:          Pass
 [INFO]
 [INFO] Test name:            JMeter home page - failed tests
@@ -68,16 +68,17 @@
 [INFO] Tests failed:      0
 [INFO] Tests errors:      0
 [INFO] Test set status:   Pass
-[INFO] Execution time:    80ms
-[INFO] ##teamcity[buildStatisticValue key='JMeter home page - average response time' value='67.0']
+[INFO] Execution time:    242ms
+[INFO] ##teamcity[buildStatisticValue key='JMeter home page - average response time' value='208']
 [INFO] ##teamcity[buildStatisticValue key='JMeter home page - failed tests' value='0']
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 3.680 s
-[INFO] Finished at: 2016-05-28T18:35:19+01:00
-[INFO] Final Memory: 13M/226M
+[INFO] Total time: 7.588 s
+[INFO] Finished at: 2019-04-07T20:45:55+02:00
 [INFO] ------------------------------------------------------------------------
+[INFO] Shutdown detected, destroying JMeter process...
+[INFO]
 </code></pre>
 
     <p>JUnit XML report will be saved to <code>target/jmeter/bin/junit.xml</code>:</p>
@@ -93,7 +94,7 @@
     </p>
 
 <pre><code>#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file="lightning-jenkins.properties",property="result.string"}
-#Mon May 02 19:08:52 BST 2016
+#Sun Apr 07 20:45:55 CEST 2019
 result.string=Tests executed\: 2, failed\: 0
 </code></pre>
 
