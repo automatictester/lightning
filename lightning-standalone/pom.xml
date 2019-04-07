@@ -335,7 +335,7 @@
         <dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
-            <version>1.58</version>
+            <version>1.72</version>
         </dependency>
 
         <dependency>
@@ -364,7 +364,7 @@
             <dependency>
                 <groupId>com.beust</groupId>
                 <artifactId>jcommander</artifactId>
-                <version>1.58</version>
+                <version>1.72</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
