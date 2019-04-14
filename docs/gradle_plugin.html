@@ -25,7 +25,7 @@
     <p>Prerequisites:</p>
 
     <ul>
-        <li>Java 7 or above</li>
+        <li>Java 8 or above</li>
         <li>Git</li>
         <li>Gradle</li>
     </ul>
@@ -33,12 +33,15 @@
     <p>Steps:</p>
 
     <ul>
-        <li>Clone repo with sample project: <code>git clone
-            https://github.com/automatictester/lightning-gradle-plugin-example.git</code></li>
-        <li>Go to cloned repo directory: <code>cd lightning-gradle-plugin-example</code></li>
-        <li>Run JMeter results analysis with Lightning Gradle Plugin: <code>gradle
-            verify</code>. You should get console output similar to this:</li>
-    </ul>
+        <li>Clone repo with sample project:
+            <pre><code>git clone https://github.com/automatictester/lightning-gradle-plugin-example.git</code></pre>
+        </li>
+        <li>Go to cloned repo directory:
+            <pre><code>cd lightning-gradle-plugin-example</code></pre>
+        </li>
+        <li>Run JMeter results analysis with Lightning Gradle Plugin:
+            <pre><code>gradle verify</code></pre>
+            You should get console output similar to this:
 
 <pre><code>:verify
 Test name:            Failed transactions (%)
@@ -81,9 +84,9 @@ Execution time:    5ms
 
 BUILD SUCCESSFUL
 
-Total time: 0.84 secs</code></pre>
+Total time: 0.84 secs</code></pre></li>
 
-    <p>JUnit XML report will be saved to <code>junit.xml</code>:</p>
+    <li>JUnit XML report will be saved to <code>junit.xml</code>:
 
 <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;testsuite errors="0" failures="0" name="Lightning" tests="2" time="0"&gt;
@@ -91,14 +94,16 @@ Total time: 0.84 secs</code></pre>
     &lt;testcase name="JMeter home page - failed tests" time="0"/&gt;
 &lt;/testsuite&gt;
 </code></pre>
+    </li>
 
-    <p>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
-    </p>
+    <li>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
 
 <pre><code>#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file="lightning-jenkins.properties",property="result.string"}
 #Tue Feb 14 22:00:16 GMT 2017
 result.string=Tests executed\: 3, failed\: 0
 </code></pre>
+    </li>
+    </ul>
 
     <p>Feel free to play with plugin configuration in <code>build.gradle</code>
         and Lightning config file <code>src/test/resources/xml/example.xml</code>. Once you familiarised yourself with the
@@ -106,7 +111,7 @@ result.string=Tests executed\: 3, failed\: 0
 
     <h3><a id="maven-central" class="anchor" href="#maven-central" aria-hidden="true"></a>Maven Central</h3>
 
-    <p>Lightning Gradle Plugin is available in <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22uk.co.automatictester%22a%3A%22lightning-gradle-plugin%22"
+    <p>Lightning Gradle Plugin is available in <a href="https://search.maven.org/artifact/uk.co.automatictester/lightning-gradle-plugin/"
                                                         target="_blank">Maven Central</a>.
     </p>
 

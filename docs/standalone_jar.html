@@ -25,20 +25,23 @@
     <p>Prerequisites:</p>
 
     <ul>
-        <li>Java 7 or above</li>
+        <li>Java 8 or above</li>
         <li>Git</li>
     </ul>
 
     <p>Steps:</p>
 
     <ul>
-        <li>Clone repo with sample project: <code>git clone https://github.com/automatictester/lightning-example.git</code></li>
-        <li>Go to cloned directory: <code>cd lightning-example</code></li>
-        <li>Run Lightning: <code>java -jar bin/lightning-standalone-*.jar verify -xml
-            src/test/resources/xml/example.xml --jmeter-csv src/test/resources/csv/example.csv</code>.
+        <li>Clone repo with sample project:
+            <pre><code>git clone https://github.com/automatictester/lightning-standalone-example.git</code></pre></li>
+        <li>Go to cloned directory: <pre><code>cd lightning-standalone-example</code></pre></li>
+        <li>Run Lightning:
+            <pre><code>java -jar bin/lightning-standalone-*.jar \
+    verify \
+    -xml src/test/resources/xml/example.xml \
+    --jmeter-csv src/test/resources/csv/example.csv</code></pre>
         </li>
         <li>You should get console output similar to this:</li>
-    </ul>
 
 <pre><code>[main] INFO Test name:            Failed transactions (%)
 [main] INFO Test type:            passedTransactionsTest
@@ -78,7 +81,7 @@
 [main] INFO ##teamcity[buildStatisticValue key='Failed transactions' value='0']
 [main] INFO ##teamcity[buildStatisticValue key='80th percentile' value='11244']</code></pre>
 
-    <p>JUnit XML report will be saved to <code>junit.xml</code>:</p>
+    <li>JUnit XML report will be saved to <code>junit.xml</code>:
 
 <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;testsuite errors="0" failures="0" name="Lightning" tests="3" time="0"&gt;
@@ -86,15 +89,17 @@
     &lt;testcase name="Failed transactions" time="0"/&gt;
     &lt;testcase name="80th percentile" time="0"/&gt;
 &lt;/testsuite&gt;
-</code></pre>
+</code></pre></li>
 
-    <p>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
-    </p>
+    <li>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
+    </li>
 
 <pre><code>#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file="lightning-jenkins.properties",property="result.string"}
 #Tue Feb 14 22:18:18 GMT 2017
 result.string=Tests executed\: 3, failed\: 0
 </code></pre>
+
+    </ul>
 
     <p>Feel free to play with Lightning config file <code>src/test/resources/xml/example.xml</code>.
         Once you familiarised yourself with the tool, create your own JMeter tests, Lightning configuration and plug it
@@ -102,7 +107,7 @@ result.string=Tests executed\: 3, failed\: 0
 
     <h3><a id="download" class="anchor" href="#download" aria-hidden="true"></a>Download</h3>
 
-    <p>Standalone JAR is available for download from <a href="https://github.com/automatictester/lightning/releases/latest" target="_blank">GitHub</a>.
+    <p>Standalone JAR is available for download from <a href="https://github.com/automatictester/lightning/releases" target="_blank">GitHub</a>.
     </p>
 
     <h3><a id="changelog" class="anchor" href="#changelog" aria-hidden="true"></a>Changelog</h3>

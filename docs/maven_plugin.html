@@ -25,7 +25,7 @@
     <p>Prerequisites:</p>
 
     <ul>
-        <li>Java 7 or above</li>
+        <li>Java 8 or above</li>
         <li>Git</li>
         <li>Maven 3</li>
     </ul>
@@ -33,16 +33,18 @@
     <p>Steps:</p>
 
     <ul>
-        <li>Clone repo with sample project: <code>git clone
-            https://github.com/automatictester/jmeter-lightning-maven-plugin-example.git</code></li>
-        <li>Go to cloned repo directory: <code>cd jmeter-lightning-maven-plugin-example</code></li>
-        <li>Run JMeter tests with JMeter Maven Plugin and results analysis with JMeter Lightning Maven Plugin: <code>mvn
-            clean verify</code>.
+        <li>Clone repo with sample project:
+            <pre><code>git clone https://github.com/automatictester/jmeter-lightning-maven-plugin-example.git</code></pre>
+        </li>
+        <li>Go to cloned repo directory:
+            <pre><code>cd jmeter-lightning-maven-plugin-example</code></pre>
+        </li>
+        <li>Run JMeter tests with JMeter Maven Plugin and results analysis with JMeter Lightning Maven Plugin:
+            <pre><code>mvn clean verify</code></pre>
             This will execute JMeter Maven Plugin at <code>integration-test</code> and JMeter Lightning Maven Plugin at
             <code>post-integration-test</code> phase.
             JMeter test results will be saved to <code>target/jmeter/results/example.csv</code></li>
         <li>You should get console output similar to this:</li>
-    </ul>
 
 <pre><code>[INFO] --- jmeter-lightning-maven-plugin:1.5.0:lightning (default) @ jmeter-lightning-maven-plugin-example ---
 [INFO] Test name:            JMeter home page - average response time
@@ -81,22 +83,23 @@
 [INFO]
 </code></pre>
 
-    <p>JUnit XML report will be saved to <code>target/jmeter/bin/junit.xml</code>:</p>
+    <li>JUnit XML report will be saved to <code>target/jmeter/bin/junit.xml</code>:
 
 <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;testsuite errors="0" failures="0" name="Lightning" tests="2" time="0"&gt;
     &lt;testcase name="JMeter home page - average response time" time="0"/&gt;
     &lt;testcase name="JMeter home page - failed tests" time="0"/&gt;
 &lt;/testsuite&gt;
-</code></pre>
+</code></pre></li>
 
-    <p>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
-    </p>
+    <li>Properties file for Jenkins Build Name Setter plugin will be saved to <code>lightning-jenkins.properties</code>:
 
 <pre><code>#In Jenkins Build Name Setter Plugin, define build name as: ${BUILD_NUMBER} - ${PROPFILE,file="lightning-jenkins.properties",property="result.string"}
 #Sun Apr 07 20:45:55 CEST 2019
 result.string=Tests executed\: 2, failed\: 0
 </code></pre>
+    </li>
+    </ul>
 
     <p>Feel free to play with plugin configuration in <code>pom.xml</code>, JMeter test plan <code>src/test/jmeter/example.jmx</code>
         and Lightning config file <code>src/test/resources/lightning.xml</code>. Once you familiarised yourself with the
@@ -104,7 +107,7 @@ result.string=Tests executed\: 2, failed\: 0
 
     <h3><a id="maven-central" class="anchor" href="#maven-central" aria-hidden="true"></a>Maven Central</h3>
 
-    <p>JMeter Lightning Maven Plugin is available in <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22uk.co.automatictester%22a%3A%22jmeter-lightning-maven-plugin%22"
+    <p>JMeter Lightning Maven Plugin is available in <a href="https://search.maven.org/artifact/uk.co.automatictester/jmeter-lightning-maven-plugin"
                                                         target="_blank">Maven Central</a>.
     </p>
 
