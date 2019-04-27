@@ -2,10 +2,7 @@ package uk.co.automatictester.lightning.core.facades;
 
 import uk.co.automatictester.lightning.core.config.ConfigReader;
 import uk.co.automatictester.lightning.core.config.LocalFileSystemConfigReader;
-import uk.co.automatictester.lightning.core.readers.CsvDataReader;
-import uk.co.automatictester.lightning.core.readers.JmeterDataReader;
-import uk.co.automatictester.lightning.core.readers.LocalFilesystemCsvDataReader;
-import uk.co.automatictester.lightning.core.readers.PerfMonDataReader;
+import uk.co.automatictester.lightning.core.readers.*;
 import uk.co.automatictester.lightning.core.reporters.TransactionReporter;
 import uk.co.automatictester.lightning.core.reporters.jenkins.LocalFileSystemJenkinsReporter;
 import uk.co.automatictester.lightning.core.reporters.junit.LocalFileSystemJunitReporter;
@@ -42,7 +39,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     public void loadTestData() {
         CsvDataReader jmeterReader = new JmeterDataReader();
         LocalFilesystemCsvDataReader localReader = new LocalFilesystemCsvDataReader(jmeterReader);
-        List<String[]> entries = localReader.fromFile(jmeterCsv);
+        List<JmeterBean> entries = (List<JmeterBean>) localReader.fromFile(jmeterCsv);
         TestData testData = TestData.getInstance();
         testData.flush();
         testData.addClientSideTestData(entries);
@@ -70,7 +67,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
         if (perfMonCsv != null) {
             CsvDataReader perfMonReader = new PerfMonDataReader();
             LocalFilesystemCsvDataReader localReader = new LocalFilesystemCsvDataReader(perfMonReader);
-            List<String[]> entries = localReader.fromFile(perfMonCsv);
+            List<PerfMonBean> entries = (List<PerfMonBean>) localReader.fromFile(perfMonCsv);
             TestData.getInstance().addServerSideTestData(entries);
         }
     }

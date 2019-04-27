@@ -9,8 +9,6 @@ import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import java.util.Arrays;
 import java.util.List;
 
-import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_DURATION;
-
 public class RespTimeStdDevTest extends AbstractClientSideTest {
 
     private static final List<String> FIELDS_TO_EXCLUDE = Arrays.asList("transactionCount", "actualResultDescription", "result", "actualResult");
@@ -34,7 +32,7 @@ public class RespTimeStdDevTest extends AbstractClientSideTest {
     protected void calculateActualResult(JmeterTransactions jmeterTransactions) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         jmeterTransactions.asStream()
-                .map(t -> Double.parseDouble(t[TRANSACTION_DURATION.getColumn()]))
+                .map(t -> (double) t.getElapsed())
                 .forEach(ds::addValue);
         actualResult = (int) ds.getStandardDeviation();
     }

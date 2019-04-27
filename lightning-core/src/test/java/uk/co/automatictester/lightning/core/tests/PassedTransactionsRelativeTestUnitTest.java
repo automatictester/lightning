@@ -2,6 +2,7 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.readers.JmeterBean;
 import uk.co.automatictester.lightning.core.state.data.JmeterTransactions;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
@@ -19,7 +20,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodPass() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 10).withDescription("Verify percent of passed tests").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_1_SUCCESS);
         testData.add(LegacyTestData.SEARCH_2_SUCCESS);
         testData.add(LegacyTestData.SEARCH_3_SUCCESS);
@@ -39,7 +40,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodRegexpPass() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Log[a-z]{2,3}").withRegexp().build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
@@ -51,7 +52,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodRegexpFail() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Log[a-z]ut").withRegexp().build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGOUT_1000_SUCCESS);
         testData.add(LegacyTestData.LOGOUT_1000_FAILURE);
         TestData.getInstance().addClientSideTestData(testData);
@@ -63,7 +64,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodAllTransactionsPass() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
@@ -79,7 +80,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodFail() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 9).withDescription("Verify percent of passed tests").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_1_SUCCESS);
         testData.add(LegacyTestData.SEARCH_2_SUCCESS);
         testData.add(LegacyTestData.SEARCH_3_SUCCESS);
@@ -99,7 +100,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodAllTransactionsFail() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_SUCCESS);
         testData.add(LegacyTestData.SEARCH_800_FAILURE);
         TestData.getInstance().addClientSideTestData(testData);
@@ -111,7 +112,7 @@ public class PassedTransactionsRelativeTestUnitTest {
     @Test
     public void verifyExecuteMethodError() {
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("nonexistent").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -146,7 +147,7 @@ public class PassedTransactionsRelativeTestUnitTest {
                 "Test result:          Pass");
 
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -166,7 +167,7 @@ public class PassedTransactionsRelativeTestUnitTest {
                 "Test result:          FAIL");
 
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("Login").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1200_FAILURE);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -186,7 +187,7 @@ public class PassedTransactionsRelativeTestUnitTest {
                 "Test result:          ERROR");
 
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").withTransactionName("incorrect").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -205,7 +206,7 @@ public class PassedTransactionsRelativeTestUnitTest {
                 "Test result:          Pass");
 
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withTransactionName("Login").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -224,7 +225,7 @@ public class PassedTransactionsRelativeTestUnitTest {
                 "Test result:          Pass");
 
         PassedTransactionsRelativeTest test = new PassedTransactionsRelativeTest.Builder("Test #1", 0).withDescription("Verify percent of passed tests").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();

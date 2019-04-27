@@ -1,6 +1,7 @@
 package uk.co.automatictester.lightning.core.state.data;
 
 import uk.co.automatictester.lightning.core.exceptions.CSVFileNonexistentLabelException;
+import uk.co.automatictester.lightning.core.readers.JmeterBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,34 +13,33 @@ import static java.lang.Math.min;
 import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
-import static uk.co.automatictester.lightning.core.enums.JmeterColumns.*;
 
 public class JmeterTransactions {
 
     private static final int MAX_NUMBER_OF_LONGEST_TRANSACTIONS = 5;
-    private List<String[]> entries;
+    private List<JmeterBean> entries;
 
-    private JmeterTransactions(List<String[]> jmeterTransactions) {
+    private JmeterTransactions(List<JmeterBean> jmeterTransactions) {
         entries = new ArrayList<>(jmeterTransactions);
     }
 
-    public static JmeterTransactions fromList(List<String[]> entries) {
+    public static JmeterTransactions fromList(List<JmeterBean> entries) {
         return new JmeterTransactions(entries);
     }
 
     public JmeterTransactions transactionsWith(String expectedTransactionName) {
-        Predicate<String[]> isTransactionNameEqualToExpected = t -> t[TRANSACTION_LABEL.getColumn()].equals(expectedTransactionName);
+        Predicate<JmeterBean> isTransactionNameEqualToExpected = t -> t.getLabel().equals(expectedTransactionName);
         return transactions(isTransactionNameEqualToExpected, expectedTransactionName);
     }
 
     public JmeterTransactions transactionsMatching(String expectedTransactionName) {
         Pattern pattern = Pattern.compile(expectedTransactionName);
-        Predicate<String[]> isTransactionNameMatchingExpected = t -> pattern.matcher(t[TRANSACTION_LABEL.getColumn()]).matches();
+        Predicate<JmeterBean> isTransactionNameMatchingExpected = t -> pattern.matcher(t.getLabel()).matches();
         return transactions(isTransactionNameMatchingExpected, expectedTransactionName);
     }
 
-    private JmeterTransactions transactions(Predicate<String[]> predicate, String expectedTransactionName) {
-        List<String[]> transactions = entries.stream()
+    private JmeterTransactions transactions(Predicate<JmeterBean> predicate, String expectedTransactionName) {
+        List<JmeterBean> transactions = entries.stream()
                 .filter(predicate)
                 .collect(collectingAndThen(toList(), filteredList -> validateAndReturn(filteredList, expectedTransactionName)));
         return JmeterTransactions.fromList(transactions);
@@ -48,7 +48,7 @@ public class JmeterTransactions {
     public List<Integer> longestTransactions() {
         int numberOfLongestTransactions = min(entries.size(), MAX_NUMBER_OF_LONGEST_TRANSACTIONS);
         return entries.stream()
-                .map(e -> Integer.parseInt(e[TRANSACTION_DURATION.getColumn()]))
+                .map(e -> e.getElapsed())
                 .sorted(reverseOrder())
                 .limit(numberOfLongestTransactions)
                 .collect(toList());
@@ -56,7 +56,7 @@ public class JmeterTransactions {
 
     public int failCount() {
         return (int) entries.stream()
-                .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
+                .filter(t -> !t.isSuccess())
                 .count();
     }
 
@@ -64,17 +64,17 @@ public class JmeterTransactions {
         return entries.size();
     }
 
-    public Stream<String[]> asStream() {
+    public Stream<JmeterBean> asStream() {
         return entries.stream();
     }
 
-    public List<String[]> asList() {
+    public List<JmeterBean> asList() {
         return entries;
     }
 
     public long firstTransactionTimestamp() {
         return entries.stream()
-                .mapToLong(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
+                .mapToLong(e -> e.getTimeStamp())
                 .sorted()
                 .limit(1)
                 .findFirst()
@@ -83,7 +83,7 @@ public class JmeterTransactions {
 
     public long lastTransactionTimestamp() {
         return entries.stream()
-                .map(e -> Long.parseLong(e[TRANSACTION_TIMESTAMP.getColumn()]))
+                .map(e -> e.getTimeStamp())
                 .sorted(reverseOrder())
                 .limit(1)
                 .mapToLong(e -> e)
@@ -91,7 +91,7 @@ public class JmeterTransactions {
                 .getAsLong();
     }
 
-    private List<String[]> validateAndReturn(List<String[]> list, String expectedTransactionName) {
+    private List<JmeterBean> validateAndReturn(List<JmeterBean> list, String expectedTransactionName) {
         if (list.size() == 0) {
             throw new CSVFileNonexistentLabelException(expectedTransactionName);
         }

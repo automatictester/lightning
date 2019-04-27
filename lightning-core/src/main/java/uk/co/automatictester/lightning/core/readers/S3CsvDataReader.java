@@ -7,9 +7,7 @@ import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
 import uk.co.automatictester.lightning.core.s3client.S3Client;
 import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -24,24 +22,24 @@ public class S3CsvDataReader {
         this.csvDataReader = csvDataReader;
     }
 
-    public List<String[]> fromS3Object(String region, String bucket, String key) {
+    public List<? extends CsvBean> fromS3Object(String region, String bucket, String key) {
         Instant start = Instant.now();
         log.debug("Reading CSV file - start");
 
-        List<String[]> entries = new ArrayList<>();
+        CsvParser parser = new CsvParser(csvDataReader.csvParserSettings());
         S3Client s3Client = S3ClientFlyweightFactory.getInstance(region).setBucket(bucket);
         String csvObjectContent = s3Client.getObjectAsString(key);
-        CsvParser csvParser = new CsvParser(csvDataReader.csvParserSettings());
-        try (InputStreamReader isr = new InputStreamReader(new ByteArrayInputStream(csvObjectContent.getBytes()))) {
-            entries.addAll(csvParser.parseAll(isr));
-        } catch (IOException e) {
-            throw new CSVFileIOException(e);
-        }
-        csvDataReader.throwExceptionIfEmpty(entries);
+        parser.parse(getReader(csvObjectContent.getBytes()));
+        List<? extends CsvBean> beans = csvDataReader.beanListProcessor().getBeans();
 
         Instant finish = Instant.now();
         Duration duration = Duration.between(start, finish);
-        log.debug("Reading CSV file - finish, read {} rows, took {}ms", entries.size(), duration.toMillis());
-        return entries;
+        log.debug("Reading CSV file - finish, read {} rows, took {}ms", beans.size(), duration.toMillis());
+        csvDataReader.throwExceptionIfEmpty(beans);
+        return beans;
+    }
+
+    private static Reader getReader(byte[] csvFile) {
+        return new InputStreamReader(new ByteArrayInputStream(csvFile));
     }
 }

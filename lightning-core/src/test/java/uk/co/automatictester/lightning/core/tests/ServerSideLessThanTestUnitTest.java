@@ -3,6 +3,7 @@ package uk.co.automatictester.lightning.core.tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.readers.PerfMonBean;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
@@ -20,7 +21,7 @@ public class ServerSideLessThanTestUnitTest {
     @Test
     public void verifyExecutePass() {
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 12501).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
         TestData.getInstance().addServerSideTestData(testData);
@@ -31,7 +32,7 @@ public class ServerSideLessThanTestUnitTest {
     @Test
     public void verifyExecuteFail() {
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 27500).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
         TestData.getInstance().addServerSideTestData(testData);
@@ -52,7 +53,7 @@ public class ServerSideLessThanTestUnitTest {
         Locale.setDefault(locale);
 
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
         TestData.getInstance().addServerSideTestData(testData);
@@ -63,7 +64,7 @@ public class ServerSideLessThanTestUnitTest {
     @Test
     public void verifyExecuteError() {
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.13 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
         TestData.getInstance().addServerSideTestData(testData);
@@ -83,7 +84,7 @@ public class ServerSideLessThanTestUnitTest {
                 "Test result:          Pass");
 
         ServerSideLessThanTest test = new ServerSideLessThanTest.Builder("Test #1", 10001).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_10001);
         TestData.getInstance().addServerSideTestData(testData);

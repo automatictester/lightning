@@ -45,7 +45,7 @@ public class S3CsvDataReaderTest {
         client.putObjectFromFile(CSV_2_TRANSACTIONS.toString());
         CsvDataReader jmeterReader = new JmeterDataReader();
         S3CsvDataReader s3Reader = new S3CsvDataReader(jmeterReader);
-        List<String[]> entries = s3Reader.fromS3Object(REGION, BUCKET, CSV_2_TRANSACTIONS.toString());
+        List<JmeterBean> entries = (List<JmeterBean>) s3Reader.fromS3Object(REGION, BUCKET, CSV_2_TRANSACTIONS.toString());
         assertThat(entries, hasItem(LOGIN_3514_SUCCESS));
         assertThat(entries, hasItem(SEARCH_11221_SUCCESS));
         assertThat(entries.size(), is(2));

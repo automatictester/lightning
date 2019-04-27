@@ -16,7 +16,7 @@ public class LocalFilesystemCsvDataReaderTest {
     public void verifyReadMethod() {
         CsvDataReader perfMonReader = new PerfMonDataReader();
         LocalFilesystemCsvDataReader localReader = new LocalFilesystemCsvDataReader(perfMonReader);
-        List<String[]> entries = localReader.fromFile(CSV_2_ENTRIES);
+        List<PerfMonBean> entries = (List<PerfMonBean>) localReader.fromFile(CSV_2_ENTRIES);
         assertThat(entries, hasItem(CPU_ENTRY_9128));
         assertThat(entries, hasItem(CPU_ENTRY_21250));
         assertThat(entries.size(), is(2));
@@ -40,7 +40,7 @@ public class LocalFilesystemCsvDataReaderTest {
     public void testFromFile() {
         CsvDataReader jmeterReader = new JmeterDataReader();
         LocalFilesystemCsvDataReader localReader = new LocalFilesystemCsvDataReader(jmeterReader);
-        List<String[]> entries = localReader.fromFile(CSV_2_TRANSACTIONS);
+        List<JmeterBean> entries = (List<JmeterBean>) localReader.fromFile(CSV_2_TRANSACTIONS);
         assertThat(entries, hasItem(LOGIN_3514_SUCCESS));
         assertThat(entries, hasItem(SEARCH_11221_SUCCESS));
         assertThat(entries.size(), is(2));

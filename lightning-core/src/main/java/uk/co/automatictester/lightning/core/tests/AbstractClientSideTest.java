@@ -6,8 +6,6 @@ import uk.co.automatictester.lightning.core.state.data.TestData;
 
 import java.util.List;
 
-import static uk.co.automatictester.lightning.core.enums.JmeterColumns.TRANSACTION_RESULT;
-
 public abstract class AbstractClientSideTest extends AbstractLightningTest {
 
     protected String transactionName;
@@ -80,7 +78,7 @@ public abstract class AbstractClientSideTest extends AbstractLightningTest {
 
     protected int failureCount(JmeterTransactions transactions) {
         return (int) transactions.asStream()
-                .filter(t -> "false".equals(t[TRANSACTION_RESULT.getColumn()]))
+                .filter(t -> !t.isSuccess())
                 .count();
     }
 

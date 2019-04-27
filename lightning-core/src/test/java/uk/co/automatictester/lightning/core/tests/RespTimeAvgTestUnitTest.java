@@ -3,6 +3,7 @@ package uk.co.automatictester.lightning.core.tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.readers.JmeterBean;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
@@ -30,7 +31,7 @@ public class RespTimeAvgTestUnitTest {
         Locale.setDefault(locale);
 
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 6010).withDescription("Verify response times").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
@@ -41,7 +42,7 @@ public class RespTimeAvgTestUnitTest {
     @Test
     public void verifyExecuteAllTransactionsPass() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 900).withDescription("Verify response times").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
@@ -52,7 +53,7 @@ public class RespTimeAvgTestUnitTest {
     @Test
     public void verifyExecuteFail() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 11220).withDescription("Verify response times").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -62,7 +63,7 @@ public class RespTimeAvgTestUnitTest {
     @Test
     public void verifyExecuteAllTransactionsFail() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 899).withDescription("Verify response times").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
         testData.add(LegacyTestData.LOGIN_1000_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
@@ -73,7 +74,7 @@ public class RespTimeAvgTestUnitTest {
     @Test
     public void verifyExecuteError() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("Test #1", 800).withDescription("Verify response times").withTransactionName("nonexistent").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();
@@ -100,7 +101,7 @@ public class RespTimeAvgTestUnitTest {
     @Test
     public void testPrintTestExecutionReport() {
         RespTimeAvgTest test = new RespTimeAvgTest.Builder("my name", 800).withDescription("my description").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_800_SUCCESS);
 
         String expectedOutput = String.format("Test name:            my name%n" +

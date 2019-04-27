@@ -3,6 +3,7 @@ package uk.co.automatictester.lightning.core.tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.readers.JmeterBean;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
 
@@ -16,18 +17,18 @@ import static org.hamcrest.core.Is.is;
 
 public class RespTimeMedianTestUnitTest {
 
-    private static final String[] SEARCH_121_SUCCESS = new String[]{"Search", "121", "true"};
-    private static final String[] SEARCH_125_SUCCESS = new String[]{"Search", "125", "true"};
-    private static final String[] SEARCH_129_SUCCESS = new String[]{"Search", "129", "true"};
-    private static final String[] SEARCH_135_SUCCESS = new String[]{"Search", "135", "true"};
-    private static final String[] SEARCH_143_SUCCESS = new String[]{"Search", "143", "true"};
-    private static final String[] SEARCH_148_SUCCESS = new String[]{"Search", "148", "true"};
-    private static final String[] SEARCH_178_SUCCESS = new String[]{"Search", "178", "true"};
-    private static final String[] SEARCH_198_SUCCESS = new String[]{"Search", "198", "true"};
-    private static final String[] SEARCH_221_SUCCESS = new String[]{"Search", "221", "true"};
-    private static final String[] SEARCH_249_SUCCESS = new String[]{"Search", "249", "true"};
-    private static final String[] LOGIN_121_SUCCESS = new String[]{"Login", "121", "true"};
-    private static final String[] LOGIN_125_SUCCESS = new String[]{"Login", "125", "true"};
+    private static final JmeterBean SEARCH_121_SUCCESS = new JmeterBean("Search", "121", "true");
+    private static final JmeterBean SEARCH_125_SUCCESS = new JmeterBean("Search", "125", "true");
+    private static final JmeterBean SEARCH_129_SUCCESS = new JmeterBean("Search", "129", "true");
+    private static final JmeterBean SEARCH_135_SUCCESS = new JmeterBean("Search", "135", "true");
+    private static final JmeterBean SEARCH_143_SUCCESS = new JmeterBean("Search", "143", "true");
+    private static final JmeterBean SEARCH_148_SUCCESS = new JmeterBean("Search", "148", "true");
+    private static final JmeterBean SEARCH_178_SUCCESS = new JmeterBean("Search", "178", "true");
+    private static final JmeterBean SEARCH_198_SUCCESS = new JmeterBean("Search", "198", "true");
+    private static final JmeterBean SEARCH_221_SUCCESS = new JmeterBean("Search", "221", "true");
+    private static final JmeterBean SEARCH_249_SUCCESS = new JmeterBean("Search", "249", "true");
+    private static final JmeterBean LOGIN_121_SUCCESS = new JmeterBean("Login", "121", "true");
+    private static final JmeterBean LOGIN_125_SUCCESS = new JmeterBean("Login", "125", "true");
 
     @DataProvider(name = "locale")
     private Object[][] locale() {
@@ -42,7 +43,7 @@ public class RespTimeMedianTestUnitTest {
         Locale.setDefault(locale);
 
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 145).withDescription("Verify median").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
         testData.add(SEARCH_129_SUCCESS);
@@ -61,7 +62,7 @@ public class RespTimeMedianTestUnitTest {
     @Test
     public void testExecuteAllTransactionsPass() {
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 145).withDescription("Verify median").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LOGIN_121_SUCCESS);
         testData.add(LOGIN_125_SUCCESS);
         testData.add(SEARCH_129_SUCCESS);
@@ -80,7 +81,7 @@ public class RespTimeMedianTestUnitTest {
     @Test
     public void testExecuteFail() {
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 144).withDescription("Verify median").withTransactionName("Search").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(SEARCH_121_SUCCESS);
         testData.add(SEARCH_125_SUCCESS);
         testData.add(SEARCH_129_SUCCESS);
@@ -99,7 +100,7 @@ public class RespTimeMedianTestUnitTest {
     @Test
     public void testExecuteAllTransactionsFail() {
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 144).withDescription("Verify median").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LOGIN_121_SUCCESS);
         testData.add(LOGIN_125_SUCCESS);
         testData.add(SEARCH_129_SUCCESS);
@@ -118,7 +119,7 @@ public class RespTimeMedianTestUnitTest {
     @Test
     public void verifyExecuteError() {
         RespTimeMedianTest test = new RespTimeMedianTest.Builder("Test #1", 800).withDescription("Verify median").withTransactionName("nonexistent").build();
-        List<String[]> testData = new ArrayList<>();
+        List<JmeterBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.SEARCH_11221_SUCCESS);
         TestData.getInstance().addClientSideTestData(testData);
         test.execute();

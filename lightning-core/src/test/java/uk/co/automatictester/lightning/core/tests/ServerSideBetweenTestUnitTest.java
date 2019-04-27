@@ -2,6 +2,7 @@ package uk.co.automatictester.lightning.core.tests;
 
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.enums.TestResult;
+import uk.co.automatictester.lightning.core.readers.PerfMonBean;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 import uk.co.automatictester.lightning.shared.LegacyTestData;
@@ -18,7 +19,7 @@ public class ServerSideBetweenTestUnitTest {
     @Test
     public void verifyExecutePass() {
         ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #1", 20000, 27501).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_25000);
         testData.add(LegacyTestData.CPU_ENTRY_30000);
         TestData.getInstance().addServerSideTestData(testData);
@@ -29,7 +30,7 @@ public class ServerSideBetweenTestUnitTest {
     @Test
     public void verifyExecuteFail() {
         ServerSideBetweenTest test = new ServerSideBetweenTest.Builder("Test #1", 10000, 12499).withDescription("Verify CPU utilisation").withHostAndMetric("192.168.0.12 CPU").build();
-        List<String[]> testData = new ArrayList<>();
+        List<PerfMonBean> testData = new ArrayList<>();
         testData.add(LegacyTestData.CPU_ENTRY_10000);
         testData.add(LegacyTestData.CPU_ENTRY_15000);
         TestData.getInstance().addServerSideTestData(testData);

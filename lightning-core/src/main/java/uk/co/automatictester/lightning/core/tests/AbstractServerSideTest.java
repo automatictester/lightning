@@ -5,8 +5,6 @@ import uk.co.automatictester.lightning.core.enums.TestResult;
 import uk.co.automatictester.lightning.core.state.data.PerfMonEntries;
 import uk.co.automatictester.lightning.core.state.data.TestData;
 
-import static uk.co.automatictester.lightning.core.enums.PerfMonColumns.VALUE;
-
 public abstract class AbstractServerSideTest extends AbstractLightningTest {
 
     protected static final String TEST_TYPE = "serverSideTest";
@@ -72,7 +70,7 @@ public abstract class AbstractServerSideTest extends AbstractLightningTest {
     private void calculateActualResult(PerfMonEntries entries) {
         DescriptiveStatistics ds = new DescriptiveStatistics();
         entries.asStream()
-                .map(e -> Double.parseDouble(e[VALUE.getColumn()]))
+                .map(e -> e.getValue())
                 .forEach(ds::addValue);
         actualResult = (int) ds.getMean();
     }
