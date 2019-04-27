@@ -48,7 +48,7 @@ pipeline {
         stage('Check') {
             steps {
                 dir('lightning-gradle-plugin') {
-                    sh './gradlew clean check'
+                    sh './gradlew clean check --console plain'
                 }
             }
             post {

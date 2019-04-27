@@ -40,6 +40,9 @@ task integrationTest(type: Test) {
     outputs.upToDateWhen { false }
 
     useTestNG()
+    testLogging {
+        events "started", "passed", "skipped", "failed"
+    }
 
     doFirst {
         println "\nIf you execute this task for first time, it may take a good while to run. This is because our tests cover compatibility with different Gradle versions, which may need to be downloaded first. However, this will be handled automatically for you and will happen only once.\n"

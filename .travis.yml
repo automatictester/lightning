@@ -35,6 +35,6 @@ jobs:
       env: CACHE=standalone
     - script:
         - ./mvnw -pl lightning-core clean install -DmockS3
-        - (cd lightning-gradle-plugin; ./gradlew clean check)
+        - (cd lightning-gradle-plugin; ./gradlew clean check --console plain)
       name: "Gradle"
       env: CACHE=gradle
