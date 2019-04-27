@@ -20,17 +20,32 @@
 
     <h3><a id="performance" class="anchor" href="#performance" aria-hidden="true"></a>Performance</h3>
 
-    <p>Maven plugin version 1.1.0 and Standalone JAR 5.2.0 benefit from significant performance optimisations.
-        Both should process 500MB JMeter CSV file with 15.5 mln of records in under 90s, subject to memory limits.
-        Overall performance of processing large CSV files should improve by up to 40% in comparison with previous versions.</p>
+    <p>If you are processing large data sets, you may want to define non-standard initial and maximum Java heap sizes
+        (<code>-Xms</code> and <code>-Xmx</code>). If you do so, in vast majority of cases you should set both of them
+        to the same value. This is due to aggresive heap usage.</p>
 
-    <p>To run Maven plugin with non-default 6GB memory limit:</p>
-
-    <pre><code>mvn ... -DargLine="-Xmx6G"</code></pre>
+    <p>On my 2017 MacBook with 1,2 GHz Intel Core m3 CPU and 8GB RAM, processing 485MB JMeter CSV file with 15 mln of
+        records takes on average 37 seconds with <code>-Xms3g -Xmx3g</code> and 22 seconds with <code>-Xms6g -Xmx6g</code>.
+    These are numbers for Lightning standalone JAR 6.0.0.</p>
 
     <p>To run Lightning standalone JAR with non-default 6GB memory limit:</p>
 
-    <pre><code>java -jar -Xmx6G ...</code></pre>
+    <pre><code>java -jar -Xmx6g -Xmx6g ...</code></pre>
+
+    <p>To run Maven plugin with non-default 6GB memory limit:</p>
+
+    <pre><code>MAVEN_OPTS="-Xms6g -Xmx6g" mvn clean verify</code></pre>
+
+    <p>To run Gradle plugin with non-default 6GB memory limit, edit <code>~/.gradle/gradle.properties</code>:</p>
+
+    <pre><code>org.gradle.jvmargs=-Xms6g -Xmx6g</code></pre>
+
+    <p>Run Gradle task:</p>
+
+    <pre><code>gradle --no-daemon verify</code></pre>
+
+    <p>Please note that in most cases, especially when processing large data sets, you wouldn't want to use Gradle
+        Daemon.</p>
 
     <footer class="site-footer" data-ng-include="'footer.html'"></footer>
 
