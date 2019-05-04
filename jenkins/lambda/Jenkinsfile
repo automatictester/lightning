@@ -44,7 +44,7 @@ pipeline {
         }
         stage('Build and unit test') {
             steps {
-                sh './mvnw -pl lightning-aws-lambda clean package'
+                sh './mvnw -pl lightning-aws-lambda clean verify'
             }
             post {
                 always {
