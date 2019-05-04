@@ -25,6 +25,7 @@ Actual result:        Average value = 15189
 Entries count:        2
 Test result:          Pass
 
+
 ============= EXECUTION SUMMARY =============
 Tests executed:    3
 Tests passed:      3

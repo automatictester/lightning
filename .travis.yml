@@ -20,7 +20,7 @@ jobs:
       env: CACHE=core
     - script:
         - ./mvnw -pl lightning-core clean install -DmockS3
-        - ./mvnw -pl lightning-aws-lambda clean verify
+        - ./mvnw -pl lightning-aws-lambda clean verify -DmockS3
       name: "Lambda"
       env: CACHE=lambda
     - script:
