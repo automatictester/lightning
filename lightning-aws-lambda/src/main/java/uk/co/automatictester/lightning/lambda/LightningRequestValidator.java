@@ -2,6 +2,9 @@ package uk.co.automatictester.lightning.lambda;
 
 public class LightningRequestValidator {
 
+    private LightningRequestValidator() {
+    }
+
     public static void validate(LightningRequest request) {
         String bucket = request.getBucket();
         String region = request.getRegion();
