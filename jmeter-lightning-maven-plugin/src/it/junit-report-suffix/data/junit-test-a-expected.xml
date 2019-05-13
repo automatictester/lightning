@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="0" name="Lightning" tests="3" time="0">
+    <testcase name="Average response time" time="0"/>
+    <testcase name="No failed transactions" time="0"/>
+    <testcase name="CPU utilisation" time="0"/>
+</testsuite>

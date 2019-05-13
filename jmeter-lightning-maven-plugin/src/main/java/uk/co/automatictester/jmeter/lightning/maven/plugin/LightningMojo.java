@@ -15,6 +15,7 @@ public class LightningMojo extends ConfigurationMojo {
     public void execute() throws MojoExecutionException {
         core.setJmeterCsv(jmeterCsv);
         core.setPerfMonCsv(perfmonCsv);
+        core.setJunitReportSuffix(junitReportSuffix);
         core.loadTestData();
 
         switch (mode) {
