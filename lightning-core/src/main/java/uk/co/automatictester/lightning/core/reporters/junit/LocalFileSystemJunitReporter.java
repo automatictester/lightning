@@ -13,18 +13,23 @@ public class LocalFileSystemJunitReporter {
     private LocalFileSystemJunitReporter() {
     }
 
-    public static void generateReport(TestSet testSet) {
+    public static void generateReport(TestSet testSet, String suffix) {
         JunitReportGenerator reportGenerator = new JunitReportGenerator(testSet);
         String report = reportGenerator.generate();
-        storeReportToDisk(report);
+        storeReportToDisk(report, suffix);
     }
 
-    private static void storeReportToDisk(String report) {
-        Path PATH = Paths.get("junit.xml");
+    private static void storeReportToDisk(String report, String suffix) {
+        String filename = getFilename(suffix);
+        Path PATH = Paths.get(filename);
         try {
             Files.write(PATH, report.getBytes());
         } catch (IOException e) {
             throw new JunitReportGenerationException(e);
         }
+    }
+
+    static String getFilename(String suffix) {
+        return suffix == null ? "junit.xml" : "junit-" + suffix + ".xml";
     }
 }
