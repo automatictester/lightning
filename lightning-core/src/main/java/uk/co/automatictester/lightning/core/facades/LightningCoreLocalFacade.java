@@ -17,6 +17,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     private File perfMonCsv;
     private File jmeterCsv;
     private File lightningXml;
+    private String junitReportSuffix;
 
     public void setPerfMonCsv(File file) {
         perfMonCsv = file;
@@ -28,6 +29,10 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
 
     public void setLightningXml(File file) {
         lightningXml = file;
+    }
+
+    public void setJunitReportSuffix(String suffix) {
+        junitReportSuffix = suffix;
     }
 
     public void loadConfig() {
@@ -60,6 +65,7 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void saveJunitReport() {
+        LocalFileSystemJunitReporter.setSuffix(junitReportSuffix);
         LocalFileSystemJunitReporter.generateReport(testSet);
     }
 

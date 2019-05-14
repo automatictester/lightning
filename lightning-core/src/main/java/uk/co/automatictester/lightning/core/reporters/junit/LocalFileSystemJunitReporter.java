@@ -10,7 +10,13 @@ import java.nio.file.Paths;
 
 public class LocalFileSystemJunitReporter {
 
+    private static String suffix;
+
     private LocalFileSystemJunitReporter() {
+    }
+
+    public static void setSuffix(String suffix) {
+        LocalFileSystemJunitReporter.suffix = suffix;
     }
 
     public static void generateReport(TestSet testSet) {
@@ -20,11 +26,16 @@ public class LocalFileSystemJunitReporter {
     }
 
     private static void storeReportToDisk(String report) {
-        Path PATH = Paths.get("junit.xml");
+        String filename = getFilename(suffix);
+        Path PATH = Paths.get(filename);
         try {
             Files.write(PATH, report.getBytes());
         } catch (IOException e) {
             throw new JunitReportGenerationException(e);
         }
+    }
+
+    static String getFilename(String suffix) {
+        return suffix == null ? "junit.xml" : "junit-" + suffix + ".xml";
     }
 }

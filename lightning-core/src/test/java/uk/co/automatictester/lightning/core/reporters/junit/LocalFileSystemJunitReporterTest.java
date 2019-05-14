@@ -15,15 +15,27 @@ import static org.hamcrest.Matchers.containsString;
 public class LocalFileSystemJunitReporterTest {
 
     @Test
-    public void testGenerateReport() throws IOException {
+    public void testGenerateReportWithoutSuffix() throws IOException {
+        LocalFileSystemJunitReporter.setSuffix(null);
         LocalFileSystemJunitReporter.generateReport(new TestSet());
-        String reportContent = readFileToStringAndDelete();
+        String reportContent = readFileToStringAndDelete(null);
         String expectedReportContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite errors=\"0\" failures=\"0\" name=\"Lightning\" tests=\"0\" time=\"0\"/>";
         assertThat(reportContent, containsString(expectedReportContent));
     }
 
-    private String readFileToStringAndDelete() throws IOException {
-        Path path = Paths.get("junit.xml");
+    @Test
+    public void testGenerateReportWithSuffix() throws IOException {
+        String suffix = "abc";
+        LocalFileSystemJunitReporter.setSuffix(suffix);
+        LocalFileSystemJunitReporter.generateReport(new TestSet());
+        String reportContent = readFileToStringAndDelete(suffix);
+        String expectedReportContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite errors=\"0\" failures=\"0\" name=\"Lightning\" tests=\"0\" time=\"0\"/>";
+        assertThat(reportContent, containsString(expectedReportContent));
+    }
+
+    private String readFileToStringAndDelete(String suffix) throws IOException {
+        String filename = LocalFileSystemJunitReporter.getFilename(suffix);
+        Path path = Paths.get(filename);
         String fileContent = Files.lines(path).collect(Collectors.joining("\n"));
         Files.delete(path);
         return fileContent;

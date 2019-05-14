@@ -32,4 +32,10 @@ abstract class ConfigurationMojo extends AbstractMojo {
      */
     @Parameter
     File perfmonCsv;
+
+    /**
+     * JUnit report suffix
+     */
+    @Parameter
+    String junitReportSuffix;
 }

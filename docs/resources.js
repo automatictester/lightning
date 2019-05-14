@@ -17,6 +17,9 @@ resourceApp.controller('ResourceListController', function ResourceListController
       title: 'enhanced_teamcity_integration',
       url: 'Enhanced TeamCity integration'
     }, {
+      title: 'junit_report_suffix',
+      url: 'JUnit report filename suffix'
+    }, {
       title: 'test_types',
       url: 'Test types'
     }, {
