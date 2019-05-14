@@ -16,7 +16,8 @@ public class LocalFileSystemJunitReporterTest {
 
     @Test
     public void testGenerateReportWithoutSuffix() throws IOException {
-        LocalFileSystemJunitReporter.generateReport(new TestSet(), null);
+        LocalFileSystemJunitReporter.setSuffix(null);
+        LocalFileSystemJunitReporter.generateReport(new TestSet());
         String reportContent = readFileToStringAndDelete(null);
         String expectedReportContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite errors=\"0\" failures=\"0\" name=\"Lightning\" tests=\"0\" time=\"0\"/>";
         assertThat(reportContent, containsString(expectedReportContent));
@@ -25,7 +26,8 @@ public class LocalFileSystemJunitReporterTest {
     @Test
     public void testGenerateReportWithSuffix() throws IOException {
         String suffix = "abc";
-        LocalFileSystemJunitReporter.generateReport(new TestSet(), suffix);
+        LocalFileSystemJunitReporter.setSuffix(suffix);
+        LocalFileSystemJunitReporter.generateReport(new TestSet());
         String reportContent = readFileToStringAndDelete(suffix);
         String expectedReportContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><testsuite errors=\"0\" failures=\"0\" name=\"Lightning\" tests=\"0\" time=\"0\"/>";
         assertThat(reportContent, containsString(expectedReportContent));

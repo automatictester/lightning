@@ -65,7 +65,8 @@ public class LightningCoreLocalFacade extends AbstractLightningCoreFacade {
     }
 
     public void saveJunitReport() {
-        LocalFileSystemJunitReporter.generateReport(testSet, junitReportSuffix);
+        LocalFileSystemJunitReporter.setSuffix(junitReportSuffix);
+        LocalFileSystemJunitReporter.generateReport(testSet);
     }
 
     private void loadPerfMonDataIfProvided() {

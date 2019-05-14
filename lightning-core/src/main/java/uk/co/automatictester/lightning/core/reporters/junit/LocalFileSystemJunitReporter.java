@@ -10,16 +10,22 @@ import java.nio.file.Paths;
 
 public class LocalFileSystemJunitReporter {
 
+    private static String suffix;
+
     private LocalFileSystemJunitReporter() {
     }
 
-    public static void generateReport(TestSet testSet, String suffix) {
-        JunitReportGenerator reportGenerator = new JunitReportGenerator(testSet);
-        String report = reportGenerator.generate();
-        storeReportToDisk(report, suffix);
+    public static void setSuffix(String suffix) {
+        LocalFileSystemJunitReporter.suffix = suffix;
     }
 
-    private static void storeReportToDisk(String report, String suffix) {
+    public static void generateReport(TestSet testSet) {
+        JunitReportGenerator reportGenerator = new JunitReportGenerator(testSet);
+        String report = reportGenerator.generate();
+        storeReportToDisk(report);
+    }
+
+    private static void storeReportToDisk(String report) {
         String filename = getFilename(suffix);
         Path PATH = Paths.get(filename);
         try {
