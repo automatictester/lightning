@@ -9,6 +9,7 @@
     <name>lightning-core</name>
     <description>enables integration of JMeter performance testing with CI pipeline</description>
     <url>http://automatictester.github.io/lightning</url>
+    <inceptionYear>2015</inceptionYear>
 
     <licenses>
         <license>

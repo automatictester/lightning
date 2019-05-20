@@ -9,6 +9,7 @@
     <name>jmeter-lightning-maven-plugin</name>
     <description>Maven plugin encapsulating Lightning functionality</description>
     <url>http://automatictester.github.io/lightning</url>
+    <inceptionYear>2016</inceptionYear>
 
     <licenses>
         <license>
