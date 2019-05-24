@@ -25,8 +25,12 @@
                         </goals>
                         <configuration>
                             <mode>verify</mode>
-                            <testSetXml>data/regexp.xml</testSetXml>
-                            <jmeterCsv>data/10_transactions.csv</jmeterCsv>
+                            <testSets>
+                                <testSet>
+                                    <testSetXml>data/regexp.xml</testSetXml>
+                                    <jmeterCsv>data/10_transactions.csv</jmeterCsv>
+                                </testSet>
+                            </testSets>
                         </configuration>
                     </execution>
                 </executions>

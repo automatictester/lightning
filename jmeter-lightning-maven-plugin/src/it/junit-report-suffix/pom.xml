@@ -20,29 +20,26 @@
                 <version>@project.version@</version>
                 <executions>
                     <execution>
-                        <id>test-a</id>
+                        <phase>integration-test</phase>
                         <goals>
                             <goal>lightning</goal>
                         </goals>
                         <configuration>
                             <mode>verify</mode>
-                            <junitReportSuffix>test-a</junitReportSuffix>
-                            <testSetXml>data/test-a.xml</testSetXml>
-                            <jmeterCsv>data/results-a.csv</jmeterCsv>
-                            <perfmonCsv>data/perf-a.csv</perfmonCsv>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-b</id>
-                        <goals>
-                            <goal>lightning</goal>
-                        </goals>
-                        <configuration>
-                            <mode>verify</mode>
-                            <junitReportSuffix>test-b</junitReportSuffix>
-                            <testSetXml>data/test-b.xml</testSetXml>
-                            <jmeterCsv>data/results-b.csv</jmeterCsv>
-                            <perfmonCsv>data/perf-b.csv</perfmonCsv>
+                            <testSets>
+                                <testSet>
+                                    <junitReportSuffix>test-a</junitReportSuffix>
+                                    <testSetXml>data/test-a.xml</testSetXml>
+                                    <jmeterCsv>data/results-a.csv</jmeterCsv>
+                                    <perfmonCsv>data/perf-a.csv</perfmonCsv>
+                                </testSet>
+                                <testSet>
+                                    <junitReportSuffix>test-b</junitReportSuffix>
+                                    <testSetXml>data/test-b.xml</testSetXml>
+                                    <jmeterCsv>data/results-b.csv</jmeterCsv>
+                                    <perfmonCsv>data/perf-b.csv</perfmonCsv>
+                                </testSet>
+                            </testSets>
                         </configuration>
                     </execution>
                 </executions>

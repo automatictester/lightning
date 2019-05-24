@@ -25,9 +25,13 @@
                         </goals>
                         <configuration>
                             <mode>verify</mode>
-                            <testSetXml>data/junit_report.xml</testSetXml>
-                            <jmeterCsv>data/2_transactions.csv</jmeterCsv>
-                            <perfmonCsv>data/junit_report.csv</perfmonCsv>
+                            <testSets>
+                                <testSet>
+                                    <testSetXml>data/junit_report.xml</testSetXml>
+                                    <jmeterCsv>data/2_transactions.csv</jmeterCsv>
+                                    <perfmonCsv>data/junit_report.csv</perfmonCsv>
+                                </testSet>
+                            </testSets>
                         </configuration>
                     </execution>
                 </executions>

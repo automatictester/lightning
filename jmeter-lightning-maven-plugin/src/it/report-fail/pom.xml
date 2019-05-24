@@ -25,7 +25,11 @@
                         </goals>
                         <configuration>
                             <mode>report</mode>
-                            <jmeterCsv>data/2_1_transactions.csv</jmeterCsv>
+                            <testSets>
+                                <testSet>
+                                    <jmeterCsv>data/2_1_transactions.csv</jmeterCsv>
+                                </testSet>
+                            </testSets>
                         </configuration>
                     </execution>
                 </executions>

@@ -53,8 +53,12 @@
                         </goals>
                         <configuration>
                             <mode>verify</mode>
-                            <testSetXml>src/test/resources/xml/lightning.xml</testSetXml>
-                            <jmeterCsv>target/jmeter/results/example.csv</jmeterCsv>
+                            <testSets>
+                                <testSet>
+                                    <testSetXml>src/test/resources/xml/lightning.xml</testSetXml>
+                                    <jmeterCsv>target/jmeter/results/example.csv</jmeterCsv>
+                                </testSet>
+                            </testSets>
                         </configuration>
                     </execution>
                 </executions>
