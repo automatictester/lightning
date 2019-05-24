@@ -1,5 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="0" name="Lightning" tests="3" time="0">
-    <testcase name="Average response time" time="0"/>
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="1" name="Lightning" tests="3" time="0">
+    <testcase name="Average response time" time="0">
+        <failure message="Average response time = 11221" type="avgRespTimeTest">Test name:            Average response time
+Test type:            avgRespTimeTest
+Transaction name:     Login
+Expected result:      Average response time &lt;= 1000
+Actual result:        Average response time = 11221
+Transaction count:    1
+Longest transactions: [11221]
+Test result:          FAIL
+</failure>
+    </testcase>
     <testcase name="No failed transactions" time="0"/>
     <testcase name="CPU utilisation" time="0"/>
 </testsuite>
