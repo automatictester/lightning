@@ -4,7 +4,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import uk.co.automatictester.lightning.core.enums.Mode;
 
-import java.io.File;
+import java.util.List;
 
 abstract class ConfigurationMojo extends AbstractMojo {
 
@@ -16,26 +16,12 @@ abstract class ConfigurationMojo extends AbstractMojo {
     Mode mode;
 
     /**
-     * Lightning XML config file with test definitions
-     */
-    @Parameter
-    File testSetXml;
-
-    /**
-     * JMeter CSV file
+     * A list of TestSets to be executed, containing properties:
+     * testSetXml,
+     * jmeterCsv (required),
+     * perfmonCsv,
+     * junitReportSuffix
      */
     @Parameter(required = true)
-    File jmeterCsv;
-
-    /**
-     * PerfMon CSV file
-     */
-    @Parameter
-    File perfmonCsv;
-
-    /**
-     * JUnit report suffix
-     */
-    @Parameter
-    String junitReportSuffix;
+    List<TestSet> testSets;
 }

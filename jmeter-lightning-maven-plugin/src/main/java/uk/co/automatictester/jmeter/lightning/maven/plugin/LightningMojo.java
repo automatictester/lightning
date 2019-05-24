@@ -5,6 +5,8 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import uk.co.automatictester.lightning.core.facades.LightningCoreLocalFacade;
 
+import java.io.File;
+
 @Mojo(name = "lightning", defaultPhase = LifecyclePhase.POST_INTEGRATION_TEST)
 public class LightningMojo extends ConfigurationMojo {
 
@@ -13,27 +15,29 @@ public class LightningMojo extends ConfigurationMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        core.setJmeterCsv(jmeterCsv);
-        core.setPerfMonCsv(perfmonCsv);
-        core.setJunitReportSuffix(junitReportSuffix);
-        core.loadTestData();
 
-        switch (mode) {
-            case verify:
-                runTests();
-                core.saveJunitReport();
-                notifyCiServerForVerify();
-                break;
-            case report:
-                runReport();
-                notifyCiServerForReport();
-                break;
+        for (TestSet testSet : testSets) {
+            core.setJmeterCsv(testSet.getJmeterCsv());
+            core.setPerfMonCsv(testSet.getPerfmonCsv());
+            core.setJunitReportSuffix(testSet.getJunitReportSuffix());
+            core.loadTestData();
+
+            switch (mode) {
+                case verify:
+                    runTests(testSet.getTestSetXml());
+                    core.saveJunitReport();
+                    notifyCiServerForVerify();
+                    break;
+                case report:
+                    runReport();
+                    notifyCiServerForReport();
+                    break;
+            }
         }
-
         setExitCode();
     }
 
-    private void runTests() {
+    private void runTests(File testSetXml) {
         long testSetExecStart = System.currentTimeMillis();
 
         core.setLightningXml(testSetXml);
