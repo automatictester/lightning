@@ -50,7 +50,7 @@ public class LightningMojo extends ConfigurationMojo {
         String message = String.format("Execution time:    %dms", testExecTime);
         log(message);
 
-        if (core.hasExecutionFailed()) {
+        if (core.hasExecutionFailed() && !continueOnFailure) {
             exitCode = 1;
         }
     }
