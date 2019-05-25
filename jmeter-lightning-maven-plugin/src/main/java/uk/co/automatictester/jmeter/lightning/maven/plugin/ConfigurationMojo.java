@@ -38,4 +38,10 @@ abstract class ConfigurationMojo extends AbstractMojo {
      */
     @Parameter
     String junitReportSuffix;
+
+    /**
+     * Whether or not subsequent tests should be executed on any failure.
+     */
+    @Parameter
+    boolean continueOnFailure;
 }
