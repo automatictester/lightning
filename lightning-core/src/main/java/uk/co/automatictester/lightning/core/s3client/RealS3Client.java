@@ -10,9 +10,8 @@ public class RealS3Client extends AbstractS3Client {
     }
 
     public static RealS3Client createInstance(String region) {
-        AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder.standard().withRegion(region);
-        AmazonS3 client = amazonS3ClientBuilder.build();
-        return new RealS3Client(client);
+        AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
+        return new RealS3Client(amazonS3);
     }
 
     @Override

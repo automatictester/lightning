@@ -103,6 +103,37 @@ public class MockedS3ClientTest {
     }
 
     @Test
+    public void testGetStandardMockPort() {
+        String mockedPort = MockedS3Client.getMockedPort();
+        assertThat(mockedPort, is(equalTo("8001")));
+    }
+
+    @Test
+    public void testGetNonStandardMockPort() {
+        System.setProperty("mockS3Port", "8002");
+        String mockedPort = MockedS3Client.getMockedPort();
+        assertThat(mockedPort, is(equalTo("8002")));
+        System.clearProperty("mockS3Port");
+    }
+
+    @Test
+    public void testGetMockedUrlStandardPort() {
+        String standardMockedUrl = "http://localhost:8001";
+        String mockedUrl = MockedS3Client.getMockedUrl();
+        assertThat(mockedUrl, is(equalTo(standardMockedUrl)));
+    }
+
+    @Test
+    public void testGetMockedUrlNonStandardPort() {
+        String nonStandardPort = "8002";
+        String nonStandardMockedUrl = String.format("http://localhost:%s", nonStandardPort);
+        System.setProperty("mockS3Port", nonStandardPort);
+        String mockedUrl = MockedS3Client.getMockedUrl();
+        assertThat(mockedUrl, is(equalTo(nonStandardMockedUrl)));
+        System.clearProperty("mockS3Port");
+    }
+
+    @Test
     public void testToString() {
         String toString = String.format("URL: %s, bucket: %s", S3_MOCK_URL, bucket);
         assertThat(lightning3Client.toString(), is(equalTo(toString)));
