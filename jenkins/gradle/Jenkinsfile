@@ -42,7 +42,7 @@ pipeline {
                     sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.RELEASE_VERSION}/\" gradle.properties"
                     sh "cat gradle.properties"
                 }
-                sh "git add -A; git commit -m 'Release version bump'"
+                sh "git add -A; git commit -m 'Lightning Gradle Plugin release version bump'"
             }
         }
         stage('Check') {
@@ -83,7 +83,7 @@ pipeline {
                     sh "sed -i -e \"/lightningGradlePluginVersion=/ s/=.*/=${params.POST_RELEASE_SNAPSHOT_VERSION}/\" gradle.properties"
                     sh "cat gradle.properties"
                 }
-                sh "git add -A; git commit -m 'Post-release version bump'"
+                sh "git add -A; git commit -m 'Lightning Gradle Plugin post-release version bump'"
             }
         }
         stage('Push release to origin') {
