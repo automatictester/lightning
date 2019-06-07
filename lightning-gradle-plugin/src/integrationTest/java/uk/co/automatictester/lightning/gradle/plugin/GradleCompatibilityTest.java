@@ -29,8 +29,7 @@ public class GradleCompatibilityTest {
     private Object[][] getGradleVersions() {
         return new Object[][] {
                 new Object[] { "2.14.1" },
-                new Object[] { "3.5" },
-                new Object[] { "4.0" }
+                new Object[] { "3.5" }
         };
     }
 }
