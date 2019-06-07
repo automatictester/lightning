@@ -71,7 +71,7 @@ pipeline {
             steps {
                 dir('lightning-gradle-plugin') {
                     // Maven Central
-                    sh './gradlew clean uploadArchives'
+                    sh './gradlew clean uploadArchives closeAndReleaseRepository'
                     // Gradle Plugin Portal
                     sh './gradlew clean publishPlugins'
                 }
