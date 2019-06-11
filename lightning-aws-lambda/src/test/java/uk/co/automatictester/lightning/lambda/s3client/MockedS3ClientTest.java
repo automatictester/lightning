@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.s3client;
+package uk.co.automatictester.lightning.lambda.s3client;
 
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;

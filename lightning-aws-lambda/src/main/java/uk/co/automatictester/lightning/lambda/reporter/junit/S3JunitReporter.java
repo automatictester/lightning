@@ -1,7 +1,8 @@
-package uk.co.automatictester.lightning.core.reporters.junit;
+package uk.co.automatictester.lightning.lambda.reporter.junit;
 
-import uk.co.automatictester.lightning.core.s3client.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.reporters.junit.JunitReportGenerator;
+import uk.co.automatictester.lightning.lambda.s3client.S3Client;
+import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 public class S3JunitReporter {

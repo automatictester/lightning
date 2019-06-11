@@ -1,14 +1,14 @@
-package uk.co.automatictester.lightning.core.config;
+package uk.co.automatictester.lightning.lambda.config;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
-import uk.co.automatictester.lightning.core.s3.AmazonS3Test;
-import uk.co.automatictester.lightning.core.s3client.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.lambda.s3.AmazonS3Test;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 import uk.co.automatictester.lightning.core.tests.LightningTest;
 import uk.co.automatictester.lightning.core.tests.RespTimeAvgTest;
+import uk.co.automatictester.lightning.lambda.s3client.S3Client;
+import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
 
 import java.io.IOException;
 import java.util.List;

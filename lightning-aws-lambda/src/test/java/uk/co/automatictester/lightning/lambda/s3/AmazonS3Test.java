@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.s3;
+package uk.co.automatictester.lightning.lambda.s3;
 
 import io.findify.s3mock.S3Mock;
 import org.testng.annotations.AfterClass;

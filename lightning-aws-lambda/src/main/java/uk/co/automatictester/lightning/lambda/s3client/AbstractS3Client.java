@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.core.s3client;
+package uk.co.automatictester.lightning.lambda.s3client;
 
 import com.amazonaws.services.s3.AmazonS3;
 import org.apache.commons.lang3.RandomStringUtils;

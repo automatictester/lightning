@@ -1,11 +1,11 @@
-package uk.co.automatictester.lightning.core.facades;
+package uk.co.automatictester.lightning.lambda.facade;
 
 import io.findify.s3mock.S3Mock;
 import org.testng.annotations.*;
-import uk.co.automatictester.lightning.core.s3client.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.lambda.s3client.S3Client;
+import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
+public class LightningCoreS3FacadeIT {
 
     private LightningCoreS3Facade core;
 
@@ -40,6 +40,17 @@ public class LightningCoreS3FacadeIT extends FileAndOutputComparisonIT {
 
     private S3Mock s3Mock;
     private S3Client client;
+
+    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    private void configureStream() {
+        System.setOut(new PrintStream(out));
+    }
+
+    private void revertStream() {
+        out.reset();
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    }
 
     @BeforeClass
     public void setupS3Mock() {

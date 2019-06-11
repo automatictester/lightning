@@ -5,8 +5,8 @@ import io.findify.s3mock.S3Mock;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.s3client.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.lambda.s3client.S3Client;
+import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;

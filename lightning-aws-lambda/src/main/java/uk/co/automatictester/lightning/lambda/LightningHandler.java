@@ -4,7 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.co.automatictester.lightning.core.facades.LightningCoreS3Facade;
+import uk.co.automatictester.lightning.lambda.facade.LightningCoreS3Facade;
 
 public class LightningHandler implements RequestHandler<LightningRequest, LightningResponse> {
 

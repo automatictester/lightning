@@ -1,12 +1,11 @@
-package uk.co.automatictester.lightning.core.reporters.jenkins;
+package uk.co.automatictester.lightning.lambda.reporter.jenkins;
 
 import io.findify.s3mock.S3Mock;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import uk.co.automatictester.lightning.core.s3.AmazonS3Test;
-import uk.co.automatictester.lightning.core.s3client.S3Client;
-import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.lambda.s3.AmazonS3Test;
+import uk.co.automatictester.lightning.lambda.s3client.S3Client;
+import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;

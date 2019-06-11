@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet>
+
+    <avgRespTimeTest>
+        <testName>Test #1</tstName>
+        <transactionName>Login</transactionName>
+        <maxAvgRespTime>3</maxAvgRespTime>
+    </avgRespTimeTest>
+
+</testSet>
