@@ -1,4 +1,4 @@
-package uk.co.automatictester.lightning.lambda.s3client;
+package uk.co.automatictester.lightning.core.s3client;
 
 import java.io.IOException;
 

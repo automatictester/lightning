@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Verify') {
             steps {
-                sh './mvnw -pl lightning-core clean verify'
+                sh './mvnw -pl lightning-core clean verify -DmockS3'
             }
             post {
                 always {
@@ -59,7 +59,7 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-                    sh "./mvnw -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPGPP} -DskipTests"
+                    sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP} -DskipTests"
                 }
             }
         }

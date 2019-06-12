@@ -1,13 +1,12 @@
-package uk.co.automatictester.lightning.lambda.config;
+package uk.co.automatictester.lightning.core.config;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import uk.co.automatictester.lightning.core.config.AbstractConfigReader;
 import uk.co.automatictester.lightning.core.exceptions.XMLFileException;
-import uk.co.automatictester.lightning.lambda.s3client.S3Client;
-import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
+import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
 
 import javax.xml.parsers.DocumentBuilder;

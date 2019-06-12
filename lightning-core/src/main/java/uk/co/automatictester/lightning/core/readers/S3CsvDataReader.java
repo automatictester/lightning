@@ -1,16 +1,16 @@
-package uk.co.automatictester.lightning.lambda.reader;
+package uk.co.automatictester.lightning.core.readers;
 
 import com.univocity.parsers.csv.CsvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.automatictester.lightning.core.readers.CsvBean;
-import uk.co.automatictester.lightning.core.readers.CsvDataReader;
-import uk.co.automatictester.lightning.lambda.s3client.S3Client;
-import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.exceptions.CSVFileIOException;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
+import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 
 import java.io.*;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 public class S3CsvDataReader {

@@ -1,11 +1,11 @@
-package uk.co.automatictester.lightning.lambda.reporter.junit;
+package uk.co.automatictester.lightning.core.reporters.junit;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import uk.co.automatictester.lightning.core.s3.AmazonS3Test;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
+import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 import uk.co.automatictester.lightning.core.state.tests.TestSet;
-import uk.co.automatictester.lightning.lambda.s3.AmazonS3Test;
-import uk.co.automatictester.lightning.lambda.s3client.S3Client;
-import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;

@@ -1,7 +1,7 @@
-package uk.co.automatictester.lightning.lambda.reporter.jenkins;
+package uk.co.automatictester.lightning.core.reporters.jenkins;
 
-import uk.co.automatictester.lightning.lambda.s3client.S3Client;
-import uk.co.automatictester.lightning.lambda.s3client.factory.S3ClientFlyweightFactory;
+import uk.co.automatictester.lightning.core.s3client.S3Client;
+import uk.co.automatictester.lightning.core.s3client.factory.S3ClientFlyweightFactory;
 
 public class S3JenkinsReporter {
 
