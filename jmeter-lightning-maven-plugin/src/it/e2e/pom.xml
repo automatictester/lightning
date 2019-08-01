@@ -62,7 +62,7 @@
             <plugin>
                 <groupId>uk.co.automatictester</groupId>
                 <artifactId>wiremock-maven-plugin</artifactId>
-                <version>4.4.1</version>
+                <version>4.5.0</version>
                 <executions>
                     <execution>
                         <goals>
