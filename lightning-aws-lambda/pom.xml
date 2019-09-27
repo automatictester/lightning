@@ -21,9 +21,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <log4j.version>2.11.2</log4j.version>
-        <slf4j.version>1.7.26</slf4j.version>
-        <aws.s3.sdk.version>1.11.563</aws.s3.sdk.version>
+        <log4j.version>2.12.1</log4j.version>
+        <slf4j.version>1.7.28</slf4j.version>
+        <aws.s3.sdk.version>1.11.623</aws.s3.sdk.version>
     </properties>
 
     <build>
@@ -193,7 +193,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.14.3</version>
+            <version>7.0.0</version>
             <scope>test</scope>
         </dependency>
 
