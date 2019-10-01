@@ -21,7 +21,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jcommander.version>1.72</jcommander.version>
+        <jcommander.version>1.78</jcommander.version>
     </properties>
 
     <build>
