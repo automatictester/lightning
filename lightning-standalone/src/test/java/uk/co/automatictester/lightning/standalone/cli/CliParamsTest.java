@@ -4,7 +4,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.ApplicationArguments;
 import org.testng.annotations.Test;
 
-import java.io.*;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,36 +13,6 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CliParamsTest {
-
-    @Test
-    public void testPrintHelp() {
-        CliParams params = new CliParams(null);
-        String expectedOutput = String.format("Usage: java -jar lightning-%s.jar [command] [command options]%n" +
-                "  Commands:%n" +
-                "    verify      Execute Lightning tests against JMeter output%n" +
-                "      Usage: verify [options]%n" +
-                "        Options:%n" +
-                "        * --jmeter-csv%n" +
-                "            JMeter CSV result file%n" +
-                "          --perfmon-csv%n" +
-                "            PerfMon CSV result file%n" +
-                "        * --xml%n" +
-                "            Lightning XML config file%n" +
-                "%n" +
-                "    report      Generate report on JMeter output%n" +
-                "      Usage: report [options]%n" +
-                "        Options:%n" +
-                "        * --jmeter-csv%n" +
-                "            JMeter CSV result file%n", params.getVersion());
-        configureStream();
-        params.printHelp();
-        String actual = out.toString();
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            actual = actual.replace("\n", "\r\n");
-        }
-        assertThat(actual).isEqualTo(expectedOutput);
-        revertStream();
-    }
 
     @Test
     public void testGetFileFromOptionValue() {
@@ -177,15 +147,5 @@ public class CliParamsTest {
 
         boolean is = new CliParams(args).isHelpRequested();
         assertThat(is).isEqualTo(false);
-    }
-
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-    private void configureStream() {
-        System.setOut(new PrintStream(out));
-    }
-
-    private void revertStream() {
-        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     }
 }

@@ -17,12 +17,6 @@ public class CliParams {
         this.args = args;
     }
 
-    public void printHelp() {
-        String rawHelp = readHelpFile();
-        String help = rawHelp.replace("VERSION_PLACEHODER", getVersion());
-        log.info(help);
-    }
-
     public File getXmlFile() {
         return getFileFromOptionValue("xml");
     }
@@ -64,14 +58,5 @@ public class CliParams {
             return new File(optionValue);
         }
         throw new RuntimeException("Number of option values for '" + optionName + "' not equal to 1");
-    }
-
-    String getVersion() {
-        String version = getClass().getPackage().getImplementationVersion();
-        return version == null ? "<version_number>" : version;
-    }
-
-    private String readHelpFile() {
-        return new Scanner(getClass().getResourceAsStream("/help.txt"), "UTF-8").useDelimiter("\\A").next();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Component;
 import uk.co.automatictester.lightning.core.enums.Mode;
 import uk.co.automatictester.lightning.core.facades.LightningCoreLocalFacade;
+import uk.co.automatictester.lightning.standalone.bean.Helper;
 
 import java.io.File;
 
@@ -16,18 +17,22 @@ import static uk.co.automatictester.lightning.core.enums.Mode.valueOf;
 public class CliTestRunner {
 
     private final LightningCoreLocalFacade core;
+    private final Helper helper;
     private CliParams params;
     private int exitCode = 0;
 
-    public CliTestRunner(@Autowired LightningCoreLocalFacade core) {
+    public CliTestRunner(
+            @Autowired LightningCoreLocalFacade core,
+            @Autowired Helper helper) {
         this.core = core;
+        this.helper = helper;
     }
 
     public void main(ApplicationArguments args) {
         params = new CliParams(args);
 
         if (params.isHelpRequested() || (!params.getParsedCommand().isPresent())) {
-            params.printHelp();
+            helper.printHelp();
             return;
         }
 
