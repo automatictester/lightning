@@ -9,9 +9,9 @@ ACTUAL_RESULT="junit.xml"
 java \
     -jar target/lightning*.jar \
     verify \
-    -xml src/test/resources/xml/junit_report.xml \
-    --jmeter-csv src/test/resources/csv/jmeter/2_transactions.csv \
-    --perfmon-csv src/test/resources/csv/perfmon/junit_report.csv \
+    --xml=src/test/resources/xml/junit_report.xml \
+    --jmeter-csv=src/test/resources/csv/jmeter/2_transactions.csv \
+    --perfmon-csv=src/test/resources/csv/perfmon/junit_report.csv \
     &> /dev/null
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT`

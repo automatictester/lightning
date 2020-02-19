@@ -9,7 +9,7 @@ PROCESSED_ACTUAL_RESULT="src/test/resources/results/actual/processed_report.txt"
 java \
     -jar target/lightning*.jar \
     report \
-    --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
+    --jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv \
     &> $ACTUAL_RESULT
 
 sed -e "s/\[main\] INFO //g" $ACTUAL_RESULT > $PROCESSED_ACTUAL_RESULT

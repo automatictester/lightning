@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.4.RELEASE</version>
+        <relativePath/>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.co.automatictester</groupId>
     <artifactId>lightning-standalone</artifactId>
@@ -21,12 +28,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jcommander.version>1.78</jcommander.version>
     </properties>
 
     <build>
 
         <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -69,24 +81,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <attach>false</attach>
-                    <archive>
-                        <manifest>
-                            <mainClass>uk.co.automatictester.lightning.standalone.runners.CliTestRunner</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
@@ -110,7 +104,7 @@
                 <executions>
                     <execution>
                         <id>c-report-10-0</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -123,7 +117,7 @@
                     </execution>
                     <execution>
                         <id>c-verify-1-1-1</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -136,7 +130,7 @@
                     </execution>
                     <execution>
                         <id>c-verify-3-0-0</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -149,7 +143,7 @@
                     </execution>
                     <execution>
                         <id>c-verify-3-0-0-2s</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -162,7 +156,7 @@
                     </execution>
                     <execution>
                         <id>e-verify-1-1-1</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -175,7 +169,7 @@
                     </execution>
                     <execution>
                         <id>e-verify-3-0-0</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -188,7 +182,7 @@
                     </execution>
                     <execution>
                         <id>e-verify-3-0-0-2s</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -201,7 +195,7 @@
                     </execution>
                     <execution>
                         <id>e-report-2-0</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -214,7 +208,7 @@
                     </execution>
                     <execution>
                         <id>e-report-2-1</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -227,7 +221,7 @@
                     </execution>
                     <execution>
                         <id>junit</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -240,7 +234,7 @@
                     </execution>
                     <execution>
                         <id>jenkins-report</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -253,7 +247,7 @@
                     </execution>
                     <execution>
                         <id>jenkins-verify</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>bash</executable>
                             <arguments>
@@ -266,7 +260,7 @@
                     </execution>
                     <execution>
                         <id>jar</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>java</executable>
                             <arguments>
@@ -280,7 +274,7 @@
                     </execution>
                     <execution>
                         <id>jar-h</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>java</executable>
                             <arguments>
@@ -295,7 +289,7 @@
                     </execution>
                     <execution>
                         <id>jar-help</id>
-                        <phase>test</phase>
+                        <phase>integration-test</phase>
                         <configuration>
                             <executable>java</executable>
                             <arguments>
@@ -312,45 +306,52 @@
             </plugin>
 
         </plugins>
-
-        <!-- to have access to library version at runtime -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>version.properties</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
     </build>
 
     <dependencies>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>uk.co.automatictester</groupId>
             <artifactId>lightning-core</artifactId>
             <version>6.1.2-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-            <version>${jcommander.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.15.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.2.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -363,13 +364,7 @@
                 <artifactId>commons-logging</artifactId>
                 <version>1.2</version>
             </dependency>
-            <dependency>
-                <groupId>com.beust</groupId>
-                <artifactId>jcommander</artifactId>
-                <version>${jcommander.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 </project>

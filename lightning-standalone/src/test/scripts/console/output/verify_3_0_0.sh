@@ -9,8 +9,8 @@ PROCESSED_ACTUAL_RESULT="src/test/resources/results/actual/processed_3_0_0.txt"
 java \
     -jar target/lightning*.jar \
     verify \
-    -xml src/test/resources/xml/3_0_0.xml \
-    --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
+    --xml=src/test/resources/xml/3_0_0.xml \
+    --jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv \
     &> $ACTUAL_RESULT
 
 cat $ACTUAL_RESULT | grep -v "Execution time:" | \
