@@ -1,9 +1,11 @@
 package uk.co.automatictester.lightning.standalone;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+@DirtiesContext
 @SpringBootTest(args = {
         "verify",
         "--xml=src/test/resources/xml/3_0_0.xml",
