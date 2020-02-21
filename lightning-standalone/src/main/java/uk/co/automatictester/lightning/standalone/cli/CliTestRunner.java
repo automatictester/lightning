@@ -113,6 +113,8 @@ public class CliTestRunner {
     }
 
     private void setExitCode() {
-        System.exit(exitCode);
+        if (exitCode != 0) {
+            System.exit(exitCode);
+        }
     }
 }
