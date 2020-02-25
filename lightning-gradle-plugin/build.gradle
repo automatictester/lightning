@@ -33,12 +33,12 @@ sourceSets {
 }
 
 configurations {
-    integrationTestCompile.extendsFrom testCompile
+    integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntime.extendsFrom testRuntime
 }
 
 task integrationTest(type: Test) {
-    testClassesDir = sourceSets.integrationTest.output.classesDir
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
 
@@ -55,13 +55,17 @@ task integrationTest(type: Test) {
 check.dependsOn integrationTest
 integrationTest.mustRunAfter test
 
+gradlePlugin {
+    testSourceSets sourceSets.integrationTest
+}
+
 tasks.withType(Test) {
     reports.html.destination = file("${reporting.baseDir}/${name}")
 }
 
 dependencies {
-    compile "uk.co.automatictester:lightning-core:${lightningCoreVersion}"
-    integrationTestCompile 'org.testng:testng:7.1.1'
+    implementation "uk.co.automatictester:lightning-core:${lightningCoreVersion}"
+    integrationTestImplementation 'org.testng:testng:7.1.1'
 }
 
 repositories {
