@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <slf4j.version>1.7.30</slf4j.version>
-        <aws.s3.sdk.version>1.11.734</aws.s3.sdk.version>
+        <aws.s3.sdk.version>1.11.852</aws.s3.sdk.version>
     </properties>
 
     <build>
