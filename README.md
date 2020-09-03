@@ -1,6 +1,6 @@
 # Lightning
 
-[![Build Status](https://travis-ci.com/automatictester/lightning.svg?branch=master)](https://travis-ci.org/automatictester/lightning)
+[![Build Status](https://travis-ci.com/automatictester/lightning.svg?branch=master)](https://travis-ci.com/automatictester/lightning)
 [![Gitter](https://badges.gitter.im/automatictester/lightning.svg)](https://gitter.im/automatictester/lightning?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Lightning integrates JMeter non-functional tests with CI servers. Visit Lightning [website](http://automatictester.github.io/lightning/).
