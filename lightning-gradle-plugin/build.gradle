@@ -65,7 +65,7 @@ tasks.withType(Test) {
 
 dependencies {
     implementation "uk.co.automatictester:lightning-core:${lightningCoreVersion}"
-    integrationTestImplementation 'org.testng:testng:7.1.1'
+    integrationTestImplementation 'org.testng:testng:7.3.0'
 }
 
 repositories {
