@@ -5,7 +5,7 @@ mkdir -p src/test/resources/results/actual/
 java \
     -jar target/lightning*.jar \
     report \
-    --jmeter-csv=src/test/resources/csv/jmeter/2_transactions.csv \
+    --jmeter-csv src/test/resources/csv/jmeter/2_transactions.csv \
     &> src/test/resources/results/actual/report_1_1.txt
 OUT=$?
 

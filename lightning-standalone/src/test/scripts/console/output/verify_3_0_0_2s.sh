@@ -9,9 +9,9 @@ PROCESSED_ACTUAL_RESULT="src/test/resources/results/actual/processed_1_client_2_
 java \
     -jar target/lightning*.jar \
     verify \
-    --xml=src/test/resources/xml/1_client_2_server.xml \
-    --jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv \
-    --perfmon-csv=src/test/resources/csv/perfmon/2_entries.csv \
+    -xml src/test/resources/xml/1_client_2_server.xml \
+    --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
+    --perfmon-csv src/test/resources/csv/perfmon/2_entries.csv \
     &> $ACTUAL_RESULT
 
 cat $ACTUAL_RESULT | grep -v "Execution time:" | \

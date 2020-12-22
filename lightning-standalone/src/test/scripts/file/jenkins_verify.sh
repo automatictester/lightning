@@ -8,8 +8,8 @@ ACTUAL_RESULT="lightning-jenkins.properties"
 java \
     -jar target/lightning*.jar \
     verify \
-    --xml=src/test/resources/xml/1_1_1.xml \
-    --jmeter-csv=src/test/resources/csv/jmeter/10_transactions.csv \
+    -xml src/test/resources/xml/1_1_1.xml \
+    --jmeter-csv src/test/resources/csv/jmeter/10_transactions.csv \
     &> /dev/null
 
 DIFF_OUTPUT=`diff $EXPECTED_RESULT $ACTUAL_RESULT`

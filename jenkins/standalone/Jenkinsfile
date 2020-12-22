@@ -44,7 +44,7 @@ pipeline {
         }
         stage('Run unit tests, generate JAR file and run E2E tests') {
             steps {
-                sh './mvnw -pl lightning-standalone clean verify'
+                sh './mvnw -pl lightning-standalone clean compile assembly:single test'
             }
             post {
                 always {
