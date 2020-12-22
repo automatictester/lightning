@@ -28,16 +28,12 @@ pipeline {
         stage('Set release version number') {
             steps {
                 sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.RELEASE_VERSION} -DprocessDependencies=true"
-                dir('lightning-gradle-plugin') {
-                    sh "sed -i -e \"/lightningCoreVersion=/ s/=.*/=${params.RELEASE_VERSION}/\" gradle.properties"
-                    sh "cat gradle.properties"
-                }
                 sh "git add -A; git commit -m 'Lightning Core release version bump'"
             }
         }
         stage('Verify') {
             steps {
-                sh './mvnw -pl lightning-core clean verify -DmockS3'
+                sh './mvnw -pl lightning-core clean verify'
             }
             post {
                 always {
@@ -59,17 +55,13 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'GPGPP')]) {
-                    sh "./mvnw -pl lightning-core clean deploy -P release -DmockS3 -Dgpg.passphrase=${GPGPP} -DskipTests"
+                    sh "./mvnw -pl lightning-core clean deploy -P release -Dgpg.passphrase=${GPGPP} -DskipTests"
                 }
             }
         }
         stage('Set snapshot version number') {
             steps {
                 sh "./mvnw -pl lightning-core versions:set -DnewVersion=${params.POST_RELEASE_SNAPSHOT_VERSION} -DprocessDependencies=true"
-                dir('lightning-gradle-plugin') {
-                    sh "sed -i -e \"/lightningCoreVersion=/ s/=.*/=${params.POST_RELEASE_SNAPSHOT_VERSION}/\" gradle.properties"
-                    sh "cat gradle.properties"
-                }
                 sh "git add -A; git commit -m 'Lightning Core post-release version bump'"
             }
         }

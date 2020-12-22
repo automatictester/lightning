@@ -36,17 +36,6 @@
 
     <pre><code>MAVEN_OPTS="-Xms6g -Xmx6g" mvn clean verify</code></pre>
 
-    <p>To run Gradle plugin with non-default 6GB memory limit, edit <code>~/.gradle/gradle.properties</code>:</p>
-
-    <pre><code>org.gradle.jvmargs=-Xms6g -Xmx6g</code></pre>
-
-    <p>Run Gradle task:</p>
-
-    <pre><code>gradle --no-daemon verify</code></pre>
-
-    <p>Please note that in most cases, especially when processing large data sets, you wouldn't want to use Gradle
-        Daemon.</p>
-
     <footer class="site-footer" data-ng-include="'footer.html'"></footer>
 
 </section>

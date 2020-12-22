@@ -1,7 +1,0 @@
-plugins {
-    id 'uk.co.automatictester.lightning'
-}
-
-lightningSettings {
-    jmeterCsv = new File('src/integrationTest/resources/csv/2_1_transactions.csv')
-}
