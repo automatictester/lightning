@@ -49,7 +49,7 @@ pipeline {
             post {
                 always {
                     junit 'lightning-standalone/target/surefire-reports/junitreports/*.xml'
-                    jacoco execPattern: '**/lightning-standalone/target/jacoco*.exec', classPattern: '**/lightning-standalone/target/classes', sourcePattern: '**/lightning-standalone/src/main/java'
+                    jacoco execPattern: '**/lightning-standalone/target/jacoco.exec', classPattern: '**/lightning-standalone/target/classes', sourcePattern: '**/lightning-standalone/src/main/java'
                 }
             }
         }
