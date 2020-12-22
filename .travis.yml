@@ -1,5 +1,5 @@
 os: linux
-dist: trusty
+dist: bionic
 language: java
 install: true
 jdk: openjdk8
