@@ -30,7 +30,7 @@ jobs:
       env: CACHE=maven
     - script:
         - ./mvnw -pl lightning-core clean install -DmockS3
-        - ./mvnw -pl lightning-standalone clean verify
+        - ./mvnw -pl lightning-standalone clean compile assembly:single test
       name: "Standalone"
       env: CACHE=standalone
     - script:
