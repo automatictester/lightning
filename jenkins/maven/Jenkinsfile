@@ -46,11 +46,6 @@ pipeline {
             steps {
                 sh "./mvnw -pl jmeter-lightning-maven-plugin clean verify"
             }
-            post {
-                always {
-                    jacoco execPattern: '**/jmeter-lightning-maven-plugin/target/jacoco.exec', classPattern: '**/jmeter-lightning-maven-plugin/target/classes', sourcePattern: '**/jmeter-lightning-maven-plugin/src/main/java'
-                }
-            }
         }
         stage('Tag release') {
             steps {

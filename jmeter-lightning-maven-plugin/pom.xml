@@ -113,28 +113,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
-                <configuration>
-                    <includes>**/*</includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>pre-integration-test</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${project.build.directory}/jacoco.exec</destFile>
-                            <propertyName>invoker.mavenOpts</propertyName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
 
     </build>

@@ -35,12 +35,6 @@ pipeline {
             steps {
                 sh './mvnw -pl lightning-core clean verify'
             }
-            post {
-                always {
-                    junit 'lightning-core/target/*-reports/junitreports/*.xml'
-                    jacoco execPattern: '**/jacoco*.exec'
-                }
-            }
         }
         stage('Tag release') {
             steps {
