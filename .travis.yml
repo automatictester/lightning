@@ -2,7 +2,14 @@ os: linux
 dist: bionic
 language: java
 install: true
-jdk: openjdk8
+jdk:
+  - openjdk8
+  - openjdk9
+  - openjdk10
+  - openjdk11
+  - openjdk12
+  - openjdk13
+  - openjdk14
 before_cache:
   - rm -rf ~/.m2/repository/uk/co/automatictester/*lightning*/
 cache:
