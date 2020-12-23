@@ -12,36 +12,36 @@ abstract class ConfigurationMojo extends AbstractMojo {
      * Execution mode.
      * Allowed values: verify, report
      */
-    @Parameter
+    @Parameter(property = "lightning.mode")
     Mode mode;
 
     /**
      * Lightning XML config file with test definitions
      */
-    @Parameter
+    @Parameter(property = "lightning.testSetXml")
     File testSetXml;
 
     /**
      * JMeter CSV file
      */
-    @Parameter(required = true)
+    @Parameter(required = true, property = "lightning.jmeterCsv")
     File jmeterCsv;
 
     /**
      * PerfMon CSV file
      */
-    @Parameter
+    @Parameter(property = "lightning.perfmonCsv")
     File perfmonCsv;
 
     /**
      * JUnit report suffix
      */
-    @Parameter
+    @Parameter(property = "lightning.junitReportSuffix")
     String junitReportSuffix;
 
     /**
      * Whether or not subsequent tests should be executed on any failure.
      */
-    @Parameter
+    @Parameter(property = "lightning.continueOnFailure")
     boolean continueOnFailure;
 }
