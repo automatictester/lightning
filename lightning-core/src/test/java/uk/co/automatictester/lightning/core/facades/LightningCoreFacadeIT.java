@@ -17,9 +17,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-public class LightningCoreLocalFacadeIT extends FileAndOutputComparisonIT {
+public class LightningCoreFacadeIT extends FileAndOutputComparisonIT {
 
-    private LightningCoreLocalFacade core = new LightningCoreLocalFacade();
+    private LightningCoreFacade core = new LightningCoreFacade();
     private Mode mode;
     private File perfMonCsv;
     private File jmeterCsv;
