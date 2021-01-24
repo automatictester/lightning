@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "PATH: ${PATH}"
-
 mkdir -p src/test/resources/results/actual/
 
 EXPECTED_RESULT="src/test/resources/results/expected/report.txt"
