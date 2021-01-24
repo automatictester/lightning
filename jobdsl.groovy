@@ -7,6 +7,7 @@ folder('lightning')
     multibranchPipelineJob("lightning/${module}") {
         branchSources {
             git {
+                id('89D67797-17C2-4935-99C8-9E66AEF453DE_' + ${module})
                 remote('git@github.com:automatictester/lightning.git')
                 credentialsId('github-creds')
             }
